@@ -35,3 +35,29 @@ Se pueden obtener más detalles en la [página de Wikipedia de la serpiente](htt
 - **Usuario espectador**: Estos usuarios solo podrán ver los juegos en curso. Por lo general, estos son usuarios a los que les gusta transmitir partidos y hacer comentarios en vivo.
 Estos usuarios son muy similares a los "Guests" en el sentido de que no necesitan registrarse y no se guardará ninguna información para ellos, sin embargo, lo que los define es que requieren la clave del juego para poder verlo.
 - **Administrador**: Los altos mandos de la plataforma. Solo actúa cuando se notifican muchos reportes a una persona. Son los que pueden eliminar a usuarios de forma temporal o permanente de la aplicación.
+
+## Vistas
+
+### Lobby
+
+La pantalla de lobby es la pantalla de inicio del juego, donde un usuario una vez se ha registrado en la aplicación web podrá seleccionar como desee jugar, si multijugador (play online) o un jugador solo (levels), así como observar otras partidas (spectate). También podrá acceder a su perfil, a los rankings o en caso de ser administrador a la pantalla de administrador.
+
+### Perfil de usuario
+
+La pantalla de perfil incluirá el perfil del usuario con su respectivo nombre y foto de perfil, así como los amigos que tiene, el número total de partidas jugadas y ganadas y un historial con las partidas recientes.
+
+### Niveles
+
+La pantalla de niveles es la pantalla de un solo jugador, en la que el usuario podrá seleccionar el nivel al que desee jugar, donde habrá distintas dificultades por nivel, al seleccionar el nivel tendrá que superar la dificultad que incluya dicho nivel.
+
+### Administrador
+
+La pantalla de administrador únicamente será accesible para aquellos usuarios con el rol de administrador, en la cual se incluirá una lista de aquellos usuarios que han sido reportados donde el administrador podrá ver el motivo de su reporte y si banea o no a dicho usuario.
+
+### Juego
+
+La pantalla de juego es la pantalla de multijugador donde varios jugadores podrán entrar a jugar simultáneamente, se enfrentarán entre ellos y ganará aquel que sea el último en quedar de pie.
+
+### Rankings
+
+La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego o lo que es lo mismo, los jugadores que hayan ganado más veces en el modo de juego multijugador. Se mostrará el nombre del usuario junto a las victorias conseguidas y la posición que ocupa en el top.
