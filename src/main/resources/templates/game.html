@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>IW: Juego</title>
+    <th:block th:replace="fragments/head :: header" />
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+    <main class="flex-shrink-0">
+      <div class="container-lg shadow-lg p-3 mb-5 bg-body rounded h-100 w-100">
+         <canvas class="h-100 w-100" id="canvas"></canvas>
+      </div>
+    </main>
+    
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>

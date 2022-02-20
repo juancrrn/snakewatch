@@ -38,4 +38,14 @@ public class RootController {
     public String levels(Model model) {
         return "levels";
     }
+
+    @GetMapping("/game")
+    public String game(Model model){
+        return "game";
+    }
+
+    @GetMapping("/rankings")
+    public String rankings(Model model){
+        return "rankings";
+    }
 }

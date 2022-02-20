@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>IW: Rankings</title>
+    <th:block th:replace="fragments/head :: header" />
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <main class="flex-shrink-0">
+        <div class="container-xl">
+            <div class="d-flex justify-content-around">
+                <button class="btn btn-lg btn-primary btn-block">Ranking Global</button>
+                <button class="btn btn-lg btn-primary btn-block">Ranking Mensual</button>
+                <button class="btn btn-lg btn-primary btn-block">Ranking Semanal</button>
+            </div>
+            <div class="row">
+                <h1 style="text-align:center">Ranking Global</h1>
+            </div>
+
+            <div class="row">
+                <table class="table table-light">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Nombre</th>
+                            <th>Victorias</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Juan</td>
+                            <td>5828</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Ana</td>
+                            <td>5247</td>
+                        </tr>
+                    </tbody>
+            
+                </table>
+            </div>
+              
+        </div>
+       
+        
+    </main>
+    
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>
