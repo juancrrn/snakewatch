@@ -4,6 +4,14 @@ Snakewatch es una aplicación web dedicada al videojuego de la serpiente o _Snak
 
 El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Grado en Ingeniería Informática de la Universidad Complutense de Madrid, y utiliza tecnologías como Spring, Maven y Thymeleaf.
 
+## Autores
+
+- Daniel Marín Irún
+- Juan Carrión Molina
+- Mohamed Ghanem
+- Óscar Caro Navarro
+- Óscar Molano Buitrago
+
 ## La serpiente
 
 En resumen, la dinámica del juego consiste en que el jugador controla una criatura larga y delgada, similar a una serpiente, que se mueve sobre un plano delimitado recogiendo alimentos. El jugador debe evitar que la serpiente se golpee contra su propia cola o contra las paredes que delimitan el plano.
