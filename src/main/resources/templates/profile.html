@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>IW: Perfil</title>
+</head>
+
+<style>
+    table, th, td {
+      border:1px solid black;
+    }
+</style>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <main class="flex-shrink-0">
+        <div class="container">
+            
+            <div>
+                <p>Óscar C. 37 amigos 470 partidas</p>
+            </div>
+
+            <table style="width:80%">
+                <tr>
+                  <th>Partidas</th>
+                </tr>
+                <tr>
+                  <td>Información de partida 1</td>
+                </tr>
+                <tr>
+                  <td>Información de partida 1</td>
+                </tr>
+              </table>
+            
+            
+        </div>        
+    </main>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+</html>

@@ -19,6 +19,11 @@ public class RootController {
         return "lobby";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        return "profile";
+    }
+
 	@GetMapping("/login")
     public String login(Model model) {
         return "login";
