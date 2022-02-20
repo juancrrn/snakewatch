@@ -33,4 +33,9 @@ public class RootController {
     public String profile(Model model) {
         return "profile";
     }
+
+    @GetMapping("/levels")
+    public String levels(Model model) {
+        return "levels";
+    }
 }
