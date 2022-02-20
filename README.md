@@ -1,31 +1,29 @@
-# Aplicación de Plantilla de IW
+# Snakewatch
 
-Debes buscar todos los lugares donde aparece la palabra "plantilla" (incluido este párrafo) y reemplazar las ocurrencias, y el contexto circundante, por valores que tengan sentido en tu aplicación. Por ejemplo, este párrafo deberías eliminarlo de tu proyecto.
+Snakewatch es una aplicación web dedicada al videojuego de la serpiente o _Snake_ en versión _online_ y multijugador.
 
+El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Grado en Ingeniería Informática de la Universidad Complutense de Madrid, y utiliza tecnologías como Spring, Maven y Thymeleaf.
 
+## La serpiente
 
-### Reference Documentation
-For further reference, please consider the following sections:
+En resumen, la dinámica del juego consiste en que el jugador controla una criatura larga y delgada, similar a una serpiente, que se mueve sobre un plano delimitado recogiendo alimentos. El jugador debe evitar que la serpiente se golpee contra su propia cola o contra las paredes que delimitan el plano.
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.6.3/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.6.3/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#boot-features-developing-web-applications)
-* [WebSocket](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#boot-features-websockets)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#boot-features-jpa-and-spring-data)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#boot-features-security)
-* [Thymeleaf](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#boot-features-spring-mvc-template-engines)
+Se pueden obtener más detalles en la [página de Wikipedia de la serpiente](https://es.wikipedia.org/wiki/La_serpiente_(videojuego)).
 
-### Guides
-The following guides illustrate how to use some features concretely:
+## Propuesta de proyecto
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Using WebSocket to build an interactive web application](https://spring.io/guides/gs/messaging-stomp-websocket/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-* [Handling Form Submission](https://spring.io/guides/gs/handling-form-submission/)
+> ¿Viciado al Elden Ring o al God of war Ragnarök? Si eres más de clásicos, ¡estás de suerte! Con Snakewatch podrás jugar al mítico y legendario Snake con tus amigos. Gracias a su entorno multijugador, la partida se sincronizará para que luchéis por ver quién es el amo del mapa. ¡Sé el último en sobrevivir y álzate con la victoria!
 
+### Roles de usuario
+
+- **Usuario guest**: Solo podrá unirse a una sesión existente y no podrá alojar la suya propia. No tendrán acceso a ninguna de las características secundarias, como equipar skins o aparecer en los rankings. De este usuario no se guardará información.
+- **Usuarios registrados**: Estos usuarios poseen un perfil propio que les permite:
+    - Crear sesión
+    - Participar en los rankings
+    - Obtener y/o cambiar skins
+    - Consultar historial de partidas
+    - Reportar usuarios, para que los administradores comprueben la respectiva cuenta y tomen las medidas oportunas.
+    - Una vez que un usuario haya iniciado sesión, podrá acceder a la vista de usuario desde la que puede administrar la configuración de su cuenta (cambiar nombre de usuario, contraseña) o en la configuración del juego, como skins, títulos o consultar los rankings, etc.
+- **Usuario espectador**: Estos usuarios solo podrán ver los juegos en curso. Por lo general, estos son usuarios a los que les gusta transmitir partidos y hacer comentarios en vivo.
+Estos usuarios son muy similares a los "Guests" en el sentido de que no necesitan registrarse y no se guardará ninguna información para ellos, sin embargo, lo que los define es que requieren la clave del juego para poder verlo.
+- **Administrador**: Los altos mandos de la plataforma. Solo actúa cuando se notifican muchos reportes a una persona. Son los que pueden eliminar a usuarios de forma temporal o permanente de la aplicación.
