@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.ucm.fdi.iw</groupId>
-	<artifactId>plantilla</artifactId>                      <!-- cambia esto -->
+	<artifactId>snakewatch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>     
-	<name>plantilla</name>                                  <!-- cambia esto -->
-	<description>Demo project for Spring Boot</description> <!-- cambia esto -->
+	<name>snakewatch</name>
+	<description>Snake web multiplayer game</description>
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.version>3.8.1</maven.compiler.version>

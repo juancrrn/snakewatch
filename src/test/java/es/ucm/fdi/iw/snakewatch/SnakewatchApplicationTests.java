@@ -1,10 +1,10 @@
-package es.ucm.fdi.iw.plantilla;
+package es.ucm.fdi.iw.snakewatch;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PlantillaApplicationTests {
+class SnakewatchApplicationTests {
 
 	@Test
 	void contextLoads() {
