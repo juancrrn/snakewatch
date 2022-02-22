@@ -13,15 +13,14 @@
         <div class="container">
             <form class="form-signin" method="post" th:action="@{/lobby}">
                 <h2 class="form-signin-heading"><center>SnakeWatch</center></h2>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Play Online</button>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Spectate</button>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Levels</button>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Settings</button>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Rankings</button>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Profile</button>
+                <a href="/game"><button class="btn btn-lg btn-primary btn-block" type="button">Play Online</button></a>
+                <a href="/game"><button class="btn btn-lg btn-primary btn-block" type="button">Spectate</button></a>
+                <a href="/levels"><button class="btn btn-lg btn-primary btn-block" type="button">Levels</button></a>
+                <a href="/settings"><button class="btn btn-lg btn-primary btn-block" type="button">Settings</button></a>
+                <a href="/rankings"><button class="btn btn-lg btn-primary btn-block" type="button">Rankings</button></a>
+                <a href="/profile"><button class="btn btn-lg btn-primary btn-block" type="button">Profile</button></a>
             </form>
-        </div>
-        
+        </div>        
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
