@@ -7,6 +7,8 @@ Snakewatch
 Has:
 
 - nickname (string)
+- password (string)
+- 
 - ...
 
 ## Friendship
@@ -33,13 +35,13 @@ Has:
 
 Has:
 
-- type (enumerate) - Public or private
+- visibility (enumerate) - Public or private
 - max_users (integer)
 - ...
 
 ## RoomUser
 
-Many users to a single room relationship, users that are in a room. The same user cannot be in different rooms at the same time.
+Many users to many rooms relationship, users that are in a room.
 
 Has:
 
