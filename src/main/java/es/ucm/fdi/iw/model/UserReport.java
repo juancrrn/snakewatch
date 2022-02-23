@@ -25,15 +25,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class UserReport /*implements Transferable<Room.Transfer>*/ {
-
+public class UserReport /*implements Transferable<Room.Transfer>*/ {	
+	
+	/**
+	 * Identifier
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
     private long id;
-
-    @Column(nullable = false)
-    private String representation;
 
     /*
     @Getter
