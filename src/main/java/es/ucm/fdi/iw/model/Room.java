@@ -30,8 +30,11 @@ public class Room {
     public enum RoomType {
         PUBLIC,			// public room 
         PRIVATE,        // private room
-    }
-
+    }	
+	
+	/**
+	 * Identifier
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")

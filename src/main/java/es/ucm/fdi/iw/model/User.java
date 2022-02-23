@@ -28,37 +28,69 @@ import java.util.List;
 })
 @Table(name="IWUser")
 public class User implements Transferable<User.Transfer> {
-
+	
+	/**
+	 * Identifier
+	 */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
+    @SequenceGenerator(name = "gen", sequenceName = "gen")
+	private long id;
+	
+	/**
+	 * Username
+	 */
+    @Column(nullable = false, unique = true)
+    private String username;
+	
+	/**
+	 * Password
+	 */
+    @Column(nullable = false)
+    private String password;
+	
+	/**
+	 * First name
+	 */
+    private String firstName;
+	
+	/**
+	 * Last name
+	 */
+    private String lastName;
+	
+	/**
+	 * Enabled
+	 */
+    private boolean enabled;
+	
+	/**
+	 * Roles
+	 */
     public enum Role {
         USER,			// normal users 
         ADMIN,          // admin users
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
-	private long id;
-
-    @Column(nullable = false, unique = true)
-    private String username;
-    @Column(nullable = false)
-    private String password;
-
-    private String firstName;
-    private String lastName;
-
-    private boolean enabled;
     private String roles; // split by ',' to separate roles
-
+	
+	/**
+	 * Messages sent
+	 */
 	@OneToMany
 	@JoinColumn(name = "sender_id")
 	private List<Message> sent = new ArrayList<>();
+	
+	/**
+	 * Messages received
+	 */
 	@OneToMany
 	@JoinColumn(name = "recipient_id")	
 	private List<Message> received = new ArrayList<>();		
 
     /**
      * Checks whether this user has a given role.
+     * 
      * @param role to check
      * @return true iff this user has that role.
      */

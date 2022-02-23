@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * TODO Class description
+ * Level model
  * 
  * @author Daniel Marín Irún
  * @author Juan Carrión Molina
@@ -25,7 +25,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Level /*implements Transferable<Room.Transfer>*/ {
-
+	
+	/**
+	 * Identifier
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")

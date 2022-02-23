@@ -6,10 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * Room user model
- * 
- * Many users to a single room relationship, users that are in a room. The same
- * user cannot be in different rooms at the same time.
+ * Room user model key
  * 
  * @author Daniel Marín Irún
  * @author Juan Carrión Molina
@@ -24,9 +21,16 @@ import javax.persistence.Embeddable;
 // ToDo: implements methods of Serializable: hashcode() and equals()
 public class RoomUserKey implements Serializable {
 
+    /**
+     * User identifier
+     */
+
     @Column(name = "user_id")
     private Long userId; 
-    @Column(name = "room_id")     
-    private Long roomId;      
 
+    /**
+     * Room identifier
+     */
+    @Column(name = "room_id")     
+    private Long roomId;
 }

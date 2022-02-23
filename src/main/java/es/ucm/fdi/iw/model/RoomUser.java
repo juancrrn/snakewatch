@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 /**
  * Room user model
  * 
- * Many users to a single room relationship, users that are in a room. The same
- * user cannot be in different rooms at the same time.
+ * Many users to a single room relationship, users that are in a room.
  * 
  * @author Daniel Marín Irún
  * @author Juan Carrión Molina
@@ -29,19 +28,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoomUser{
 
+    /**
+     * Identifier
+     */
     @EmbeddedId
-    RoomUserKey roomUserKey;
+    RoomUserKey id;
 
-    @Column(name = "user_id")
+    /**
+     * User
+     */
     @ManyToOne
-    @MapsId("studentId")
+    @MapsId("userId")
+    @Column(name = "user_id")
     private User user; 
 
+    /**
+     * Room
+     */
     @ManyToOne
-    @MapsId("studentId")
+    @MapsId("roomId")
     @Column(name = "room_id")     
     private Room room;      
 
+    /**
+     * User is admin of the room
+     */
     private boolean admin;
 
 }

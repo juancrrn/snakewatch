@@ -14,8 +14,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Match /*implements Transferable<Room.Transfer>*/ {
-
+public class Match /*implements Transferable<Room.Transfer>*/ {	
+	
+	/**
+	 * Identifier
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")

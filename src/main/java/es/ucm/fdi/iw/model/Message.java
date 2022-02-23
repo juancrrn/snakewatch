@@ -34,21 +34,44 @@ public class Message implements Transferable<Message.Transfer> {
 	
 	private static Logger log = LogManager.getLogger(Message.class);	
 	
+	/**
+	 * Identifier
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
 	private long id;
+
+	/**
+	 * Sender
+	 */
 	@ManyToOne
 	private User sender;
+
+	/**
+	 * Recipient
+	 */
 	@ManyToOne
 	private User recipient;
+
+	/**
+	 * Text
+	 */
 	private String text;
-	
+		
+	/**
+	 * Date sent
+	 */
 	private LocalDateTime dateSent;
+		
+	/**
+	 * Date read
+	 */
 	private LocalDateTime dateRead;
 	
 	/**
 	 * Objeto para persistir a/de JSON
+	 * 
 	 * @author mfreire
 	 */
     @Getter
