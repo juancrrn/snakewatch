@@ -1,5 +1,14 @@
 package es.ucm.fdi.iw.model;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Room user model
  * 
@@ -14,7 +23,6 @@ package es.ucm.fdi.iw.model;
  * 
  * @version 0.0.1
  */
-
 
 @Entity
 @Data

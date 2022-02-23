@@ -1,5 +1,10 @@
 package es.ucm.fdi.iw.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 /**
  * Room user model
  * 
@@ -15,10 +20,9 @@ package es.ucm.fdi.iw.model;
  * @version 0.0.1
  */
 
-
 @Embeddable // make this class a Many to Many relationship with JPA
 // ToDo: implements methods of Serializable: hashcode() and equals()
-public class RoomUserKey implements Serializable{
+public class RoomUserKey implements Serializable {
 
     @Column(name = "user_id")
     private Long userId; 

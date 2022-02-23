@@ -1,9 +1,20 @@
 package es.ucm.fdi.iw.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Data
 @NoArgsConstructor
-public class Match implements Transferable<Room.Transfer> {
+public class Match /*implements Transferable<Room.Transfer>*/ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
@@ -12,15 +23,19 @@ public class Match implements Transferable<Room.Transfer> {
 
     /**
      * Room
+     * 
+     * TODO Check relationship type
      */
-    @OneToOne // TODO Comprobar esto
+    @OneToOne
     @Column(nullable = false)
     private Room room;
 
     /**
      * Level
+     * 
+     * TODO Check relationship type
      */
-    @OneToOne // TODO Comprobar esto
+    @OneToOne
     @Column(nullable = false)
     private Level level;
 
