@@ -39,7 +39,6 @@ public class RoomUser{
      */
     @ManyToOne
     @MapsId("userId")
-    @Column(name = "user_id")
     private User user; 
 
     /**
@@ -47,7 +46,6 @@ public class RoomUser{
      */
     @ManyToOne
     @MapsId("roomId")
-    @Column(name = "room_id")     
     private Room room;      
 
     /**

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -30,7 +31,6 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
      * TODO Check relationship type
      */
     @OneToOne
-    @Column(nullable = false)
     private Room room;
 
     /**
@@ -39,7 +39,6 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
      * TODO Check relationship type
      */
     @OneToOne
-    @Column(nullable = false)
     private Level level;
 
     /**
@@ -73,6 +72,7 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
      * Might be null if the match is waiting, ongoing or paused, or if it has
      * ended and has no winner.
      */
+    @ManyToOne
     private User winner;
 
     /*
