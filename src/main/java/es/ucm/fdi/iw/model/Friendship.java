@@ -1,5 +1,12 @@
 package es.ucm.fdi.iw.model;
 
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Friendship model
  * 
@@ -13,6 +20,18 @@ package es.ucm.fdi.iw.model;
  * 
  * @version 0.0.1
  */
-public class Friendship {
-    
+@Entity
+@Data
+@NoArgsConstructor
+public class Friendship implements Serializable{
+
+    @Id
+    @ManyToOne
+    @MapsId("userId")
+    private User user1;
+
+    @Id
+    @ManyToOne
+    @MapsId("userId")
+    private User user2;
 }

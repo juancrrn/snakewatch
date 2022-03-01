@@ -1,5 +1,12 @@
 package es.ucm.fdi.iw.model;
 
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Match player model
  * 
@@ -14,6 +21,21 @@ package es.ucm.fdi.iw.model;
  * 
  * @version 0.0.1
  */
-public class MatchPlayer {
-    
+@Entity
+@Data
+@NoArgsConstructor
+public class MatchPlayer implements Serializable{
+
+
+    @Id
+    @ManyToOne
+    @MapsId("matchId")
+    private Match match;
+
+    @Id
+    @ManyToOne
+    @MapsId("userId")
+    private User user;
+
+    private int result;
 }

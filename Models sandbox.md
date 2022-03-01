@@ -71,7 +71,7 @@ Has:
 
 - match (foreign reference to Match)
 - user (foreign reference to User)
-- result (string) - Individual result (?)
+- result (int (-1 not defined)) - Individual result (?)
 - ...
 
 ## Skin
