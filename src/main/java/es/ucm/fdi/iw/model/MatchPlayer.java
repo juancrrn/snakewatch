@@ -14,6 +14,6 @@ package es.ucm.fdi.iw.model;
  * 
  * @version 0.0.1
  */
-
 public class MatchPlayer {
+    
 }

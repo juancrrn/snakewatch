@@ -20,8 +20,17 @@ import lombok.Getter;
 import lombok.AllArgsConstructor;
 
 /**
- * A message that users can send each other.
- *
+ * Message model
+ * 
+ * A message that users can send to each other.
+ * 
+ * @author Daniel Marín Irún
+ * @author Juan Carrión Molina
+ * @author Mohamed Ghanem
+ * @author Óscar Caro Navarro
+ * @author Óscar Molano Buitrago
+ * 
+ * @version 0.0.1
  */
 @Entity
 @NamedQueries({

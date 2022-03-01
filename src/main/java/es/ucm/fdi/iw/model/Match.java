@@ -12,6 +12,17 @@ import javax.persistence.SequenceGenerator;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Match model
+ * 
+ * @author Daniel Marín Irún
+ * @author Juan Carrión Molina
+ * @author Mohamed Ghanem
+ * @author Óscar Caro Navarro
+ * @author Óscar Molano Buitrago
+ * 
+ * @version 0.0.1
+ */
 @Entity
 @Data
 @NoArgsConstructor

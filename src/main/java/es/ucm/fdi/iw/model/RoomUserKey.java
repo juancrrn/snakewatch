@@ -16,7 +16,6 @@ import javax.persistence.Embeddable;
  * 
  * @version 0.0.1
  */
-
 @Embeddable // make this class a Many to Many relationship with JPA
 // ToDo: implements methods of Serializable: hashcode() and equals()
 public class RoomUserKey implements Serializable {
