@@ -1,6 +1,5 @@
 package es.ucm.fdi.iw.model;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
