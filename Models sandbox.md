@@ -103,6 +103,6 @@ Has:
 
 - reporter (foreign reference to User) - User reporting
 - reported (foreign reference to User) - User being reported
-- reason (string)
 - moderator (foreign reference to User)
-- status (enumerate)
+- reason (string)
+- status (enumerate: sent, being processed, closed)
