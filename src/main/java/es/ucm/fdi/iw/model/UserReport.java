@@ -33,6 +33,48 @@ public class UserReport /*implements Transferable<Room.Transfer>*/ {
     @SequenceGenerator(name = "gen", sequenceName = "gen")
     private long id;
 
+	/**
+	 * User that issued the report 
+	 */
+    @ManyToOne
+    @MapsId("userId")
+    private User reportingUser;
+
+	/**
+	 * User being reported
+	 */
+    @ManyToOne
+    @MapsId("userId")
+    private User reportedUser;
+
+	/**
+	 * Moderator in charge of taken decisions
+	 */
+    @ManyToOne
+    @MapsId("userId")
+    private User moderatorUser;
+
+	/**
+	 * Explanation given by reportingUser
+	 */
+    private String reasons;
+
+    /**
+     * Status of the report
+     * 
+     * - Sent: reported but not yet examined by the moderator
+     * - Being Processed: currently being examined by the moderator
+     * - Closed: decision already taken (punishment or dismissal)
+     */
+    public enum Status {
+        SENT,
+        BEING_PROCESSED,
+        CLOSED
+    }
+
+    @Column(nullable = false)
+    private Status status;
+
     /*
     @Getter
     @AllArgsConstructor

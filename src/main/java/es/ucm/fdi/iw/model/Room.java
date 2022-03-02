@@ -24,12 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 // ToDo: implements Transferable<Room.Transfer>
-public class Room {
-
-    public enum RoomType {
-        PUBLIC,			// public room 
-        PRIVATE,        // private room
-    }	
+public class Room {	
 	
 	/**
 	 * Identifier
@@ -39,7 +34,18 @@ public class Room {
     @SequenceGenerator(name = "gen", sequenceName = "gen")
     private long id;
 
-    private RoomType visibility;      // Type of room (public, private...)
+    /**
+     * Visibility of the room
+     * 
+     * - Public: anyone can join
+     * - Private: needs permission to join (passwork, link...)
+     */
+    public enum RoomType {
+        PUBLIC,
+        PRIVATE,
+    }
+    private RoomType visibility;
+    
     private int maxUsers;           // Max number of users in this room
 
 /*
