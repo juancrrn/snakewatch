@@ -39,9 +39,8 @@ public class Friendship implements Serializable{
     @Column(nullable=false)
     private FriendshipKey id;
 
-    public Friendship(User user1, User user2){
-        this.id.setUser1(user1);
-        this.id.setUser2(user2);
+    public Friendship(FriendshipKey id){
+        this.id = id;
         /*provisional initation*/
         this.status = Status.ACCEPTED;
         /*REAL INIITATION
@@ -49,15 +48,6 @@ public class Friendship implements Serializable{
         */
         
     }
-    
-    /*@ManyToOne
-    @MapsId("userId")
-    private User user1;
-
-    @ManyToOne
-    @MapsId("userId")
-    private User user2;*/
-
     /**
      * Status of the friendship request
      * 

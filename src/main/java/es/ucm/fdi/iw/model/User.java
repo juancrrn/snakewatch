@@ -24,7 +24,10 @@ import java.util.List;
         @NamedQuery(name="User.hasUsername",
                 query="SELECT COUNT(u) "
                         + "FROM User u "
-                        + "WHERE u.username = :username")
+                        + "WHERE u.username = :username"),
+		@NamedQuery(name="User.getUsersLessMe",
+				query="SELECT u FROM User u "
+				+ "WHERE u.username != :username AND u.enabled = TRUE")
 		
 })
 @Table(name="IWUser")
@@ -35,7 +38,7 @@ public class User implements Transferable<User.Transfer> {
 	 */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
+    @SequenceGenerator(name = "gen", sequenceName = "gen", initialValue=1)
 	private long id;
 	
 	/**

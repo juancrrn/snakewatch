@@ -6,6 +6,8 @@ import java.util.List;
 
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import es.ucm.fdi.iw.model.Friendship;
+import es.ucm.fdi.iw.model.FriendshipKey;
 import es.ucm.fdi.iw.model.User;
 
 /**
@@ -42,8 +45,6 @@ public class RootController {
 	private static final Logger log = LogManager.getLogger(RootController.class);
     @Autowired
     private EntityManager entityManager;
-    @Autowired
-	private PasswordEncoder passwordEncoder;
     
 	/**
      * Home view
@@ -66,46 +67,28 @@ public class RootController {
      */
     @GetMapping("/profile")
     @Transactional
-    public String profile(Model model) {
-        User thisUser = (User) session.getAttribute("u");
-        
-        User user2 = new User();
-        //user2.setPassword(passwordEncoder.encode(UserController.generateRandomBase64Token(12)));
-        user2.setPassword("patatas");
-        user2.setEnabled(true);
-        user2.setUsername("OscarM");
-        user2.setFirstName("Oscar");
-        user2.setLastName("Molano");
-
-        User user3 = new User();
-        //user3.setPassword(passwordEncoder.encode(UserController.generateRandomBase64Token(12)));
-        user3.setPassword("patatas");
-        user3.setEnabled(true);
-        user3.setUsername("OscarC");
-        user3.setFirstName("Oscar");
-        user3.setLastName("Caro");
-    
-        entityManager.persist(user2);
-        entityManager.persist(user3);
-        entityManager.flush();
-        
-
-        Friendship fr2 = new Friendship(thisUser, user2);
-        Friendship fr3 = new Friendship(thisUser, user3);
-        
-        entityManager.persist(fr2);
-        entityManager.persist(fr3);
-        entityManager.flush();
+    public String profile(HttpServletRequest request, HttpServletResponse response, Model model) {
 
         List<User> amigos = new ArrayList<User>();
+        User adminUser = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", "a").getSingleResult();
+        List<User> users = entityManager.createNamedQuery("User.getUsersLessMe", User.class).setParameter("username", adminUser.getUsername()).getResultList();
+    
+        for(int i=0; i<users.size();i++){
+            FriendshipKey fkey = new FriendshipKey(adminUser, users.get(i));
+            Friendship friendship = new Friendship(fkey);
+            if(entityManager.find(Friendship.class, friendship.getId()) == null) {
+                entityManager.persist(friendship);
+                entityManager.flush();
+            }
+        }
 
         List<Friendship> userFriendships = entityManager
                     .createNamedQuery("Friendship.getFriends", Friendship.class)
-                    .setParameter("userid", thisUser.getId())
+                    .setParameter("userid", adminUser.getId())
                     .getResultList();
                     
         for (Friendship friendship : userFriendships){
-            if(friendship.getId().getUser1().getId() == thisUser.getId()){
+            if(friendship.getId().getUser1().getId() == adminUser.getId()){
                 amigos.add(friendship.getId().getUser2());
             }
             else{
