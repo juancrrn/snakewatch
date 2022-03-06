@@ -34,21 +34,21 @@ public class UserReport /*implements Transferable<Room.Transfer>*/ {
 	 * User that issued the report 
 	 */
     @ManyToOne
-    @MapsId("userId")
+    @JoinColumn(name="reportingUser_id")
     private User reportingUser;
 
 	/**
 	 * User being reported
 	 */
     @ManyToOne
-    @MapsId("userId")
+    @JoinColumn(name="reportedUser_id")
     private User reportedUser;
 
 	/**
 	 * Moderator in charge of taken decisions
 	 */
     @ManyToOne
-    @MapsId("userId")
+    @JoinColumn(name="moderatorUser_id")
     private User moderatorUser;
 
 	/**
