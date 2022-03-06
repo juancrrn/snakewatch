@@ -26,16 +26,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MatchPlayer implements Serializable{
 
+    @EmbeddedId
+    @Column(nullable=false)
+    private MatchPlayerKey id;
 
-    @Id
-    @ManyToOne
-    @MapsId("matchId")
-    private Match match;
-
-    @Id
-    @ManyToOne
-    @MapsId("userId")
-    private User user;
-
-    private int result;
+    private int position;
 }

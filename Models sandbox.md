@@ -60,7 +60,6 @@ Has:
 - level (foreign reference)
 - status (enumerate) - Waiting, ongoing, ended... (?)
 - max_players (integer)
-- winner (foreign reference) - Winner (?)
 - ...
 
 ## MatchPlayer
@@ -71,7 +70,7 @@ Has:
 
 - match (foreign reference to Match)
 - user (foreign reference to User)
-- result (int (-1 not defined)) - Individual result (?)
+- position (int) - position in the ranking of the match (-1 if match not finished)
 - ...
 
 ## Skin
