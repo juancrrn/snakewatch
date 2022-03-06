@@ -1,9 +1,7 @@
 package es.ucm.fdi.iw.model;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
+
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,24 +25,11 @@ import lombok.NoArgsConstructor;
 public class RoomUser{
 
     /**
-     * Identifier
+     * Compound key with reference to: User + Room
      */
     @EmbeddedId
-    RoomUserKey id;
-
-    /**
-     * User
-     */
-    @ManyToOne
-    @MapsId("userId")
-    private User user; 
-
-    /**
-     * Room
-     */
-    @ManyToOne
-    @MapsId("roomId")
-    private Room room;      
+    @Column(nullable=false)
+    private RoomUserKey id;
 
     /**
      * User is admin of the room

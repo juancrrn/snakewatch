@@ -2,8 +2,7 @@ package es.ucm.fdi.iw.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
 /**
  * Room user model key
@@ -20,16 +19,12 @@ import javax.persistence.Embeddable;
 // ToDo: implements methods of Serializable: hashcode() and equals()
 public class RoomUserKey implements Serializable {
 
-    /**
-     * User identifier
-     */
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user; 
 
-    @Column(name = "user_id")
-    private Long userId; 
-
-    /**
-     * Room identifier
-     */
-    @Column(name = "room_id")     
-    private Long roomId;
+    @ManyToOne
+    @JoinColumn(name="room_id")
+    private Room room; 
+    
 }
