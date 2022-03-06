@@ -25,10 +25,11 @@ import java.util.List;
                 query="SELECT COUNT(u) "
                         + "FROM User u "
                         + "WHERE u.username = :username")
+		
 })
 @Table(name="IWUser")
 public class User implements Transferable<User.Transfer> {
-	
+
 	/**
 	 * Identifier
 	 */

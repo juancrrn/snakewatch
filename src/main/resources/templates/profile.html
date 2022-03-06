@@ -41,6 +41,15 @@
                   </tr>
                 </tbody>
               </table>
+
+              <table class="table table-light">
+                <thead>
+                  <tr th:each="amigo: ${amigos}">
+                    <th th:text="'Id del amigo: ' + ${amigo.id}">ID</th></br></br>
+                    <th th:text="'Nombre del amigo: ' + ${amigo.nombre}">Nombre</th></br></br>
+                  </tr>
+                </thead>
+              </table>
             
             
         </div>        

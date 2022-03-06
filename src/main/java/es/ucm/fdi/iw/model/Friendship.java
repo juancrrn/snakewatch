@@ -26,7 +26,8 @@ import lombok.NoArgsConstructor;
 @NamedQueries({
     @NamedQuery(name="Friendship.getFriends",
             query="SELECT f FROM Friendship f "
-                    + "WHERE f.id.user1.id = :userid OR f.id.user2.id = :userid")
+                    + "WHERE (f.id.user1.id = :userid OR f.id.user2.id = :userid)"
+                    + "AND (f.status = 1)")
 })
 public class Friendship implements Serializable{
 
@@ -37,6 +38,17 @@ public class Friendship implements Serializable{
     @EmbeddedId
     @Column(nullable=false)
     private FriendshipKey id;
+
+    public Friendship(User user1, User user2){
+        this.id.setUser1(user1);
+        this.id.setUser2(user2);
+        /*provisional initation*/
+        this.status = Status.ACCEPTED;
+        /*REAL INIITATION
+        this.status = Status.PENDING;
+        */
+        
+    }
     
     /*@ManyToOne
     @MapsId("userId")
