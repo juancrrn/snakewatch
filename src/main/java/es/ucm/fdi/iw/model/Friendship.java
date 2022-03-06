@@ -23,21 +23,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+    @NamedQuery(name="Friendship.getFriends",
+            query="SELECT f FROM Friendship f "
+                    + "WHERE f.id.user1.id = :userid OR f.id.user2.id = :userid")
+})
 public class Friendship implements Serializable{
 
     // TODO: to have a compound primary key, we need to create a separate class FriendshipId
     // Explained here: https://stackoverflow.com/questions/13032948/how-to-create-and-handle-composite-primary-key-in-jpa
     // And here: https://stackoverflow.com/questions/31385658/jpa-how-to-make-composite-foreign-key-part-of-composite-primary-key
 
-    @Id
-    @ManyToOne
+    @EmbeddedId
+    @Column(nullable=false)
+    private FriendshipKey id;
+    
+    /*@ManyToOne
     @MapsId("userId")
     private User user1;
 
-    @Id
     @ManyToOne
     @MapsId("userId")
-    private User user2;
+    private User user2;*/
 
     /**
      * Status of the friendship request
