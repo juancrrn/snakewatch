@@ -31,7 +31,7 @@ import java.util.List;
 		
 })
 @Table(name="IWUser")
-public class User implements Transferable<User.Transfer> {
+public class User /*implements Transferable<User.Transfer>*/ {
 
 	/**
 	 * Identifier
@@ -111,6 +111,7 @@ public class User implements Transferable<User.Transfer> {
         return Arrays.asList(roles.split(",")).contains(roleName);
     }
 
+	/*
     @Getter
     @AllArgsConstructor
     public static class Transfer {
@@ -129,5 +130,6 @@ public class User implements Transferable<User.Transfer> {
 	public String toString() {
 		return toTransfer().toString();
 	}
+	*/
 }
 
