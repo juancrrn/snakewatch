@@ -18,16 +18,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @NamedQueries({
-        @NamedQuery(name="User.byUsername",
-                query="SELECT u FROM User u "
-                        + "WHERE u.username = :username AND u.enabled = TRUE"),
-        @NamedQuery(name="User.hasUsername",
-                query="SELECT COUNT(u) "
-                        + "FROM User u "
-                        + "WHERE u.username = :username"),
-		@NamedQuery(name="User.getUsersLessMe",
-				query="SELECT u FROM User u "
-				+ "WHERE u.username != :username AND u.enabled = TRUE")
+    @NamedQuery(name="User.byUsername",
+        query="SELECT u FROM User u "
+            + "WHERE u.username = :username AND u.enabled = TRUE"),
+    @NamedQuery(name="User.hasUsername",
+        query="SELECT COUNT(u) "
+            + "FROM User u "
+            + "WHERE u.username = :username"),
+	@NamedQuery(name="User.getUsersLessMe",
+		query="SELECT u FROM User u "
+			+ "WHERE u.username != :username AND u.enabled = TRUE")
 		
 })
 @Table(name="IWUser")
