@@ -9,13 +9,13 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,16 +36,14 @@ public class TestController {
     @Autowired
     private EntityManager entityManager;
 
-    
-
-    /**
-     * Profile view
-     */
     @GetMapping("/insert-friendship")
     @Transactional
     public String profile(HttpServletRequest request, HttpServletResponse response, Model model) {
 
         List<User> amigos = new ArrayList<User>();
+
+        
+
         User adminUser = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", "a").getSingleResult();
         List<User> users = entityManager.createNamedQuery("User.getUsersLessMe", User.class).setParameter("username", adminUser.getUsername()).getResultList();
 
