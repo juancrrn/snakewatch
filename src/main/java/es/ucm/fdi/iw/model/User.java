@@ -35,6 +35,9 @@ public class User implements Transferable<User.Transfer> {
 
 	/**
 	 * Identifier
+	 * 
+	 * This @SequenceGenerator generates a sequence named "user_id", which will
+	 * be used later to fill the User.id sequence.
 	 */
     @Id
 	@SequenceGenerator(name = "user_id", sequenceName = "user_id")
