@@ -54,17 +54,20 @@
                                     y luego se escribe a ${application.debug})
                             */-->
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                                Test login:
+                            </li>
+                            <li class="nav-item debug align-self-center" th:if="${application.debug}">
                                 <form class="d-flex" th:action="@{/login}" method="post">
-                                    <input type="hidden" name="username" value="a">
+                                    <input type="hidden" name="username" value="admin">
                                     <input type="hidden" name="password" value="aa">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">a</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">admin</button>
                                 </form>
                             </li>
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">
                                 <form class="d-flex" th:action="@{/login}" method="post">
-                                    <input type="hidden" name="username" value="b">
+                                    <input type="hidden" name="username" value="user1">
                                     <input type="hidden" name="password" value="aa">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">b</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">user1</button>
                                 </form>
                             </li>
                         </th:block>

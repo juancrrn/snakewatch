@@ -1,13 +1,13 @@
 -- insert admin (username a, password aa)
 INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'ADMIN,USER', 'a',
+VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'USER,ADMIN', 'admin',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'b',
+VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user1',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'OscarM',
+VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user2',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 INSERT INTO IWUser (id, enabled, roles, username, password)
-VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'OscarC',
+VALUES (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user3',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
