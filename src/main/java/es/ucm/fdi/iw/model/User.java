@@ -36,12 +36,17 @@ public class User implements Transferable<User.Transfer> {
 	/**
 	 * Identifier
 	 * 
-	 * This @SequenceGenerator generates a sequence named "user_id", which will
-	 * be used later to fill the User.id sequence.
+	 * This @SequenceGenerator creates a sequence generator named
+	 * "user_id_seq_gen" based on a sequence "user_id_seq" autocreated
+	 * previously by the persistence provider, H2. This sequence will be used
+	 * later to fill the "User.id" field.
+	 * 
+	 * Setting "allocationSize" to 1 allows the allocated sequence space to be
+	 * just one, avoiding id gaps.
 	 */
     @Id
-	@SequenceGenerator(name = "user_id", sequenceName = "user_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id")
+	@SequenceGenerator(name = "user_id_seq_gen", sequenceName = "user_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq_gen")
 	private long id;
 	
 	/**
