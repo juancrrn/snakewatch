@@ -36,4 +36,40 @@ class UserTests {
 		assertEquals(5, user.getId());
 	}
 
+	/*@Test
+	@Transactional
+	void newFriendship() {
+		ist<User> amigos = new ArrayList<User>();
+
+        
+
+        User adminUser = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", "a").getSingleResult();
+        List<User> users = entityManager.createNamedQuery("User.getUsersLessMe", User.class).setParameter("username", adminUser.getUsername()).getResultList();
+
+        for(int i=0; i<users.size();i++){
+            FriendshipKey fkey = new FriendshipKey(adminUser, users.get(i));
+            Friendship friendship = new Friendship(fkey);
+            if(entityManager.find(Friendship.class, friendship.getId()) == null) {
+                entityManager.persist(friendship);
+                entityManager.flush();
+            }
+        }
+
+        List<Friendship> userFriendships = entityManager
+                    .createNamedQuery("Friendship.getFriends", Friendship.class)
+                    .setParameter("userid", adminUser.getId())
+                    .getResultList();
+                    
+        for (Friendship friendship : userFriendships){
+            if(friendship.getId().getUser1().getId() == adminUser.getId()){
+                amigos.add(friendship.getId().getUser2());
+            }
+            else{
+                amigos.add(friendship.getId().getUser1());
+            }
+        }
+        
+        model.addAttribute("amigos", amigos);
+	}*/
+
 }
