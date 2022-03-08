@@ -28,7 +28,6 @@ import java.util.List;
 	@NamedQuery(name="User.getUsersLessMe",
 		query="SELECT u FROM User u "
 			+ "WHERE u.username != :username AND u.enabled = TRUE")
-		
 })
 @Table(name="IWUser")
 public class User /*implements Transferable<User.Transfer>*/ {
