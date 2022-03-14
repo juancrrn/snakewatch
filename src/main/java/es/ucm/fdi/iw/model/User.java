@@ -25,7 +25,7 @@ import java.util.List;
         query="SELECT COUNT(u) "
             + "FROM User u "
             + "WHERE u.username = :username"),
-	@NamedQuery(name="User.getUsersLessMe",
+	@NamedQuery(name="User.getAllUsersExceptMe",
 		query="SELECT u FROM User u "
 			+ "WHERE u.username != :username AND u.enabled = TRUE")
 })

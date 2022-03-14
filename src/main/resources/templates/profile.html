@@ -2,68 +2,73 @@
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:replace="fragments/head :: header" />
-    <title>Usuario — Snakewatch</title>
+  <th:block th:replace="fragments/head :: header" />
+  <title>Usuario — Snakewatch</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header th:replace="fragments/nav.html :: nav"></header>
+  <header th:replace="fragments/nav.html :: nav"></header>
 
-    <main class="flex-shrink-0">
-        <div class="container">
+  <main class="flex-shrink-0">
+    <div class="container">
 
-          <span style="display: inline-block; width: 40px; height: 50px;"></span>
-            
-            <div>
-                <h1 class="col" style="text-align:center">Óscar C. &nbsp;&nbsp;&nbsp; 37 amigos &nbsp;&nbsp;&nbsp; 470 partidas</h1>
-            </div>
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
 
-            <span style="display: inline-block; width: 40px; height: 30px;"></span>
+      <div>
+        <h1 class="col" style="text-align:center"
+          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${amigos.size()} amigos &nbsp;&nbsp;&nbsp; 470 partidas|">
+        </h1>
+      </div>
 
-            <table class="table table-light">
-                <thead>
-                  <tr>
-                    <th>Partida</th>
-                    <th>Información</th>
-                    <th>Ganador</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>#1</td>
-                    <td>Información de partida 1</td>
-                    <td>Oscar M.</td>
-                  </tr>
-                  <tr>
-                    <td>#2</td>
-                    <td>Información de partida 2</td>
-                    <td>Mohamed</td>
-                  </tr>
-                </tbody>
-              </table>
+      <span style="display: inline-block; width: 40px; height: 30px;"></span>
 
-              <table class="table table-light">
-                <thead>
-                  <tr rowspan="1">
-                    <th colspan="1">Friends</th>
-                  </tr>
-                  <tr rowspan="1">
-                    <th colspan="1">Friend's Id</th>
-                    <th colspan="1">Friend's Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr rowspan="1" th:each="amigo: ${amigos}">
-                    <td colspan="1" th:text="${amigo.id}">ID</td>
-                    <td colspan="1" th:text="${amigo.username}">Nombre</td>
-                  </tr>
-                </tbody>
-              </table>
-            
-            
-        </div>        
-    </main>
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>Partida</th>
+            <th>Información</th>
+            <th>Ganador</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#1</td>
+            <td>Información de partida 1</td>
+            <td>Oscar M.</td>
+          </tr>
+          <tr>
+            <td>#2</td>
+            <td>Información de partida 2</td>
+            <td>Mohamed</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <th:block th:replace="fragments/footer.html :: footer" />
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
+
+      <table class="table table-light">
+        <thead>
+          <tr rowspan="1">
+            <th colspan="1">Friends</th>
+          </tr>
+          <tr rowspan="1">
+            <th colspan="1">Friend's Id</th>
+            <th colspan="1">Friend's Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr rowspan="1" th:each="amigo: ${amigos}">
+            <td colspan="1" th:text="${amigo.id}">ID</td>
+            <td colspan="1" th:text="${amigo.username}">Nombre</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+  </main>
+
+  <th:block th:replace="fragments/footer.html :: footer" />
 </body>
+
 </html>

@@ -68,6 +68,33 @@ public class RootController {
     @GetMapping("/profile")
     @Transactional
     public String profile(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+        // Get logged user
+        User user = (User)session.getAttribute("u");
+
+        // Pass username with thymeleaf to the view 
+        model.addAttribute("username", user.getUsername());
+        
+        // Get their friendships
+        List<Friendship> friendships = entityManager
+            .createNamedQuery("Friendship.getFriends", Friendship.class)
+            .setParameter("userid", user.getId())
+            .getResultList();
+
+        // Get friends (as Users)
+        List<User> amigos = new ArrayList<>();        
+        for (Friendship friendship : friendships){
+            if(friendship.getId().getUser1().getId() == user.getId()){
+                amigos.add(friendship.getId().getUser2());
+            }
+            else{
+                amigos.add(friendship.getId().getUser1());
+            }
+        }
+
+        // Pass friends with thymeleaf to the view 
+        model.addAttribute("amigos", amigos);
+
         return "profile";
     }
 

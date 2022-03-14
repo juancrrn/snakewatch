@@ -3,6 +3,9 @@ package es.ucm.fdi.iw.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -41,18 +44,17 @@ class UserTests {
 		assertEquals(5, userInBD.getId());
 	}
 
-	/*@Test
+	@Test
 	@Transactional
 	void newFriendship() {
-		ist<User> amigos = new ArrayList<User>();
 
-        
+        // 1º Get Admin and get rest the rest of users
+        User adminUser = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", "admin").getSingleResult();
+        List<User> otherUsers = entityManager.createNamedQuery("User.getAllUsersExceptMe", User.class).setParameter("username", adminUser.getUsername()).getResultList();
 
-        User adminUser = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", "a").getSingleResult();
-        List<User> users = entityManager.createNamedQuery("User.getUsersLessMe", User.class).setParameter("username", adminUser.getUsername()).getResultList();
-
-        for(int i=0; i<users.size();i++){
-            FriendshipKey fkey = new FriendshipKey(adminUser, users.get(i));
+        // 2º Make Admin be friends with every other user
+        for(int i=0; i<otherUsers.size();i++){
+            FriendshipKey fkey = new FriendshipKey(adminUser, otherUsers.get(i));
             Friendship friendship = new Friendship(fkey);
             if(entityManager.find(Friendship.class, friendship.getId()) == null) {
                 entityManager.persist(friendship);
@@ -60,21 +62,13 @@ class UserTests {
             }
         }
 
-        List<Friendship> userFriendships = entityManager
+        // 3º Get friends of Admin and check that every other user is indeed a friend
+        List<Friendship> adminFriendships = entityManager
                     .createNamedQuery("Friendship.getFriends", Friendship.class)
                     .setParameter("userid", adminUser.getId())
                     .getResultList();
-                    
-        for (Friendship friendship : userFriendships){
-            if(friendship.getId().getUser1().getId() == adminUser.getId()){
-                amigos.add(friendship.getId().getUser2());
-            }
-            else{
-                amigos.add(friendship.getId().getUser1());
-            }
-        }
-        
-        model.addAttribute("amigos", amigos);
-	}*/
+
+        assertEquals(otherUsers.size(), adminFriendships.size());
+	}
 
 }

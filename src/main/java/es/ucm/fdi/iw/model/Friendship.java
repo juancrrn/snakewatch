@@ -46,7 +46,7 @@ public class Friendship implements Serializable{
         /*REAL INIITATION
         this.status = Status.PENDING;
         */
-        
+        // TODO: when creating a new Friendship, we should add 2 instances on the database: (u1, u2) y (u2,u1)
     }
     /**
      * Status of the friendship request
