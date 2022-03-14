@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Usage: "mvn test" on console 
+ */
 @SpringBootTest
 class UserTests {
 
@@ -33,7 +36,9 @@ class UserTests {
         this.entityManager.persist(user);
         this.entityManager.flush();
 
-		assertEquals(5, user.getId());
+        User userInBD = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", user.getUsername()).getSingleResult();
+
+		assertEquals(5, userInBD.getId());
 	}
 
 	/*@Test
