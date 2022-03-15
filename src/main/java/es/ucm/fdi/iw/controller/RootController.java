@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import es.ucm.fdi.iw.model.Friendship;
+import es.ucm.fdi.iw.model.Level;
 import es.ucm.fdi.iw.model.FriendshipKey;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.User;
@@ -115,6 +116,10 @@ public class RootController {
      */
     @GetMapping("/levels")
     public String levels(Model model) {
+        List<Level> levels = entityManager
+            .createNamedQuery("Level.getLevels", Level.class)
+            .getResultList();
+        model.addAttribute("levels", levels); 
         return "levels";
     }
 

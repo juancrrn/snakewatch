@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+    @NamedQuery(name="Level.getLevels",
+            query="SELECT l FROM Level l "
+                    )
+})
 public class Level /*implements Transferable<Room.Transfer>*/ {
 
     /**
