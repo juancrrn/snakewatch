@@ -84,6 +84,7 @@ class MatchTests {
         this.entityManager.persist(player2);
         this.entityManager.persist(roomUser1);
         this.entityManager.persist(roomUser2); 
+        this.entityManager.persist(match);
         this.entityManager.persist(matchPlayer1);
         this.entityManager.persist(matchPlayer2);
         
