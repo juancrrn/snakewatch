@@ -24,13 +24,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Level /*implements Transferable<Room.Transfer>*/ {
-	
-	/**
+
+    /**
 	 * Identifier
+	 * 
+	 * <p> This SequenceGenerator creates a sequence generator named
+	 * "level_id_seq_gen" based on a sequence "level_id_seq" autocreated
+	 * previously by the persistence provider, H2. 
+     * 
+     * <p> This sequence will be used later to fill the "Level.id" field.
+	 * 
+	 * <p> Setting "allocationSize" to 1 allows the allocated sequence space to be
+	 * just one, avoiding id gaps.
 	 */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
+	@SequenceGenerator(name = "level_id_seq_gen", sequenceName = "level_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "level_id_seq_gen")
     private long id;
 
     private String representation;

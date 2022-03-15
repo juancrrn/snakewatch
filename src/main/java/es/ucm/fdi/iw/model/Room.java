@@ -28,25 +28,39 @@ public class Room {
 	
 	/**
 	 * Identifier
+	 * 
+	 * <p> This SequenceGenerator creates a sequence generator named
+	 * "room_id_seq_gen" based on a sequence "room_id_seq" autocreated
+	 * previously by the persistence provider, H2. 
+     * 
+     * <p> This sequence will be used later to fill the "Room.id" field.
+	 * 
+	 * <p> Setting "allocationSize" to 1 allows the allocated sequence space to be
+	 * just one, avoiding id gaps.
 	 */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
+	@SequenceGenerator(name = "room_id_seq_gen", sequenceName = "room_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "room_id_seq_gen")
     private long id;
 
     /**
      * Visibility of the room
-     * 
-     * - Public: anyone can join
-     * - Private: needs permission to join (passwork, link...)
+     * <p> - PUBLIC: anyone can join
+     * <p> - PRIVATE: needs permission to join (passwork, link...)
      */
     public enum RoomType {
         PUBLIC,
         PRIVATE,
     }
     private RoomType visibility;
-    
-    private int maxUsers;           // Max number of users in this room
+
+    /**
+     * Max number of users in the room
+     * 
+     * <p> If null, the match has no maximum.
+     * <p> TODO: check this constraint when adding new users to the room
+     */
+    private int maxUsers;           
 
 /*
     @Getter

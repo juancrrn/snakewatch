@@ -24,11 +24,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+    @NamedQuery(name="MatchPlayer.byPlayerId",
+        query="SELECT mp FROM MatchPlayer mp WHERE mp.id.player.id = :playerId")
+})
 public class MatchPlayer implements Serializable{
 
     @EmbeddedId
     @Column(nullable=false)
     private MatchPlayerKey id;
 
+    /**
+     * Position in the ranking of the match.
+     * 
+     * <p> - Starting from 1 (for winner)
+     * <p> - Null if the match hasn't ended yet.
+     */
     private int position;
 }

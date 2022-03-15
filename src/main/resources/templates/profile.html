@@ -16,7 +16,7 @@
 
       <div>
         <h1 class="col" style="text-align:center"
-          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${amigos.size()} amigos &nbsp;&nbsp;&nbsp; 470 partidas|">
+          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${amigos.size()} amigos &nbsp;&nbsp;&nbsp; ${matches.size()} partidas|">
         </h1>
       </div>
 
@@ -24,22 +24,15 @@
 
       <table class="table table-light">
         <thead>
-          <tr>
+          <tr rowspan="1">
             <th>Partida</th>
-            <th>Información</th>
-            <th>Ganador</th>
+            <th>Resultado</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>#1</td>
-            <td>Información de partida 1</td>
-            <td>Oscar M.</td>
-          </tr>
-          <tr>
-            <td>#2</td>
-            <td>Información de partida 2</td>
-            <td>Mohamed</td>
+          <tr rowspan="1" th:each="match: ${matches}">
+            <td colspan="1" th:text="${match.id.match.id}"></td>
+            <td colspan="1" th:text="| ${match.position} º|"></td>
           </tr>
         </tbody>
       </table>
@@ -48,9 +41,6 @@
 
       <table class="table table-light">
         <thead>
-          <tr rowspan="1">
-            <th colspan="1">Friends</th>
-          </tr>
           <tr rowspan="1">
             <th colspan="1">Friend's Id</th>
             <th colspan="1">Friend's Username</th>

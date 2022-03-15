@@ -30,26 +30,31 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
 	
 	/**
 	 * Identifier
+	 * 
+	 * <p> This SequenceGenerator creates a sequence generator named
+	 * "match_id_seq_gen" based on a sequence "match_id_seq" autocreated
+	 * previously by the persistence provider, H2. 
+     * 
+     * <p> This sequence will be used later to fill the "Match.id" field.
+	 * 
+	 * <p> Setting "allocationSize" to 1 allows the allocated sequence space to be
+	 * just one, avoiding id gaps.
 	 */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
+	@SequenceGenerator(name = "match_id_seq_gen", sequenceName = "match_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_id_seq_gen")
     private long id;
 
     /**
      * Room
-     * 
-     * TODO Check relationship type
      */
-    @OneToOne
+    @ManyToOne
     private Room room;
 
     /**
      * Level
-     * 
-     * TODO Check relationship type
      */
-    @OneToOne
+    @ManyToOne
     private Level level;
 
     /**
@@ -73,18 +78,10 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
     /**
      * Maximum number of players
      * 
-     * If null, the match has no maximum.
+     * <p> If null, the match has no maximum.
+     * <p> TODO: check this constraint when adding new players to the match
      */
     private int maxPlayers;
-
-    /**
-     * Winner
-     * 
-     * Might be null if the match is waiting, ongoing or paused, or if it has
-     * ended and has no winner.
-     */
-    @ManyToOne
-    private User winner;
 
     /*
     @Getter
