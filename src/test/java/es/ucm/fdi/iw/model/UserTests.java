@@ -41,7 +41,7 @@ class UserTests {
 
         User userInBD = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", user.getUsername()).getSingleResult();
 
-		assertEquals(5, userInBD.getId());
+		assertEquals(7, userInBD.getId());
 	}
 
 	@Test

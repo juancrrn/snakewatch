@@ -16,7 +16,7 @@
 
       <div>
         <h1 class="col" style="text-align:center"
-          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${amigos.size()} amigos &nbsp;&nbsp;&nbsp; ${matches.size()} partidas|">
+          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${amigos.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
         </h1>
       </div>
 
@@ -31,10 +31,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr rowspan="1" th:each="match: ${matches}">
-            <td colspan="1" th:text="${match.match.id}"></td>
-            <td colspan="1" th:text="${match.match.room.id}"></td>
-            <td colspan="1" th:text="| ${match.position} º|"></td>
+          <tr rowspan="1" th:each="matchPlayer: ${matchPlayers}">
+            <td colspan="1" th:text="${matchPlayer.match.id}"></td>
+            <td colspan="1" th:text="${matchPlayer.match.room.id}"></td>
+            <td colspan="1" th:text="| ${matchPlayer.position} º|"></td>
           </tr>
         </tbody>
       </table>

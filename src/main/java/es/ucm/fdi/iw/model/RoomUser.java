@@ -25,15 +25,30 @@ import lombok.NoArgsConstructor;
 public class RoomUser{
 
     /**
-     * Compound key with reference to: User + Room
-     */
-    @EmbeddedId
-    @Column(nullable=false)
-    private RoomUserKey id;
+	 * Identifier
+	 * 
+	 * This @SequenceGenerator creates a sequence generator named
+	 * "roomuser_id_seq_gen" based on a sequence "roomuser_id_seq" autocreated
+	 * previously by the persistence provider, H2. This sequence will be used
+	 * later to fill the "User.id" field.
+	 * 
+	 * Setting "allocationSize" to 1 allows the allocated sequence space to be
+	 * just one, avoiding id gaps.
+	 */
+    @Id
+	@SequenceGenerator(name = "roomuser_id_seq_gen", sequenceName = "roomuser_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roomuser_id_seq_gen")
+	private long id;
 
-    /**
-     * User is admin of the room
-     */
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user; 
+
+    @ManyToOne
+    @JoinColumn(name="room_id")
+    private Room room; 
+
+    /** User is admin of the room */
     private boolean admin;
 
 }

@@ -116,7 +116,7 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
 	@OneToMany(mappedBy = "player")
-	private List<MatchPlayer> matches;
+	private List<MatchPlayer> matches = new ArrayList<>();
 
 	/*
     @Getter

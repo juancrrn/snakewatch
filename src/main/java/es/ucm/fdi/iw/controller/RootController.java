@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Level;
+import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.FriendshipKey;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.User;
@@ -97,15 +98,13 @@ public class RootController {
         // Pass friends with thymeleaf to the view 
         model.addAttribute("amigos", amigos);
 
-        
-        // Get info of matches that this user has played
-        List<MatchPlayer> matchPlayerList = entityManager
+        List<MatchPlayer> matchPlayers = entityManager
             .createNamedQuery("MatchPlayer.byPlayerId", MatchPlayer.class)
             .setParameter("playerId", user.getId())
             .getResultList();
 
         // Pass matches with thymeleaf to the view 
-        model.addAttribute("matches", matchPlayerList);  
+        model.addAttribute("matchPlayers", matchPlayers);  
               
 
         return "profile";
