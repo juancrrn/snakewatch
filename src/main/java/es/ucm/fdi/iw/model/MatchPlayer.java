@@ -26,13 +26,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @NamedQueries({
     @NamedQuery(name="MatchPlayer.byPlayerId",
-        query="SELECT mp FROM MatchPlayer mp WHERE mp.id.player.id = :playerId")
+        query="SELECT mp FROM MatchPlayer mp WHERE mp.id.playerId = :playerId")
 })
 public class MatchPlayer implements Serializable{
 
     @EmbeddedId
     @Column(nullable=false)
     private MatchPlayerKey id;
+
+    /**
+	 * Player
+	 * @see www.baeldung.com/jpa-many-to-many
+	 */
+    @ManyToOne
+    @MapsId("playerId")
+    @JoinColumn(name = "player_id")
+    private User player;
+
+    /**
+	 * Match
+	 * @see www.baeldung.com/jpa-many-to-many
+	 */
+    @ManyToOne
+    @MapsId("matchId")
+    @JoinColumn(name = "match_id")
+    private Match match;
 
     /**
      * Position in the ranking of the match.

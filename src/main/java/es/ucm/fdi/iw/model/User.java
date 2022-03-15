@@ -110,6 +110,14 @@ public class User /*implements Transferable<User.Transfer>*/ {
         return Arrays.asList(roles.split(",")).contains(roleName);
     }
 
+
+	/**
+	 * List of matches (MatchPlayer class) that the user has played
+	 * @see www.baeldung.com/jpa-many-to-many
+	 */
+	@OneToMany(mappedBy = "player")
+	private List<MatchPlayer> matches;
+
 	/*
     @Getter
     @AllArgsConstructor

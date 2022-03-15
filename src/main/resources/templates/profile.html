@@ -26,12 +26,14 @@
         <thead>
           <tr rowspan="1">
             <th>Partida</th>
+            <th>Sala</th>
             <th>Resultado</th>
           </tr>
         </thead>
         <tbody>
           <tr rowspan="1" th:each="match: ${matches}">
-            <td colspan="1" th:text="${match.id.match.id}"></td>
+            <td colspan="1" th:text="${match.match.id}"></td>
+            <td colspan="1" th:text="${match.match.room.id}"></td>
             <td colspan="1" th:text="| ${match.position} º|"></td>
           </tr>
         </tbody>

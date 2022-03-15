@@ -7,12 +7,10 @@ import lombok.Data;
 @Data
 public class MatchPlayerKey implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name="match_id")
-    private Match match;
+    @Column(name = "match_id")
+    private Long matchId;
 
-    @ManyToOne
-    @JoinColumn(name="player_id")
-    private User player;
+    @Column(name = "player_id")
+    private Long playerId;
 
 }
