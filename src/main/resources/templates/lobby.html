@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="fragments/head :: header" />
-    <title>Lobby — Snakewatch</title>
+    <title>Home — Snakewatch</title>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -11,15 +11,32 @@
 
     <main class="flex-shrink-0">
         <div class="container">
-            <form class="form-signin" method="post" th:action="@{/lobby}">
-                <h2 class="form-signin-heading"><center>SnakeWatch</center></h2>
-                <a href="/game"><button class="btn btn-lg btn-primary btn-block" type="button">Play Online</button></a>
-                <a href="/game"><button class="btn btn-lg btn-primary btn-block" type="button">Spectate</button></a>
-                <a href="/levels"><button class="btn btn-lg btn-primary btn-block" type="button">Levels</button></a>
-                <a href="/settings"><button class="btn btn-lg btn-primary btn-block" type="button">Settings</button></a>
-                <a href="/rankings"><button class="btn btn-lg btn-primary btn-block" type="button">Rankings</button></a>
-                <a href="/profile"><button class="btn btn-lg btn-primary btn-block" type="button">Profile</button></a>
-            </form>
+            <div class="text-center" style="margin: 64px 0;">
+                <img th:src="@{/img/logo.png}" src="/img/logo.png" alt="Snakewatch" width="28" height="28" class="d-inline-block">
+            </div>
+
+            <div class="row">
+                <div class="col-4 d-grid">
+                    <a class="btn btn-secondary p-5 mb-4" href="/game">Play online</a>
+                </div>
+                <div class="col-4 d-grid">
+                    <a class="btn btn-secondary p-5 mb-4" href="/game">Spectate</a>
+                </div>
+                <div class="col-4 d-grid">
+                    <a class="btn btn-secondary p-5 mb-4" href="/levels">Levels</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 d-grid">
+                    <a class="btn btn-secondary p-5 mb-4" href="/settings">Settings</a>
+                </div>
+                <div class="col-4 d-grid">
+                    <a class="btn btn-secondary p-5 mb-4" href="/rankings">Rankings</a>
+                </div>
+                <div class="col-4 d-grid">
+                    <a class="btn btn-secondary p-5 mb-4" href="/profile">Profile</a>
+                </div>
+            </div>
         </div>        
     </main>
 
