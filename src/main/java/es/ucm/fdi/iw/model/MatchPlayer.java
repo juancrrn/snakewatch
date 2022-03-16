@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name="MatchPlayer.getWinnerById",
         query="SELECT COUNT(mp) FROM MatchPlayer mp WHERE mp.position=1 AND mp.player.id = :playerId")
 })
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "player", "match" })})
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "player", "match" }))
 public class MatchPlayer implements Serializable{
 
     /**
