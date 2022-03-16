@@ -1,7 +1,6 @@
 package es.ucm.fdi.iw.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,12 +11,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.AllArgsConstructor;
 
 /**
  * Message model
@@ -39,9 +36,9 @@ import lombok.AllArgsConstructor;
 			+ "WHERE m.recipient.id = :userId AND m.dateRead = null")
 })
 @Data
-public class Message implements Transferable<Message.Transfer> {
+public class Message /*implements Transferable<Message.Transfer>*/ {
 	
-	private static Logger log = LogManager.getLogger(Message.class);	
+	//private static Logger log = LogManager.getLogger(Message.class);	
 	
 	/**
 	 * Identifier
@@ -83,6 +80,7 @@ public class Message implements Transferable<Message.Transfer> {
 	 * 
 	 * @author mfreire
 	 */
+	/*
     @Getter
     @AllArgsConstructor
 	public static class Transfer {
@@ -111,4 +109,5 @@ public class Message implements Transferable<Message.Transfer> {
 			text, id
         );
     }
+	*/
 }

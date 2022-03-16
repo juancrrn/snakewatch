@@ -2,7 +2,7 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Message;
-import es.ucm.fdi.iw.model.Transferable;
+//import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
 
@@ -41,9 +41,9 @@ import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
-import java.util.List;
+//import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 /**
  * User management
@@ -243,6 +243,7 @@ public class UserController {
     /**
      * Returns JSON with all received messages
      */
+	/*
     @GetMapping(path = "received", produces = "application/json")
 	@Transactional // para no recibir resultados inconsistentes
 	@ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
@@ -252,7 +253,8 @@ public class UserController {
 		log.info("Generating message list for user {} ({} messages)", 
 				u.getUsername(), u.getReceived().size());
 		return  u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
-	}	
+	}
+	*/
     
     /**
      * Returns JSON with count of unread messages 

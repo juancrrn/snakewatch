@@ -2,7 +2,6 @@ package es.ucm.fdi.iw.controller;
 
 
 import java.math.BigInteger;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,27 +9,20 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.hibernate.boot.jaxb.mapping.spi.EntityOrMappedSuperclass;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Level;
-import es.ucm.fdi.iw.model.Match;
-import es.ucm.fdi.iw.model.FriendshipKey;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.User;
 
@@ -53,7 +45,8 @@ public class RootController {
     @Autowired 
     private HttpSession session;
 
-	private static final Logger log = LogManager.getLogger(RootController.class);
+	//private static final Logger log = LogManager.getLogger(RootController.class);
+
     @Autowired
     private EntityManager entityManager;
     
