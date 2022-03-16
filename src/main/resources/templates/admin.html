@@ -17,19 +17,23 @@
                 <thead>
                     <th>ID del reporte</th>
                     <th>Usuario reportado</th>
+                    <th>Motivos</th>
+                    <th>Estado</th>
                     <th>Moderador</th>
                     <th>Acciones</th>
                 </thead>
                 <tbody>
                     <tr th:each="report: ${reports}">
                         <td th:text="${report.id}">Report ID</td>
-                        <td th:text="${report.reportedUser.username} + ' (' + ${report.reportedUser.id} + ')'">Usuario reportado</td>
-                        <td th:text="${report.reportedUser.username} + ' (' + ${report.reportedUser.id} + ')'">Moderador encargado</td>
+                        <td th:text="|${report.reportedUser.username} (${report.reportedUser.id})|">Usuario reportado</td>
+                        <td th:text="${report.reasons}">Motivos</td>
+                        <td th:text="${report.status.ordinal() != 2} ? (${report.status.ordinal() == 0} ? 'Enviado' : 'En proceso') : 'Cerrado'">Status</td>
+                        <td th:text="${report.moderatorUser}? |${report.moderatorUser.username} (${report.moderatorUser.id})| : 'Ninguno'">Moderador encargado</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-primary">Revisar</button>
-                                <button class="btn btn-success">Ignorar</button>
-                                <button class="btn btn-danger">Bloquear</button>
+                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-primary">Revisar</button>
+                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-success">Ignorar</button>
+                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-danger">Bloquear</button>
                             </div>
                         </td>
                     </tr>
