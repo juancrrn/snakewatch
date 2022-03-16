@@ -44,3 +44,10 @@ VALUES
     (NEXT VALUE FOR matchplayer_id_seq, 2, 2, 2),
     (NEXT VALUE FOR matchplayer_id_seq, 3, 2, 3),
     (NEXT VALUE FOR matchplayer_id_seq, 4, 2, 4);
+
+INSERT INTO User_report (id, reasons, status, moderator_user_id, reported_user_id, reporting_user_id) 
+VALUES 
+    (NEXT VALUE FOR userreport_id_seq, 'Cheater', 0, 1, 2, 3),
+    (NEXT VALUE FOR userreport_id_seq, 'Cheater', 1, 1, 3, 4),
+    (NEXT VALUE FOR userreport_id_seq, 'Cheater', 2, 1, 4, 2),
+    (NEXT VALUE FOR userreport_id_seq, 'Cheater', 0, 1, 2, 3);

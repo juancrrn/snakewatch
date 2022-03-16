@@ -20,14 +20,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQuery(name = "UserReport.getAll", query = "SELECT e FROM UserReport e")
 public class UserReport /*implements Transferable<Room.Transfer>*/ {	
 	
 	/**
 	 * Identifier
 	 */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userreport_id_seq_gen")
+    @SequenceGenerator(name = "userreport_id_seq_gen", sequenceName = "userreport_id_seq", allocationSize = 1)
     private long id;
 
 	/**

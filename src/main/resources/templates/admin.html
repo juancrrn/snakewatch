@@ -15,32 +15,16 @@
 
             <table class="table table-light">
                 <thead>
-                    <th>Usuario</th>
+                    <th>ID del reporte</th>
+                    <th>Usuario reportado</th>
+                    <th>Moderador</th>
                     <th>Acciones</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Usuario 1</td>
-                        <td>
-                            <div class="btn-group">
-                                <button class="btn btn-primary">Revisar</button>
-                                <button class="btn btn-success">Ignorar</button>
-                                <button class="btn btn-danger">Bloquear</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Usuario 2</td>
-                        <td>
-                            <div class="btn-group">
-                                <button class="btn btn-primary">Revisar</button>
-                                <button class="btn btn-success">Ignorar</button>
-                                <button class="btn btn-danger">Bloquear</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Usuario 3</td>
+                    <tr th:each="report: ${reports}">
+                        <td th:text="${report.id}">Report ID</td>
+                        <td th:text="${report.reportedUser.username} + ' (' + ${report.reportedUser.id} + ')'">Usuario reportado</td>
+                        <td th:text="${report.reportedUser.username} + ' (' + ${report.reportedUser.id} + ')'">Moderador encargado</td>
                         <td>
                             <div class="btn-group">
                                 <button class="btn btn-primary">Revisar</button>
