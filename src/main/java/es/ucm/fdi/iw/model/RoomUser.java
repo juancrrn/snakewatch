@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user", "room" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "room_id" }))
 public class RoomUser{
 
     /**
