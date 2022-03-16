@@ -155,37 +155,37 @@ public class RootController {
         List<Object[]> ranking_global = new ArrayList<Object[]>();
 
         List<Object[]> results_global = entityManager
-        .createNativeQuery("SELECT player_id, COUNT(*) FROM Match_Player WHERE position=1 GROUP BY player_id")
+        .createNativeQuery("SELECT player_id, COUNT(player_id) FROM Match_Player WHERE position=1 GROUP BY player_id ORDER BY COUNT(player_id) DESC, player_id")
         .getResultList();
         
         for(int i=0; i<results_global.size();i++){
-            BigInteger n = (BigInteger) results_global.get(i)[0];
-            
+            BigInteger n1 = (BigInteger) results_global.get(i)[0];
+            BigInteger n2 = (BigInteger) results_global.get(i)[1];
             User u = entityManager
                 .createNamedQuery("User.byId", User.class) 
-                .setParameter("id", n.longValue())
+                .setParameter("id", n1.longValue())
                 .getSingleResult();
            
-            Object[] fila = {u, results_global.get(i)[1]};
+            Object[] fila = {u, n2.intValue()};
 
             ranking_global.add(fila);
         }
 
         List<Object[]> results_mensual = entityManager
-        .createNativeQuery("SELECT player_id, COUNT(*) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND MONTH(m.date)=:mes GROUP BY player_id")
+        .createNativeQuery("SELECT player_id, COUNT(player_id) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND MONTH(m.date)=:mes GROUP BY player_id ORDER BY COUNT(player_id) DESC, player_id")
         .setParameter("mes", mes)
         .getResultList();
 
 
         for(int i=0; i<results_mensual.size();i++){
-            BigInteger n = (BigInteger) results_mensual.get(i)[0];
-
+            BigInteger n1 = (BigInteger) results_mensual.get(i)[0];
+            BigInteger n2 = (BigInteger) results_mensual.get(i)[1];
             User u = entityManager
             .createNamedQuery("User.byId", User.class) 
-            .setParameter("id", n.longValue())
+            .setParameter("id", n1.longValue())
             .getSingleResult();
        
-            Object[] fila = {u, results_mensual.get(i)[1]};
+            Object[] fila = {u, n2.intValue()};
 
             ranking_mensual.add(fila);
 
@@ -193,20 +193,20 @@ public class RootController {
 
 
         List<Object[]> results_semanal = entityManager
-        .createNativeQuery("SELECT player_id, COUNT(*) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND WEEK(m.date)=:semana GROUP BY player_id")
+        .createNativeQuery("SELECT player_id, COUNT(player_id) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND WEEK(m.date)=:semana GROUP BY player_id ORDER BY COUNT(player_id) DESC, player_id")
         .setParameter("semana", semana)
         .getResultList();
 
 
         for(int i=0; i<results_semanal.size();i++){
-            BigInteger n = (BigInteger) results_semanal.get(i)[0];
-
+            BigInteger n1 = (BigInteger) results_semanal.get(i)[0];
+            BigInteger n2 = (BigInteger) results_semanal.get(i)[1];
             User u = entityManager
             .createNamedQuery("User.byId", User.class) 
-            .setParameter("id", n.longValue())
+            .setParameter("id", n1.longValue())
             .getSingleResult();
        
-            Object[] fila = {u, results_semanal.get(i)[1]};
+            Object[] fila = {u, n2.intValue()};
 
             ranking_semanal.add(fila);
 
