@@ -30,6 +30,7 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name="MatchPlayer.byPlayerId",
         query="SELECT mp FROM MatchPlayer mp WHERE mp.player.id = :playerId")
 })
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "player", "match" })})
 public class MatchPlayer implements Serializable{
 
     /**
