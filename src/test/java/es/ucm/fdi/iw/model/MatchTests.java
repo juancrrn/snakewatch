@@ -3,6 +3,7 @@ package es.ucm.fdi.iw.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,7 @@ class MatchTests {
         match.setRoom(room);
         match.setLevel(level);
         match.setStatus(Match.Status.ENDED);
+        match.setDate(LocalDate.now());
 
         MatchPlayer matchPlayer1 = new MatchPlayer();
         matchPlayer1.setMatch(match);

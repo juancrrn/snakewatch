@@ -1,9 +1,9 @@
 package es.ucm.fdi.iw.controller;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -135,6 +136,31 @@ public class RootController {
      */
     @GetMapping("/rankings")
     public String rankings(Model model){
+
+        LocalDate date = LocalDate.now();
+
+        List<Pair<User,Integer>> ranking_semanal = new ArrayList<Pair<User,Integer>>();
+
+        List<Pair<User,Integer>> ranking_mensual = new ArrayList<Pair<User,Integer>>();
+
+        List<Pair<User,Integer>> ranking_global = new ArrayList<Pair<User,Integer>>();
+
+        int mes = date.getMonthValue();
+
+        int semana = (date.getDayOfMonth() / 7) + 1;
+
+        List<Pair<User,Integer>> matchPlayers = entityManager
+            .createNamedQuery("MatchPlayer.getWinners", MatchPlayer.class)
+            .getResultList();
+        
+        
+
+        model.addAttribute("ranking_semanal", ranking_semanal);
+
+        model.addAttribute("ranking_mensual", ranking_mensual);
+
+        model.addAttribute("ranking_global", ranking_global);
+
         return "rankings";
     }
 }

@@ -25,6 +25,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @NamedQueries({
+    @NamedQuery(name="MatchPlayer.getMatchPlayers",
+        query="SELECT mp FROM MatchPlayer mp"),
     @NamedQuery(name="MatchPlayer.byPlayerId",
         query="SELECT mp FROM MatchPlayer mp WHERE mp.player.id = :playerId")
 })

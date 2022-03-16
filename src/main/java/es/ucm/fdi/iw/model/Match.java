@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import java.time.*;
+
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -97,6 +99,9 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
      * <p> TODO: check this constraint when adding new players to the match
      */
     private int maxPlayers;
+
+
+    private LocalDate date;
 
     /*
     @Getter

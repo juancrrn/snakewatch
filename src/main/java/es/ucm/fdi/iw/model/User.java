@@ -18,6 +18,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @NamedQueries({
+	@NamedQuery(name="User.getUsers",
+        query="SELECT u FROM User u"),
+	@NamedQuery(name="User.byId",
+        query="SELECT u FROM User u "
+            + "WHERE u.id = :id AND u.enabled = TRUE"),
     @NamedQuery(name="User.byUsername",
         query="SELECT u FROM User u "
             + "WHERE u.username = :username AND u.enabled = TRUE"),
