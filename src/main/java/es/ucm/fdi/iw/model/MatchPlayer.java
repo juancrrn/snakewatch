@@ -28,7 +28,9 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name="MatchPlayer.getMatchPlayers",
         query="SELECT mp FROM MatchPlayer mp"),
     @NamedQuery(name="MatchPlayer.byPlayerId",
-        query="SELECT mp FROM MatchPlayer mp WHERE mp.player.id = :playerId")
+        query="SELECT mp FROM MatchPlayer mp WHERE mp.player.id = :playerId"),
+    @NamedQuery(name="MatchPlayer.getWinnerById",
+        query="SELECT COUNT(mp) FROM MatchPlayer mp WHERE mp.position=1 AND mp.player.id = :playerId")
 })
 public class MatchPlayer implements Serializable{
 

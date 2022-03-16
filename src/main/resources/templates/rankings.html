@@ -13,16 +13,16 @@
     <main class="flex-shrink-0">
         <div class="container-xl">
             <div class="d-flex justify-content-around">
-                <button class="btn btn-lg btn-primary btn-block">Ranking Global</button>
-                <button class="btn btn-lg btn-primary btn-block">Ranking Mensual</button>
-                <button class="btn btn-lg btn-primary btn-block">Ranking Semanal</button>
+                <button id="boton_global" class="btn btn-lg btn-primary btn-block" onclick="global()">Ranking Global</button>
+                <button id="boton_mensual" class="btn btn-lg btn-primary btn-block" onclick="mensual()">Ranking Mensual</button>
+                <button id="boton_semanal" class="btn btn-lg btn-primary btn-block" onclick="semanal()">Ranking Semanal</button>
             </div>
             <div class="row">
-                <h1 style="text-align:center">Ranking Global</h1>
+                <h1 id="titulo_ranking" style="text-align:center">Ranking Global</h1>
             </div>
 
             <div class="row">
-                <table class="table table-light">
+                <table id="tabla_global" class="table table-light">
                     <thead>
                         <tr>
                             <th>Nº</th>
@@ -31,16 +31,47 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr th:each="r,iterador : ${ranking_global}">
+                            <td th:text="${iterador.index} + 1">Puesto</td>
+                            <td th:text="${r[0].username}">Nombre</td>
+                            <td th:text="${r[1]}">Victorias</td>
+                        </tr>                  
+                    </tbody>
+            
+                </table>
+
+                <table id="tabla_mensual" class="table table-light">
+                    <thead>
                         <tr>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>5828</td>
+                            <th>Nº</th>
+                            <th>Nombre</th>
+                            <th>Victorias</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="r,iterador : ${ranking_mensual}">
+                            <td th:text="${iterador.index} + 1">Puesto</td>
+                            <td th:text="${r[0].username}">Nombre</td>
+                            <td th:text="${r[1]}">Victorias</td>
+                        </tr>                  
+                    </tbody>
+            
+                </table>
+
+                <table id="tabla_semanal" class="table table-light">
+                    <thead>
                         <tr>
-                            <td>2</td>
-                            <td>Ana</td>
-                            <td>5247</td>
+                            <th>Nº</th>
+                            <th>Nombre</th>
+                            <th>Victorias</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="r,iterador : ${ranking_semanal}">
+                            <td th:text="${iterador.index} + 1">Puesto</td>
+                            <td th:text="${r[0].username}">Nombre</td>
+                            <td th:text="${r[1]}">Victorias</td>
+                        </tr>                  
                     </tbody>
             
                 </table>
@@ -51,6 +82,43 @@
         
     </main>
     
+
+    <script th:inline="javascript">
+
+        var titulo_ranking = document.getElementById("titulo_ranking");
+
+        var tabla_global = document.getElementById("tabla_global");
+
+        var tabla_mensual = document.getElementById("tabla_mensual");
+
+        var tabla_semanal = document.getElementById("tabla_semanal");
+
+        tabla_semanal.style.display = "none";
+        tabla_mensual.style.display = "none";
+
+        function global(){
+            titulo_ranking.innerHTML = "Ranking Global";
+            tabla_global.style.display = "table";
+            tabla_mensual.style.display = "none";
+            tabla_semanal.style.display = "none";
+        }
+
+
+        function mensual(){
+            titulo_ranking.innerHTML = "Ranking Mensual";
+            tabla_global.style.display = "none";
+            tabla_mensual.style.display = "table";
+            tabla_semanal.style.display = "none";
+        }
+
+        function semanal(){
+            titulo_ranking.innerHTML = "Ranking Semanal";
+            tabla_global.style.display = "none";
+            tabla_mensual.style.display = "none";
+            tabla_semanal.style.display = "table";
+
+        }
+    </script>
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
 

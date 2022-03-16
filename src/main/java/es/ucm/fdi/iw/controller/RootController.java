@@ -1,11 +1,17 @@
 package es.ucm.fdi.iw.controller;
 
 
+import java.math.BigInteger;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +19,7 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.boot.jaxb.mapping.spi.EntityOrMappedSuperclass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -137,23 +144,80 @@ public class RootController {
     @GetMapping("/rankings")
     public String rankings(Model model){
 
+        
         LocalDate date = LocalDate.now();
-
-        List<Pair<User,Integer>> ranking_semanal = new ArrayList<Pair<User,Integer>>();
-
-        List<Pair<User,Integer>> ranking_mensual = new ArrayList<Pair<User,Integer>>();
-
-        List<Pair<User,Integer>> ranking_global = new ArrayList<Pair<User,Integer>>();
 
         int mes = date.getMonthValue();
 
-        int semana = (date.getDayOfMonth() / 7) + 1;
 
-        List<Pair<User,Integer>> matchPlayers = entityManager
-            .createNamedQuery("MatchPlayer.getWinners", MatchPlayer.class)
-            .getResultList();
+        Calendar c = new GregorianCalendar();
+
+        int semana = c.get(Calendar.WEEK_OF_YEAR);
+
+
+        List<Object[]> ranking_semanal = new ArrayList<Object[]>();
+
+        List<Object[]> ranking_mensual = new ArrayList<Object[]>();
         
+        List<Object[]> ranking_global = new ArrayList<Object[]>();
+
+        List<Object[]> results_global = entityManager
+        .createNativeQuery("SELECT player_id, COUNT(*) FROM Match_Player WHERE position=1 GROUP BY player_id")
+        .getResultList();
         
+        for(int i=0; i<results_global.size();i++){
+            BigInteger n = (BigInteger) results_global.get(i)[0];
+            
+            User u = entityManager
+                .createNamedQuery("User.byId", User.class) 
+                .setParameter("id", n.longValue())
+                .getSingleResult();
+           
+            Object[] fila = {u, results_global.get(i)[1]};
+
+            ranking_global.add(fila);
+        }
+
+        List<Object[]> results_mensual = entityManager
+        .createNativeQuery("SELECT player_id, COUNT(*) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND MONTH(m.date)=:mes GROUP BY player_id")
+        .setParameter("mes", mes)
+        .getResultList();
+
+
+        for(int i=0; i<results_mensual.size();i++){
+            BigInteger n = (BigInteger) results_mensual.get(i)[0];
+
+            User u = entityManager
+            .createNamedQuery("User.byId", User.class) 
+            .setParameter("id", n.longValue())
+            .getSingleResult();
+       
+            Object[] fila = {u, results_mensual.get(i)[1]};
+
+            ranking_mensual.add(fila);
+
+        }
+
+
+        List<Object[]> results_semanal = entityManager
+        .createNativeQuery("SELECT player_id, COUNT(*) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND WEEK(m.date)=:semana GROUP BY player_id")
+        .setParameter("semana", semana)
+        .getResultList();
+
+
+        for(int i=0; i<results_semanal.size();i++){
+            BigInteger n = (BigInteger) results_semanal.get(i)[0];
+
+            User u = entityManager
+            .createNamedQuery("User.byId", User.class) 
+            .setParameter("id", n.longValue())
+            .getSingleResult();
+       
+            Object[] fila = {u, results_semanal.get(i)[1]};
+
+            ranking_semanal.add(fila);
+
+        }
 
         model.addAttribute("ranking_semanal", ranking_semanal);
 
