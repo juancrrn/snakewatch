@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,7 +68,7 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
 	 * List of players (MatchPlayer class) that have participated in this match
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
-    @OneToMany(mappedBy = "match")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "match")
     private List<MatchPlayer> players = new ArrayList<>();
 
 

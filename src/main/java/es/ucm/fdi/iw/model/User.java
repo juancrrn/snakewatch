@@ -118,7 +118,7 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	 * List of matches (MatchPlayer class) that the user has played
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
-	@OneToMany(mappedBy = "player")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "player")
 	private List<MatchPlayer> matches = new ArrayList<>();
 
 	/*

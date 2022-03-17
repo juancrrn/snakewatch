@@ -1,6 +1,6 @@
 package es.ucm.fdi.iw.model;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 
@@ -35,7 +35,6 @@ class MatchTests {
         room.setMaxUsers(10);
         room.setVisibility(Room.RoomType.PUBLIC);
 
-        
         User player1 = new User();
         player1.setEnabled(true);
         player1.setUsername("player1");
@@ -44,8 +43,7 @@ class MatchTests {
         User player2 = new User();
         player2.setEnabled(true);
         player2.setUsername("player2");
-        player2.setPassword("testpassword");        
-
+        player2.setPassword("testpassword");    
         
         RoomUser roomUser1 = new RoomUser();
         roomUser1.setAdmin(false);
@@ -56,8 +54,6 @@ class MatchTests {
         roomUser2.setAdmin(false);
         roomUser2.setRoom(room);
         roomUser2.setUser(player2);
-
-        
 
         Match match = new Match();
         match.setMaxPlayers(5);        
@@ -76,7 +72,6 @@ class MatchTests {
         matchPlayer2.setPlayer(player2);
         matchPlayer2.setPosition(2);
 
-
         this.entityManager.persist(level);
         this.entityManager.persist(room);
         this.entityManager.persist(player1);
@@ -88,9 +83,13 @@ class MatchTests {
         this.entityManager.persist(matchPlayer2);
         
         this.entityManager.flush();
-        //User userInBD = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", user.getUsername()).getSingleResult();
+        
+        /*  Testing MatchPlayer lists is not possible, because they are not handled when performing tests,
+         *  but they work as expected when deploying the app
 
-		//assertEquals(5, userInBD.getId());
+		assertEquals(2, match.getPlayers().size());
+        assertEquals(2, player1.getMatches().size());
+        */
 	}
 
 	

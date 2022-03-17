@@ -99,10 +99,7 @@ public class RootController {
         // Pass friends with thymeleaf to the view 
         model.addAttribute("amigos", amigos);
 
-        List<MatchPlayer> matchPlayers = entityManager
-            .createNamedQuery("MatchPlayer.byPlayerId", MatchPlayer.class)
-            .setParameter("playerId", user.getId())
-            .getResultList();
+        List<MatchPlayer> matchPlayers = user.getMatches();
 
         // Pass matches with thymeleaf to the view 
         model.addAttribute("matchPlayers", matchPlayers);  
