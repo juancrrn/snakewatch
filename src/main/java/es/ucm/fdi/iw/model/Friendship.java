@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
  * 
  * Many users to many users relationship.
  * 
+ * For each friendship between users, there are 2 instances of the database: (u1, u2) y (u2, u1)
+ * 
  * @author Daniel Marín Irún
  * @author Juan Carrión Molina
  * @author Mohamed Ghanem
@@ -23,12 +25,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQueries({
-    @NamedQuery(name="Friendship.getFriends",
-            query="SELECT f FROM Friendship f "
-                    + "WHERE (f.id.user1.id = :userid OR f.id.user2.id = :userid)"
-                    + "AND (f.status = 1)")
-})
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user1_id", "user2_id" }))
 public class Friendship implements Serializable{
 
@@ -70,7 +66,6 @@ public class Friendship implements Serializable{
     @Column(nullable = false)
     private Status status;
 
-    
 
     public Friendship(User user1, User user2){
         this.user1 = user1;

@@ -51,31 +51,16 @@ public class User /*implements Transferable<User.Transfer>*/ {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq_gen")
 	private long id;
 	
-	/**
-	 * Username
-	 */
     @Column(nullable = false, unique = true)
     private String username;
 	
-	/**
-	 * Password
-	 */
     @Column(nullable = false)
     private String password;
 	
-	/**
-	 * First name
-	 */
     private String firstName;
-	
-	/**
-	 * Last name
-	 */
+
     private String lastName;
 	
-	/**
-	 * Enabled
-	 */
     private boolean enabled;
 	
 	/**
@@ -102,6 +87,25 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	@JoinColumn(name = "recipient_id")	
 	private List<Message> received = new ArrayList<>();		
 
+	/**
+	 * List of matches (MatchPlayer class) that the user has played
+	 * @see www.baeldung.com/jpa-many-to-many
+	 */
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "player")
+	private List<MatchPlayer> matchPlayers = new ArrayList<>();
+
+	/**
+	 * List of friends (Friendship class)
+	 * 
+	 * Remainder: for each friendship, there are 2 instances: (u1, u2) y (u2, u1).
+	 * That's why this list is mapped only to "user1"
+	 * 
+	 * @see www.baeldung.com/jpa-many-to-many
+	 */
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "user1")
+	private List<Friendship> friendships = new ArrayList<>();
+
+	
     /**
      * Checks whether this user has a given role.
      * 
@@ -112,15 +116,7 @@ public class User /*implements Transferable<User.Transfer>*/ {
         String roleName = role.name();
         return Arrays.asList(roles.split(",")).contains(roleName);
     }
-
-
-	/**
-	 * List of matches (MatchPlayer class) that the user has played
-	 * @see www.baeldung.com/jpa-many-to-many
-	 */
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "player")
-	private List<MatchPlayer> matchPlayers = new ArrayList<>();
-
+	
 	/*
     @Getter
     @AllArgsConstructor

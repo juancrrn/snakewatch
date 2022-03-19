@@ -16,7 +16,7 @@
 
       <div>
         <h1 class="col" style="text-align:center"
-          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${amigos.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
+          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${friendships.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
         </h1>
       </div>
 
@@ -51,9 +51,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr rowspan="1" th:each="amigo: ${amigos}">
-            <td colspan="1" th:text="${amigo.id}">ID</td>
-            <td colspan="1" th:text="${amigo.username}">Nombre</td>
+          <tr rowspan="1" th:each="friendship: ${friendships}">
+            <td colspan="1" th:text="${friendship.user2.id}">ID</td>
+            <td colspan="1" th:text="${friendship.user2.username}">Nombre</td>
           </tr>
         </tbody>
       </table>

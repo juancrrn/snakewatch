@@ -6,12 +6,16 @@ VALUES
     (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user2','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W'),
     (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user3','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 
-INSERT INTO Friendship (user1_id, user2_id, status) 
+INSERT INTO Friendship (id, user1_id, user2_id, status) 
 VALUES 
     (NEXT VALUE FOR friendship_id_seq, 1, 2, 1), 
+    (NEXT VALUE FOR friendship_id_seq, 2, 1, 1),
     (NEXT VALUE FOR friendship_id_seq, 3, 4, 1), 
+    (NEXT VALUE FOR friendship_id_seq, 4, 3, 1),
     (NEXT VALUE FOR friendship_id_seq, 1, 3, 1), 
-    (NEXT VALUE FOR friendship_id_seq, 2, 4, 1);
+    (NEXT VALUE FOR friendship_id_seq, 3, 1, 1), 
+    (NEXT VALUE FOR friendship_id_seq, 2, 4, 1),
+    (NEXT VALUE FOR friendship_id_seq, 4, 2, 1);
 
 INSERT INTO Level (id, representation) 
 VALUES (NEXT VALUE FOR level_id_seq, 'tmp');
