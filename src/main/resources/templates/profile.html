@@ -46,14 +46,33 @@
       <table class="table table-light">
         <thead>
           <tr rowspan="1">
-            <th colspan="1">Friend's Id</th>
-            <th colspan="1">Friend's Username</th>
+            <th colspan="1">Friend Id</th>
+            <th colspan="1">Friend Username</th>
           </tr>
         </thead>
         <tbody>
           <tr rowspan="1" th:each="friendship: ${friendships}">
             <td colspan="1" th:text="${friendship.user2.id}">ID</td>
             <td colspan="1" th:text="${friendship.user2.username}">Nombre</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
+
+      <table class="table table-light">
+        <thead>
+          <tr rowspan="1">
+            <th colspan="1">Room Id</th>
+            <th colspan="1">Room Privacy</th>
+            <th colspan="1">Room Users</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr rowspan="1" th:each="roomUser: ${roomUsers}">
+            <td colspan="1" th:text="${roomUser.room.id}">ID</td>
+            <td colspan="1" th:text="${roomUser.room.visibility}">Privacy</td>
+            <td th:each="participant: ${roomUser.room.getRoomUsers()}" th:text="| ${participant.user.username} |"></td>
           </tr>
         </tbody>
       </table>

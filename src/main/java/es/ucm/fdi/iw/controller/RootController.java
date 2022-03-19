@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Level;
 import es.ucm.fdi.iw.model.MatchPlayer;
+import es.ucm.fdi.iw.model.RoomUser;
 import es.ucm.fdi.iw.model.User;
 
 /**
@@ -85,7 +86,11 @@ public class RootController {
 
         // Get matches that this user has played (as MatchPlayer objects)
         List<MatchPlayer> matchPlayers = user.getMatchPlayers();
-        model.addAttribute("matchPlayers", matchPlayers);                
+        model.addAttribute("matchPlayers", matchPlayers);        
+        
+        // Get rooms that this user has joined (as RoomUser objects)
+        List<RoomUser> roomUsers = user.getRoomUsers();
+        model.addAttribute("roomUsers", roomUsers);  
 
         return "profile";
     }

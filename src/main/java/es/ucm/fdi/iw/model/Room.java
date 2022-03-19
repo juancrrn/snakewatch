@@ -1,9 +1,14 @@
 package es.ucm.fdi.iw.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
@@ -60,7 +65,14 @@ public class Room {
      * <p> If null, the match has no maximum.
      * <p> TODO: check this constraint when adding new users to the room
      */
-    private int maxUsers;           
+    private int maxUsers;  
+    
+    /**
+	 * List of users in this room (as RoomUser objects)
+	 * @see www.baeldung.com/jpa-many-to-many
+	 */
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "room")
+	private List<RoomUser> roomUsers = new ArrayList<>();
 
 /*
     @Getter
