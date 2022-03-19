@@ -29,25 +29,33 @@ import lombok.NoArgsConstructor;
                     + "WHERE (f.id.user1.id = :userid OR f.id.user2.id = :userid)"
                     + "AND (f.status = 1)")
 })
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user1_id", "user2_id" }))
 public class Friendship implements Serializable{
 
-    // TODO: to have a compound primary key, we need to create a separate class FriendshipId
-    // Explained here: https://stackoverflow.com/questions/13032948/how-to-create-and-handle-composite-primary-key-in-jpa
-    // And here: https://stackoverflow.com/questions/31385658/jpa-how-to-make-composite-foreign-key-part-of-composite-primary-key
+    /**
+	 * Identifier
+	 * 
+	 * This @SequenceGenerator creates a sequence generator named
+	 * "friendship_id_seq_gen" based on a sequence "friendship_id_seq" autocreated
+	 * previously by the persistence provider, H2. This sequence will be used
+	 * later to fill the "User.id" field.
+	 * 
+	 * Setting "allocationSize" to 1 allows the allocated sequence space to be
+	 * just one, avoiding id gaps.
+	 */
+    @Id
+	@SequenceGenerator(name = "friendship_id_seq_gen", sequenceName = "friendship_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "friendship_id_seq_gen")
+	private long id;
 
-    @EmbeddedId
-    @Column(nullable=false)
-    private FriendshipKey id;
+    @ManyToOne
+    @JoinColumn(name="user1_id")
+    private User user1;
 
-    public Friendship(FriendshipKey id){
-        this.id = id;
-        /*provisional initation*/
-        this.status = Status.ACCEPTED;
-        /*REAL INIITATION
-        this.status = Status.PENDING;
-        */
-        // TODO: when creating a new Friendship, we should add 2 instances on the database: (u1, u2) y (u2,u1)
-    }
+    @ManyToOne
+    @JoinColumn(name="user2_id")
+    private User user2;
+
     /**
      * Status of the friendship request
      * 
@@ -61,4 +69,14 @@ public class Friendship implements Serializable{
 
     @Column(nullable = false)
     private Status status;
+
+    
+
+    public Friendship(User user1, User user2){
+        this.user1 = user1;
+        this.user2 = user2;
+        this.status = Status.ACCEPTED;
+        // TODO: should start as PENDING, and then be updated to ACCEPTED
+        // TODO: when creating a new Friendship, we should add 2 instances on the database: (u1, u2) y (u2,u1)
+    }
 }

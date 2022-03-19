@@ -53,8 +53,7 @@ class UserTests {
 
         // 2º Make Admin be friends with every other user
         for(int i=0; i<otherUsers.size();i++){
-            FriendshipKey fkey = new FriendshipKey(adminUser, otherUsers.get(i));
-            Friendship friendship = new Friendship(fkey);
+            Friendship friendship = new Friendship(adminUser, otherUsers.get(i));
             if(entityManager.find(Friendship.class, friendship.getId()) == null) {
                 entityManager.persist(friendship);
                 entityManager.flush();

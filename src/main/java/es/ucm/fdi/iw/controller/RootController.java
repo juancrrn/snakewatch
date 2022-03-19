@@ -86,11 +86,11 @@ public class RootController {
         // Get friends (as Users)
         List<User> amigos = new ArrayList<>();        
         for (Friendship friendship : friendships){
-            if(friendship.getId().getUser1().getId() == user.getId()){
-                amigos.add(friendship.getId().getUser2());
+            if(friendship.getUser1().getId() == user.getId()){
+                amigos.add(friendship.getUser2());
             }
             else{
-                amigos.add(friendship.getId().getUser1());
+                amigos.add(friendship.getUser1());
             }
         }
 

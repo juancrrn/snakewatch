@@ -8,10 +8,10 @@ VALUES
 
 INSERT INTO Friendship (user1_id, user2_id, status) 
 VALUES 
-    (1, 2, 1), 
-    (3, 4, 1), 
-    (1, 3, 1), 
-    (2, 4, 1);
+    (NEXT VALUE FOR friendship_id_seq, 1, 2, 1), 
+    (NEXT VALUE FOR friendship_id_seq, 3, 4, 1), 
+    (NEXT VALUE FOR friendship_id_seq, 1, 3, 1), 
+    (NEXT VALUE FOR friendship_id_seq, 2, 4, 1);
 
 INSERT INTO Level (id, representation) 
 VALUES (NEXT VALUE FOR level_id_seq, 'tmp');
@@ -53,7 +53,6 @@ VALUES
     (NEXT VALUE FOR matchplayer_id_seq, 2, 3, 1),
     (NEXT VALUE FOR matchplayer_id_seq, 3, 3, 4),
     (NEXT VALUE FOR matchplayer_id_seq, 4, 3, 3);
-
 
 INSERT INTO Match_player (id, player_id, match_id, position) 
 VALUES 
