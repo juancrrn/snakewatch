@@ -84,8 +84,8 @@ class MatchTests {
         
         this.entityManager.flush();
         
-        /*  Testing MatchPlayer lists is not possible, because they are not handled when performing tests,
-         *  but they work as expected when deploying the app
+        /*  We can't test generated lists (like match.getPlayers() and player.getMatches())
+        *   because they are not loaded properly in tests. They only work well on normal execution
 
 		assertEquals(2, match.getPlayers().size());
         assertEquals(2, player1.getMatches().size());

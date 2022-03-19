@@ -75,8 +75,6 @@ public class RootController {
 
         // Get logged user
         User user = (User)session.getAttribute("u");
-
-        // Pass username with thymeleaf to the view 
         model.addAttribute("username", user.getUsername());
         
         // Get their friendships
@@ -96,14 +94,11 @@ public class RootController {
             }
         }
 
-        // Pass friends with thymeleaf to the view 
         model.addAttribute("amigos", amigos);
 
-        List<MatchPlayer> matchPlayers = user.getMatches();
-
-        // Pass matches with thymeleaf to the view 
-        model.addAttribute("matchPlayers", matchPlayers);  
-              
+        // Get matches that this user has played (as MatchPlayer objects)
+        List<MatchPlayer> matchPlayers = user.getMatchPlayers();
+        model.addAttribute("matchPlayers", matchPlayers);                
 
         return "profile";
     }

@@ -69,8 +69,7 @@ public class Match /*implements Transferable<Room.Transfer>*/ {
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
     @OneToMany(fetch=FetchType.EAGER, mappedBy = "match")
-    private List<MatchPlayer> players = new ArrayList<>();
-
+    private List<MatchPlayer> matchPlayers = new ArrayList<>();
 
 
     /**
