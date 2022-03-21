@@ -1,11 +1,12 @@
 package es.ucm.fdi.iw.controller;
 
-import java.math.BigInteger;
+
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+
 import java.util.List;
+
 
 import javax.persistence.EntityManager;
 
@@ -15,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import es.ucm.fdi.iw.model.User;
 
 /**
  * Ranking controller
@@ -42,79 +42,35 @@ public class RankingController {
     public String rankings(Model model){
 
         
-        LocalDate date = LocalDate.now();
+        LocalDate nowDate = LocalDate.now();
 
-        int mes = date.getMonthValue();
+        int mes = nowDate.getMonthValue();
 
+        WeekFields w = WeekFields.ISO;
 
-        Calendar c = new GregorianCalendar();
-
-        int semana = c.get(Calendar.WEEK_OF_YEAR);
+        int semana = nowDate.get(w.weekOfWeekBasedYear());
 
 
         List<Object[]> ranking_semanal = new ArrayList<Object[]>();
 
         List<Object[]> ranking_mensual = new ArrayList<Object[]>();
         
-        List<Object[]> ranking_global = new ArrayList<Object[]>();
-
-        List<Object[]> results_global = entityManager
-        .createNativeQuery("SELECT player_id, COUNT(player_id) FROM Match_Player WHERE position=1 GROUP BY player_id ORDER BY COUNT(player_id) DESC, player_id")
-        .getResultList();
+        List<Object[]> ranking_global = entityManager
+            .createNamedQuery("MatchPlayer.ranking", Object[].class)
+            .getResultList();
         
-        for(int i=0; i<results_global.size();i++){
-            BigInteger n1 = (BigInteger) results_global.get(i)[0];
-            BigInteger n2 = (BigInteger) results_global.get(i)[1];
-            User u = entityManager
-                .createNamedQuery("User.byId", User.class) 
-                .setParameter("id", n1.longValue())
-                .getSingleResult();
-           
-            Object[] fila = {u, n2.intValue()};
+        LocalDate listDate;
 
-            ranking_global.add(fila);
+        for(int i=0;i<ranking_global.size();i++){      
+            listDate = (LocalDate) ranking_global.get(i)[2];
+            if(listDate.getMonthValue()==mes){
+                ranking_mensual.add(ranking_global.get(i));
+            }
+            if(listDate.get(w.weekOfWeekBasedYear())==semana){
+                ranking_semanal.add(ranking_global.get(i));
+            }
         }
-
-        List<Object[]> results_mensual = entityManager
-        .createNativeQuery("SELECT player_id, COUNT(player_id) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND MONTH(m.date)=:mes GROUP BY player_id ORDER BY COUNT(player_id) DESC, player_id")
-        .setParameter("mes", mes)
-        .getResultList();
-
-
-        for(int i=0; i<results_mensual.size();i++){
-            BigInteger n1 = (BigInteger) results_mensual.get(i)[0];
-            BigInteger n2 = (BigInteger) results_mensual.get(i)[1];
-            User u = entityManager
-            .createNamedQuery("User.byId", User.class) 
-            .setParameter("id", n1.longValue())
-            .getSingleResult();
-       
-            Object[] fila = {u, n2.intValue()};
-
-            ranking_mensual.add(fila);
-
-        }
-
-
-        List<Object[]> results_semanal = entityManager
-        .createNativeQuery("SELECT player_id, COUNT(player_id) FROM Match_Player mp JOIN Match m WHERE mp.match_id=m.id AND mp.position=1 AND WEEK(m.date)=:semana GROUP BY player_id ORDER BY COUNT(player_id) DESC, player_id")
-        .setParameter("semana", semana)
-        .getResultList();
-
-
-        for(int i=0; i<results_semanal.size();i++){
-            BigInteger n1 = (BigInteger) results_semanal.get(i)[0];
-            BigInteger n2 = (BigInteger) results_semanal.get(i)[1];
-            User u = entityManager
-            .createNamedQuery("User.byId", User.class) 
-            .setParameter("id", n1.longValue())
-            .getSingleResult();
-       
-            Object[] fila = {u, n2.intValue()};
-
-            ranking_semanal.add(fila);
-
-        }
+        
 
         model.addAttribute("ranking_semanal", ranking_semanal);
 

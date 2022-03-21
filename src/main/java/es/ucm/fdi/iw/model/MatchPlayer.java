@@ -30,7 +30,9 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name="MatchPlayer.byPlayerId",
         query="SELECT mp FROM MatchPlayer mp WHERE mp.player.id = :playerId"),
     @NamedQuery(name="MatchPlayer.getWinnerById",
-        query="SELECT COUNT(mp) FROM MatchPlayer mp WHERE mp.position=1 AND mp.player.id = :playerId")
+        query="SELECT COUNT(mp) FROM MatchPlayer mp WHERE mp.position=1 AND mp.player.id = :playerId"),
+    @NamedQuery(name="MatchPlayer.ranking",
+    query="SELECT u.username, COUNT(mp.player.id) as co, m.date FROM MatchPlayer mp JOIN Match m ON m.id=mp.match.id JOIN User u ON u.id=mp.player.id WHERE mp.position=1 GROUP BY u.username ORDER BY co DESC")
 })
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "player_id", "match_id" }))
 public class MatchPlayer implements Serializable{
