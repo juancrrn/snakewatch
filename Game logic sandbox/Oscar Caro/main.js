@@ -31,6 +31,9 @@ function setup() {
 // P5js function: called on every cycle
 function draw() {
   background(100);
+
+  // Enviar estado local al servidor
+  // Obtener el estado global del servidor
   
   // Update positions and status of all snakes
   botSnakes.forEach(botSnake => botSnake.update());

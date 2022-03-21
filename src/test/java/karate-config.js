@@ -1,18 +1,34 @@
 function fn() {
   var env = karate.env; // get system property 'karate.env'
   karate.log('karate.env system property was:', env);
+
   if (!env) {
-    env = 'dev';
+      env = 'dev';
   }
+
+  /**
+   * Variables here are available in all tests
+   */
   var config = {
-    env: env,
-    myVarName: 'someValue'
+      env: env,
+      myVarName: 'someValue',
+      baseUrl: 'http://localhost:8080'
   }
+
+  /**
+   * Drivers for tests - currently configured value is good for Linux
+   */
+  karate.configure('driver', {
+      type: 'chrome',
+      executable: '/usr/bin/chromium-browser',
+      showDriverLog: true
+  })
+
   if (env == 'dev') {
-    // customize
-    // e.g. config.foo = 'bar';
+      // customize
+      // e.g. config.foo = 'bar';
   } else if (env == 'e2e') {
-    // customize
+      // customize
   }
   return config;
 }
