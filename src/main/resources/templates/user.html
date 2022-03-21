@@ -12,6 +12,13 @@
     <main class="flex-shrink-0">
         <div class="container">
             <h1 class="mt-5">Perfil de <span th:text="${user.username}">Paco</span></h1>
+            <!-- Para solicitar amistad -->
+            <div>
+                <form th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
+                    <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
+                </form>
+            </div>
+
             <!-- para enviar mensajes; algo feo -->
             <div class="py-5 position-absolute bottom-0 row ">
                 <form th:action="@{/user/__${user.id}__/msg}" method="POST">

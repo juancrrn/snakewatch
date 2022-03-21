@@ -16,7 +16,7 @@
 
       <div>
         <h1 class="col" style="text-align:center"
-          th:text="| ${username} &nbsp;&nbsp;&nbsp; ${friendships.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
+          th:text="| ${user.username} &nbsp;&nbsp;&nbsp; ${friendships.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
         </h1>
       </div>
 
@@ -37,6 +37,31 @@
             <td th:text="| ${matchPlayer.match.room.id} |"></td>
             <td th:text="| ${matchPlayer.position} º|"></td>
             <td th:each="participant: ${matchPlayer.match.getMatchPlayers()}" th:text="| ${participant.player.username} |"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
+
+      <table class="table table-light">
+        <thead>
+          <tr rowspan="1">
+            <th colspan="1">Friend Request Id</th>
+            <th colspan="1">Sender Id</th>
+            <th colspan="1">Sender Username</th>
+            <th colspan="1">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr rowspan="1" th:each="request: ${friendRequests}">
+            <td colspan="1" th:text="${request.id}">ID</td>
+            <td colspan="1" th:text="${request.user1.id}">Nombre</td>
+            <td colspan="1" th:text="${request.user1.username}">ID</td>
+            <td colspan="1">
+              <form th:action="@{/user/accept_friend_req/__${request.id}__}" method="POST">
+                <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
+              </form>
+            </td>
           </tr>
         </tbody>
       </table>

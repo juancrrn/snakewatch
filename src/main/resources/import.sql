@@ -8,8 +8,7 @@ VALUES
 
 INSERT INTO Friendship (id, user1_id, user2_id, status) 
 VALUES 
-    (NEXT VALUE FOR friendship_id_seq, 1, 2, 1), 
-    (NEXT VALUE FOR friendship_id_seq, 2, 1, 1),
+    (NEXT VALUE FOR friendship_id_seq, 1, 2, 0), 
     (NEXT VALUE FOR friendship_id_seq, 3, 4, 1), 
     (NEXT VALUE FOR friendship_id_seq, 4, 3, 1),
     (NEXT VALUE FOR friendship_id_seq, 1, 3, 1), 

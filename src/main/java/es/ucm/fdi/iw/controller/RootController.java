@@ -76,13 +76,19 @@ public class RootController {
 
         // Get logged user
         User user = (User)session.getAttribute("u");
-        model.addAttribute("username", user.getUsername());
+        model.addAttribute("user", user);
         
         // Get their friendships
         List<Friendship> friendships = user.getFriendships();
         // Remove the ones that are not on ACCEPTED status
         friendships.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED));
         model.addAttribute("friendships", friendships);
+        
+        // Get their friend requests (any sender, this user as receiver, status as "Pending")
+        List<Friendship> friendRequests = entityManager.createNamedQuery("Friendship.getRequests", Friendship.class)
+            .setParameter("userId", user.getId())
+            .getResultList();
+        model.addAttribute("friendRequests", friendRequests);        
 
         // Get matches that this user has played (as MatchPlayer objects)
         List<MatchPlayer> matchPlayers = user.getMatchPlayers();

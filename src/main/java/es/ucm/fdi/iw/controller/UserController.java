@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Message;
 //import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
@@ -272,7 +273,7 @@ public class UserController {
     
     /**
      * Posts a message to a user.
-     * @param id of target user (source user is from ID)
+     * @param id of target user (source user is obtained from session attributes)
      * @param o JSON-ized message, similar to {"message": "text goes here"}
      * @throws JsonProcessingException
      */
@@ -311,5 +312,70 @@ public class UserController {
 
 		messagingTemplate.convertAndSend("/user/"+u.getUsername()+"/queue/updates", json);
 		return "{\"result\": \"message sent.\"}";
+	}	
+
+
+	/**
+     * Sends a friend request to an user.
+     * @param id of target user (source user is obtained from session attributes)
+     */
+    @PostMapping("/{id}/send_friend_req")
+	@ResponseBody
+	@Transactional
+	public String sendFriendReq(@PathVariable long id, Model model, HttpSession session){
+		
+		User receiver = entityManager.find(User.class, id);
+		User sender = entityManager.find(
+				User.class, ((User)session.getAttribute("u")).getId());
+		//model.addAttribute("user", receiver);
+
+		// Contruye objeto Friendship y lo guarda en la BD
+		// El estado será PENDING, hasta que el otro usuario la acepte/rechaze
+		Friendship fr = new Friendship();
+		fr.setUser1(sender);
+		fr.setUser2(receiver);
+		fr.setStatus(Friendship.Status.PENDING);
+		entityManager.persist(fr);
+		entityManager.flush();
+		
+		// Registrar accion en logs		
+		log.info("Sending a friend request from '{}' to '{}'", sender.getUsername(), receiver.getUsername());
+
+		return "{\"result\": \"friend request sent.\"}";
+	}	
+
+	/**
+     * Accept a received friend request from another user.
+	 * @param friendshipID of the friendship request
+     */
+    @PostMapping("/accept_friend_req/{friendshipId}")
+	@ResponseBody
+	@Transactional
+	public String acceptFriendReq(@PathVariable long friendshipId, Model model, HttpSession session){
+		
+		Friendship frRequest = entityManager.find(Friendship.class, friendshipId);
+		User sender = frRequest.getUser1();
+		User receiver = frRequest.getUser2();		
+
+		// 1º Actualizar la friendship request a ACCEPTED
+		frRequest.setStatus(Friendship.Status.ACCEPTED);
+		entityManager.merge(frRequest);
+
+		// 2º Crear la instancia reversa de friendship
+		Friendship fr2 = new Friendship();
+		fr2.setUser1(receiver);
+		fr2.setUser2(sender);
+		fr2.setStatus(Friendship.Status.ACCEPTED);
+		entityManager.persist(fr2);
+		receiver.getFriendships().add(fr2);
+		entityManager.merge(sender);
+		entityManager.merge(receiver);
+		
+		entityManager.flush();
+		
+		// Registrar accion en logs		
+		log.info("Accepting the friend request from '{}' to '{}'", sender.getUsername(), receiver.getUsername());
+
+		return "{\"result\": \"friend request sent.\"}";
 	}	
 }
