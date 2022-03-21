@@ -1,7 +1,7 @@
 Feature: envío de mensajes
 
   Scenario: envio de mensajes via websocket
-    Given call read('login.feature@login_a')
+    Given call read('login.feature@login_admin')
     And driver baseUrl + '/user/2'
     And def mensaje = script("'el número secreto es el ' + Math.floor(Math.random() * 1000)")
     And input('#message', mensaje)
@@ -9,6 +9,6 @@ Feature: envío de mensajes
     And delay(500)
 
     When call read('login.feature@logout')
-    And call read('login.feature@login_b')
+    And call read('login.feature@login_user1')
     Then match html('#mensajes') contains mensaje
     And driver.screenshot()
