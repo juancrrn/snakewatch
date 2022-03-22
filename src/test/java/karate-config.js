@@ -20,7 +20,7 @@ function fn() {
    */
   karate.configure('driver', {
       type: 'chrome',
-      executable: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      executable: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
       //executable: '/usr/bin/chromium-browser',
       showDriverLog: true
   })
