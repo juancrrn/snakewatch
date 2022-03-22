@@ -147,6 +147,33 @@ public class UserController {
         // Get rooms that this user has joined (as RoomUser objects)
         List<RoomUser> roomUsers = user.getRoomUsers();
         model.addAttribute("roomUsers", roomUsers);  
+
+		// Check if "user" is the logged user or another person
+		Long loggedUserId = ((User)session.getAttribute("u")).getId();
+		boolean isLoggedUser = user.getId() == loggedUserId;
+		model.addAttribute("isLoggedUser", isLoggedUser);
+
+		// Check if "user" is friends with logged user
+		boolean isFriends = false;
+		for(Friendship fr : acceptedFr){
+			if(fr.getUser2().getId() == loggedUserId) {
+				isFriends = true;
+			}
+		}
+		model.addAttribute("isFriends", isFriends);
+
+		// Check if "user" has sent a friend request to logged user
+		boolean hasPendingRequest = false;
+		
+		List<Friendship> pendingFr = new ArrayList<>(allFriendships);
+        acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING));
+
+		for(Friendship fr : pendingFr){
+			if(fr.getUser2().getId() == loggedUserId) {
+				hasPendingRequest = true;
+			}
+		}
+		model.addAttribute("hasPendingRequest", hasPendingRequest);
 	}
 
 	/**
