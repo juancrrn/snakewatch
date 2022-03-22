@@ -121,35 +121,6 @@ public class UserController {
     }
 
 	/**
-     * Default user page. Display profile of logged user
-     */
-    @GetMapping("/")
-    public String defaultIndex(Model model) {
-		// Get logged user
-        Long userId = ((User)session.getAttribute("u")).getId();
-		User user = entityManager.find(User.class, userId);
-
-		// Pass info of that user to the model 
-		fillModelWithInfo(user, model);     
-
-        return "user";
-    }
-
-    /**
-     * Display profile of given user (userId passed via url)
-     */
-	@GetMapping("{id}")
-    public String index(@PathVariable long id, Model model, HttpSession session) {
-        // Get user with id given by url
-        User user = entityManager.find(User.class, id);
-        
-		// Pass info of that user to the model 
-		fillModelWithInfo(user, model);
-
-		return "user";
-	}
-
-	/**
 	 * Auxiliary method to pass info of the user to the model
 	 */
 	private void fillModelWithInfo(User user, Model model){
@@ -176,6 +147,35 @@ public class UserController {
         // Get rooms that this user has joined (as RoomUser objects)
         List<RoomUser> roomUsers = user.getRoomUsers();
         model.addAttribute("roomUsers", roomUsers);  
+	}
+
+	/**
+     * Default user page. Display profile of logged user
+     */
+    @GetMapping("/")
+    public String defaultIndex(Model model) {
+		// Get logged user
+        Long userId = ((User)session.getAttribute("u")).getId();
+		User user = entityManager.find(User.class, userId);
+
+		// Pass info of that user to the model 
+		fillModelWithInfo(user, model);     
+
+        return "user";
+    }
+
+    /**
+     * Display profile of given user (userId passed via url)
+     */
+	@GetMapping("{id}")
+    public String index(@PathVariable long id, Model model, HttpSession session) {
+        // Get user with id given by url
+        User user = entityManager.find(User.class, id);
+        
+		// Pass info of that user to the model 
+		fillModelWithInfo(user, model);
+
+		return "user";
 	}
 
     /**
@@ -228,6 +228,7 @@ public class UserController {
             session.setAttribute("u", target);
         }
 
+		// TODO: call fillModelWithInfo
 		return "user";
 	}	
 
@@ -293,6 +294,8 @@ public class UserController {
 				log.warn("Error uploading " + id + " ", e);
 			}
 		}
+
+		// TODO: call fillModelWithInfo
 		return "user";
     }
     
