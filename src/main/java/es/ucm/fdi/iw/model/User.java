@@ -91,7 +91,7 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	 * List of matches (MatchPlayer class) that the user has played
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "player")
+	@OneToMany(mappedBy = "player")
 	private List<MatchPlayer> matchPlayers = new ArrayList<>();
 
 	/**
@@ -102,7 +102,7 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	 * 
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "user1")
+	@OneToMany(mappedBy = "user1")
 	private List<Friendship> friendships = new ArrayList<>();
 
 
@@ -110,7 +110,7 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	 * List of rooms that this user has joined (as RoomUser class)
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	private List<RoomUser> roomUsers = new ArrayList<>();
 
 	

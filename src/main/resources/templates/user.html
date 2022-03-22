@@ -11,22 +11,114 @@
 
     <main class="flex-shrink-0">
         <div class="container">
-            <h1 class="mt-5">Perfil de <span th:text="${user.username}">Paco</span></h1>
-            <!-- Para solicitar amistad -->
+
+            <span style="display: inline-block; width: 40px; height: 50px;"></span>
+      
             <div>
-                <form th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
-                    <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
-                </form>
+              <h1 class="col" style="text-align:center"
+                th:text="| ${user.username} &nbsp;&nbsp;&nbsp; ${friendships.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
+              </h1>
             </div>
+      
+            <span style="display: inline-block; width: 40px; height: 30px;"></span>
+      
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th>Partida</th>
+                  <th>Sala</th>
+                  <th>Resultado</th>
+                  <th>Participantes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="matchPlayer: ${matchPlayers}">
+                  <td th:text="| # ${matchPlayer.match.id} |"></td>
+                  <td th:text="| ${matchPlayer.match.room.id} |"></td>
+                  <td th:text="| ${matchPlayer.position} º|"></td>
+                  <td th:each="participant: ${matchPlayer.match.getMatchPlayers()}" th:text="| ${participant.player.username} |"></td>
+                </tr>
+              </tbody>
+            </table>
+      
+            <span style="display: inline-block; width: 40px; height: 50px;"></span>
+      
+            <table class="table table-light">
+              <thead>
+                <tr rowspan="1">
+                  <th colspan="1">Friend Request Id</th>
+                  <th colspan="1">Sender Id</th>
+                  <th colspan="1">Sender Username</th>
+                  <th colspan="1">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr rowspan="1" th:each="request: ${friendRequests}">
+                  <td colspan="1" th:text="${request.id}">ID</td>
+                  <td colspan="1" th:text="${request.user1.id}">Nombre</td>
+                  <td colspan="1" th:text="${request.user1.username}">ID</td>
+                  <td colspan="1">
+                    <form th:action="@{/user/accept_friend_req/__${request.id}__}" method="POST">
+                      <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+      
+            <span style="display: inline-block; width: 40px; height: 50px;"></span>
+      
+            <table class="table table-light">
+              <thead>
+                <tr rowspan="1">
+                  <th colspan="1">Friend Id</th>
+                  <th colspan="1">Friend Username</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr rowspan="1" th:each="friendship: ${friendships}">
+                  <td colspan="1" th:text="${friendship.user2.id}">ID</td>
+                  <td colspan="1" th:text="${friendship.user2.username}">Nombre</td>
+                </tr>
+              </tbody>
+            </table>
+      
+            <span style="display: inline-block; width: 40px; height: 50px;"></span>
+      
+            <table class="table table-light">
+              <thead>
+                <tr rowspan="1">
+                  <th colspan="1">Room Id</th>
+                  <th colspan="1">Room Privacy</th>
+                  <th colspan="1">Room Users</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr rowspan="1" th:each="roomUser: ${roomUsers}">
+                  <td colspan="1" th:text="${roomUser.room.id}">ID</td>
+                  <td colspan="1" th:text="${roomUser.room.visibility}">Privacy</td>
+                  <td th:each="participant: ${roomUser.room.getRoomUsers()}" th:text="| ${participant.user.username} |"></td>
+                </tr>
+              </tbody>
+            </table>
 
             <!-- para enviar mensajes; algo feo -->
-            <div class="py-5 position-absolute bottom-0 row ">
+            <div class="py-5">
                 <form th:action="@{/user/__${user.id}__/msg}" method="POST">
                     <input type="text" id="message" placeholder="escribe a este usuario" />
                     <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
                 </form>
             </div>
-        </div>
+
+            <div>
+                <form th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
+                    <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
+                </form>
+            </div>
+      
+      
+          </div>
+        
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />

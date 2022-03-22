@@ -71,7 +71,7 @@ public class Room {
 	 * List of users in this room (as RoomUser objects)
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "room")
+	@OneToMany( mappedBy = "room")
 	private List<RoomUser> roomUsers = new ArrayList<>();
 
 /*

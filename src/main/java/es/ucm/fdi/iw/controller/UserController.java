@@ -2,7 +2,9 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Friendship;
+import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Message;
+import es.ucm.fdi.iw.model.RoomUser;
 //import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
@@ -41,7 +43,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 //import java.util.List;
 import java.util.Objects;
 //import java.util.stream.Collectors;
@@ -118,8 +122,32 @@ public class UserController {
      */
 	@GetMapping("{id}")
     public String index(@PathVariable long id, Model model, HttpSession session) {
-        User target = entityManager.find(User.class, id);
-        model.addAttribute("user", target);
+        // Get logged user
+        User user = entityManager.find(User.class, id);
+        model.addAttribute("user", user);
+        
+        // Get their friendships
+        List<Friendship> allFriendships = user.getFriendships();
+
+        // Remove the ones that are not on ACCEPTED status
+		List<Friendship> acceptedFr = new ArrayList<>(allFriendships);
+        acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED));
+        model.addAttribute("friendships", acceptedFr);
+        
+        // Get their friend requests (any sender, this user as receiver, status as "Pending")
+        List<Friendship> friendRequests = entityManager.createNamedQuery("Friendship.getRequests", Friendship.class)
+            .setParameter("userId", user.getId())
+            .getResultList();
+        model.addAttribute("friendRequests", friendRequests);        
+
+        // Get matches that this user has played (as MatchPlayer objects)
+        List<MatchPlayer> matchPlayers = user.getMatchPlayers();
+        model.addAttribute("matchPlayers", matchPlayers);        
+        
+        // Get rooms that this user has joined (as RoomUser objects)
+        List<RoomUser> roomUsers = user.getRoomUsers();
+        model.addAttribute("roomUsers", roomUsers);  
+
         return "user";
     }
 
