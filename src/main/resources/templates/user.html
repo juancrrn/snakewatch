@@ -22,7 +22,7 @@
       
             <span style="display: inline-block; width: 40px; height: 30px;"></span>
       
-            <table class="table table-light">
+            <table th:if="${isLoggedUser}" class="table table-light">
               <thead>
                 <tr>
                   <th>Partida</th>
@@ -43,7 +43,7 @@
       
             <span style="display: inline-block; width: 40px; height: 50px;"></span>
       
-            <table class="table table-light">
+            <table th:if="${isLoggedUser}" class="table table-light">
               <thead>
                 <tr rowspan="1">
                   <th colspan="1">Friend Request Id</th>
@@ -68,7 +68,7 @@
       
             <span style="display: inline-block; width: 40px; height: 50px;"></span>
       
-            <table class="table table-light">
+            <table th:if="${isLoggedUser}" class="table table-light">
               <thead>
                 <tr rowspan="1">
                   <th colspan="1">Friend Id</th>
@@ -85,7 +85,7 @@
       
             <span style="display: inline-block; width: 40px; height: 50px;"></span>
       
-            <table class="table table-light">
+            <table th:if="${isLoggedUser}" class="table table-light">
               <thead>
                 <tr rowspan="1">
                   <th colspan="1">Room Id</th>
@@ -103,18 +103,21 @@
             </table>
 
             <!-- para enviar mensajes; algo feo -->
-            <div class="py-5">
-                <form th:action="@{/user/__${user.id}__/msg}" method="POST">
-                    <input type="text" id="message" placeholder="escribe a este usuario" />
-                    <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
+            <div class="d-flex justify-content-around">
+              <form th:if="${not isFriends and not hasPendingRequest and not isLoggedUser}" th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
+                <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
                 </form>
+
+              <p th:if="${hasPendingRequest}" class="text-light bg-secondary" >¡Solicitud Enviada!</p>
+
+              <p th:if="${isFriends}" class="text-light bg-secondary" >¡Ya sois amigos!</p>
+
+              <form th:if="${not isLoggedUser}" th:action="@{/user/__${user.id}__/msg}" method="POST">
+                  <input type="text" id="message" placeholder="escribe a este usuario" />
+                  <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
+              </form>
             </div>
 
-            <div>
-                <form th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
-                    <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
-                </form>
-            </div>
       
       
           </div>

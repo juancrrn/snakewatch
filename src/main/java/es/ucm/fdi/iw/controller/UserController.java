@@ -166,7 +166,7 @@ public class UserController {
 		boolean hasPendingRequest = false;
 		
 		List<Friendship> pendingFr = new ArrayList<>(allFriendships);
-        acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING));
+        pendingFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING));
 
 		for(Friendship fr : pendingFr){
 			if(fr.getUser2().getId() == loggedUserId) {
