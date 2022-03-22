@@ -81,6 +81,9 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired 
+    private HttpSession session;
+
     /**
      * Exception to use when denying access to unauthorized users.
      * 
@@ -117,24 +120,50 @@ public class UserController {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(token); //base64 encoding
     }
 
+	/**
+     * Default user page. Display profile of logged user
+     */
+    @GetMapping("/")
+    public String defaultIndex(Model model) {
+		// Get logged user
+        Long userId = ((User)session.getAttribute("u")).getId();
+		User user = entityManager.find(User.class, userId);
+
+		// Pass info of that user to the model 
+		fillModelWithInfo(user, model);     
+
+        return "user";
+    }
+
     /**
-     * Landing page for a user profile
+     * Display profile of given user (userId passed via url)
      */
 	@GetMapping("{id}")
     public String index(@PathVariable long id, Model model, HttpSession session) {
-        // Get logged user
+        // Get user with id given by url
         User user = entityManager.find(User.class, id);
-        model.addAttribute("user", user);
         
-        // Get their friendships
+		// Pass info of that user to the model 
+		fillModelWithInfo(user, model);
+
+		return "user";
+	}
+
+	/**
+	 * Auxiliary method to pass info of the user to the model
+	 */
+	private void fillModelWithInfo(User user, Model model){
+		model.addAttribute("user", user);
+
+		// Get their friendships (all, no matter the friendship status)
         List<Friendship> allFriendships = user.getFriendships();
 
-        // Remove the ones that are not on ACCEPTED status
+        // Get friendships on ACCEPTED state
 		List<Friendship> acceptedFr = new ArrayList<>(allFriendships);
         acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED));
         model.addAttribute("friendships", acceptedFr);
         
-        // Get their friend requests (any sender, this user as receiver, status as "Pending")
+        // Get their friend requests (any sender, this user as receiver)
         List<Friendship> friendRequests = entityManager.createNamedQuery("Friendship.getRequests", Friendship.class)
             .setParameter("userId", user.getId())
             .getResultList();
@@ -147,9 +176,7 @@ public class UserController {
         // Get rooms that this user has joined (as RoomUser objects)
         List<RoomUser> roomUsers = user.getRoomUsers();
         model.addAttribute("roomUsers", roomUsers);  
-
-        return "user";
-    }
+	}
 
     /**
      * Alter or create a user

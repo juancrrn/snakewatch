@@ -43,11 +43,6 @@ import es.ucm.fdi.iw.model.User;
 @Controller
 public class RootController {
 
-    @Autowired 
-    private HttpSession session;
-
-	//private static final Logger log = LogManager.getLogger(RootController.class);
-
     @Autowired
     private EntityManager entityManager;
     
@@ -55,7 +50,7 @@ public class RootController {
      * Home view
      */
     @GetMapping("/")
-    public String lobby(Model model) {
+    public String lobby(Model model) {       
         return "lobby";
     }
 
@@ -65,39 +60,6 @@ public class RootController {
     @GetMapping("/login")
     public String login(Model model) {
         return "login";
-    }
-
-    /**
-     * Profile view
-     */
-    @GetMapping("/profile")
-    public String profile(HttpServletRequest request, HttpServletResponse response, Model model) {
-
-        // Get logged user
-        User user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
-        model.addAttribute("user", user);
-        
-        // Get their friendships
-        List<Friendship> friendships = user.getFriendships();
-        // Remove the ones that are not on ACCEPTED status
-        //friendships.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED));
-        model.addAttribute("friendships", friendships);
-        
-        // Get their friend requests (any sender, this user as receiver, status as "Pending")
-        List<Friendship> friendRequests = entityManager.createNamedQuery("Friendship.getRequests", Friendship.class)
-            .setParameter("userId", user.getId())
-            .getResultList();
-        model.addAttribute("friendRequests", friendRequests);        
-
-        // Get matches that this user has played (as MatchPlayer objects)
-        List<MatchPlayer> matchPlayers = user.getMatchPlayers();
-        model.addAttribute("matchPlayers", matchPlayers);        
-        
-        // Get rooms that this user has joined (as RoomUser objects)
-        List<RoomUser> roomUsers = user.getRoomUsers();
-        model.addAttribute("roomUsers", roomUsers);  
-
-        return "profile";
     }
 
     /**
