@@ -58,7 +58,9 @@
                 <tr rowspan="1" th:each="request: ${friendRequests}">
                   <td colspan="1" th:text="${request.id}">ID</td>
                   <td colspan="1" th:text="${request.user1.id}">Nombre</td>
-                  <td colspan="1" th:text="${request.user1.username}">ID</td>
+                  <td colspan="1"> 
+                    <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
+                  </td>
                   <td colspan="1">
                     <form th:action="@{/user/accept_friend_req/__${request.id}__}" method="POST">
                       <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
@@ -80,7 +82,9 @@
               <tbody>
                 <tr rowspan="1" th:each="friendship: ${friendships}">
                   <td colspan="1" th:text="${friendship.user2.id}">ID</td>
-                  <td colspan="1" th:text="${friendship.user2.username}">Nombre</td>
+                  <td colspan="1">
+                    <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |"></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -99,7 +103,10 @@
                 <tr rowspan="1" th:each="roomUser: ${roomUsers}">
                   <td colspan="1" th:text="${roomUser.room.id}">ID</td>
                   <td colspan="1" th:text="${roomUser.room.visibility}">Privacy</td>
-                  <td th:each="participant: ${roomUser.room.getRoomUsers()}" th:text="| ${participant.user.username} |"></td>
+
+                  <td th:each="participant: ${roomUser.room.getRoomUsers()}">
+                    <a th:href="@{/user/__${participant.user.id}__}" th:text="| ${participant.user.username} |"></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
