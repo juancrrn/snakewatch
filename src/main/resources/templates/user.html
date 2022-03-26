@@ -134,6 +134,7 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
+
     <script>
         // envio de mensajes con AJAX
         let b = document.getElementById("sendmsg");
@@ -145,6 +146,17 @@
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
         }
+    </script>
+
+    <script>
+      // envio de solicitudes de amistad
+      let frButton = document.getElementById("send_friend_req");
+      frButton.onclick = (e) => {
+          e.preventDefault();
+          go(frButton.parentNode.action, 'POST', {})
+              .then(d => frButton.style.visibility = 'hidden')
+              .catch(e => console.log("sad", e))
+      }
     </script>
 </body>
 

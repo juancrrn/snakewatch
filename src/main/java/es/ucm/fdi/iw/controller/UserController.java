@@ -427,6 +427,8 @@ public class UserController {
 		// Registrar accion en logs		
 		log.info("Sending a friend request from '{}' to '{}'", sender.getUsername(), receiver.getUsername());
 
+		model.addAttribute("hasPendingRequest", true);
+
 		return "{\"result\": \"friend request sent.\"}";
 	}	
 
