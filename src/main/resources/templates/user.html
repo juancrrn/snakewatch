@@ -115,7 +115,7 @@
             <div class="d-flex justify-content-around">
               <form th:if="${not isFriends and not hasPendingRequest and not isLoggedUser}" th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
                 <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
-                </form>
+              </form>
 
               <p th:if="${hasPendingRequest}" class="text-light bg-secondary" >¡Solicitud Enviada!</p>
 
