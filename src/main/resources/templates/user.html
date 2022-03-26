@@ -36,7 +36,9 @@
                   <td th:text="| # ${matchPlayer.match.id} |"></td>
                   <td th:text="| ${matchPlayer.match.room.id} |"></td>
                   <td th:text="| ${matchPlayer.position} º|"></td>
-                  <td th:each="participant: ${matchPlayer.match.getMatchPlayers()}" th:text="| ${participant.player.username} |"></td>
+                  <td th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}">
+                    <a th:href="@{/user/__${matchPlayerOthers.player.id}__}" th:text="| ${matchPlayerOthers.player.username} |"></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
