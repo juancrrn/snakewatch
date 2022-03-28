@@ -111,20 +111,33 @@
               </tbody>
             </table>
 
-            <!-- para enviar mensajes; algo feo -->
+            <!-- Amistad -->
             <div class="d-flex justify-content-around">
-              <form th:if="${not isFriends and not hasPendingRequest and not isLoggedUser}" th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
-                <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
-              </form>
+                <div id="friendship-status" th:if="${not isLoggedUser}">
+                    <p class="default">
+                        <span>Cargando...</span>
+                    </p>
+                    <p class="not-friends d-none">
+                        <span>No sois amigos</span>
+                        <a id="friendship-action-send" th:href="@{/user/__${user.id}__/send_friend_req}" class="btn btn-primary">Enviar solicitud</a>
+                    </p>
+                    <p class="request-sent d-none">
+                        <span>Solicitud de amistad enviada</span>
+                        <a id="friendship-action-request-cancel" th:href="@{/user/__${user.id}__/cancel_friend_req}" class="btn btn-primary">Rechazar solicitud</a>
+                    </p>
+                    <p class="request-received d-none">
+                        <span>Solicitud de amistad recibida</span>
+                        <a id="friendship-action-request-accept" th:href="@{/user/__${user.id}__/accept_friend_req}" class="btn btn-primary">Aceptar solicitud</a>
+                    </p>
+                    <p class="friends d-none">
+                        <span>Ya sois amigos</span>
+                        <a id="friendship-action-cancel" th:href="@{/user/__${user.id}__/unfriend}" class="btn btn-primary">Dejar de ser amigos</a>
+                    </p>
+                </div>
 
-              <p th:if="${hasPendingRequest}" class="text-light bg-secondary" >¡Solicitud Enviada!</p>
+              <!--p th:if="${hasPendingRequest}" class="text-light bg-secondary" >¡Solicitud Enviada!</p>
 
-              <p th:if="${isFriends}" class="text-light bg-secondary" >¡Ya sois amigos!</p>
-
-              <form th:if="${not isLoggedUser}" th:action="@{/user/__${user.id}__/msg}" method="POST">
-                  <input type="text" id="message" placeholder="escribe a este usuario" />
-                  <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
-              </form>
+              <p th:if="${isFriends}" class="text-light bg-secondary" >¡Ya sois amigos!</p-->
             </div>
 
       
@@ -134,6 +147,10 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
+
+    <template id="profile-send-friend-request-button">
+        <button id="send_friend_req" class="btn btn-secondary" type="submit">Solicitar amistad</button>
+    </template>
 
     <script>
         // envio de mensajes con AJAX
@@ -146,17 +163,24 @@
                 .then(d => console.log("happy", d))
                 .catch(e => console.log("sad", e))
         }
-    </script>
-
-    <script>
+        
       // envio de solicitudes de amistad
       let frButton = document.getElementById("send_friend_req");
       frButton.onclick = (e) => {
           e.preventDefault();
-          go(frButton.parentNode.action, 'POST', {})
-              .then(d => frButton.style.visibility = 'hidden')
+          go('https://localhost/', 'POST', {})
+              .then(d => {
+                $("#friendship-status > *").hide();
+                $("#friendship-status .request-sent").show();
+              })
               .catch(e => console.log("sad", e))
       }
+
+        // TODO: Cuando cargue la página
+        //$(document).onLoad()
+            // TODO: Pedir estado al servidor
+
+            // Cuando se reciba, ocultar el loader y mostrar el botón
     </script>
 </body>
 
