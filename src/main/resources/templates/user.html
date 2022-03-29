@@ -184,14 +184,13 @@
     </div>
   </main>
 
-  <form id="aux-form-friendship-state" hidden th:action="@{/friendship/state/__${session.u.id}__/__${user.id}__/}" method="POST"></form>
-
   <th:block th:replace="fragments/footer.html :: footer" />
 
+  <script th:inline="javascript">
+    var G_FRIENDSHIP_STATE_URL = [[@{/friendship/state/__${session.u.id}__/__${user.id}__/}]];
+  </script>
+
   <script th:if="${not isOwnProfile}">
-
-    //  
-
     document.addEventListener("DOMContentLoaded", () => {
 
       // envio de mensajes con AJAX
@@ -220,7 +219,7 @@
       }
 
       // Get friendship status and show corresponding button
-      go(document.getElementById("aux-form-friendship-state").action, 'POST', {})
+      go(G_FRIENDSHIP_STATE_URL, 'POST', {})
         .then(d => {
           hideAll();
 
