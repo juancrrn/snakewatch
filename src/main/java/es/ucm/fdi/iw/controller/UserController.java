@@ -151,8 +151,8 @@ public class UserController {
 
 		// Check if "user" is the logged user or another person
 		Long loggedUserId = ((User)session.getAttribute("u")).getId();
-		boolean isLoggedUser = user.getId() == loggedUserId;
-		model.addAttribute("isLoggedUser", isLoggedUser);
+		boolean isOwnProfile = user.getId() == loggedUserId;
+		model.addAttribute("isOwnProfile", isOwnProfile);
 	}
 
 	/**
