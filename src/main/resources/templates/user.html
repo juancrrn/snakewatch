@@ -121,24 +121,24 @@
           <p id="friendship-loading"> Cargando... </p>
 
           <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
-          <form id="friendship-send" th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
+          <form th:action="@{/friendship/send_req/__${session.u.id}__/__${user.id}__/}" method="POST">
             <button id="friendship-send-button" class="btn btn-secondary" type="submit">Solicitar amistad</button>
           </form>
 
           <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
-          <form id="friendship-request-cancel" th:action="@{/user/cancel_friend_req/__${user.id}__/__${session.u.id}__/}" method="POST">
+          <form th:action="@{/friendship/cancel_req/__${session.u.id}__/__${user.id}__/}" method="POST">
             <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit">Cancelar solicitud de
-              amistad</button>
+              amistad enviada</button>
           </form>
 
           <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
-          <form id="friendship-request-accept" th:action="@{/user/accept_friend_req/__${user.id}__/__${session.u.id}__/}" method="POST">
+          <form th:action="@{/friendship/accept_req/__${user.id}__/__${session.u.id}__/}" method="POST">
             <button id="friendship-request-accept-button" class="btn btn-secondary" type="submit">Aceptar solicitud de
               amistad</button>
           </form>
 
           <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
-          <form id="friendship-finish" th:action="@{/user/finish_friendship/__${user.id}__/__${session.u.id}__/}" method="POST">
+          <form th:action="@{/friendship/finish/__${session.u.id}__/__${user.id}__/}" method="POST">
             <button id="friendship-finish-button" class="btn btn-secondary" type="submit">Dejar de ser amigos</button>
           </form>
         </div>
@@ -151,7 +151,7 @@
     </div>
   </main>
 
-  <form id="aux-form-friendship-state" hidden th:action="@{/user/__${user.id}__/friendship_state}" method="POST"></form>
+  <form id="aux-form-friendship-state" hidden th:action="@{/friendship/state/__${session.u.id}__/__${user.id}__/}" method="POST"></form>
 
   <th:block th:replace="fragments/footer.html :: footer" />
 
@@ -170,9 +170,9 @@
 
     let frLoadingMessage = document.getElementById("friendship-loading");
     let frSendButton = document.getElementById("friendship-send-button");
-    let frCancelButton = document.getElementById("friendship-request-cancel");
-    let frAcceptButton = document.getElementById("friendship-request-accept");
-    let frFinishButton = document.getElementById("friendship-finish");
+    let frCancelButton = document.getElementById("friendship-request-cancel-button");
+    let frAcceptButton = document.getElementById("friendship-request-accept-button");
+    let frFinishButton = document.getElementById("friendship-finish-button");
 
     function hideAll() {
       frLoadingMessage.style.visibility = 'hidden';
