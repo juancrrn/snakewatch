@@ -2,252 +2,255 @@
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:replace="fragments/head :: header" />
-    <title>Perfil — Snakewatch</title>
+  <th:block th:replace="fragments/head :: header" />
+  <title>Perfil — Snakewatch</title>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header th:replace="fragments/nav.html :: nav"></header>
+  <header th:replace="fragments/nav.html :: nav"></header>
 
-    <main class="flex-shrink-0">
-        <div class="container">
+  <main class="flex-shrink-0">
+    <div class="container">
 
-            <span style="display: inline-block; width: 40px; height: 50px;"></span>
-      
-            <div>
-              <h1 class="col" style="text-align:center"
-                th:text="| ${user.username} &nbsp;&nbsp;&nbsp; ${friendships.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
-              </h1>
-            </div>
-      
-            <span style="display: inline-block; width: 40px; height: 30px;"></span>
-      
-            <table class="table table-light">
-              <thead>
-                <tr>
-                  <th>Partida</th>
-                  <th>Sala</th>
-                  <th>Resultado</th>
-                  <th>Participantes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="matchPlayer: ${matchPlayers}">
-                  <td th:text="| # ${matchPlayer.match.id} |"></td>
-                  <td th:text="| ${matchPlayer.match.room.id} |"></td>
-                  <td th:text="| ${matchPlayer.position} º|"></td>
-                  <td th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}">
-                    <a th:href="@{/user/__${matchPlayerOthers.player.id}__}" th:text="| ${matchPlayerOthers.player.username} |"></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-      
-            <span style="display: inline-block; width: 40px; height: 50px;"></span>
-      
-            <table th:if="${isLoggedUser}" class="table table-light">
-              <thead>
-                <tr rowspan="1">
-                  <th colspan="1">Friend Request Id</th>
-                  <th colspan="1">Sender Id</th>
-                  <th colspan="1">Sender Username</th>
-                  <th colspan="1">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr rowspan="1" th:each="request: ${friendRequests}">
-                  <td colspan="1" th:text="${request.id}">ID</td>
-                  <td colspan="1" th:text="${request.user1.id}">Nombre</td>
-                  <td colspan="1"> 
-                    <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
-                  </td>
-                  <td colspan="1">
-                    <form th:action="@{/user/accept_friend_req/__${request.user1.id}__/__${request.user2.id}__}" method="POST">
-                      <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
-                    </form>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-      
-            <span style="display: inline-block; width: 40px; height: 50px;"></span>
-      
-            <table th:if="${isLoggedUser}" class="table table-light">
-              <thead>
-                <tr rowspan="1">
-                  <th colspan="1">Friend Id</th>
-                  <th colspan="1">Friend Username</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr rowspan="1" th:each="friendship: ${friendships}">
-                  <td colspan="1" th:text="${friendship.user2.id}">ID</td>
-                  <td colspan="1">
-                    <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |"></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-      
-            <span style="display: inline-block; width: 40px; height: 50px;"></span>
-      
-            <table class="table table-light">
-              <thead>
-                <tr rowspan="1">
-                  <th colspan="1">Room Id</th>
-                  <th colspan="1">Room Privacy</th>
-                  <th colspan="1">Room Users</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr rowspan="1" th:each="roomUser: ${roomUsers}">
-                  <td colspan="1" th:text="${roomUser.room.id}">ID</td>
-                  <td colspan="1" th:text="${roomUser.room.visibility}">Privacy</td>
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
 
-                  <td th:each="participant: ${roomUser.room.getRoomUsers()}">
-                    <a th:href="@{/user/__${participant.user.id}__}" th:text="| ${participant.user.username} |"></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      <div>
+        <h1 class="col" style="text-align:center"
+          th:text="| ${user.username} &nbsp;&nbsp;&nbsp; ${friendships.size()} amigos &nbsp;&nbsp;&nbsp; ${matchPlayers.size()} partidas|">
+        </h1>
+      </div>
 
-            <!-- para enviar mensajes; algo feo -->
-            <div class="d-flex justify-content-around">
-              <div id="friendship-status" th:if="${not isLoggedUser}">
+      <span style="display: inline-block; width: 40px; height: 30px;"></span>
 
-                <!-- temporary message while loading info -->
-                <p id="friendship-loading"> Cargando... </p>
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>Partida</th>
+            <th>Sala</th>
+            <th>Resultado</th>
+            <th>Participantes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="matchPlayer: ${matchPlayers}">
+            <td th:text="| # ${matchPlayer.match.id} |"></td>
+            <td th:text="| ${matchPlayer.match.room.id} |"></td>
+            <td th:text="| ${matchPlayer.position} º|"></td>
+            <td th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}">
+              <a th:href="@{/user/__${matchPlayerOthers.player.id}__}"
+                th:text="| ${matchPlayerOthers.player.username} |"></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-                <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
-                <form id="friendship-send" th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
-                  <button id="friendship-send-button" class="btn btn-secondary" type="submit">Solicitar amistad</button>
-                </form>
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
 
-                <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
-                <form id="friendship-request-cancel" th:action="@{/user/__${user.id}__/cancel_friend_req/__${session.u.id}__}" method="POST">
-                  <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit">Cancelar solicitud de amistad</button>
-                </form>
-
-                <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
-                <form id="friendship-request-accept" th:action="@{/user/accept_friend_req/__${user.id}__/__${session.u.id}__}" method="POST">
-                  <button id="friendship-request-accept-button" class="btn btn-secondary" type="submit">Aceptar solicitud de amistad</button>
-                </form>
-
-                <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
-                <form id="friendship-finish" th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
-                  <button id="friendship-finish-button" class="btn btn-secondary" type="submit">Dejar de ser amigos</button>
-                </form>                
-              </div>
-
-              <form th:if="${not isLoggedUser}" th:action="@{/user/__${user.id}__/msg}" method="POST">
-                  <input type="text" id="message" placeholder="escribe a este usuario" />
-                  <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
+      <table th:if="${isLoggedUser}" class="table table-light">
+        <thead>
+          <tr rowspan="1">
+            <th colspan="1">Friend Request Id</th>
+            <th colspan="1">Sender Id</th>
+            <th colspan="1">Sender Username</th>
+            <th colspan="1">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr rowspan="1" th:each="request: ${friendRequests}">
+            <td colspan="1" th:text="${request.id}">ID</td>
+            <td colspan="1" th:text="${request.user1.id}">Nombre</td>
+            <td colspan="1">
+              <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
+            </td>
+            <td colspan="1">
+              <form th:action="@{/user/accept_friend_req/__${request.user1.id}__/__${request.user2.id}__}"
+                method="POST">
+                <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
               </form>
-            </div>      
-          </div>        
-    </main>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <form id="aux-form-friendship-state" hidden th:action="@{/user/__${user.id}__/friendship_state}" method="POST"></form>
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
 
-    <th:block th:replace="fragments/footer.html :: footer" />
+      <table th:if="${isLoggedUser}" class="table table-light">
+        <thead>
+          <tr rowspan="1">
+            <th colspan="1">Friend Id</th>
+            <th colspan="1">Friend Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr rowspan="1" th:each="friendship: ${friendships}">
+            <td colspan="1" th:text="${friendship.user2.id}">ID</td>
+            <td colspan="1">
+              <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |"></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <script>
+      <span style="display: inline-block; width: 40px; height: 50px;"></span>
 
-      // envio de mensajes con AJAX
-      let b = document.getElementById("sendmsg");
-      b.onclick = (e) => {
-          e.preventDefault();
-          go(b.parentNode.action, 'POST', {
-                  message: document.getElementById("message").value
-              })
-              .then(d => console.log("happy", d))
-              .catch(e => console.log("sad", e))
-      }
+      <table class="table table-light">
+        <thead>
+          <tr rowspan="1">
+            <th colspan="1">Room Id</th>
+            <th colspan="1">Room Privacy</th>
+            <th colspan="1">Room Users</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr rowspan="1" th:each="roomUser: ${roomUsers}">
+            <td colspan="1" th:text="${roomUser.room.id}">ID</td>
+            <td colspan="1" th:text="${roomUser.room.visibility}">Privacy</td>
 
-      let frLoadingMessage = document.getElementById("friendship-loading");
-      let frSendButton = document.getElementById("friendship-send-button");
-      let frCancelButton = document.getElementById("friendship-request-cancel");
-      let frAcceptButton = document.getElementById("friendship-request-accept");
-      let frFinishButton = document.getElementById("friendship-finish");
+            <td th:each="participant: ${roomUser.room.getRoomUsers()}">
+              <a th:href="@{/user/__${participant.user.id}__}" th:text="| ${participant.user.username} |"></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      function hideAll(){
-        frLoadingMessage.style.visibility = 'hidden';
-        frSendButton.style.visibility = 'hidden';
-        frCancelButton.style.visibility = 'hidden';
-        frAcceptButton.style.visibility = 'hidden';
-        frFinishButton.style.visibility = 'hidden';
-      }
+      <!-- para enviar mensajes; algo feo -->
+      <div class="d-flex justify-content-around">
+        <div id="friendship-status" th:if="${not isLoggedUser}">
 
-      // Get friendship status and show corresponding button
-      go(document.getElementById("aux-form-friendship-state").action, 'POST', {})
+          <!-- temporary message while loading info -->
+          <p id="friendship-loading"> Cargando... </p>
+
+          <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
+          <form id="friendship-send" th:action="@{/user/__${user.id}__/send_friend_req}" method="POST">
+            <button id="friendship-send-button" class="btn btn-secondary" type="submit">Solicitar amistad</button>
+          </form>
+
+          <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
+          <form id="friendship-request-cancel" th:action="@{/user/cancel_friend_req/__${user.id}__/__${session.u.id}__/}" method="POST">
+            <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit">Cancelar solicitud de
+              amistad</button>
+          </form>
+
+          <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
+          <form id="friendship-request-accept" th:action="@{/user/accept_friend_req/__${user.id}__/__${session.u.id}__/}" method="POST">
+            <button id="friendship-request-accept-button" class="btn btn-secondary" type="submit">Aceptar solicitud de
+              amistad</button>
+          </form>
+
+          <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
+          <form id="friendship-finish" th:action="@{/user/finish_friendship/__${user.id}__/__${session.u.id}__/}" method="POST">
+            <button id="friendship-finish-button" class="btn btn-secondary" type="submit">Dejar de ser amigos</button>
+          </form>
+        </div>
+
+        <form th:if="${not isLoggedUser}" th:action="@{/user/__${user.id}__/msg}" method="POST">
+          <input type="text" id="message" placeholder="escribe a este usuario" />
+          <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <form id="aux-form-friendship-state" hidden th:action="@{/user/__${user.id}__/friendship_state}" method="POST"></form>
+
+  <th:block th:replace="fragments/footer.html :: footer" />
+
+  <script>
+
+    // envio de mensajes con AJAX
+    let b = document.getElementById("sendmsg");
+    b.onclick = (e) => {
+      e.preventDefault();
+      go(b.parentNode.action, 'POST', {
+        message: document.getElementById("message").value
+      })
+        .then(d => console.log("happy", d))
+        .catch(e => console.log("sad", e))
+    }
+
+    let frLoadingMessage = document.getElementById("friendship-loading");
+    let frSendButton = document.getElementById("friendship-send-button");
+    let frCancelButton = document.getElementById("friendship-request-cancel");
+    let frAcceptButton = document.getElementById("friendship-request-accept");
+    let frFinishButton = document.getElementById("friendship-finish");
+
+    function hideAll() {
+      frLoadingMessage.style.visibility = 'hidden';
+      frSendButton.style.visibility = 'hidden';
+      frCancelButton.style.visibility = 'hidden';
+      frAcceptButton.style.visibility = 'hidden';
+      frFinishButton.style.visibility = 'hidden';
+    }
+
+    // Get friendship status and show corresponding button
+    go(document.getElementById("aux-form-friendship-state").action, 'POST', {})
+      .then(d => {
+        hideAll();
+
+        if (d.result === "friends") {
+          frFinishButton.style.visibility = 'visible';
+        }
+        else if (d.result === "request sent") {
+          frCancelButton.style.visibility = 'visible';
+        }
+        else if (d.result === "request received") {
+          frAcceptButton.style.visibility = 'visible';
+        }
+        else {
+          frSendButton.style.visibility = 'visible';
+        }
+      })
+      .catch(e => {
+        hideAll();
+        console.log("Error loading friendship status", e)
+      })
+
+
+    // Accion de frSendButton: envio de solicitudes de amistad
+    frSendButton.onclick = (e) => {
+      e.preventDefault();
+      go(frSendButton.parentNode.action, 'POST', {})
         .then(d => {
           hideAll();
-                          
-          if(d.result === "friends"){                  
-            frFinishButton.style.visibility = 'visible';
-          } 
-          else if(d.result === "request sent"){
-            frCancelButton.style.visibility = 'visible';
-          } 
-          else if(d.result === "request received"){
-            frAcceptButton.style.visibility = 'visible';
-            frAcceptButton.action += d.friendship_id
-          } 
-          else{
-            frSendButton.style.visibility = 'visible';
-          }
+          frCancelButton.style.visibility = 'visible';
         })
-        .catch(e => {
+        .catch(e => console.log("sad", e))
+    }
+
+    // Accion de frCancelButton: cancelar solicitud de amistad enviada
+    frCancelButton.onclick = (e) => {
+      e.preventDefault();
+      go(frCancelButton.parentNode.action, 'POST', {})
+        .then(d => {
           hideAll();
-          console.log("Error loading friendship status", e)
+          frSendButton.style.visibility = 'visible';
         })
-      
+        .catch(e => console.log("sad", e))
+    }
 
-      // Accion de frSendButton: envio de solicitudes de amistad
-      frSendButton.onclick = (e) => {
-          e.preventDefault();
-          go(frSendButton.parentNode.action, 'POST', {})
-              .then(d => {
-                hideAll();
-                frCancelButton.style.visibility = 'visible';                
-              })
-              .catch(e => console.log("sad", e))
-      }
+    // Accion de frAcceptButton: aceptar solicitud de amistad recibida
+    frAcceptButton.onclick = (e) => {
+      e.preventDefault();
+      go(frAcceptButton.parentNode.action, 'POST', {})
+        .then(d => {
+          hideAll();
+          frFinishButton.style.visibility = 'visible';
+        })
+        .catch(e => console.log("sad", e))
+    }
 
-      // Accion de frCancelButton: cancelar solicitud de amistad enviada
-      frCancelButton.onclick = (e) => {
-          e.preventDefault();
-          go(frCancelButton.parentNode.action, 'POST', {})
-              .then(d => {
-                hideAll();
-                frSendButton.style.visibility = 'visible';       
-              })
-              .catch(e => console.log("sad", e))
-      }
+    // Accion de frFinishButton: eliminar amigo
+    frFinishButton.onclick = (e) => {
+      e.preventDefault();
+      go(frFinishButton.parentNode.action, 'POST', {})
+        .then(d => {
+          hideAll();
+          frSendButton.style.visibility = 'visible';
+        })
+        .catch(e => console.log("sad", e))
+    }
 
-      // Accion de frAcceptButton: aceptar solicitud de amistad recibida
-      frAcceptButton.onclick = (e) => {
-          e.preventDefault();
-          go(frAcceptButton.parentNode.action, 'POST', {})
-              .then(d => {
-                hideAll();
-                frFinishButton.style.visibility = 'visible';       
-              })
-              .catch(e => console.log("sad", e))
-      }
-
-      // Accion de frFinishButton: eliminar amigo
-      frFinishButton.onclick = (e) => {
-          e.preventDefault();
-          go(frFinishButton.parentNode.action, 'POST', {})
-              .then(d => {
-                hideAll();
-                frSendButton.style.visibility = 'visible';       
-              })
-              .catch(e => console.log("sad", e))
-      }
-
-    </script>
+  </script>
 </body>
 
 </html>
