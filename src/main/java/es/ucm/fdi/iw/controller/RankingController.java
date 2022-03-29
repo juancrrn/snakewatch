@@ -1,12 +1,13 @@
 package es.ucm.fdi.iw.controller;
 
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 
 import java.util.List;
-
+import java.util.Locale;
 
 import javax.persistence.EntityManager;
 
@@ -41,42 +42,33 @@ public class RankingController {
     @GetMapping("/rankings")
     public String rankings(Model model){
 
-        
         LocalDate nowDate = LocalDate.now();
 
-        int mes = nowDate.getMonthValue();
+        LocalDate fechaInicialMes = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue(), 1);
 
-        WeekFields w = WeekFields.ISO;
-
-        int semana = nowDate.get(w.weekOfWeekBasedYear());
-
-
-        List<Object[]> ranking_semanal = new ArrayList<Object[]>();
-
-        List<Object[]> ranking_mensual = new ArrayList<Object[]>();
+        LocalDate fechaInicialSemana = nowDate.with(WeekFields.of(Locale.FRANCE).dayOfWeek(),1);
         
-        List<Object[]> ranking_global = entityManager
-            .createNamedQuery("MatchPlayer.ranking", Object[].class)
+        List<Object[]> rankingGlobal = entityManager
+            .createNamedQuery("MatchPlayer.rankingGlobal", Object[].class)
             .getResultList();
         
-        LocalDate listDate;
-
-        for(int i=0;i<ranking_global.size();i++){      
-            listDate = (LocalDate) ranking_global.get(i)[2];
-            if(listDate.getMonthValue()==mes){
-                ranking_mensual.add(ranking_global.get(i));
-            }
-            if(listDate.get(w.weekOfWeekBasedYear())==semana){
-                ranking_semanal.add(ranking_global.get(i));
-            }
-        }
+        List<Object[]> rankingMensual = entityManager
+        .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
+        .setParameter("fechaInicial", fechaInicialMes)
+        .setParameter("fechaFinal", nowDate)
+        .getResultList();
         
+        List<Object[]> rankingSemanal = entityManager
+        .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
+        .setParameter("fechaInicial", fechaInicialSemana)
+        .setParameter("fechaFinal", nowDate)
+        .getResultList();
+        
+        model.addAttribute("rankingSemanal", rankingSemanal);
 
-        model.addAttribute("ranking_semanal", ranking_semanal);
+        model.addAttribute("rankingMensual", rankingMensual);
 
-        model.addAttribute("ranking_mensual", ranking_mensual);
-
-        model.addAttribute("ranking_global", ranking_global);
+        model.addAttribute("rankingGlobal", rankingGlobal);
 
         return "rankings";
     }

@@ -34,7 +34,7 @@ VALUES
     (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, CURDATE()),
     (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, CURDATE()),
     (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, '2022-02-14'),
-    (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, '2022-03-03');
+    (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, '2022-03-26');
 
 INSERT INTO Match_player (id, player_id, match_id, position) 
 VALUES 
