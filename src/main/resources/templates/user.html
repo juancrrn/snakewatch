@@ -63,8 +63,7 @@
               <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
             </td>
             <td colspan="1">
-              <form th:action="@{/user/accept_friend_req/__${request.user1.id}__/__${request.user2.id}__}"
-                method="POST">
+              <form th:action="@{/friendship/accept_req/__${request.user1.id}__/__${request.user2.id}__/}" method="POST">
                 <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
               </form>
             </td>

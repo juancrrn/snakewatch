@@ -151,31 +151,8 @@ public class UserController {
 
 		// Check if "user" is the logged user or another person
 		Long loggedUserId = ((User)session.getAttribute("u")).getId();
-		User loggedUser = entityManager.find(User.class, loggedUserId);		
 		boolean isLoggedUser = user.getId() == loggedUserId;
 		model.addAttribute("isLoggedUser", isLoggedUser);
-
-		// Check if "user" is friends with logged user
-		boolean isFriends = false;
-		for(Friendship fr : acceptedFr){
-			if(fr.getUser2().getId() == loggedUserId) {
-				isFriends = true;
-			}
-		}
-		model.addAttribute("isFriends", isFriends);
-
-		// Check if "user" has sent a friend request to logged user
-		boolean hasPendingRequest = false;
-		
-		List<Friendship> loggedUserFr = new ArrayList<>(loggedUser.getFriendships());
-        loggedUserFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING));
-
-		for(Friendship fr : loggedUserFr){
-			if(fr.getUser2().getId() == user.getId()) {
-				hasPendingRequest = true;
-			}
-		}
-		model.addAttribute("hasPendingRequest", hasPendingRequest);
 	}
 
 	/**
