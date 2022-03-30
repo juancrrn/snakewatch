@@ -1,18 +1,9 @@
 package es.ucm.fdi.iw.controller;
 
 
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
@@ -21,11 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Level;
-import es.ucm.fdi.iw.model.MatchPlayer;
-import es.ucm.fdi.iw.model.RoomUser;
-import es.ucm.fdi.iw.model.User;
+
 
 /**
  * Root controller

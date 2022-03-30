@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Rooms — Snakewatch</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <main class="flex-shrink-0">
+        
+        <div class="container">
+            <h1 class="text-center">Rooms</h1>
+            <div class="row justify-content-around bg-info bg-gradient bg-opacity-25 border border-secondary rounded-pill my-4 py-3 shadow" th:each="r : ${rooms}">
+                <p class="col-4 fs-4" style="color:blueviolet;" th:text="'Room ' + ${r.id}"></p> 
+                <form class="col-4" th:action="@{/rooms/__${r.id}__}" method="GET">
+                    <button class="w-75 btn btn-primary">See room</button> 
+                </form>           
+            </div>
+        </div>
+
+    </main>
+
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>

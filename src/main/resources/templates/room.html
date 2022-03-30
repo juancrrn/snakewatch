@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Rooms — Snakewatch</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <main class="flex-shrink-0">
+        <div class="container">
+            <div class="row justify-content-around bg-info bg-gradient bg-opacity-10 py-4 my-4 shadow-lg" style="border-radius: 15px;">
+                <h1 class="col-12 text-center" style="color:blueviolet;" th:text="'Room ' + ${room.id}"></h1>
+                <p class="col-4 fs-4 text-info my-2" th:text="'Type of room: ' + ${room.visibility}"></p>
+                <p class="col-4 fs-4 text-warning my-2" th:text="'Max Players: ' + ${room.maxUsers}"></p>
+                <p class="col-4 fs-4 text-success my-2" th:text="'Current Players: ' + ${room.roomUsers.size}"></p>
+                <p class="col-4 fs-4 text-danger my-2" th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username!=session.u.username}" th:text="'Room´s Leader: ' + ${ru.user.username}"></p>
+                <button class="col-4 btn btn-primary my-2">Play</button>
+                <button th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4 btn btn-primary my-2">Config</button>
+            </div>
+        </div>
+    </main>
+
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>
+ 

@@ -20,14 +20,25 @@ INSERT INTO Level (id, representation)
 VALUES (NEXT VALUE FOR level_id_seq, 'tmp');
 
 INSERT INTO Room (id, visibility, max_users) 
-VALUES (NEXT VALUE FOR room_id_seq, 0, 10);
+VALUES 
+    (NEXT VALUE FOR room_id_seq, 0, 10),
+    (NEXT VALUE FOR room_id_seq, 0, 5),
+    (NEXT VALUE FOR room_id_seq, 1, 5);
 
 INSERT INTO Room_User (id, room_id, user_id, admin) 
 VALUES 
     (NEXT VALUE FOR roomuser_id_seq, 1, 1, true),
     (NEXT VALUE FOR roomuser_id_seq, 1, 2, false),
     (NEXT VALUE FOR roomuser_id_seq, 1, 3, false),
-    (NEXT VALUE FOR roomuser_id_seq, 1, 4, false);
+    (NEXT VALUE FOR roomuser_id_seq, 1, 4, false),
+    (NEXT VALUE FOR roomuser_id_seq, 2, 1, false),
+    (NEXT VALUE FOR roomuser_id_seq, 2, 2, false),
+    (NEXT VALUE FOR roomuser_id_seq, 2, 3, true),
+    (NEXT VALUE FOR roomuser_id_seq, 2, 4, false),
+    (NEXT VALUE FOR roomuser_id_seq, 3, 1, false),
+    (NEXT VALUE FOR roomuser_id_seq, 3, 2, true),
+    (NEXT VALUE FOR roomuser_id_seq, 3, 3, false),
+    (NEXT VALUE FOR roomuser_id_seq, 3, 4, false);
 
 INSERT INTO Match (id, room_id, level_id, status, max_players, date) 
 VALUES 
