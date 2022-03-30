@@ -135,6 +135,9 @@
               <form th:action="@{/friendship/accept_req/__${request.user1.id}__/__${request.user2.id}__/}" method="POST">
                 <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
               </form>
+              <form th:action="@{/friendship/reject_req/__${request.user1.id}__/__${request.user2.id}__/}" method="POST">
+                <button id="reject_friend_req" class="btn btn-secondary" type="submit">Rechazar</button>
+              </form>
             </td>
           </tr>
         </tbody>

@@ -212,6 +212,27 @@ public class FriendshipController {
 		return "{\"result\": \"friend request sent.\"}";
 	}	
 
+	@PostMapping("/reject_req/{sender_id}/{receiver_id}")
+	@ResponseBody
+	@Transactional
+	public String rejectFriendReq(@PathVariable long sender_id, @PathVariable long receiver_id, Model model, HttpSession session){
+		User sender = entityManager.find(User.class, sender_id);
+
+		List<Friendship> frList = new ArrayList<>(sender.getFriendships());
+		frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != receiver_id));
+		
+		Long frId = frList.get(0).getId();
+		Friendship frRequest = entityManager.find(Friendship.class, frId);
+
+		// 1º Eliminar la request de la bbdd
+		entityManager.remove(frRequest);
+		sender.getFriendships().remove(frRequest);
+		entityManager.merge(sender);
+		entityManager.flush();
+
+		return "{\"result\": \"friend request rejected.\"}";
+	}	
+
 	/**
      * Cancel the friend request sent
 	 * @param sender_id user that sent the friend request
