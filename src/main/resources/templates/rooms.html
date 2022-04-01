@@ -12,12 +12,22 @@
     <main class="flex-shrink-0">
         
         <div class="container">
-            <h1 class="text-center">Rooms</h1>
-            <div class="row justify-content-around bg-info bg-gradient bg-opacity-25 border border-secondary rounded-pill my-4 py-3 shadow" th:each="r : ${rooms}">
-                <p class="col-4 fs-4" style="color:blueviolet;" th:text="'Room ' + ${r.id}"></p> 
-                <form class="col-4" th:action="@{/rooms/__${r.id}__}" method="GET">
-                    <button class="w-75 btn btn-primary">See room</button> 
-                </form>           
+            <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow">Rooms</h1>           
+            <div class="row">
+                <div class="card col-12 my-3 px-0 shadow" th:each="r : ${rooms}">
+                    <div class="card-header bg-info bg-gradient bg-opacity-75">
+                        <h2 class="text-center text-white fst-italic" th:text="'Room ' + ${r.id}"></h2>
+                    </div>
+                    <div class="card-body bg-secondary bg-gradient bg-opacity-10">
+                        <h3 class="card-title text-center text-info" th:each="ru: ${r.roomUsers}" th:if="${ru.admin}" th:text="'Room´s Leader: ' + ${ru.user.username}"></h3> 
+                        <p class="card-text text-center fs-4 text-danger" th:text="${r.visibility} + ' Room'"></p>
+                        <p class="card-text text-center fs-4 text-warning" th:text="'Players Online: ' + ${r.roomUsers.size} + '/' + ${r.maxUsers}"></p>
+                        <form class="card-text text-center" th:action="@{/rooms/__${r.id}__}" method="GET">
+                            <button class="w-50 btn btn-outline-info fs-5">Join</button> 
+                        </form> 
+                    </div>
+                    
+                </div>
             </div>
         </div>
 

@@ -59,6 +59,7 @@ public class MatchPlayer implements Serializable{
 	 * Player
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
+
     @ManyToOne
     @JoinColumn(name = "player_id")
     private User player;

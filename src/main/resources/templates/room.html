@@ -11,15 +11,37 @@
 
     <main class="flex-shrink-0">
         <div class="container">
-            <div class="row justify-content-around bg-info bg-gradient bg-opacity-10 py-4 my-4 shadow-lg" style="border-radius: 15px;">
-                <h1 class="col-12 text-center" style="color:blueviolet;" th:text="'Room ' + ${room.id}"></h1>
-                <p class="col-4 text-center fs-4 text-info my-3" th:text="'Type of room: ' + ${room.visibility}"></p>
-                <p class="col-4 text-center fs-4 text-warning my-3" th:text="'Max Players: ' + ${room.maxUsers}"></p>
-                <p class="col-4 text-center fs-4 text-success my-3" th:text="'Current Players: ' + ${room.roomUsers.size}"></p>
-                <p class="col-4 text-center fs-4 text-danger my-3" th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username!=session.u.username}" th:text="'Room´s Leader: ' + ${ru.user.username}"></p>
-                <button class="col-4 btn btn-primary my-3">Play</button>
-                <button th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4 btn btn-primary my-3">Config</button>
+            <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4" th:text="'Room ' + ${room.id}"></h1> 
+            <div class="row justify-content-around" th:each="m : ${matches}">
+                <div class="card col-12 my-3 px-0 shadow">
+                    <div class="card-header bg-info bg-gradient bg-opacity-50">
+                        <h2 class="card-title text-center text-white" th:text="'Match ' + ${m.id}"></h2> 
+                        <h3 class="card-title text-center text-white" th:text="${m.date}"></h3>
+                    </div>
+                    <div class="card-body bg-info bg-gradient bg-opacity-10"> 
+                        <div class="row pb-3">
+                            <div class="col-12 py-3"> 
+                                <h3 class="card-text text-dark text-center">Positions</h3>
+                            </div>
+                            <div class="col-4" th:each="mp, iterator: ${m.matchPlayers}" th:if="${iterator.index < 3}">
+                                <div th:switch="${iterator.index}">
+                                    <p th:case="0" class="card-text fs-4 text-center" style="color:goldenrod;" th:text="${iterator.index + 1} + '. ' + ${mp.player.username}"></p>
+                                    <p th:case="1" class="card-text fs-4 text-center" style="color:silver;" th:text="${iterator.index + 1} + '. ' + ${mp.player.username}"></p>
+                                    <p th:case="2" class="card-text fs-4 text-center" style="color: brown;" th:text="${iterator.index + 1} + '. ' + ${mp.player.username}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>        
             </div>
+
+                <div class="row justify-content-around">
+                    <button class="col-4 fs-4 btn btn-outline-danger">
+                        Go Back</button>
+                    <button th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4 fs-4 btn btn-outline-success">
+                        Begin Match</button>
+                </div>
+
         </div>
     </main>
 

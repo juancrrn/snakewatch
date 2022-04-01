@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -76,9 +77,14 @@ public class Room {
 	 * List of users in this room (as RoomUser objects)
 	 * @see www.baeldung.com/jpa-many-to-many
 	 */
-	@OneToMany( mappedBy = "room")
+	@OneToMany(mappedBy = "room")
 	private List<RoomUser> roomUsers = new ArrayList<>();
 
+
+
+
+    @OneToMany(mappedBy = "room")
+    private List<Match> matches = new ArrayList<>();
 /*
     @Getter
     @AllArgsConstructor
