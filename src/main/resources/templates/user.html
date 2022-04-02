@@ -36,24 +36,24 @@
 
                   <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
                   <form th:action="@{/friendship/send_req/__${session.u.id}__/__${user.id}__/}" method="POST">
-                    <button id="friendship-send-button" class="btn btn-secondary" type="submit">Solicitar amistad</button>
+                    <button id="friendship-send-button" class="btn btn-secondary" type="submit" style="display: none;">Solicitar amistad</button>
                   </form>
 
                   <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
                   <form th:action="@{/friendship/cancel_req/__${session.u.id}__/__${user.id}__/}" method="POST">
-                    <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit">Cancelar solicitud de
+                    <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit" style="display: none;">Cancelar solicitud de
                       amistad enviada</button>
                   </form>
 
                   <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
                   <form th:action="@{/friendship/accept_req/__${user.id}__/__${session.u.id}__/}" method="POST">
-                    <button id="friendship-request-accept-button" class="btn btn-success" type="submit">Aceptar solicitud de
+                    <button id="friendship-request-accept-button" class="btn btn-success" type="submit" style="display: none;">Aceptar solicitud de
                       amistad</button>
                   </form>
 
                   <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
                   <form th:action="@{/friendship/finish/__${session.u.id}__/__${user.id}__/}" method="POST">
-                    <button id="friendship-finish-button" class="btn btn-light" type="submit">Dejar de ser amigos</button>
+                    <button id="friendship-finish-button" class="btn btn-light" type="submit" style="display: none;">Dejar de ser amigos</button>
                   </form>
                 </div>
               </div>
