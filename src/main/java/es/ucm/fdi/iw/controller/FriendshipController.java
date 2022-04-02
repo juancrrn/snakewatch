@@ -76,32 +76,32 @@ public class FriendshipController {
 	 * @param sender_id user that sent the friend request
 	 * @param receiver_id user that received the friend request
      */
-    @PostMapping("/state/{user1_id}/{user2_id}")
+    @PostMapping("/state/{user2_id}")
 	@ResponseBody
 	@Transactional
-	public String getFriendStatus(@PathVariable long user1_id, @PathVariable long user2_id, Model model, HttpSession session){
+	public String getFriendStatus(@PathVariable long user2_id, Model model, HttpSession session){
+    User logged_user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
 		
-		User user1 = entityManager.find(User.class, user1_id);
 		User user2 = entityManager.find(User.class, user2_id);
 		
 		boolean isFriends = false;
 		boolean requestSent = false;
 		boolean requestReceived = false;
 
-		List<Friendship> acceptedFr = new ArrayList<>(user1.getFriendships());
+		List<Friendship> acceptedFr = new ArrayList<>(logged_user.getFriendships());
 		acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED || f.getUser2().getId() != user2.getId()));
 		if(!acceptedFr.isEmpty()){
 			isFriends = true;
 		}
 
-		List<Friendship> pendingFr = new ArrayList<>(user1.getFriendships());
+		List<Friendship> pendingFr = new ArrayList<>(logged_user.getFriendships());
 		pendingFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != user2.getId()));
 		if(!pendingFr.isEmpty()){
 			requestSent = true;
 		}
 
 		List<Friendship> pendingReceivedFr = new ArrayList<>(user2.getFriendships());
-		pendingReceivedFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != user1.getId()));
+		pendingReceivedFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != logged_user.getId()));
 		if(!pendingReceivedFr.isEmpty()){
 			requestReceived = true;
 		}
@@ -129,25 +129,24 @@ public class FriendshipController {
      * Sends a friend request to an user.
      * @param id of target user (source user is obtained from session attributes)
      */
-    @PostMapping("/send_req/{sender_id}/{receiver_id}")
+    @PostMapping("/send_req/{receiver_id}")
 	@ResponseBody
 	@Transactional
-	public String sendFriendReq(@PathVariable long sender_id, @PathVariable long receiver_id, Model model, HttpSession session){
-		
-		User sender = entityManager.find(User.class, sender_id);
+	public String sendFriendReq(@PathVariable long receiver_id, Model model, HttpSession session){
+    User logged_user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
 		User receiver = entityManager.find(User.class, receiver_id);
 
 		// Contruye objeto Friendship y lo guarda en la BD
 		// El estado será PENDING, hasta que el otro usuario la acepte/rechaze
 		Friendship fr = new Friendship();
-		fr.setUser1(sender);
+		fr.setUser1(logged_user);
 		fr.setUser2(receiver);
 		fr.setStatus(Friendship.Status.PENDING);
 		entityManager.persist(fr);
 		entityManager.flush();
 		
 		// Registrar accion en logs		
-		log.info("Sending a friend request from '{}' to '{}'", sender.getUsername(), receiver.getUsername());
+		log.info("Sending a friend request from '{}' to '{}'", logged_user.getUsername(), receiver.getUsername());
 
 		return "{\"result\": \"ok\"}";
 	}	
@@ -157,15 +156,15 @@ public class FriendshipController {
 	 * @param sender_id user that sent the friend request
 	 * @param receiver_id user that received the friend request
      */
-    @PostMapping("/accept_req/{sender_id}/{receiver_id}")
+    @PostMapping("/accept_req/{sender_id}/")
 	@ResponseBody
 	@Transactional
-	public String acceptFriendReq(@PathVariable long sender_id, @PathVariable long receiver_id, Model model, HttpSession session){
+	public String acceptFriendReq(@PathVariable long sender_id, Model model, HttpSession session){
+    User logged_user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
 		User sender = entityManager.find(User.class, sender_id);
-		User receiver = entityManager.find(User.class, receiver_id);
 
 		List<Friendship> frList = new ArrayList<>(sender.getFriendships());
-		frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != receiver_id));
+		frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != logged_user.getId()));
 		
 		Long frId = frList.get(0).getId();
 		Friendship frRequest = entityManager.find(Friendship.class, frId);
@@ -176,30 +175,31 @@ public class FriendshipController {
 
 		// 2º Crear la instancia reversa de friendship
 		Friendship fr2 = new Friendship();
-		fr2.setUser1(receiver);
+		fr2.setUser1(logged_user);
 		fr2.setUser2(sender);
 		fr2.setStatus(Friendship.Status.ACCEPTED);
 		entityManager.persist(fr2);
-		receiver.getFriendships().add(fr2);
+		logged_user.getFriendships().add(fr2);
 		entityManager.merge(sender);
-		entityManager.merge(receiver);
+		entityManager.merge(logged_user);
 		
 		entityManager.flush();
 		
 		// Registrar accion en logs		
-		log.info("Accepting the friend request from '{}' to '{}'", sender.getUsername(), receiver.getUsername());
+		log.info("Accepting the friend request from '{}' to '{}'", sender.getUsername(), logged_user.getUsername());
 
 		return "{\"result\": \"friend request sent.\"}";
 	}	
 
-	@PostMapping("/reject_req/{sender_id}/{receiver_id}")
+	@PostMapping("/reject_req/{sender_id}/")
 	@ResponseBody
 	@Transactional
-	public String rejectFriendReq(@PathVariable long sender_id, @PathVariable long receiver_id, Model model, HttpSession session){
+	public String rejectFriendReq(@PathVariable long sender_id, Model model, HttpSession session){
+    User logged_user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
 		User sender = entityManager.find(User.class, sender_id);
 
 		List<Friendship> frList = new ArrayList<>(sender.getFriendships());
-		frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != receiver_id));
+		frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != logged_user.getId()));
 		
 		Long frId = frList.get(0).getId();
 		Friendship frRequest = entityManager.find(Friendship.class, frId);
@@ -218,13 +218,13 @@ public class FriendshipController {
 	 * @param sender_id user that sent the friend request
 	 * @param receiver_id user that received the friend request
      */
-    @PostMapping("/cancel_req/{sender_id}/{receiver_id}")
+    @PostMapping("/cancel_req/{receiver_id}")
 	@ResponseBody
 	@Transactional
-	public String cancelFriendReq(@PathVariable long sender_id, @PathVariable long receiver_id, Model model, HttpSession session){
-		User sender = entityManager.find(User.class, sender_id);
+	public String cancelFriendReq(@PathVariable long receiver_id, Model model, HttpSession session){
+    User logged_user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
 
-		List<Friendship> frList = new ArrayList<>(sender.getFriendships());
+		List<Friendship> frList = new ArrayList<>(logged_user.getFriendships());
 		frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != receiver_id));
 		
 		Long frId = frList.get(0).getId();
@@ -232,8 +232,8 @@ public class FriendshipController {
 
 		// 1º Eliminar la request de la bbdd
 		entityManager.remove(frRequest);
-		sender.getFriendships().remove(frRequest);
-		entityManager.merge(sender);
+		logged_user.getFriendships().remove(frRequest);
+		entityManager.merge(logged_user);
 		entityManager.flush();
 
 		return "{\"result\": \"friend request canceled.\"}";
@@ -244,20 +244,20 @@ public class FriendshipController {
 	 * @param user1_id user that sent the friend request
 	 * @param user2_id user that received the friend request
      */
-    @PostMapping("/finish/{user1_id}/{user2_id}")
+    @PostMapping("/finish/{user2_id}")
 	@ResponseBody
 	@Transactional
-	public String finishFriendship(@PathVariable long user1_id, @PathVariable long user2_id, Model model, HttpSession session){
-		
-		User user1 = entityManager.find(User.class, user1_id);
+	public String finishFriendship(@PathVariable long user2_id, Model model, HttpSession session){
+    User logged_user = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+
 		User user2 = entityManager.find(User.class, user2_id);
 
-		List<Friendship> frList1 = new ArrayList<>(user1.getFriendships());
+		List<Friendship> frList1 = new ArrayList<>(logged_user.getFriendships());
 		frList1.removeIf(f -> (f.getUser2().getId() != user2.getId()));
 		Long frId1 = frList1.get(0).getId();
 
 		List<Friendship> frList2 = new ArrayList<>(user2.getFriendships());
-		frList2.removeIf(f -> (f.getUser2().getId() != user1.getId()));
+		frList2.removeIf(f -> (f.getUser2().getId() != logged_user.getId()));
 		Long frId2 = frList2.get(0).getId();
 
 		Friendship fr1 = entityManager.find(Friendship.class, frId1);
@@ -268,14 +268,14 @@ public class FriendshipController {
 		// Eliminar las friendships de la bbdd
 		entityManager.remove(fr1);
 		entityManager.remove(fr2);
-		user1.getFriendships().remove(fr1);
+		logged_user.getFriendships().remove(fr1);
 		user2.getFriendships().remove(fr2);
-		entityManager.merge(user1);
+		entityManager.merge(logged_user);
 		entityManager.merge(user2);
 		entityManager.flush();
 		
 		// Registrar accion en logs		
-		log.info("Removing friendship between '{}' to '{}'", user1.getUsername(), user2.getUsername());
+		log.info("Removing friendship between '{}' to '{}'", logged_user.getUsername(), user2.getUsername());
 
 		return "{\"result\": \"friendship finished.\"}";
 	}

@@ -35,24 +35,24 @@
                   <p id="friendship-loading"> Cargando... </p>
 
                   <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
-                  <form th:action="@{/friendship/send_req/__${session.u.id}__/__${user.id}__/}" method="POST">
+                  <form th:action="@{/friendship/send_req/__${user.id}__/}" method="POST">
                     <button id="friendship-send-button" class="btn btn-secondary" type="submit" style="display: none;">Solicitar amistad</button>
                   </form>
 
                   <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
-                  <form th:action="@{/friendship/cancel_req/__${session.u.id}__/__${user.id}__/}" method="POST">
+                  <form th:action="@{/friendship/cancel_req/__${user.id}__/}" method="POST">
                     <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit" style="display: none;">Cancelar solicitud de
                       amistad enviada</button>
                   </form>
 
                   <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
-                  <form th:action="@{/friendship/accept_req/__${user.id}__/__${session.u.id}__/}" method="POST">
+                  <form th:action="@{/friendship/accept_req/__${user.id}__/}" method="POST">
                     <button id="friendship-request-accept-button" class="btn btn-success" type="submit" style="display: none;">Aceptar solicitud de
                       amistad</button>
                   </form>
 
                   <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
-                  <form th:action="@{/friendship/finish/__${session.u.id}__/__${user.id}__/}" method="POST">
+                  <form th:action="@{/friendship/finish/__${user.id}__/}" method="POST">
                     <button id="friendship-finish-button" class="btn btn-light" type="submit" style="display: none;">Dejar de ser amigos</button>
                   </form>
                 </div>
@@ -132,10 +132,10 @@
               <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
             </td>
             <td colspan="1">
-              <form th:action="@{/friendship/accept_req/__${request.user1.id}__/__${request.user2.id}__/}" method="POST">
+              <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" method="POST">
                 <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
               </form>
-              <form th:action="@{/friendship/reject_req/__${request.user1.id}__/__${request.user2.id}__/}" method="POST">
+              <form th:action="@{/friendship/reject_req/__${request.user1.id}__/}" method="POST">
                 <button id="reject_friend_req" class="btn btn-secondary" type="submit">Rechazar</button>
               </form>
             </td>
@@ -190,7 +190,7 @@
   <th:block th:replace="fragments/footer.html :: footer" />
 
   <script th:inline="javascript">
-    var G_FRIENDSHIP_STATE_URL = [[@{/friendship/state/__${session.u.id}__/__${user.id}__/}]];
+    var G_FRIENDSHIP_STATE_URL = [[@{/friendship/state/__${user.id}__/}]];
   </script>
 
   <script th:if="${not isOwnProfile}">
