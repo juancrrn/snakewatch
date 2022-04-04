@@ -25,7 +25,7 @@ VALUES
     (NEXT VALUE FOR room_id_seq, 0, 5),
     (NEXT VALUE FOR room_id_seq, 1, 5);
 
-INSERT INTO Room_User (id, room_id, user_id, admin) 
+/*INSERT INTO Room_User (id, room_id, user_id, admin) 
 VALUES 
     (NEXT VALUE FOR roomuser_id_seq, 1, 1, true),
     (NEXT VALUE FOR roomuser_id_seq, 1, 2, false),
@@ -39,7 +39,7 @@ VALUES
     (NEXT VALUE FOR roomuser_id_seq, 3, 2, true),
     (NEXT VALUE FOR roomuser_id_seq, 3, 3, false),
     (NEXT VALUE FOR roomuser_id_seq, 3, 4, false);
-
+*/
 INSERT INTO Match (id, room_id, level_id, status, max_players, date) 
 VALUES 
     (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, CURDATE()),

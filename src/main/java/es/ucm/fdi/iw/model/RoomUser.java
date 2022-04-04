@@ -2,7 +2,8 @@ package es.ucm.fdi.iw.model;
 
 import javax.persistence.*;
 
-
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+	@NamedQuery(name="RoomUser.getRoomUser",
+	query="SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId AND ru.room.id= :roomId")
+})
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "room_id" }))
 public class RoomUser{
 

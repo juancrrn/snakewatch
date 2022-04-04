@@ -36,10 +36,19 @@
             </div>
 
                 <div class="row justify-content-around">
-                    <button class="col-4 fs-4 btn btn-outline-danger">
-                        Go Back</button>
-                    <button th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4 fs-4 btn btn-outline-success">
-                        Begin Match</button>
+                    <form class="col-4" th:action="@{/rooms/leave_room/__${room.id}__/__${session.u.id}__}" method="POST">
+                        <button class="w-100 text-center fs-4 btn btn-outline-danger">
+                            Leave room
+                        </button>
+                    </form>
+                    
+
+                    <form th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4">
+                        <button class="w-100 text-center fs-4 btn btn-outline-success">
+                            Begin Match
+                        </button>
+                    </form>
+                    
                 </div>
 
         </div>
