@@ -38,8 +38,47 @@
                 </div>
             </div>
         </div>        
+
+        <div class="toast show" style="display: none;">
+            <div class="toast-header">
+              <strong class="me-auto toast-header-title">Toast Header</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+              <p class="toast-body-text">Some text inside the toast body</p>
+            </div>
+        </div>
+
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
+
+
+  
+    <script>
+        function showToast(title, body) {            
+            let toastHTML = document.querySelector(".toast");
+            
+            // Make it visible (remove display = "none")
+            toastHTML.style.display = '';
+
+            // Put sender username in the toast title
+            toastHTML.querySelector('.toast-header-title').innerHTML = title;
+            // Put message content on toast body
+            toastHTML.querySelector('.toast-body-text').innerHTML = body;
+        
+            // Cast it to bootstrap toast and make it show
+            let toast = new bootstrap.Toast(toastHTML);
+            toast.show();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            ws.receive = (text) => {
+                showToast("Nuevo mensaje de " + text.from, text.text);
+            };        
+        });
+    
+      </script>
+
 </body>
 </html>
