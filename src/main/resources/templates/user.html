@@ -190,7 +190,7 @@
   <th:block th:replace="fragments/footer.html :: footer" />
 
   <script th:inline="javascript">
-    var G_FRIENDSHIP_STATE_URL = "[[@{/friendship/state/__${user.id}__/}]]";
+    var G_FRIENDSHIP_STATE_URL = [[@{/friendship/state/__${user.id}__/}]];
   </script>
 
   <script th:if="${not isOwnProfile}">

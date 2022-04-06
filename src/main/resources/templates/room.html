@@ -54,6 +54,20 @@
         </div>
     </main>
 
+    <script th:inline="javascript">
+        var G_ROOMURL = "/topic/room" +[[${room.id}]];
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            ws.subs.push(G_ROOMURL);
+
+            ws.receive = (text) => {
+                alert(text.from);
+            }
+        });
+    </script>
 
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>

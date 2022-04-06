@@ -10,6 +10,7 @@ const ws = {
      */
     retries: 3,
 
+    subs: config.admin ? ["/topic/admin","/user/queue/updates"] : ["/user/queue/updates"],
     /**
      * Default action when message is received. 
      */
@@ -55,6 +56,7 @@ const ws = {
             console.log("Error, could not subscribe to " + sub, e);
         }
     }
+    
 }
 
 /**
@@ -110,8 +112,8 @@ function go(url, method, data = {}) {
  */
 document.addEventListener("DOMContentLoaded", () => {
     if (config.socketUrl) {
-        let subs = config.admin ? ["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"]
-        ws.initialize(config.socketUrl, subs);
+
+        ws.initialize(config.socketUrl, ws.subs);
 
         let p = document.querySelector("#nav-unread");
         if (p) {

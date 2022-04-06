@@ -6,8 +6,16 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +37,8 @@ import es.ucm.fdi.iw.model.User;
 @RequestMapping("rooms")
 public class RoomsController {
     
+    private static final Logger log = LogManager.getLogger(RoomsController.class);
+
     @Autowired
     private EntityManager entityManager;
 
@@ -51,8 +62,10 @@ public class RoomsController {
 
 
     @GetMapping("{roomId}")
+    @MessageMapping
     @Transactional
-    public String getRoom(@PathVariable long roomId, Model model){
+    public String getRoom(@PathVariable long roomId, Model model)
+    throws JsonProcessingException {
         Room room = entityManager.find(Room.class, roomId);
 
         model.addAttribute("room", room);
@@ -68,16 +81,26 @@ public class RoomsController {
         model.addAttribute("matches", matches);
 
         User joinUser =  (User) session.getAttribute("u");
-        
-        RoomUser ru = new RoomUser();
-    
-        ru.setAdmin(false);
-        ru.setUser(joinUser);
-        ru.setRoom(room);
-    
-        entityManager.persist(ru);
 
-        entityManager.flush();     
+        RoomUser ru = new RoomUser();
+
+        ru.setAdmin(false);
+        ru.setRoom(entityManager.find(Room.class, roomId));
+        ru.setUser(entityManager.find(User.class, joinUser.getId()));
+
+        entityManager.persist(ru);
+        entityManager.flush();
+
+
+        ObjectMapper mapper = new ObjectMapper();
+		ObjectNode rootNode = mapper.createObjectNode();
+		rootNode.put("from", "rooms");
+		rootNode.put("to", "room" + roomId);
+		rootNode.put("playersOnline", room.getRoomUsers().size());
+        rootNode.put("userJoiner", joinUser.getUsername());
+		String json = mapper.writeValueAsString(rootNode);
+
+        messagingTemplate.convertAndSend("/topic/room" + roomId, json);
 
         return "room";
     }

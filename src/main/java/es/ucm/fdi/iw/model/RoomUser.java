@@ -25,7 +25,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @NamedQueries({
 	@NamedQuery(name="RoomUser.getRoomUser",
-	query="SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId AND ru.room.id= :roomId")
+	query="SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId AND ru.room.id= :roomId"),
+	@NamedQuery(name="RoomUser.getRoom",
+	query="SELECT ru FROM RoomUser ru WHERE ru.room.id= :roomId"),
 })
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "room_id" }))
 public class RoomUser{

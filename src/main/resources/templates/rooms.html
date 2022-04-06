@@ -23,7 +23,7 @@
                         <p class="card-text text-center fs-4 text-danger" th:text="${r.visibility} + ' Room'"></p>
                         <p class="card-text text-center fs-4 text-warning" th:text="'Players Online: ' + ${r.roomUsers.size} + '/' + ${r.maxUsers}"></p>
                         <form class="card-text text-center" th:action="@{/rooms/__${r.id}__}" method="GET">
-                            <button id="join" class="w-50 btn btn-outline-info fs-5">Join</button> 
+                            <button id="join" class="w-50 btn btn-outline-info fs-5" type="submit">Join</button> 
                         </form> 
                     </div>
                     
@@ -32,6 +32,7 @@
         </div>
 
     </main>
+
 
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
