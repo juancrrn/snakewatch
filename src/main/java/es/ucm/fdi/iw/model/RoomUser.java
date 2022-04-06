@@ -24,6 +24,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @NamedQueries({
+	@NamedQuery(name="RoomUser.getRoomUsers",
+	query="SELECT ru FROM RoomUser ru"),
 	@NamedQuery(name="RoomUser.getRoomUser",
 	query="SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId AND ru.room.id= :roomId"),
 	@NamedQuery(name="RoomUser.getRoom",

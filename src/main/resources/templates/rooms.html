@@ -33,6 +33,16 @@
 
     </main>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            ws.receive = (text) => {
+                if(text.to=='rooms'){
+                    alert(text.text);
+                }
+            }
+        });
+    </script>
 
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>

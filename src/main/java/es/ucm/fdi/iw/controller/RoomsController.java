@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.controller;
 
+import java.io.Console;
 import java.util.Comparator;
 import java.util.List;
 
@@ -69,6 +70,9 @@ public class RoomsController {
         Room room = entityManager.find(Room.class, roomId);
 
         model.addAttribute("room", room);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
         
         List<Match> matches = entityManager
             .createNamedQuery("Match.getRoomsMatches", Match.class)
@@ -82,33 +86,50 @@ public class RoomsController {
 
         User joinUser =  (User) session.getAttribute("u");
 
-        RoomUser ru = new RoomUser();
+        if(session.getAttribute("userInRoom")==null || (long) session.getAttribute("userInRoom")==0){
+            RoomUser ru = new RoomUser();
 
-        ru.setAdmin(false);
-        ru.setRoom(entityManager.find(Room.class, roomId));
-        ru.setUser(entityManager.find(User.class, joinUser.getId()));
+            ru.setAdmin(false);
+            ru.setRoom(entityManager.find(Room.class, roomId));
+            ru.setUser(entityManager.find(User.class, joinUser.getId()));
+    
+            entityManager.persist(ru);
+            entityManager.flush();
 
-        entityManager.persist(ru);
-        entityManager.flush();
+            session.setAttribute("userInRoom", roomId);
 
+            rootNode.put("from", "rooms");
+            rootNode.put("to", "room" + roomId);
+            rootNode.put("type", "join");
+            rootNode.put("playersOnline", room.getRoomUsers().size());
+            rootNode.put("userJoiner", joinUser.getUsername());
+            String json = mapper.writeValueAsString(rootNode);
+    
+            messagingTemplate.convertAndSend("/topic/room" + roomId, json);
+    
+            return "room";
+        }
+        else{
+            if((long) session.getAttribute("userInRoom")!=roomId){
+                rootNode.put("from", "rooms");
+                rootNode.put("to", "rooms");
+                rootNode.put("text", "You just join Room " + (long) session.getAttribute("userInRoom"));
+                String json = mapper.writeValueAsString(rootNode);
+        
+                messagingTemplate.convertAndSend("/user/" + joinUser.getUsername() + "/queue/updates", json);
 
-        ObjectMapper mapper = new ObjectMapper();
-		ObjectNode rootNode = mapper.createObjectNode();
-		rootNode.put("from", "rooms");
-		rootNode.put("to", "room" + roomId);
-		rootNode.put("playersOnline", room.getRoomUsers().size());
-        rootNode.put("userJoiner", joinUser.getUsername());
-		String json = mapper.writeValueAsString(rootNode);
+                return "redirect:/rooms";
+            }
 
-        messagingTemplate.convertAndSend("/topic/room" + roomId, json);
-
-        return "room";
+            return "room";
+        }
     }
 
     @PostMapping("/leave_room/{roomId}/{userleaveId}")
     @ResponseBody
     @Transactional
-    public String leaveRoom(@PathVariable long roomId, @PathVariable long userleaveId, Model model){
+    public String leaveRoom(@PathVariable long roomId, @PathVariable long userleaveId, Model model)
+    throws JsonProcessingException {
         RoomUser ru = entityManager
             .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
             .setParameter("roomId", roomId)
@@ -118,6 +139,20 @@ public class RoomsController {
         
         entityManager.remove(ru);
         entityManager.flush();
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
+
+        rootNode.put("from", "rooms");
+        rootNode.put("to", "room" + roomId);
+        rootNode.put("type", "leave");
+        rootNode.put("userLeaver", ru.getUser().getUsername());
+        String json = mapper.writeValueAsString(rootNode);
+
+        messagingTemplate.convertAndSend("/topic/room" + roomId, json);
+
+        
+        session.setAttribute("userInRoom", Integer.toUnsignedLong(0));
 
         return "{\"result\": \"leave room complete.\"}";
     }

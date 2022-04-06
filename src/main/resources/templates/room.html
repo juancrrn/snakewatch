@@ -51,6 +51,17 @@
                     
                 </div>
 
+
+                <div class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" style="display:none;">
+                    <div class="toast-header">
+                        <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                        <strong class="me-auto">Snakewatch</strong>
+                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <p class="toast-body-text">Some text inside the toast body</p>
+                    </div>
+                </div>
         </div>
     </main>
 
@@ -63,8 +74,28 @@
 
             ws.subs.push(G_ROOMURL);
 
+
+            function showToast(text){
+
+                let toastHTML = document.querySelector(".toast");
+            
+                // Make it visible (remove display = "none")
+                toastHTML.style.display = '';
+                // Put message content on toast body
+                if(text.type=='join'){
+                    toastHTML.querySelector('.toast-body-text').innerHTML = text.userJoiner + " joined the game!!!!!!";
+                }
+                else if(text.type=='leave'){
+                    toastHTML.querySelector('.toast-body-text').innerHTML = text.userLeaver + " left the game!!!!!!";
+                }
+                // Cast it to bootstrap toast and make it show
+                let toast = new bootstrap.Toast(toastHTML);
+                toast.show();
+
+            }
+
             ws.receive = (text) => {
-                alert(text.from);
+                showToast(text);
             }
         });
     </script>
