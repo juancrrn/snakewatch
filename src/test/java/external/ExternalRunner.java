@@ -18,4 +18,10 @@ class ExternalRunner {
     Karate testPrincipal() {
         return Karate.run("principal").relativeTo(getClass());
     }  
+
+    @Karate.Test
+    Karate testPrincipal2() {
+        return Karate.run("principal2").relativeTo(getClass());
+    } 
+
 }
