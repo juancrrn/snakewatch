@@ -36,7 +36,7 @@
             </div>
 
                 <div class="row justify-content-around">
-                    <form class="col-4" th:action="@{/rooms/leave_room/__${room.id}__/__${session.u.id}__}" method="POST">
+                    <form class="col-4" th:action="@{/rooms/leave_room/__${room.id}__}" method="POST">
                         <button class="w-100 text-center fs-4 btn btn-outline-danger">
                             Leave room
                         </button>

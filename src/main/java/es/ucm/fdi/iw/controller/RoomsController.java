@@ -121,17 +121,20 @@ public class RoomsController {
         }
     }
 
-    @PostMapping("/leave_room/{roomId}/{userleaveId}")
+    @PostMapping("/leave_room/{roomId}")
     @ResponseBody
     @Transactional
-    public String leaveRoom(@PathVariable long roomId, @PathVariable long userleaveId, Model model)
+    public String leaveRoom(@PathVariable long roomId, Model model)
     throws JsonProcessingException {
+        User leaveUser =  (User) session.getAttribute("u");
+
         RoomUser ru = entityManager
             .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
             .setParameter("roomId", roomId)
-            .setParameter("userId", userleaveId)
+            .setParameter("userId", leaveUser.getId())
             .getSingleResult();
 
+        leaveUser.getRoomUsers().remove(ru);
         
         entityManager.remove(ru);
         entityManager.flush();
