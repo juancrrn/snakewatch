@@ -1,6 +1,5 @@
 package es.ucm.fdi.iw.controller;
 
-import java.io.Console;
 import java.util.Comparator;
 import java.util.List;
 
@@ -8,13 +7,11 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -24,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -85,18 +81,18 @@ public class RoomsController {
         model.addAttribute("matches", matches);
 
         User joinUser =  (User) session.getAttribute("u");
-
-        if(session.getAttribute("userInRoom")==null || (long) session.getAttribute("userInRoom")==0){
+    
+        if(joinUser.getRoomUsers().size()==0){
             RoomUser ru = new RoomUser();
 
             ru.setAdmin(false);
             ru.setRoom(entityManager.find(Room.class, roomId));
             ru.setUser(entityManager.find(User.class, joinUser.getId()));
+
+            joinUser.getRoomUsers().add(ru);
     
             entityManager.persist(ru);
             entityManager.flush();
-
-            session.setAttribute("userInRoom", roomId);
 
             rootNode.put("from", "rooms");
             rootNode.put("to", "room" + roomId);
@@ -110,10 +106,10 @@ public class RoomsController {
             return "room";
         }
         else{
-            if((long) session.getAttribute("userInRoom")!=roomId){
+            if(joinUser.getRoomUsers().get(0).getRoom().getId()!=roomId){
                 rootNode.put("from", "rooms");
                 rootNode.put("to", "rooms");
-                rootNode.put("text", "You just join Room " + (long) session.getAttribute("userInRoom"));
+                rootNode.put("text", "You just join Room " + joinUser.getRoomUsers().get(0).getRoom().getId());
                 String json = mapper.writeValueAsString(rootNode);
         
                 messagingTemplate.convertAndSend("/user/" + joinUser.getUsername() + "/queue/updates", json);
@@ -150,9 +146,6 @@ public class RoomsController {
         String json = mapper.writeValueAsString(rootNode);
 
         messagingTemplate.convertAndSend("/topic/room" + roomId, json);
-
-        
-        session.setAttribute("userInRoom", Integer.toUnsignedLong(0));
 
         return "{\"result\": \"leave room complete.\"}";
     }
