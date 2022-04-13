@@ -66,25 +66,29 @@
     </main>
 
     <script th:inline="javascript">
-        var G_ROOMURL = "/topic/room" +[[${room.id}]];
+        var G_ROOMURL = "/topic/room" + [[${room.id}]];
         var G_USERSESSION = [[${session.u.username}]];
     </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-            ws.subs.push(G_ROOMURL);
-
             const messageToSend = {
                 from: G_USERSESSION,
                 to: G_ROOMURL             
             }
 
+            function init(){
+                ws.subscribe(G_ROOMURL);
+            }
+
             function sendMessage(){
                 if(ws){
-                    ws.send(G_ROOMURL, { 'X-CSRF-TOKEN': config.csrf.value } ,JSON.stringify(messageToSend));
+                    ws.stompClient.send(G_ROOMURL, ws.headers ,JSON.stringify(messageToSend));
                 }
             }
+
+            setTimeout(init, 100);
          
             setInterval(sendMessage, 5000);
 
@@ -109,10 +113,14 @@
             }
 
             ws.receive = (text) => {
-                alert(text);
-                //showToast(text);              
+                    if(text.from=="rooms"){
+                        showToast(text);   
+                    }
+                    else if(text.from!=G_USERSESSION){
+                        alert(text.from);
+                    }            
             }
-
+            
         });
     </script>
 

@@ -9,8 +9,6 @@ const ws = {
      * Number of retries if connection fails
      */
     retries: 3,
-
-    subs: config.admin ? ["/topic/admin","/user/queue/updates"] : ["/user/queue/updates"],
     /**
      * Default action when message is received. 
      */
@@ -55,9 +53,6 @@ const ws = {
         } catch (e) {
             console.log("Error, could not subscribe to " + sub, e);
         }
-    },
-    send: (channel, headers, message) =>{
-        ws.stompClient.send(channel,headers, message);
     }
 }
 
@@ -114,8 +109,8 @@ function go(url, method, data = {}) {
  */
 document.addEventListener("DOMContentLoaded", () => {
     if (config.socketUrl) {
-
-        ws.initialize(config.socketUrl, ws.subs);
+        let subs = config.admin ? ["/topic/admin","/user/queue/updates"] : ["/user/queue/updates"];
+        ws.initialize(config.socketUrl, subs);
 
         let p = document.querySelector("#nav-unread");
         if (p) {
