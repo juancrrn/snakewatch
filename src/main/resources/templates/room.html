@@ -67,12 +67,26 @@
 
     <script th:inline="javascript">
         var G_ROOMURL = "/topic/room" +[[${room.id}]];
+        var G_USERSESSION = [[${session.u.username}]];
     </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
             ws.subs.push(G_ROOMURL);
+
+            const messageToSend = {
+                from: G_USERSESSION,
+                to: G_ROOMURL             
+            }
+
+            function sendMessage(){
+                if(ws){
+                    ws.send(G_ROOMURL, { 'X-CSRF-TOKEN': config.csrf.value } ,JSON.stringify(messageToSend));
+                }
+            }
+         
+            setInterval(sendMessage, 5000);
 
 
             function showToast(text){
@@ -95,8 +109,10 @@
             }
 
             ws.receive = (text) => {
-                showToast(text);
+                alert(text);
+                //showToast(text);              
             }
+
         });
     </script>
 

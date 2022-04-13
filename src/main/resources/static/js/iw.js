@@ -55,8 +55,10 @@ const ws = {
         } catch (e) {
             console.log("Error, could not subscribe to " + sub, e);
         }
+    },
+    send: (channel, headers, message) =>{
+        ws.stompClient.send(channel,headers, message);
     }
-    
 }
 
 /**
