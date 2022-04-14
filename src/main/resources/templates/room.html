@@ -12,6 +12,20 @@
     <main class="flex-shrink-0">
         <div class="container">
             <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4" th:text="'Room ' + ${room.id}"></h1> 
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Players Online
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul id="playersList" style="list-style: none;"></ul>
+                        </div>    
+                    </div>
+                </div>
+            </div> 
             <div class="row justify-content-around" th:each="m : ${matches}">
                 <div class="card col-12 my-3 px-0 shadow">
                     <div class="card-header bg-info bg-gradient bg-opacity-50">
@@ -68,30 +82,39 @@
     <script th:inline="javascript">
         var G_ROOMURL = "/topic/room" + [[${room.id}]];
         var G_USERSESSION = [[${session.u.username}]];
+        var G_ADMIN = [[${admin}]];
     </script>
 
-    <script>
+    <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
 
             const messageToSend = {
                 from: G_USERSESSION,
-                to: G_ROOMURL             
+                to: G_ROOMURL
             }
 
             function init(){
                 ws.subscribe(G_ROOMURL);
             }
 
+
             function sendMessage(){
-                if(ws){
-                    ws.stompClient.send(G_ROOMURL, ws.headers ,JSON.stringify(messageToSend));
+
+                var accordionBody = document.getElementById('playersList');
+                accordionBody.innerHTML = '';
+
+                if(G_ADMIN == G_USERSESSION){
+                   
+                    const messageAdmin = {
+                            from: G_ADMIN,
+                            to: G_ROOMURL
+                        }
+
+                    ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageAdmin));
+                    
                 }
+                    
             }
-
-            setTimeout(init, 100);
-         
-            setInterval(sendMessage, 5000);
-
 
             function showToast(text){
 
@@ -112,13 +135,28 @@
 
             }
 
+            setTimeout(init, 100);
+         
+            setInterval(sendMessage, 5000);
+
             ws.receive = (text) => {
                     if(text.from=="rooms"){
                         showToast(text);   
                     }
-                    else if(text.from!=G_USERSESSION){
-                        alert(text.from);
-                    }            
+                    else if(text.from==G_ADMIN && text.to==G_ROOMURL){
+                        const messageRoomUser = {
+                            from: G_USERSESSION,
+                            to: G_ADMIN
+                        }
+
+                        ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageRoomUser));
+
+                    }
+                    else if(text.to==G_ADMIN && text.from!=G_USERSESSION){
+                        var accordionBody = document.getElementById('playersList');
+                        accordionBody.innerHTML += "<li><p>" + text.from + "</p></li>";
+                    }
+                     
             }
             
         });

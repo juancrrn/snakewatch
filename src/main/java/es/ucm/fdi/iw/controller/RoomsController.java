@@ -113,6 +113,7 @@ public class RoomsController {
     @GetMapping("{roomId}")
     public String getRoom(@PathVariable long roomId, Model model)
     throws JsonProcessingException {
+
         Room room = entityManager.find(Room.class, roomId);
         model.addAttribute("room", room);
         
@@ -122,6 +123,14 @@ public class RoomsController {
             matches.get(i).getMatchPlayers().sort(Comparator.comparing(MatchPlayer::getPosition));
         }
         model.addAttribute("matches", matches);
+
+
+        for(int i=0; i < room.getRoomUsers().size();i++){
+            if(room.getRoomUsers().get(i).isAdmin()){
+                model.addAttribute("admin", room.getRoomUsers().get(i).getUser().getUsername());
+                break;
+            }
+        }
 
         return "room";
     }
