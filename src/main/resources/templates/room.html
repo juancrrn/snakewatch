@@ -88,11 +88,6 @@
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
 
-            const messageToSend = {
-                from: G_USERSESSION,
-                to: G_ROOMURL
-            }
-
             function init(){
                 ws.subscribe(G_ROOMURL);
             }
@@ -137,11 +132,11 @@
 
             setTimeout(init, 100);
          
-            setInterval(sendMessage, 5000);
+            setInterval(sendMessage, 2500);
 
             ws.receive = (text) => {
                     if(text.from=="rooms"){
-                        showToast(text);   
+                        showToast(text);
                     }
                     else if(text.from==G_ADMIN && text.to==G_ROOMURL){
                         const messageRoomUser = {
