@@ -88,27 +88,33 @@
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
 
+            var playersName = ['admin'];
+
             function init(){
                 ws.subscribe(G_ROOMURL);
             }
 
 
-            function sendMessage(){
-
-                var accordionBody = document.getElementById('playersList');
-                accordionBody.innerHTML = '';
-
-                if(G_ADMIN == G_USERSESSION){
-                   
-                    const messageAdmin = {
-                            from: G_ADMIN,
-                            to: G_ROOMURL
-                        }
-
-                    ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageAdmin));
-                    
+            function userMessage(){
+                const messageUser = {
+                    from: G_USERSESSION,
+                    to: G_ADMIN
                 }
-                    
+
+                ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageUser));        
+                
+            }
+
+            function adminMessage(){
+                const messageAdmin = {
+                    from: G_ADMIN,
+                    to: G_ROOMURL,
+                    message: playersName
+                }
+
+                ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageAdmin));
+
+                playersName = ['admin'];
             }
 
             function showToast(text){
@@ -132,24 +138,29 @@
 
             setTimeout(init, 100);
          
-            setInterval(sendMessage, 2500);
+            if(G_ADMIN!=G_USERSESSION){
+                setInterval(userMessage, 1000)
+            }
+            else{
+                setInterval(adminMessage, 2500);
+            }
 
             ws.receive = (text) => {
                     if(text.from=="rooms"){
                         showToast(text);
                     }
-                    else if(text.from==G_ADMIN && text.to==G_ROOMURL){
-                        const messageRoomUser = {
-                            from: G_USERSESSION,
-                            to: G_ADMIN
+                    else if(text.to==G_ADMIN && G_USERSESSION==G_ADMIN){
+                        if(playersName.indexOf(text.from)==-1){
+                            playersName.push(text.from);
                         }
-
-                        ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageRoomUser));
-
                     }
-                    else if(text.to==G_ADMIN && text.from!=G_USERSESSION){
-                        var accordionBody = document.getElementById('playersList');
-                        accordionBody.innerHTML += "<li><p>" + text.from + "</p></li>";
+                    else if(text.to==G_ROOMURL && text.from==G_ADMIN){  
+                        var accordionBody = document.getElementById('playersList');     
+                        var accordionHTML = '';
+                        for(var i=0; i< text.message.length;i++){
+                            accordionHTML += "<li><p>" +  text.message[i] + "</p></li>";
+                        }
+                        accordionBody.innerHTML = accordionHTML;
                     }
                      
             }
