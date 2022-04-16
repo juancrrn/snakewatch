@@ -174,7 +174,9 @@
         </thead>
         <tbody>
           <tr rowspan="1" th:each="roomUser: ${roomUsers}">
-            <td colspan="1" th:text="${roomUser.room.id}">ID</td>
+            <td colspan="1">
+              <a th:href="@{/rooms/__${roomUser.room.id}__}" th:text="${roomUser.room.id} |">ID</a>
+            </td>
             <td colspan="1" th:text="${roomUser.room.visibility}">Privacy</td>
 
             <td th:each="participant: ${roomUser.room.getRoomUsers()}">
