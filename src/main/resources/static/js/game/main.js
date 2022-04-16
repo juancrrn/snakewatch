@@ -1,21 +1,51 @@
+
+
 var myGamePiece;
 var myObstacles = [];
 var myScore;
 
+
+const cellSize = 20;
+const mapSize = 500;
+var numRows;
+var numCols;
+
+var snake;      // player snake
+var botSnakes;  // array with all botSnakes
+var food;
+
+
+/** 
+ * Called when the html has finished been loaded
+ */
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 10, 120);
-    myGamePiece.gravity = 0.05;
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    numRows = 500 / cellSize;
+    numCols = 500 / cellSize;
+
+    snake = new Snake();
+    food = new Food();
+    botSnakes = [];
+    botSnakes[0] = new BotSnake();
+    botSnakes[1] = new BotSnake();
+    botSnakes[2] = new BotSnake();
+    botSnakes[3] = new BotSnake();
+    botSnakes[4] = new BotSnake();
+
+    //myGamePiece = new component(30, 30, "red", 10, 120);
+    //myGamePiece.gravity = 0.05;
+    //myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
 }
 
 var myGameArea = {
-    //canvas: document.createElement("canvas"),
     canvas: document.getElementById("canvas"),
     start: function () {
+        this.canvas.width = mapSize;
+        this.canvas.height = mapSize;
+
         this.context = this.canvas.getContext("2d");
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
+        this.interval = setInterval(updateGameArea, 100);
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -74,7 +104,24 @@ function component(width, height, color, x, y, type) {
     }
 }
 
+/**
+ * Called periodically with setInterval(...)
+ */
 function updateGameArea() {
+    // Update positions and status of all snakes
+    botSnakes.forEach(botSnake => botSnake.update());
+    snake.update();
+
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+
+    // Paint new cycle on screen
+    snake.draw(myGameArea.context);
+    botSnakes.forEach(botSnake => botSnake.draw(myGameArea.context));
+    food.draw(myGameArea.context);
+
+
+    /*
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
@@ -102,6 +149,7 @@ function updateGameArea() {
     myScore.update();
     myGamePiece.newPos();
     myGamePiece.update();
+    */
 }
 
 function everyinterval(n) {
@@ -111,4 +159,18 @@ function everyinterval(n) {
 
 function accelerate(n) {
     myGamePiece.gravity = n;
+}
+
+/**
+ * @returns número aleatorio entre min (incluido) y max (excluido)
+ */
+function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+/**
+ * @returns distance between the points (x1,y1) and (x2,y2)
+ */
+function dist(x1, y1, x2, y2) {
+    return Math.sqrt((Math.pow((x1 - x2), 2)) + (Math.pow((y1 - y2), 2)))
 }

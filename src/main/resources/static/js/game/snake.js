@@ -15,12 +15,12 @@ class Snake {
 
   constructor() {
     // Appear on a random spot of the map
-    var initX = floor(random(0, numCols - 1));
-    var initY = floor(random(0, numRows - 1));
+    var initX = Math.floor(getRandom(0, numCols - 1));
+    var initY = Math.floor(getRandom(0, numRows - 1));
 
     // Initial body has just 1 position (snake of size 1)
     this.body = [];
-    this.body[0] = createVector(initX, initY);
+    this.body[0] = {x: initX, y:initY};
 
     // Initial direction (right):
     this.xDir = 1;
@@ -38,7 +38,7 @@ class Snake {
     }
 
     // Put "next position" at [0] of array and shift the rest (snake grows)
-    this.body.unshift(createVector(newX, newY));
+    this.body.unshift({x: newX, y:newY});
 
     // Check if "next position" has food. If not, body restores previous size
     this.checkEat();
@@ -95,23 +95,24 @@ class Snake {
     snake = new Snake();
   }
 
-  draw() {
-    // Paint each cell of the body of the snake
-    var color = this.color;
-    noStroke();
+  draw(gameAreaContext) {
+
+    gameAreaContext.fillStyle = "blue";
+    
 
     for (var i = 0; i < this.body.length; i++) {
-      fill(color[0], color[1], color[2]);
+      //fill(color[0], color[1], color[2]);
 
       // Locate exact pixel where the cell has to be placed
       var xPixel = this.body[i].x * cellSize;
       var yPixel = this.body[i].y * cellSize;
 
       // Paint the cell
-      rect(xPixel, yPixel, cellSize, cellSize);
+      //rect(xPixel, yPixel, cellSize, cellSize);
+      gameAreaContext.fillRect(xPixel, yPixel, cellSize, cellSize);
 
       // Decrease color to have cool grading efect
-      color[0] -= 16; color[1] -= 16; color[2] -= 16;
+      //color[0] -= 16; color[1] -= 16; color[2] -= 16;
     }
   }
 
@@ -133,3 +134,4 @@ class Snake {
   }
 
 }
+

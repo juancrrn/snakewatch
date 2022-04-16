@@ -10,11 +10,11 @@ var food;
 // P5js function: called just once at beginning of game
 function setup() {
   createCanvas(mapSize, mapSize);
-  
+
   // Compute number of rows/columns
   numRows = 500 / cellSize;
   numCols = 500 / cellSize;
-  
+
   snake = new Snake();
   food = new Food();
   botSnakes = [];
@@ -23,7 +23,7 @@ function setup() {
   botSnakes[2] = new BotSnake();
   botSnakes[3] = new BotSnake();
   botSnakes[4] = new BotSnake();
-  
+
   // speed of new cycles (slow for arcade games)
   frameRate(5);
 }
@@ -34,11 +34,11 @@ function draw() {
 
   // Enviar estado local al servidor
   // Obtener el estado global del servidor
-  
+
   // Update positions and status of all snakes
   botSnakes.forEach(botSnake => botSnake.update());
   snake.update();
-  
+
   // Paint new cycle on screen
   snake.draw();
   botSnakes.forEach(botSnake => botSnake.draw());
@@ -49,7 +49,7 @@ function draw() {
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
     snake.newDir(-1, 0);
-  } 
+  }
   else if (keyCode === RIGHT_ARROW) {
     snake.newDir(1, 0);
   }
