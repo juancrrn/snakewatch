@@ -12,8 +12,56 @@
     <main class="flex-shrink-0">
         <div class="container">
             <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4" th:text="'Room ' + ${room.id}"></h1> 
-            
-            <div class="d-flex justify-content-center accordion" id="accordionExample">
+
+            <div class="card mb-5">
+                <div class="card-header bg-info bg-opacity-50">
+                    <h1 class="text-center bg-info bg-opacity-10">Last Matches</h1>
+                </div>
+                <div class="card-body bg-primary bg-opacity-10">
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">  
+                            <div th:each="m, iterator : ${matches}" th:if="${iterator.index==0}" class="carousel-item active">
+                                <img th:src="@{/img/logo.png}" class="d-block w-25 h-25">
+                                <div class="carousel-caption d-none d-sm-block">
+                                    <h4 class="text-center" th:text="'Match ' + ${m.id}"></h4>
+                                    <p class="text-center" th:text="${m.date}"></p>
+                                    <h5 class="text-center">Winner</h5>
+                                    <div th:each="mp, iterator: ${m.matchPlayers}" th:if="${iterator.index < 1}">
+                                        <p class="fs-6 text-center" style="color:goldenrod;" th:text="${mp.player.username}"></p>                          
+                                    </div>
+                                </div>                   
+                            </div>
+                            <div th:each="m, iterator : ${matches}" th:unless="${iterator.index==0}" class="carousel-item">
+                                <img th:src="@{/img/logo.png}" class="d-block w-25 h-25">
+                                <div class="carousel-caption d-none d-sm-block">
+                                    <h4 class="text-center" th:text="'Match ' + ${m.id}"></h4>
+                                    <p class="text-center" th:text="${m.date}"></p>
+                                    <h5 class="text-center">Winner</h5>
+                                    <div th:each="mp, iterator: ${m.matchPlayers}" th:if="${iterator.index < 1}">
+                                            <p class="fs-6 text-center" style="color:goldenrod;" th:text="${mp.player.username}"></p>                          
+                                    </div>
+                                </div>
+                            </div>                   
+                        </div>                   
+        
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleDark" th:each="m, iterator : ${matches}" th:if="${iterator.index==0}" th:attr="data-bs-slide-to=${iterator.index}" class="active" aria-current="true"></button>
+                            <button type="button" data-bs-target="#carouselExampleDark" th:each="m, iterator : ${matches}" th:unless="${iterator.index==0}" th:attr="data-bs-slide-to=${iterator.index}" aria-current="true"></button>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="d-flex justify-content-center accordion my-5" id="accordionExample">
                 <div class="col-4 accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                       <button class="accordion-button bg-info text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -27,56 +75,35 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-around" th:each="m : ${matches}">
-                <div class="card col-12 my-3 px-0 shadow">
-                    <div class="card-header bg-info bg-gradient bg-opacity-50">
-                        <h2 class="card-title text-center text-white" th:text="'Match ' + ${m.id}"></h2> 
-                        <h3 class="card-title text-center text-white" th:text="${m.date}"></h3>
-                    </div>
-                    <div class="card-body bg-info bg-gradient bg-opacity-10"> 
-                        <div class="row pb-3">
-                            <div class="col-12 py-3"> 
-                                <h3 class="card-text text-dark text-center">Positions</h3>
-                            </div>
-                            <div class="col-4" th:each="mp, iterator: ${m.matchPlayers}" th:if="${iterator.index < 3}">
-                                <div th:switch="${iterator.index}">
-                                    <p th:case="0" class="card-text fs-4 text-center" style="color:goldenrod;" th:text="${iterator.index + 1} + '. ' + ${mp.player.username}"></p>
-                                    <p th:case="1" class="card-text fs-4 text-center" style="color:silver;" th:text="${iterator.index + 1} + '. ' + ${mp.player.username}"></p>
-                                    <p th:case="2" class="card-text fs-4 text-center" style="color: brown;" th:text="${iterator.index + 1} + '. ' + ${mp.player.username}"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>        
+
+
+            <div class="row justify-content-around mt-5">
+                <form class="col-4" th:action="@{/rooms/leave_room/__${room.id}__}" method="POST">
+                    <button class="w-100 text-center fs-4 btn btn-outline-danger">
+                        Leave room
+                    </button>
+                </form>
+                
+
+                <form th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4">
+                    <button class="w-100 text-center fs-4 btn btn-outline-success">
+                        Begin Match
+                    </button>
+                </form>
+                
             </div>
 
-                <div class="row justify-content-around">
-                    <form class="col-4" th:action="@{/rooms/leave_room/__${room.id}__}" method="POST">
-                        <button class="w-100 text-center fs-4 btn btn-outline-danger">
-                            Leave room
-                        </button>
-                    </form>
-                    
 
-                    <form th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4">
-                        <button class="w-100 text-center fs-4 btn btn-outline-success">
-                            Begin Match
-                        </button>
-                    </form>
-                    
+            <div class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" style="display:none;">
+                <div class="toast-header">
+                    <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                    <strong class="me-auto">Snakewatch</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
-
-
-                <div class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" style="display:none;">
-                    <div class="toast-header">
-                        <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
-                        <strong class="me-auto">Snakewatch</strong>
-                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        <p class="toast-body-text">Some text inside the toast body</p>
-                    </div>
+                <div class="toast-body">
+                    <p class="toast-body-text">Some text inside the toast body</p>
                 </div>
+            </div>
         </div>
     </main>
 
