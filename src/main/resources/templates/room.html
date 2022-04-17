@@ -12,20 +12,21 @@
     <main class="flex-shrink-0">
         <div class="container">
             <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4" th:text="'Room ' + ${room.id}"></h1> 
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
+            
+            <div class="d-flex justify-content-center accordion" id="accordionExample">
+                <div class="col-4 accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <button class="accordion-button bg-info text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                         Players Online
                       </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <ul id="playersList" style="list-style: none;"></ul>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body p-0">
+                            <ul id="playersList" class="list-group"></ul>
                         </div>    
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="row justify-content-around" th:each="m : ${matches}">
                 <div class="card col-12 my-3 px-0 shadow">
                     <div class="card-header bg-info bg-gradient bg-opacity-50">
@@ -110,7 +111,7 @@
                 var accordionBody = document.getElementById('playersList');
                 accordionBody.innerHTML = '';
                 for(var i=0;i<playersNames.length;i++){
-                    accordionBody.innerHTML+= "<li><p>" + playersNames[i] + "</p></li>";
+                    accordionBody.innerHTML+= "<li class='list-group-item text-center bg-info bg-opacity-25'><p>" + playersNames[i] + "</p></li>";
                 }
 
                 playersNames.splice(0, playersNames.length);
