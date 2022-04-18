@@ -13,7 +13,7 @@
         
         <div class="container">
             <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow">Rooms</h1>           
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="card col-12 my-3 px-0 shadow" th:each="r : ${roomsInfo}">
                     <div class="card-header bg-info bg-gradient bg-opacity-75">
                         <h2 class="text-center text-white fst-italic" th:text="'Room ' + ${r[0].id}"></h2>
@@ -27,9 +27,15 @@
                         </form> 
                         <form th:if="${r[1]}"class="card-text text-center" th:action="@{/rooms/__${r[0].id}__}" method="GET">
                             <button id="entry" class="w-50 btn btn-outline-info fs-5" type="submit">Entry</button> 
-                        </form> 
+                        </form>
                     </div>
                     
+                </div>
+
+                <div class="row justify-content-center">
+                    <form class="col-4 text-center" th:action="@{/rooms/create_room}" method="POST">
+                        <button class="w-100 btn btn-outline-success fs-5" type="submit">Create Room</button>
+                    </form>
                 </div>
             </div>
         </div>
