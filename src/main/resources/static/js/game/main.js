@@ -1,19 +1,21 @@
-const cellSize = 20;
-const mapSize = 500;
-var numRows;
-var numCols;
+const cycleTime = 200;      // Duration of a cycle (refresh period time)
+const cellSize = 20;        // Size of a square cell unit
+const mapSize = 500;        // Size of the whole map
 
-var snake;      // player snake
-var botSnakes;  // array with all botSnakes
+var numRows;        // numRows = mapSize / cellSize
+var numCols;        // numCols = mapSize / cellSize
+
+var snake;          // player snake
+var botSnakes;      // array with all botSnakes
 var food;
-
+var walls;          // array of wall positions
 
 /** 
  * Called when the html has finished been loaded
  */
 function startGame() {
-    numRows = 500 / cellSize;
-    numCols = 500 / cellSize;
+    numRows = mapSize / cellSize;
+    numCols = mapSize / cellSize;
 
     snake = new Snake();
     food = new Food();
@@ -23,6 +25,13 @@ function startGame() {
     botSnakes[2] = new BotSnake();
     botSnakes[3] = new BotSnake();
     botSnakes[4] = new BotSnake();
+    
+    walls = [];
+    walls[0] = new Wall();
+    walls[1] = new Wall();
+    walls[2] = new Wall();
+    walls[3] = new Wall();
+    walls[4] = new Wall();
 
     myGameArea.start();
 }
@@ -37,7 +46,20 @@ var myGameArea = {
         this.canvas.height = mapSize;
 
         this.context = this.canvas.getContext("2d");
-        this.interval = setInterval(updateGameArea, 100);
+        this.interval = setInterval(this.update, cycleTime);
+    },
+    update: function () {
+        //Called periodically by setInterval() on myGameArea.start()
+        botSnakes.forEach(botSnake => botSnake.update());
+        snake.update();
+
+        myGameArea.clear();
+
+        // Paint new cycle on screen
+        snake.draw(myGameArea.context);
+        botSnakes.forEach(botSnake => botSnake.draw(myGameArea.context));
+        food.draw(myGameArea.context);
+        walls.forEach(wall => wall.draw(myGameArea.context));
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -45,30 +67,9 @@ var myGameArea = {
 }
 
 /**
- * Called periodically with setInterval(...)
- */
-function updateGameArea() {
-    // Update positions and status of all snakes
-    botSnakes.forEach(botSnake => botSnake.update());
-    snake.update();
-
-    myGameArea.clear();
-    myGameArea.frameNo += 1;
-
-    // Paint new cycle on screen
-    snake.draw(myGameArea.context);
-    botSnakes.forEach(botSnake => botSnake.draw(myGameArea.context));
-    food.draw(myGameArea.context);    
-}
-
-function accelerate(n) {
-    myGamePiece.gravity = n;
-}
-
-/**
  * Arrow keys pressed -> update dir of player snake
  */
-document.onkeydown = function(e) {
+document.onkeydown = function (e) {
     switch (e.key) {
         case "ArrowLeft":
             snake.newDir(-1, 0);
@@ -83,18 +84,4 @@ document.onkeydown = function(e) {
             snake.newDir(0, 1);
             break;
     }
-}
-
-/**
- * Número aleatorio entre min (incluido) y max (excluido)
- */
-function getRandom(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-/**
- * Distance between the points (x1,y1) and (x2,y2)
- */
-function dist(x1, y1, x2, y2) {
-    return Math.sqrt((Math.pow((x1 - x2), 2)) + (Math.pow((y1 - y2), 2)))
 }

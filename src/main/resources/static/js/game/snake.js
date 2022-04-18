@@ -20,7 +20,7 @@ class Snake {
 
     // Initial body has just 1 position (snake of size 1)
     this.body = [];
-    this.body[0] = {x: initX, y:initY};
+    this.body[0] = { x: initX, y: initY };
 
     // Initial direction (right):
     this.xDir = 1;
@@ -38,7 +38,7 @@ class Snake {
     }
 
     // Put "next position" at [0] of array and shift the rest (snake grows)
-    this.body.unshift({x: newX, y:newY});
+    this.body.unshift({ x: newX, y: newY });
 
     // Check if "next position" has food. If not, body restores previous size
     this.checkEat();
@@ -61,12 +61,19 @@ class Snake {
   // Check if given position causes a crash
   checkCrash(xPos, yPos) {
 
-    // Check crash against walls
+    // Check crash against outer walls
     if (xPos < 0 || xPos >= numCols ||
       yPos < 0 || yPos >= numRows) {
       return true;
     }
 
+    // Check crash against map walls
+    for (let k = 0; k < walls.length; k++){
+      if (xPos == walls[k].x && yPos == walls[k].y) {
+        return true;
+      }
+    }
+    
     // Check crash with user snake
     for (var i = 0; i < snake.body.length; i++) {
       if (xPos == snake.body[i].x &&
@@ -96,23 +103,20 @@ class Snake {
   }
 
   draw(gameAreaContext) {
-
-    gameAreaContext.fillStyle = "blue";
-    
+    var color = this.color;
 
     for (var i = 0; i < this.body.length; i++) {
-      //fill(color[0], color[1], color[2]);
+      gameAreaContext.fillStyle = parseColor(color);
 
       // Locate exact pixel where the cell has to be placed
       var xPixel = this.body[i].x * cellSize;
       var yPixel = this.body[i].y * cellSize;
 
       // Paint the cell
-      //rect(xPixel, yPixel, cellSize, cellSize);
       gameAreaContext.fillRect(xPixel, yPixel, cellSize, cellSize);
 
       // Decrease color to have cool grading efect
-      //color[0] -= 16; color[1] -= 16; color[2] -= 16;
+      color[0] -= 16; color[1] -= 16; color[2] -= 16;
     }
   }
 

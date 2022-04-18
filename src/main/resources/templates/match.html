@@ -5,7 +5,6 @@
     <th:block th:replace="fragments/head :: header" />
     <title>Match — Snakewatch</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
 </head>
 
 <body onload="startGame()">
@@ -13,21 +12,16 @@
 
     <main class="flex-shrink-0">
         <div class="container" id="canvas_container">
-            <canvas id="canvas" width="480" height="270" 
-                style="border: 1px solid #d3d3d3; background-color: #f1f1f1;">
+            <canvas id="canvas" width="480" height="270" style="border: 1px solid #d3d3d3; background-color: #1b1b1b;
+                margin-left: auto; margin-right: auto; display: block;">
             </canvas>
-
-            <br>
-            <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-            <p>Use the ACCELERATE button to stay in the air</p>
-            <p>How long can you stay alive?</p>
-
         </div>
-
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
 
+    <script th:src="@{/js/game/utils.js}" src="/js/game/utils.js"></script>
+    <script th:src="@{/js/game/wall.js}" src="/js/game/wall.js"></script>
     <script th:src="@{/js/game/food.js}" src="/js/game/food.js"></script>
     <script th:src="@{/js/game/snake.js}" src="/js/game/snake.js"></script>
     <script th:src="@{/js/game/botSnake.js}" src="/js/game/botSnake.js"></script>

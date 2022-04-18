@@ -4,10 +4,6 @@ class Food {
     // Appear on a random spot in the map
     this.x = Math.floor(getRandom(0, numCols - 1));
     this.y = Math.floor(getRandom(0, numRows - 1));
-
-    console.log(numCols);
-    console.log(getRandom(0, numCols - 1));
-    console.log(Math.floor(getRandom(0, numCols - 1)));
   }
 
   draw(gameAreaContext) {
