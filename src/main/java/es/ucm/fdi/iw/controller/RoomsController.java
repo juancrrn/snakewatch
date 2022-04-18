@@ -30,6 +30,7 @@ import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Room;
 import es.ucm.fdi.iw.model.RoomUser;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Room.RoomType;
 
 @Controller
 @RequestMapping("rooms")
@@ -135,8 +136,35 @@ public class RoomsController {
         return "room";
     }
 
+
+    @PostMapping("create_room")
+    @Transactional
+    public String createRoom(Model model)
+    throws JsonProcessingException {
+
+        Room room= new Room();
+        room.setVisibility(RoomType.PUBLIC);
+        room.setMaxUsers(5);
+
+        Long adminId = ((User)session.getAttribute("u")).getId();
+		User adminUser = entityManager.find(User.class, adminId);
+
+        RoomUser ruAdmin = new RoomUser();
+
+        ruAdmin.setAdmin(true);
+        ruAdmin.setRoom(room);
+        ruAdmin.setUser(adminUser);
+
+        entityManager.persist(room);
+        entityManager.persist(ruAdmin);
+        entityManager.flush();
+
+        return "redirect:/rooms/" + room.getId();
+    }
+
+
+
     @PostMapping("/leave_room/{roomId}")
-    @ResponseBody
     @Transactional
     public String leaveRoom(@PathVariable long roomId, Model model)
     throws JsonProcessingException {
@@ -164,7 +192,26 @@ public class RoomsController {
 
         messagingTemplate.convertAndSend("/topic/room" + roomId, json);
 
-        return "{\"result\": \"leave room complete.\"}";
+        return "redirect:/rooms";
     }
-    
+
+
+    @PostMapping("/delete_room/{roomId}")
+    @Transactional
+    public String deleteRoom(@PathVariable long roomId, Model model){
+
+        Room r = entityManager.find(Room.class, roomId);
+
+        List<RoomUser> roomUsers = entityManager
+                .createNamedQuery("RoomUser.getUsersOfRoom", RoomUser.class)
+                .setParameter("roomId", roomId)
+                .getResultList();
+
+        for(int i=0; i<roomUsers.size();i++){
+            entityManager.remove(roomUsers.get(i));
+        }
+        entityManager.remove(r);
+        entityManager.flush();
+        return "redirect:/rooms";
+    }
 }

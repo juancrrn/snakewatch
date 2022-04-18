@@ -17,7 +17,7 @@
                 <div class="card-header bg-info bg-opacity-50">
                     <h1 class="text-center bg-info bg-opacity-10">Last Matches</h1>
                 </div>
-                <div class="card-body bg-primary bg-opacity-10">
+                <div th:if="${matches.size!=0}" class="card-body bg-primary bg-opacity-10">
                     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                         <div class="carousel-inner">  
                             <div th:each="m, iterator : ${matches}" th:if="${iterator.index==0}" class="carousel-item active">
@@ -58,6 +58,26 @@
                         </button>
                     </div>
                 </div>
+                <div th:unless="${matches.size!=0}" class="card-body bg-primary bg-opacity-10">
+                    <div id="carouselExampleDarkSize0" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">  
+                            <div class="carousel-item active">
+                                <img th:src="@{/img/logo.png}" class="d-block w-25 h-25">
+                                <div class="carousel-caption d-none d-sm-block">
+                                    <h5>No recent Matches</h5>
+                                </div>                   
+                            </div>                  
+                        </div>                   
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDarkSize0" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDarkSize0" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
             </div>
            
 
@@ -78,12 +98,18 @@
 
 
             <div class="row justify-content-around mt-5">
-                <form class="col-4" th:action="@{/rooms/leave_room/__${room.id}__}" method="POST">
+                <form class="col-4" th:if="${session.u.username!=admin}" th:action="@{/rooms/leave_room/__${room.id}__}" method="POST">
                     <button class="w-100 text-center fs-4 btn btn-outline-danger">
                         Leave room
                     </button>
                 </form>
                 
+
+                <form class="col-4" th:unless="${session.u.username!=admin}" th:action="@{/rooms/delete_room/__${room.id}__}" method="POST">
+                    <button class="w-100 text-center fs-4 btn btn-outline-danger">
+                        Delete room
+                    </button>
+                </form>
 
                 <form th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4">
                     <button class="w-100 text-center fs-4 btn btn-outline-success">
@@ -91,6 +117,7 @@
                     </button>
                 </form>
                 
+                <form></form>
             </div>
 
 
