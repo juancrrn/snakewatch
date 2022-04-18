@@ -11,6 +11,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -70,6 +71,8 @@ public class Room {
      * <p> If null, the match has no maximum.
      * <p> TODO: check this constraint when adding new users to the room
      */
+
+    @Size(min=2, max=6, message="Minimum 2 players, Maximum 6 players in a Room")
     private int maxUsers;  
     
     /**

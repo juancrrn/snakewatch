@@ -98,22 +98,49 @@
 
 
             <div class="row justify-content-around mt-5">
-                <form class="col-4" th:if="${session.u.username!=admin}" th:action="@{/rooms/leave_room/__${room.id}__}" method="POST">
-                    <button class="w-100 text-center fs-4 btn btn-outline-danger">
+                <form class="col-3" th:if="${session.u.username!=admin}" th:action="@{/rooms/leave_room/__${room.id}__}" method="POST">
+                    <button class="w-100 text-center fs-4 btn btn-outline-danger" type="submit">
                         Leave room
                     </button>
                 </form>
                 
 
-                <form class="col-4" th:unless="${session.u.username!=admin}" th:action="@{/rooms/delete_room/__${room.id}__}" method="POST">
-                    <button class="w-100 text-center fs-4 btn btn-outline-danger">
+                <form class="col-3" th:unless="${session.u.username!=admin}" th:action="@{/rooms/delete_room/__${room.id}__}" method="POST">
+                    <button class="w-100 text-center fs-4 btn btn-outline-danger" type="submit">
                         Delete room
                     </button>
                 </form>
 
-                <form th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-4">
-                    <button class="w-100 text-center fs-4 btn btn-outline-success">
-                        Begin Match
+            
+                <button id="editButton" th:if="${session.u.username==admin}" class="col-3 text-center fs-4 btn btn-outline-warning">
+                    Edit room
+                </button>
+            
+
+                <form id="editForm" th:action="@{/rooms/edit_room/__${room.id}__}" method="POST" style="display: none; border-radius: 15px;" class="col-md-3 my-5 mx-3 position-absolute top-50 start-50 translate-middle bg-info bg-gradient">
+                    <legend>Change Room</legend>
+
+                    <div class="form-group row justify-content-center my-2">
+                        <label for="roomVisibility">Choose Room Visibility</label>
+                        <select class="form-control w-75" id="roomVisibility" name="roomVisibility">
+                          <option>PUBLIC</option>
+                          <option>PRIVATE</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group row justify-content-center my-2">
+                        <label for="maxPlayers">Choose Number of Players (Min. 2, Max. 6)</label>
+                        <input class="form-control w-75" type="number" id="maxPlayers" name="maxPlayers" min="2" max="6">
+                    </div>
+
+                    <div class="form-group row justify-content-center my-2">
+                        <button class="form-control w-50 btn btn-outline-dark" type="submit">Save changes</button>
+                    </div>
+                </form>
+
+                <form th:each="ru: ${room.roomUsers}" th:if="${ru.admin and ru.user.username==session.u.username}" class="col-3">
+                    <button class="w-100 text-center fs-4 btn btn-outline-success" type="submit">
+                        Send Invitation
                     </button>
                 </form>
                 
@@ -149,7 +176,6 @@
                 ws.subscribe(G_ROOMURL);
             }
 
-
             function sendMessage(){
                 const messageUser = {
                     from: G_USERSESSION,
@@ -159,7 +185,6 @@
                 ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageUser));        
                 
             }
-
 
             function actualizeList(){
                 var accordionBody = document.getElementById('playersList');
@@ -171,6 +196,18 @@
                 playersNames.splice(0, playersNames.length);
             }
 
+
+            var editButton = document.getElementById('editButton');
+            var editForm = document.getElementById('editForm');
+
+            editButton.onclick = () => {
+                if(editForm.style.display=='none'){
+                    editForm.style.display = 'block';
+                }
+                else{
+                    editForm.style.display = 'none';
+                }
+            }
 
             function showToast(text){
 

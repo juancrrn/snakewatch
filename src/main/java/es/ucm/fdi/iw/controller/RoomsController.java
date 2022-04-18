@@ -22,7 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.model.Match;
@@ -162,7 +164,18 @@ public class RoomsController {
         return "redirect:/rooms/" + room.getId();
     }
 
+    @PostMapping("/edit_room/{roomId}")
+    @Transactional
+    public String editRoom(@PathVariable long roomId, @RequestParam String roomVisibility, @RequestParam int maxPlayers, Model model){
+        Room room = entityManager.find(Room.class, roomId);
 
+        room.setVisibility(RoomType.valueOf(roomVisibility));
+        room.setMaxUsers(maxPlayers);
+        entityManager.persist(room);
+        entityManager.flush();
+
+        return "redirect:/rooms/" + roomId;
+    }
 
     @PostMapping("/leave_room/{roomId}")
     @Transactional

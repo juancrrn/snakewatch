@@ -21,7 +21,7 @@ VALUES (NEXT VALUE FOR level_id_seq, 'tmp');
 
 INSERT INTO Room (id, visibility, max_users) 
 VALUES 
-    (NEXT VALUE FOR room_id_seq, 0, 10),
+    (NEXT VALUE FOR room_id_seq, 0, 6),
     (NEXT VALUE FOR room_id_seq, 0, 5),
     (NEXT VALUE FOR room_id_seq, 1, 5);
 
