@@ -31,8 +31,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="r,iterador : ${rankingGlobal}">
-                            <td th:text="${iterador.index} + 1">Puesto</td>
+                        <tr th:each="r,iterator : ${globalRanking}">
+                            <td th:text="${iterator.index} + 1">Puesto</td>
                             <td th:text="${r[0]}">Nombre</td>
                             <td th:text="${r[1]}">Victorias</td>
                         </tr>                  
@@ -49,8 +49,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="r,iterador : ${rankingMensual}">
-                            <td th:text="${iterador.index} + 1">Puesto</td>
+                        <tr th:each="r,iterator : ${monthRanking}">
+                            <td th:text="${iterator.index} + 1">Puesto</td>
                             <td th:text="${r[0]}">Nombre</td>
                             <td th:text="${r[1]}">Victorias</td>
                         </tr>                  
@@ -67,8 +67,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="r,iterador : ${rankingSemanal}">
-                            <td th:text="${iterador.index} + 1">Puesto</td>
+                        <tr th:each="r,iterator : ${weekRanking}">
+                            <td th:text="${iterator.index} + 1">Puesto</td>
                             <td th:text="${r[0]}">Nombre</td>
                             <td th:text="${r[1]}">Victorias</td>
                         </tr>                  

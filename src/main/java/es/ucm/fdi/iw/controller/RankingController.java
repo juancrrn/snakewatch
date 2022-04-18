@@ -1,9 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
-
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-
 
 import java.util.List;
 import java.util.Locale;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 /**
  * Ranking controller
@@ -39,35 +36,36 @@ public class RankingController {
      * Rankings view
      */
     @GetMapping("/rankings")
-    public String rankings(Model model){
+    public String rankings(Model model) {
 
         LocalDate nowDate = LocalDate.now();
 
-        LocalDate fechaInicialMes = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue(), 1);
+        LocalDate initialMonthDate = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue(), 1);
 
-        LocalDate fechaInicialSemana = nowDate.with(WeekFields.of(Locale.FRANCE).dayOfWeek(),1);
+        LocalDate initialWeekDate = nowDate.with(WeekFields.of(Locale.FRANCE).dayOfWeek(),1);
         
-        List<Object[]> rankingGlobal = entityManager
-            .createNamedQuery("MatchPlayer.rankingGlobal", Object[].class)
+        List<Object[]> globalRanking = entityManager
+            .createNamedQuery("MatchPlayer.globalRanking", Object[].class)
             .getResultList();
         
-        List<Object[]> rankingMensual = entityManager
+        // FIXME Change named query to English
+        List<Object[]> monthRanking = entityManager
         .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
-        .setParameter("fechaInicial", fechaInicialMes)
+        .setParameter("fechaInicial", initialMonthDate)
         .setParameter("fechaFinal", nowDate)
         .getResultList();
         
-        List<Object[]> rankingSemanal = entityManager
+        List<Object[]> weekRanking = entityManager
         .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
-        .setParameter("fechaInicial", fechaInicialSemana)
+        .setParameter("fechaInicial", initialWeekDate)
         .setParameter("fechaFinal", nowDate)
         .getResultList();
         
-        model.addAttribute("rankingSemanal", rankingSemanal);
+        model.addAttribute("weekRanking", weekRanking);
 
-        model.addAttribute("rankingMensual", rankingMensual);
+        model.addAttribute("monthRanking", monthRanking);
 
-        model.addAttribute("rankingGlobal", rankingGlobal);
+        model.addAttribute("globalRanking", globalRanking);
 
         return "rankings";
     }
