@@ -1,4 +1,4 @@
-const cycleTime = 200;      // Duration of a cycle (refresh period time)
+const cycleTime = 200;      // Duration of a cycle (in milliseconds)
 const cellSize = 20;        // Size of a square cell unit
 const mapSize = 500;        // Size of the whole map
 
@@ -13,7 +13,7 @@ var walls;          // array of wall positions
 /** 
  * Called when the html has finished been loaded
  */
-function startGame() {
+function startGame(levelId) {
     numRows = mapSize / cellSize;
     numCols = mapSize / cellSize;
 

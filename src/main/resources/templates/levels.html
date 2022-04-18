@@ -21,7 +21,9 @@
                 </thead>
                 <tbody>
                   <tr rowspan="1" th:each="level: ${levels}">
-                    <td colspan="1" th:text="${level.id}">ID</td>
+                    <td colspan="1">
+                      <a th:href="@{/match/play/__${level.id}__}" th:text="${level.id}">ID</a>
+                    </td>
                     <td colspan="1" th:text="${level.representation}">Rep</td>
                   </tr>
                 </tbody>
