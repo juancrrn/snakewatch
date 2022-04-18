@@ -280,7 +280,7 @@ public class FriendshipController {
 
         List<Friendship> loggedInUserFriendships = new ArrayList<>(loggedInUser.getFriendships());
         // FIXME This seems obvious but if you have to retrieve an entity it is bad if you retrieve them all and then remove the ones you do not want or need
-        loggedInUserFriendships.removeIf(f -> (f.getUser2().getId() != otherUser.getId()));
+        loggedInUserFriendships.removeIf(f -> (f.getUser2().getId() != friend.getId()));
         // FIXME Better to store the friendship and then get the id where needed
         Long loggedInUserFriendshipId = loggedInUserFriendships.get(0).getId();
 
