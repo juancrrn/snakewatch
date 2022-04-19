@@ -9,19 +9,17 @@ export default class Snake {
     this.scene = scene;
     this.snakesGroup = snakesGroup;
     this.skin = skin;
+    this.initSize = initSize;
 
     this.parts = [];
     this.head = new SnakePart(this, pos);
     this.parts.push(this.head);
-    for (let i = 1; i < initSize; i++){
-      this.parts.push(new SnakePart(this, { x: pos.x, y: pos.y + i}));
-    }    
     this.snakesGroup.addMultiple(this.parts);
     this.scene.physics.add.overlap(this.head, this.snakesGroup, this.die, null, this);
     this.scene.physics.add.collider(this.head, this.scene.wallsLayer);
 
-    this.dir = 1;
-    this.lastDir = 0;
+    this.dir = Math.floor(Math.random() * 4);
+    this.lastDir = this.dir;
   }
 
   chooseNextMove() {}
@@ -44,10 +42,10 @@ export default class Snake {
         let tailPos = this.move(dest);
 
         // Grow if te snake can eat
-        if (this.canEat(dest)) {
-          this.tail = new SnakePart(this, tailPos, true);
-          this.snakesGroup.add(this.tail);
-          this.parts.push(this.tail);
+        if (this.canEat(dest) || this.parts.length < this.initSize) {
+          let tail = new SnakePart(this, tailPos, true);
+          this.snakesGroup.add(tail);
+          this.parts.push(tail);
         }
       }
     }
