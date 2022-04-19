@@ -19,18 +19,12 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
-
-    <script th:src="@{/js/game/utils.js}" src="/js/game/utils.js"></script>
-    <script th:src="@{/js/game/wall.js}" src="/js/game/wall.js"></script>
-    <script th:src="@{/js/game/food.js}" src="/js/game/food.js"></script>
-    <script th:src="@{/js/game/snake.js}" src="/js/game/snake.js"></script>
-    <script th:src="@{/js/game/botSnake.js}" src="/js/game/botSnake.js"></script>
-    <script th:src="@{/js/game/main.js}" src="/js/game/main.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <script th:src="@{/js/game/game.js}" src="/js/game/game.js" type="module"></script>
 
     <script th:inline="javascript">
         // Get "level_id" variable from thymeleaf into javascript:
         var levelId = [[@{__${ level_id }__}]];
-        document.body.onload = startGame(levelId);
     </script>
 
 
