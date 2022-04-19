@@ -45,7 +45,7 @@ public class RankingController {
         LocalDate initialWeekDate = nowDate.with(WeekFields.of(Locale.FRANCE).dayOfWeek(),1);
         
         List<Object[]> globalRanking = entityManager
-            .createNamedQuery("MatchPlayer.globalRanking", Object[].class)
+            .createNamedQuery("MatchPlayer.rankingGlobal", Object[].class)
             .getResultList();
         
         // FIXME Change named query to English
