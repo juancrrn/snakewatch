@@ -143,17 +143,16 @@
                 </div>
                 
 
-                <form th:if="${session.u.username==admin}" class="col-3">
-                    <button class="w-100 text-center fs-4 btn btn-outline-success" type="submit">
-                        Send Invitations
-                    </button>
-                </form>
+             
+                <button id="sendInvitationsButton" th:if="${session.u.username==admin}" class="col-3 text-center fs-4 btn btn-outline-success">
+                    Send Invitations
+                </button>
+             
                 
-                <form></form>
             </div>
 
 
-            <div class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" style="display:none;">
+            <div id="joinAndLeaveRoomToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" style="display:none;">
                 <div class="toast-header">
                     <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
                     <strong class="me-auto">Snakewatch</strong>
@@ -163,41 +162,89 @@
                     <p class="toast-body-text">Some text inside the toast body</p>
                 </div>
             </div>
+
+            <div id="acceptAndRejectMatchToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="15000" style="display:none;">
+                <div class="toast-header">
+                    <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                    <strong class="me-auto">Snakewatch</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body row justify-content-around">
+                    <p class="col-12 fs-5">Do you want to play a match?</p>
+                    <button id="rejectMatchInvitationButton" class="col-4 btn btn-outline-danger">Reject</button>
+                    <button id="acceptMatchInvitationButton" class="col-4 btn btn-outline-success ">Accept</button>
+                </div>
+            </div>
+
+
+            <div id="waitingPlayersToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" style="display:none;">
+                <div class="toast-header">
+                    <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                    <strong class="me-auto">Snakewatch</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body row justify-content-center">
+                    <div class="spinner-border text-info" role="status"></div>
+                    <p class="text-center text-info fs-5">Waiting for players...</p>
+                    <p id="numberOfPlayersReady" class="text-center text-info fs-5 mb-0"></p>
+                    <ul id="playersReady"class="list-group list-group-sm text-center" style="list-style:none;"></ul>
+                    <button class="w-50 btn btn-outline-info text-center my-2 fs-5">Start Match</button>
+                </div>
+            </div>
+
+            <div id="waitingAdminToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" style="display:none;">
+                <div class="toast-header">
+                    <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                    <strong class="me-auto">Snakewatch</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body row justify-content-center">
+                    <div class="spinner-border text-info" role="status"></div>
+                    <p class="text-center text-info fs-5">Waiting start match...</p>
+                </div>
+            </div>
         </div>
     </main>
 
     <script th:inline="javascript">
-        var G_ROOMURL = "/topic/room" + [[${room.id}]];
-        var G_USERSESSION = [[${session.u.username}]];
-        var G_ADMIN = [[${admin}]];
+        const ROOMURL = "/topic/room" + [[${room.id}]];
+        const USERSESSIONAME = [[${session.u.username}]];
+        const ADMINAME = [[${admin}]];
+        const MAXROOMPLAYERS = [[${room.maxUsers}]]
     </script>
 
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
 
-            var playersNames = [];
+            var playersOnlineNames = [];
+
+            var gamePlayersNames = [ADMINAME];
+
 
             function init(){
-                ws.subscribe(G_ROOMURL);
+                ws.subscribe(ROOMURL);
+                setInterval(sendMessage, 1000);
+                setInterval(actualizeList, 2000);
             }
 
             function sendMessage(){
                 const messageUser = {
-                    from: G_USERSESSION,
-                    to: G_ROOMURL
+                    from: USERSESSIONAME,
+                    to: ROOMURL,
+                    type: "playerOnline"
                 }
 
-                ws.stompClient.send(G_ROOMURL, ws.headers, JSON.stringify(messageUser));        
+                ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageUser));        
                 
             }
 
             function actualizeList(){
                 var accordionBody = document.getElementById('playersList');
                 accordionBody.innerHTML = '';
-                for(var i=0;i<playersNames.length;i++){
-                    accordionBody.innerHTML+= "<li class='list-group-item text-center bg-info bg-opacity-25'><p>" + playersNames[i] + "</p></li>";
+                for(var i=0;i<playersOnlineNames.length;i++){
+                    accordionBody.innerHTML+= "<li class='list-group-item text-center bg-info bg-opacity-25'><p>" + playersOnlineNames[i] + "</p></li>";
                 }
-                playersNames.splice(0, playersNames.length);
+                playersOnlineNames.splice(0, playersOnlineNames.length);
             }
 
 
@@ -220,9 +267,70 @@
             }
             
 
+            var sendInvitationsButton = document.getElementById('sendInvitationsButton');
+
+            if(sendInvitationsButton){
+                sendInvitationsButton.onclick = () => {
+                    const messageAdmin = {
+                        from: ADMINAME,
+                        to: ROOMURL,
+                        type: "matchInvitation"
+                    }
+
+                    ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageAdmin));
+
+
+                    var toastHTML = document.getElementById('waitingPlayersToast');
+                    var numberOfPlayersReady = document.getElementById('numberOfPlayersReady');
+                    var playersReady = document.getElementById('playersReady');
+                    toastHTML.style.display = '';
+
+                    gamePlayersNames = [ADMINAME];
+                    
+                    playersReady.innerHTML = "<li class='list-group-item text-primary border-0 p-0 fs-5 bg-transparent'>" + gamePlayersNames[0] + "</li>";
+                    
+                    numberOfPlayersReady.innerHTML = gamePlayersNames.length + "/" +  MAXROOMPLAYERS   + " Players Ready";
+
+                    var toast = new bootstrap.Toast(toastHTML);
+                    toast.show(); 
+
+                }
+            }
+
+            var acceptMatchInvitationButton = document.getElementById('acceptMatchInvitationButton');
+            var rejectMatchInvitationButton = document.getElementById('rejectMatchInvitationButton');
+            var acceptAndRejectMatchToast = document.getElementById('acceptAndRejectMatchToast');
+
+            if(acceptMatchInvitationButton){
+                acceptMatchInvitationButton.onclick = () => {
+                    acceptAndRejectMatchToast.style.display = 'none';
+
+                    const messageAcceptMatch = {
+                        from: USERSESSIONAME,
+                        to: ADMINAME,
+                        type: "acceptMatchInvitation"
+                    }
+
+                    ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageAcceptMatch));
+
+                    var toastHTML = document.getElementById('waitingAdminToast');
+
+                    toastHTML.style.display = '';
+
+                    var toast = new bootstrap.Toast(toastHTML);
+                    toast.show(); 
+                }
+            }
+
+            if(rejectMatchInvitationButton){
+                rejectMatchInvitationButton.onclick = () => {
+                    acceptAndRejectMatchToast.style.display = 'none';
+                }
+            }
+
             function showToast(text){
 
-                let toastHTML = document.querySelector(".toast");
+                var toastHTML = document.getElementById('joinAndLeaveRoomToast');
             
                 // Make it visible (remove display = "none")
                 toastHTML.style.display = '';
@@ -234,27 +342,41 @@
                     toastHTML.querySelector('.toast-body-text').innerHTML = text.userLeaver + " left the game!!!!!!";
                 }
                 // Cast it to bootstrap toast and make it show
-                let toast = new bootstrap.Toast(toastHTML);
+                var toast = new bootstrap.Toast(toastHTML);
                 toast.show();
 
             }
 
             setTimeout(init, 100);
-            
-            setInterval(sendMessage, 1000);
-            
-            setInterval(actualizeList, 2000);
 
             ws.receive = (text) => {
                     if(text.from=="rooms"){
                         showToast(text);
                     }
-                    else if(text.to==G_ROOMURL){
-                        if(playersNames.indexOf(text.from)==-1){
-                            playersNames.push(text.from);
+                    if(text.to==ROOMURL && text.type=="playerOnline"){
+                        if(playersOnlineNames.indexOf(text.from)==-1){
+                            playersOnlineNames.push(text.from);
                         }
                     }
-                     
+                    if(ADMINAME!=USERSESSIONAME && text.to==ROOMURL && text.type=="matchInvitation"){          
+                        var toastHTML = document.getElementById('acceptAndRejectMatchToast');
+                        toastHTML.style.display = 'block';
+                        var toast = new bootstrap.Toast(toastHTML);
+                        toast.show();                  
+                    }
+                    if(ADMINAME==USERSESSIONAME && text.to==ADMINAME && text.type=="acceptMatchInvitation"){
+                        
+                        var numberOfPlayersReady = document.getElementById('numberOfPlayersReady');
+                        var playersReady = document.getElementById('playersReady');
+
+                        if(gamePlayersNames.indexOf(text.from)==-1){
+                            gamePlayersNames.push(text.from);
+                            playersReady.innerHTML += "<li class='list-group-item text-primary p-0 border-0 fs-5 bg-transparent'>" + text.from + "</li>";
+                            numberOfPlayersReady.innerHTML = gamePlayersNames.length + "/" +  MAXROOMPLAYERS   + " Players Ready";
+                        }
+
+                    }
+                    
             }
             
         });
