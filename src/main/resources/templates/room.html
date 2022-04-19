@@ -197,7 +197,6 @@
                 for(var i=0;i<playersNames.length;i++){
                     accordionBody.innerHTML+= "<li class='list-group-item text-center bg-info bg-opacity-25'><p>" + playersNames[i] + "</p></li>";
                 }
-
                 playersNames.splice(0, playersNames.length);
             }
 
@@ -205,15 +204,22 @@
             var editButton = document.getElementById('editButton');
             var editForm = document.getElementById('editForm');
 
-            editButton.onclick = () => {          
-                editForm.style.display = 'block';        
+            if(editButton){
+                editButton.onclick = () => {          
+                    editForm.style.display = 'block';        
+                }
             }
+            
 
             var closeEditFormButton = document.getElementById('closeEditFormButton');
 
-            closeEditFormButton.onclick = () => {
-                editForm.style.display = 'none';
+            if(closeEditFormButton){
+                closeEditFormButton.onclick = () => {
+                    editForm.style.display = 'none';
+                }
             }
+            
+
             function showToast(text){
 
                 let toastHTML = document.querySelector(".toast");
