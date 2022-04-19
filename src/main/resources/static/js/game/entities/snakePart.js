@@ -20,4 +20,8 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
     this.setPosition(pos.x * 20 + 10, pos.y * 20 + 10);
     return oldPos;
   }
+
+  exportJson() {
+    return {x: this.pos.x, y: this.pos.y};
+  }
 }

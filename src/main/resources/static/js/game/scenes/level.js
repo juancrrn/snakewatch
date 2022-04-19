@@ -29,7 +29,6 @@ export default class Level extends Phaser.Scene {
     this.groundLayer = this.map.createLayer('ground', tileset);
     this.wallsLayer = this.map.createLayer('walls', tileset);
 
-
     // Create food
     this.food = new Food(this, { x: 6, y: 6 });
 
@@ -53,7 +52,7 @@ export default class Level extends Phaser.Scene {
     this.cursors.left.on('down', () => this.player.setDir(3), this);
 
     // Set level collisions
-    this.wallsLayer.setCollisionFromCollisionGroup()
+    this.wallsLayer.setCollisionFromCollisionGroup();
     this.wallsLayer.setTileIndexCallback(2, this.onCollision, this);
 
     // Set timer for cycles execution
@@ -85,5 +84,16 @@ export default class Level extends Phaser.Scene {
   processTick() {
     this.bots.forEach(bot => bot.processTick());
     this.player.processTick();
+
+    // TODO: remove, just testing
+    console.log(this.exportToJson())
+  }
+
+  exportToJson(){
+    return {
+      food: this.food.exportJson(),
+      snakes: this.bots.map(b => b.exportJson()),
+      player: this.player.exportJson()
+    };
   }
 }

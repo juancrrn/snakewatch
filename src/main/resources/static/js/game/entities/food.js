@@ -21,4 +21,12 @@ export default class Food extends Phaser.GameObjects.Sprite {
     }
     return false;
   }
+
+  exportJson() {
+    let json = {};
+    json.x = this.pos.x;
+    json.y = this.pos.y;
+    json.eaten = this.eaten;
+    return json;
+  }
 }

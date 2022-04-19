@@ -124,4 +124,10 @@ export default class Snake {
 
     return pos;
   }
+
+  exportJson(){
+    return {
+      parts: this.parts.map(p => p.exportJson())
+    };
+  }
 }
