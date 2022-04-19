@@ -5,21 +5,22 @@ import SnakePart from './snakePart.js';
  */
 export default class Snake {
 
-  constructor(scene, snakesGroup, pos, skin) {
+  constructor(scene, snakesGroup, pos, initSize, skin) {
     this.scene = scene;
     this.snakesGroup = snakesGroup;
     this.skin = skin;
 
     this.parts = [];
     this.head = new SnakePart(this, pos);
-    this.tail = this.head;
     this.parts.push(this.head);
-    this.parts.push(new SnakePart(this, { x: pos.x, y: pos.y + 1}));
+    for (let i = 1; i < initSize; i++){
+      this.parts.push(new SnakePart(this, { x: pos.x, y: pos.y + i}));
+    }    
     this.snakesGroup.addMultiple(this.parts);
     this.scene.physics.add.overlap(this.head, this.snakesGroup, this.die, null, this);
     this.scene.physics.add.collider(this.head, this.scene.wallsLayer);
 
-    this.dir = 0;
+    this.dir = 1;
     this.lastDir = 0;
   }
 

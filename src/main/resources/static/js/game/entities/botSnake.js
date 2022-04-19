@@ -6,7 +6,7 @@ import Snake from '../entities/snake.js';
 export default class BotSnake extends Snake {
 
   constructor(scene, snakesGroup, pos, texture) {
-    super(scene, snakesGroup, pos, texture);
+    super(scene, snakesGroup, pos, 5, texture);
   }
 
   chooseNextMove() {

@@ -9,10 +9,10 @@ let config = {
     type: Phaser.CANVAS,
     canvas: document.getElementById('canvas'),
     scale: {
-        autoCenter: Phaser.Scale.CENTER_BOTH,
+        //autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 500,
         height: 500,
-        mode: Phaser.Scale.FIT
+        //mode: Phaser.Scale.FIT
     },
     dom: {
         createContainer: true

@@ -40,7 +40,9 @@ export default class Level extends Phaser.Scene {
     // Create bots
     this.bots = [];
     this.bots.push(new BotSnake(this, this.snakesGroup, { x: 7, y: 6 }, 'red'));
-
+    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 12, y: 14 }, 'red'));
+    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 14, y: 2 }, 'red'));
+    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 3, y: 19 }, 'red'));
 
     // Cursors
     this.cursors = this.input.keyboard.createCursorKeys();
