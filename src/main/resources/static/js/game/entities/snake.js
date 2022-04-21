@@ -128,4 +128,11 @@ export default class Snake {
       parts: this.parts.map(p => p.exportJson())
     };
   }
+
+  importFromJson(json) {
+    var tempPartsArray = json.parts;
+    for (let idx = 0; idx < this.parts.length; idx++) {
+      this.parts[idx].importFromJson(tempPartsArray[idx]);
+    }
+  }
 }

@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
 
     function init(){
@@ -14,5 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(init, 500);
 
     setTimeout(loadGame, 1000);
+
+    ws.receive = (json) => {
+      // TODO: importFromJson(json) para pintar el estado del juego
+    }
 
   })

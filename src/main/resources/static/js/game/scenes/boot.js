@@ -2,7 +2,7 @@
  * Scene that preloads the game assets
  */
 export default class Boot extends Phaser.Scene {
-
+  
   constructor() {
     super({ key: 'boot' });
   }
@@ -24,6 +24,12 @@ export default class Boot extends Phaser.Scene {
    */
   create() {
     // TODO: cargar level o spectator dependiendo de si es el propietario o espectador
-    this.scene.start('level');
+    
+    if(ADMIN){
+      this.scene.start('level');
+    }
+    else{
+      this.scene.start('spectator');
+    }
   }
 }

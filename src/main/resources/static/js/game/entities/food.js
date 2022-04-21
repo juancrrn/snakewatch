@@ -29,4 +29,10 @@ export default class Food extends Phaser.GameObjects.Sprite {
     json.eaten = this.eaten;
     return json;
   }
+
+  importFromJson(json) {
+    this.pos.x = json.x;
+    this.pos.y = json.y;
+    this.eaten = json.canEat;
+  }
 }

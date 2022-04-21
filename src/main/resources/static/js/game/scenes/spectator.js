@@ -62,6 +62,9 @@ export default class Spectator extends Phaser.Scene {
   }
 
   importFromJson(json) {
-    //this.json.snakes.map(snakeJson => b.exportJson());
+    this.food.importFromJson(this.json.food);
+    //this.bots.map(b => b.importFromJson(this.json.snakes));
+    this.player.importFromJson(this.json.player);
+    //this.json.snakes.map(s => s.importFromJson());
   }
 }

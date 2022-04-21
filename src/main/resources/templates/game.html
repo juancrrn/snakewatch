@@ -18,6 +18,7 @@
     <script th:inline="javascript">
       const SCRIPTURL = [[@{/js/game/game.js}]];
       const ROOM = [[${room.id}]] 
+      const ADMIN = [[${admin}]];
       const MATCH = [[${match.id}]];
       const USERSESSIONAME = [[${session.u.username}]];
       const CLIENTURL = [[@{/rooms/go_to_match/__${match.id}__/__${room.id}__}]];
