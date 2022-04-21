@@ -1,9 +1,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    var playersOnlineNames = [];
+    let playersOnlineNames = [];
 
-    var imMatchParticipant = false;
+    let imMatchPlayer = false;
 
     function init(){
         ws.subscribe(ROOMURL);
@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function actualizeList(){
-        var accordionBody = document.getElementById('playersList');
+        let accordionBody = document.getElementById('playersList');
         accordionBody.innerHTML = '';
-        for(var i=0;i<playersOnlineNames.length;i++){
+        for(let i=0;i<playersOnlineNames.length;i++){
             accordionBody.innerHTML+= "<li class='list-group-item text-center bg-info bg-opacity-25'><p>" + playersOnlineNames[i] + "</p></li>";
         }
         playersOnlineNames.splice(0, playersOnlineNames.length);
@@ -34,27 +34,27 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function showToast(text){
     
-        var toastHTML = document.getElementById('joinAndLeaveRoomToast');
+        let toastHTML = document.getElementById('joinAndLeaveRoomToast');
     
         // Make it visible (remove display = "none")
         toastHTML.style.display = '';
         // Put message content on toast body
-        if(text.type=='join'){
-            toastHTML.querySelector('.toast-body-text').innerHTML = text.userJoiner + " joined the game!!!!!!";
+        if(text.type=='joinRoom'){
+            toastHTML.querySelector('.toast-body-text').innerHTML = text.message + " joined the game!!!!!!";
         }
-        else if(text.type=='leave'){
-            toastHTML.querySelector('.toast-body-text').innerHTML = text.userLeaver + " left the game!!!!!!";
+        else if(text.type=='leaveRoom'){
+            toastHTML.querySelector('.toast-body-text').innerHTML = text.message + " left the game!!!!!!";
         }
         // Cast it to bootstrap toast and make it show
-        var toast = new bootstrap.Toast(toastHTML);
+        let toast = new bootstrap.Toast(toastHTML);
         toast.show();
     
     }
 
 
-    var acceptMatchInvitationButton = document.getElementById('acceptMatchInvitationButton');
-    var rejectMatchInvitationButton = document.getElementById('rejectMatchInvitationButton');
-    var acceptAndRejectMatchToast = document.getElementById('acceptAndRejectMatchToast');
+    let acceptMatchInvitationButton = document.getElementById('acceptMatchInvitationButton');
+    let rejectMatchInvitationButton = document.getElementById('rejectMatchInvitationButton');
+    let acceptAndRejectMatchToast = document.getElementById('acceptAndRejectMatchToast');
    
     acceptMatchInvitationButton.onclick = () => {
         acceptAndRejectMatchToast.style.display = 'none';
@@ -66,11 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageAcceptMatch));
 
-        var toastHTML = document.getElementById('waitingAdminToast');
+        let toastHTML = document.getElementById('waitingAdminToast');
 
         toastHTML.style.display = '';
 
-        var toast = new bootstrap.Toast(toastHTML);
+        let toast = new bootstrap.Toast(toastHTML);
         toast.show(); 
     }
     
@@ -93,20 +93,20 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         if(text.type=="matchInvitation"){          
-            var toastHTML = document.getElementById('acceptAndRejectMatchToast');
+            let toastHTML = document.getElementById('acceptAndRejectMatchToast');
             toastHTML.style.display = 'block';
-            var toast = new bootstrap.Toast(toastHTML);
+            let toast = new bootstrap.Toast(toastHTML);
             toast.show();                  
         }
     
         if(text.type=="playersNames"){
             if(text.message.indexOf(USERSESSIONAME)!=-1){
-                imMatchParticipant = true;
+                imMatchPlayer = true;
             }
         }
     
         if(text.type=="startMatch"){   
-            if(imMatchParticipant){
+            if(imMatchPlayer){
                 window.location.replace(text.message);
             }         
         }

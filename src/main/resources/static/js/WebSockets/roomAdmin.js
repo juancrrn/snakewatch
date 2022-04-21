@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    var gamePlayersNames = [ADMINAME];
+    let gamePlayersNames = [USERSESSIONAME];
 
-
-    var playersOnlineNames = [];
+    let playersOnlineNames = [];
 
     function init(){
         ws.subscribe(ROOMURL);
@@ -22,30 +21,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function actualizeList(){
-        var accordionBody = document.getElementById('playersList');
+        let accordionBody = document.getElementById('playersList');
         accordionBody.innerHTML = '';
-        for(var i=0;i<playersOnlineNames.length;i++){
+        for(let i=0;i<playersOnlineNames.length;i++){
             accordionBody.innerHTML+= "<li class='list-group-item text-center bg-info bg-opacity-25'><p>" + playersOnlineNames[i] + "</p></li>";
         }
         playersOnlineNames.splice(0, playersOnlineNames.length);
     }
     
-    var editButton = document.getElementById('editButton');
-    var editForm = document.getElementById('editForm');
+    let editButton = document.getElementById('editButton');
+    let editForm = document.getElementById('editForm');
 
     
     editButton.onclick = () => {          
         editForm.style.display = 'block';        
     }
 
-    var closeEditFormButton = document.getElementById('closeEditFormButton');
+    let closeEditFormButton = document.getElementById('closeEditFormButton');
 
    
     closeEditFormButton.onclick = () => {
         editForm.style.display = 'none';
     }
 
-    var sendInvitationsButton = document.getElementById('sendInvitationsButton');
+    let sendInvitationsButton = document.getElementById('sendInvitationsButton');
 
   
     sendInvitationsButton.onclick = () => {
@@ -56,23 +55,23 @@ document.addEventListener("DOMContentLoaded", () => {
         ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageAdmin));
 
 
-        var toastHTML = document.getElementById('waitingPlayersToast');
-        var numberOfPlayersReady = document.getElementById('numberOfPlayersReady');
-        var playersReady = document.getElementById('playersReady');
+        let toastHTML = document.getElementById('waitingPlayersToast');
+        let numberOfPlayersReady = document.getElementById('numberOfPlayersReady');
+        let playersReady = document.getElementById('playersReady');
         toastHTML.style.display = '';
 
-        gamePlayersNames = [ADMINAME];
+        gamePlayersNames = [USERSESSIONAME];
         
         playersReady.innerHTML = "<li class='list-group-item text-primary border-0 p-0 fs-5 bg-transparent'>" + gamePlayersNames[0] + "</li>";
         
         numberOfPlayersReady.innerHTML = gamePlayersNames.length + "/" +  MAXROOMPLAYERS   + " Players Ready";
 
-        var toast = new bootstrap.Toast(toastHTML);
+        let toast = new bootstrap.Toast(toastHTML);
         toast.show(); 
 
     }
     
-    var startMatchButton = document.getElementById('startMatchButton');
+    let startMatchButton = document.getElementById('startMatchButton');
 
     startMatchButton.onclick = () => {
         const messageHaveYouAcceptInvitation = {
@@ -81,6 +80,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageHaveYouAcceptInvitation));
+    }
+
+    function showToast(text){
+    
+        let toastHTML = document.getElementById('joinAndLeaveRoomToast');
+    
+        // Make it visible (remove display = "none")
+        toastHTML.style.display = '';
+        // Put message content on toast body
+        if(text.type=='joinRoom'){
+            toastHTML.querySelector('.toast-body-text').innerHTML = text.message + " joined the game!!!!!!";
+        }
+        else if(text.type=='leaveRoom'){
+            toastHTML.querySelector('.toast-body-text').innerHTML = text.message + " left the game!!!!!!";
+        }
+        // Cast it to bootstrap toast and make it show
+        let toast = new bootstrap.Toast(toastHTML);
+        toast.show();
+    
     }
     
     ws.receive = (text) => {
@@ -96,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if(text.type=="acceptMatchInvitation"){
             
-            var numberOfPlayersReady = document.getElementById('numberOfPlayersReady');
-            var playersReady = document.getElementById('playersReady');
+            let numberOfPlayersReady = document.getElementById('numberOfPlayersReady');
+            let playersReady = document.getElementById('playersReady');
 
             if(gamePlayersNames.indexOf(text.message)==-1){
                 gamePlayersNames.push(text.message);

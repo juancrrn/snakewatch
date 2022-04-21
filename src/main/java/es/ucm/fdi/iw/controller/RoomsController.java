@@ -123,22 +123,27 @@ public class RoomsController {
 
         Room room = entityManager.find(Room.class, roomId);
         model.addAttribute("room", room);
+
+        Long sessionUserId = ((User)session.getAttribute("u")).getId();
         
+        boolean isAdmin = false;
+
         List<Match> matches = room.getMatches();
         // Ordenar los players de cada match segun su posicion de resultado
         for(int i=0; i < matches.size();i++){
             matches.get(i).getMatchPlayers().sort(Comparator.comparing(MatchPlayer::getPosition));
         }
+
         model.addAttribute("matches", matches);
 
-
         for(int i=0; i < room.getRoomUsers().size();i++){
-            if(room.getRoomUsers().get(i).isAdmin()){
-                model.addAttribute("admin", room.getRoomUsers().get(i).getUser().getUsername());
+            if(room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId()==sessionUserId){
+                isAdmin = true;
                 break;
             }
         }
 
+        model.addAttribute("admin", isAdmin);
         return "room";
     }
 
@@ -185,15 +190,14 @@ public class RoomsController {
     @Transactional
     public String leaveRoom(@PathVariable long roomId, Model model)
     throws JsonProcessingException {
-        User leaveUser =  (User) session.getAttribute("u");
+        Long leaveUserId =  ((User)session.getAttribute("u")).getId();
+        User leaveUser = entityManager.find(User.class, leaveUserId);
 
         RoomUser ru = entityManager
             .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
             .setParameter("roomId", roomId)
             .setParameter("userId", leaveUser.getId())
             .getSingleResult();
-
-        leaveUser.getRoomUsers().remove(ru);
         
         entityManager.remove(ru);
         entityManager.flush();

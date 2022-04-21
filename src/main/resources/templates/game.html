@@ -19,51 +19,13 @@
       const SCRIPTURL = [[@{/js/game/game.js}]];
       const ROOM = [[${room.id}]] 
       const MATCH = [[${match.id}]];
-      const ADMIN = [[${admin}]];
       const USERSESSIONAME = [[${session.u.username}]];
       const CLIENTURL = [[@{/rooms/go_to_match/__${match.id}__/__${room.id}__}]];
     </script>
     
-    <script type="text/javascript">
+    <script th:if="${admin}" type="text/javascript" th:src="@{/js/WebSockets/matchAdmin.js}"></script>
 
-
-      document.addEventListener("DOMContentLoaded", () => {
-
-        var subscribed = false;
-
-        function init(){
-          if(ADMIN){
-            ws.subscribe("/topic/match" + MATCH); 
-
-            const messageStartMatch = {
-                type: "startMatch",
-                message: CLIENTURL
-            }
-
-            ws.stompClient.send("/topic/room" + ROOM,ws.headers, JSON.stringify(messageStartMatch));
-          }
-          else{
-            ws.subscribe("/topic/match" + MATCH);
-          }
-        }
-
-        function loadGame(){
-          var script = document.createElement('script');
-          script.src= SCRIPTURL;
-          script.type = "module";
-          document.body.appendChild(script);
-        }
-
-        setTimeout(init, 1000);
-
-        setTimeout(loadGame, 1000);
-
-        ws.receive = (text) => {
-          console.log(text.food);
-        }
-      })
-
-    </script>
+    <script th:unless="${admin}" type="text/javascript" th:src="@{/js/WebSockets/matchPlayer.js}"></script>
 
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
