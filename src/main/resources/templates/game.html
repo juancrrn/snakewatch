@@ -49,8 +49,15 @@
           }
         }
 
-        setTimeout(init, 100);
+        function loadGame(){
+          var script = document.createElement('script');
+          script.src= SCRIPTURL;
+          script.type = "module";
+          document.body.appendChild(script);
+        }
 
+        setTimeout(init, 100);
+        setTimeout(loadGame, 1000);
       })
 
     </script>
