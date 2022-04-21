@@ -5,33 +5,59 @@
     <meta charset="utf-8">
     <title>Juego - Snakewatch</title>
     <th:block th:replace="fragments/head :: header" />
-    <style>
-      .wrap {
-        width: 80%;
-        height: 80%;
-        overflow: hidden;
-      }
-
-      iframe {
-        margin: 0 auto;
-        width: 120.66% !important;
-        height: 120.66% !important;
-        -webkit-transform: scale(0.8);
-        transform: scale(0.8);
-        -webkit-transform-origin: 0 0;
-        transform-origin: 0 0;
-      }
-  </style>
-  
 </head>
 
 <body class="d-flex flex-column h-100">
     <header th:replace="fragments/nav.html :: nav"></header>
     <main class="wrap">
-      <!-- Loads Oscar C. snake game from the p5js.com enviroment. DELETE LATER.-->
-      <iframe class="frame" src="https://editor.p5js.org/Raaaaac/full/M5GCR9pXN"></iframe>
+      <canvas id="canvas"></canvas>  
     </main>
+
+
+
+    <script th:inline="javascript">
+      const SCRIPTURL = [[@{/js/game/multiplayerGame.js}]];
+      const ROOM = [[${room.id}]] 
+      const MATCH = [[${match.id}]];
+      const ADMIN = [[${admin}]];
+      const USERSESSIONAME = [[${session.u.username}]];
+      const CLIENTURL = [[@{/rooms/go_to_match/__${match.id}__/__${room.id}__}]];
+    </script>
     
+    <script type="text/javascript">
+
+
+      document.addEventListener("DOMContentLoaded", () => {
+
+        var subscribed = false;
+
+        function init(){
+          if(ADMIN){
+            ws.subscribe("/topic/match" + MATCH); 
+
+            const messageStartMatch = {
+                from: ADMIN,
+                to: "/topic/room" + ROOM,
+                type: "startMatch",
+                url: CLIENTURL
+            }
+
+            ws.stompClient.send(messageStartMatch.to,ws.headers, JSON.stringify(messageStartMatch));
+          }
+          else{
+            ws.subscribe("/topic/match" + MATCH);
+          }
+        }
+
+        setTimeout(init, 100);
+
+      })
+
+    </script>
+
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
 

@@ -1,5 +1,4 @@
-import Boot from './scenes/boot.js';
-import Level from './scenes/level.js';
+import Multiplayer from './scenes/multiplayer.js';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -11,23 +10,23 @@ let config = {
     type: Phaser.CANVAS,
     canvas: document.getElementById('canvas'),
     scale: {
-        //autoCenter: Phaser.Scale.CENTER_BOTH,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 500,
         height: 500,
-        //mode: Phaser.Scale.FIT
+        mode: Phaser.Scale.FIT
     },
     dom: {
         createContainer: true
     },
     pixelArt: true,
-    scene: [Boot, Level],
+    scene: [Multiplayer],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
             debug: false
         }
-    } 
+    }
 };
 
 new Phaser.Game(config);

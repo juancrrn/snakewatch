@@ -2,13 +2,17 @@ package es.ucm.fdi.iw.controller;
 
 import java.util.Comparator;
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,6 +37,7 @@ import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Room;
 import es.ucm.fdi.iw.model.RoomUser;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Match.Status;
 import es.ucm.fdi.iw.model.Room.RoomType;
 
 @Controller
@@ -227,4 +233,51 @@ public class RoomsController {
         entityManager.flush();
         return "redirect:/rooms";
     }
+
+
+
+    @GetMapping("/go_to_match/{matchId}/{roomId}")
+    public String goToMatch(@PathVariable long matchId, @PathVariable long roomId, Model model){
+
+        Match match = entityManager.find(Match.class, matchId);
+        Room room = entityManager.find(Room.class, roomId);
+    
+        model.addAttribute("room", room);
+        model.addAttribute("match", match);
+        model.addAttribute("admin", false);
+
+        return getMatch(roomId, model);
+    }
+
+
+    @GetMapping("/get_match/{roomId}")
+    @Transactional
+    public String getMatch(@PathVariable long roomId, Model model){
+
+        Room room = entityManager.find(Room.class, roomId);
+
+        Long sessionUserId = ((User)session.getAttribute("u")).getId();
+
+        for(int i=0; i< room.getRoomUsers().size();i++){
+            if(room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId()==sessionUserId){
+                Match match = new Match(); 
+
+                match.setRoom(room);
+                match.setDate(LocalDate.now());
+                match.setStatus(Status.WAITING);
+
+
+                model.addAttribute("room", room);
+                model.addAttribute("match", match);
+                model.addAttribute("admin", true);
+
+                entityManager.persist(match);
+                entityManager.flush();
+            }
+        }
+
+        return "game";
+    }
+
+
 }
