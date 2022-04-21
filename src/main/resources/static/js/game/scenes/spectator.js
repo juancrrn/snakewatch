@@ -6,12 +6,12 @@ import SnakePart from '../entities/snakePart.js';
 /**
  * Scene that represents the current match and level
  */
-export default class Level extends Phaser.Scene {
+export default class Spectator extends Phaser.Scene {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'level' });
+    super({ key: 'spectator' });
   }
 
   preload() {
@@ -32,7 +32,7 @@ export default class Level extends Phaser.Scene {
     // Create food
     this.food = new Food(this, { x: 6, y: 6 });
 
-    this.snakesGroup = this.physics.add.group();
+    this.snakesGroup = null;
     // Create player
     this.player = new PlayerSnake(this, this.snakesGroup, { x: 4, y: 2 }, 'white');
     
@@ -46,53 +46,22 @@ export default class Level extends Phaser.Scene {
     // Cursors
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    // TODO: en vez de cambiar nueva direccion, pasarla por websocket al propietario
     this.cursors.up.on('down', () => this.player.setDir(0), this);
     this.cursors.right.on('down', () => this.player.setDir(1), this);
     this.cursors.down.on('down', () => this.player.setDir(2), this);
     this.cursors.left.on('down', () => this.player.setDir(3), this);
-
-    // Set level collisions
-    this.wallsLayer.setCollisionFromCollisionGroup();
-    this.wallsLayer.setTileIndexCallback(2, this.onCollision, this);
-
-    // Set timer for cycles execution
-    this.timer = this.time.addEvent({
-      delay: 500,
-      callback: this.processTick,
-      callbackScope: this,
-      loop: true
-    })
   }
 
-  /**
-   * Handles collision for two given GameObjects
-   * If the objects are Snakes they are killed
-   * @param {Phaser.GameObjects.GameObject} o1 
-   * @param {Phaser.GameObjects.GameObject} o2 
-   */
-  onCollision(o1, o2) {
-    if (o1 instanceof SnakePart) {
-      o1.snake.die();
-    } else if (o2 instanceof SnakePart) {
-      o2.snake.die();
-    }
-  }
-
-  /**
-   * Calls the tick processing method of all the snakes
-   */
-  processTick() {
-    this.bots.forEach(bot => bot.processTick());
-    this.player.processTick();
-
-    ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(this.exportToJson()));
-  }
-
-  exportToJson(){
+  exportToJson() {
     return {
       food: this.food.exportJson(),
       snakes: this.bots.map(b => b.exportJson()),
       player: this.player.exportJson()
     };
+  }
+
+  importFromJson(json) {
+    //this.json.snakes.map(snakeJson => b.exportJson());
   }
 }

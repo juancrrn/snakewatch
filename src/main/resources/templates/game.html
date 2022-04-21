@@ -16,7 +16,7 @@
 
 
     <script th:inline="javascript">
-      const SCRIPTURL = [[@{/js/game/multiplayerGame.js}]];
+      const SCRIPTURL = [[@{/js/game/game.js}]];
       const ROOM = [[${room.id}]] 
       const MATCH = [[${match.id}]];
       const ADMIN = [[${admin}]];
@@ -36,13 +36,11 @@
             ws.subscribe("/topic/match" + MATCH); 
 
             const messageStartMatch = {
-                from: ADMIN,
-                to: "/topic/room" + ROOM,
                 type: "startMatch",
-                url: CLIENTURL
+                message: CLIENTURL
             }
 
-            ws.stompClient.send(messageStartMatch.to,ws.headers, JSON.stringify(messageStartMatch));
+            ws.stompClient.send("/topic/room" + ROOM,ws.headers, JSON.stringify(messageStartMatch));
           }
           else{
             ws.subscribe("/topic/match" + MATCH);
@@ -56,8 +54,13 @@
           document.body.appendChild(script);
         }
 
-        setTimeout(init, 100);
+        setTimeout(init, 1000);
+
         setTimeout(loadGame, 1000);
+
+        ws.receive = (text) => {
+          console.log(text.food);
+        }
       })
 
     </script>

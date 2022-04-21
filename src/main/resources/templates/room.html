@@ -217,6 +217,10 @@
         const MATCHURL = [[@{/rooms/get_match/__${room.id}__}]];
     </script>
 
+    <script th:if="${session.u.username==admin}" th:src="@{/js/WebSockets/roomAdmin.js}">
+    </script>
+    <script th:unless="${session.u.username==admin}" th:src="@{/js/WebSockets/roomUser.js}"></script>
+
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
 
@@ -365,7 +369,7 @@
 
             }
 
-            setTimeout(init, 100);
+            setTimeout(init, 500);
 
             ws.receive = (text) => {
                     if(text.from=="rooms"){

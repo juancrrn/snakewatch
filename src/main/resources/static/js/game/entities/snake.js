@@ -14,7 +14,7 @@ export default class Snake {
     this.parts = [];
     this.head = new SnakePart(this, pos);
     this.parts.push(this.head);
-    this.snakesGroup.addMultiple(this.parts);
+    if (this.snakesGroup !== null) this.snakesGroup.addMultiple(this.parts);
     this.scene.physics.add.overlap(this.head, this.snakesGroup, this.die, null, this);
     this.scene.physics.add.collider(this.head, this.scene.wallsLayer);
 
@@ -44,7 +44,7 @@ export default class Snake {
         // Grow if te snake can eat
         if (this.canEat(dest) || this.parts.length < this.initSize) {
           let tail = new SnakePart(this, tailPos, true);
-          this.snakesGroup.add(tail);
+          if (this.snakesGroup !== null) this.snakesGroup.add(tail);
           this.parts.push(tail);
         }
       }

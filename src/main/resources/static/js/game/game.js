@@ -20,7 +20,7 @@ let config = {
         createContainer: true
     },
     pixelArt: true,
-    scene: [Boot, Level],
+    scene: [Boot, Level, Spectator],
     physics: {
         default: 'arcade',
         arcade: {

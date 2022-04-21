@@ -23,6 +23,7 @@ export default class Boot extends Phaser.Scene {
    * Start the level scene
    */
   create() {
+    // TODO: cargar level o spectator dependiendo de si es el propietario o espectador
     this.scene.start('level');
   }
 }

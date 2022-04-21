@@ -106,11 +106,9 @@ public class RoomsController {
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
-        rootNode.put("from", "rooms");
-        rootNode.put("to", "room" + roomId);
-        rootNode.put("type", "join");
-        rootNode.put("playersOnline", room.getRoomUsers().size());
-        rootNode.put("userJoiner", joinUser.getUsername());
+
+        rootNode.put("type", "joinRoom");
+        rootNode.put("message", joinUser.getUsername());
         String json = mapper.writeValueAsString(rootNode);
 
         messagingTemplate.convertAndSend("/topic/room" + roomId, json);
@@ -203,10 +201,8 @@ public class RoomsController {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
 
-        rootNode.put("from", "rooms");
-        rootNode.put("to", "room" + roomId);
-        rootNode.put("type", "leave");
-        rootNode.put("userLeaver", ru.getUser().getUsername());
+        rootNode.put("type", "leaveRoom");
+        rootNode.put("message", ru.getUser().getUsername());
         String json = mapper.writeValueAsString(rootNode);
 
         messagingTemplate.convertAndSend("/topic/room" + roomId, json);
