@@ -12,7 +12,11 @@ import javax.servlet.ServletContext;
 import java.text.SimpleDateFormat;
 
 /**
- * This code will execute when the application first starts.
+ * Enables or disables debugging and sets the date format
+ * 
+ * When context is refreshed, i. e. when the app starts, this component enables
+ * or disables debugging based in the "es.ucm.fdi.debug" enviroment variable.
+ * Also sets the date format.
  * 
  * @author mfreire
  */
@@ -27,6 +31,10 @@ public class StartupConfig {
 	@Autowired
 	private ServletContext context;
 	
+	/**
+	 * @see http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15
+	 * @see https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html
+	 */
 	@EventListener(ContextRefreshedEvent.class)
 	public void contextRefreshedEvent() {
 		String debugProperty = env.getProperty("es.ucm.fdi.debug");
@@ -34,9 +42,6 @@ public class StartupConfig {
 				&& Boolean.parseBoolean(debugProperty.toLowerCase()));
 		log.info("Setting global debug property to {}", 
 				context.getAttribute("debug"));
-		
-		// see http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15
-		// and https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html
 		context.setAttribute("dateFormatter", 
 				new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss.sssZ"));
 	}
