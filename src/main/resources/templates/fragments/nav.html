@@ -70,6 +70,20 @@
                                     <button type="submit" class="btn btn-outline-danger btn-sm">user1</button>
                                 </form>
                             </li>
+                            <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                                <form class="d-flex" th:action="@{/login}" method="post">
+                                    <input type="hidden" name="username" value="user2">
+                                    <input type="hidden" name="password" value="aa">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">user2</button>
+                                </form>
+                            </li>
+                            <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                                <form class="d-flex" th:action="@{/login}" method="post">
+                                    <input type="hidden" name="username" value="user3">
+                                    <input type="hidden" name="password" value="aa">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">user3</button>
+                                </form>
+                            </li>
                         </th:block>
                     </ul>
                 </div>
