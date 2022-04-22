@@ -43,6 +43,6 @@ public class StartupConfig {
 		log.info("Setting global debug property to {}", 
 				context.getAttribute("debug"));
 		context.setAttribute("dateFormatter", 
-				new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss.sssZ"));
+				new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sssZ"));
 	}
 }
