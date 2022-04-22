@@ -8,10 +8,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.ucm.fdi.iw</groupId>
-	<artifactId>snakewatch</artifactId>
+	<artifactId>snakewatch-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>snakewatch</name>
-	<description>Snake web multiplayer game</description>
+	<name>Snakewatch Server</name>
+	<description>Snake web multiplayer game server component</description>
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.version>3.8.1</maven.compiler.version>
