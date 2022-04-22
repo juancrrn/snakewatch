@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IwApplication {
+public class SnakewatchServerApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IwApplication.class, args);
+		SpringApplication.run(SnakewatchServerApp.class, args);
 	}
 
 }
