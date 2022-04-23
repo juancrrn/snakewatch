@@ -31,7 +31,8 @@ FIXME If this code is unuseful, remove it.
 */
 @NamedQuery(
 	name = "RoomUser.getRoomUser",
-	query = "SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId AND ru.room.id= :roomId"
+	query = "SELECT ru FROM RoomUser ru "
+		  + "WHERE ru.user.id= :userId AND ru.room.id= :roomId"
 )
 @NamedQuery(
 	name = "RoomUser.getUsersOfRoom",

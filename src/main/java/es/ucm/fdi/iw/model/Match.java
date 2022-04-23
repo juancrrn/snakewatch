@@ -36,7 +36,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @NamedQuery(
     name = "Match.getRoomsMatches",
-    query = "SELECT m FROM Match m JOIN Room r ON r.id=m.room.id WHERE r.id= :roomId ORDER BY m.date DESC"
+    query = "SELECT m FROM Match m JOIN Room r ON r.id=m.room.id "
+          + "WHERE r.id= :roomId ORDER BY m.date DESC"
 )
 public class Match {	
 	
