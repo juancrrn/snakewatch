@@ -16,7 +16,6 @@ import javax.persistence.SequenceGenerator;
 import java.io.Serializable;
 import java.time.*;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -39,22 +38,25 @@ import lombok.NoArgsConstructor;
     query = "SELECT m FROM Match m JOIN Room r ON r.id=m.room.id "
           + "WHERE r.id= :roomId ORDER BY m.date DESC"
 )
-public class Match implements Serializable {	
-	
-	/**
-	 * Identifier
-	 * 
-	 * <p> This SequenceGenerator creates a sequence generator named
-	 * "match_id_seq_gen" based on a sequence "match_id_seq" autocreated
-	 * previously by the persistence provider, H2. 
+public class Match implements Serializable {
+
+    /**
+     * Identifier
      * 
-     * <p> This sequence will be used later to fill the "Match.id" field.
-	 * 
-	 * <p> Setting "allocationSize" to 1 allows the allocated sequence space to be
-	 * just one, avoiding id gaps.
-	 */
+     * <p>
+     * This SequenceGenerator creates a sequence generator named
+     * "match_id_seq_gen" based on a sequence "match_id_seq" autocreated
+     * previously by the persistence provider, H2.
+     * 
+     * <p>
+     * This sequence will be used later to fill the "Match.id" field.
+     * 
+     * <p>
+     * Setting "allocationSize" to 1 allows the allocated sequence space to be
+     * just one, avoiding id gaps.
+     */
     @Id
-	@SequenceGenerator(name = "match_id_seq_gen", sequenceName = "match_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "match_id_seq_gen", sequenceName = "match_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_id_seq_gen")
     private long id;
 
@@ -70,14 +72,13 @@ public class Match implements Serializable {
     @ManyToOne
     private Level level;
 
-
-	/**
-	 * List of players (MatchPlayer class) that have participated in this match
-	 * @see www.baeldung.com/jpa-many-to-many
-	 */
+    /**
+     * List of players (MatchPlayer class) that have participated in this match
+     * 
+     * @see www.baeldung.com/jpa-many-to-many
+     */
     @OneToMany(mappedBy = "match")
     private List<MatchPlayer> matchPlayers = new ArrayList<>();
-
 
     /**
      * Status
@@ -100,11 +101,12 @@ public class Match implements Serializable {
     /**
      * Maximum number of players
      * 
-     * <p> If null, the match has no maximum.
-     * <p> TODO: check this constraint when adding new players to the match
+     * <p>
+     * If null, the match has no maximum.
+     * <p>
+     * TODO: check this constraint when adding new players to the match
      */
     private int maxPlayers;
-
 
     private LocalDate date;
 }

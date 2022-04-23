@@ -47,7 +47,7 @@ FIXME If this code is unuseful, remove it.
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "room_id" }))
 public class RoomUser implements Serializable {
 
-    /**
+	/**
 	 * Identifier
 	 * 
 	 * This @SequenceGenerator creates a sequence generator named
@@ -58,20 +58,20 @@ public class RoomUser implements Serializable {
 	 * Setting "allocationSize" to 1 allows the allocated sequence space to be
 	 * just one, avoiding id gaps.
 	 */
-    @Id
+	@Id
 	@SequenceGenerator(name = "roomuser_id_seq_gen", sequenceName = "roomuser_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roomuser_id_seq_gen")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roomuser_id_seq_gen")
 	private long id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user; 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-    @ManyToOne
-    @JoinColumn(name="room_id")
-    private Room room; 
+	@ManyToOne
+	@JoinColumn(name = "room_id")
+	private Room room;
 
-    /** User is admin of the room */
-    private boolean admin;
+	/** User is admin of the room */
+	private boolean admin;
 
 }

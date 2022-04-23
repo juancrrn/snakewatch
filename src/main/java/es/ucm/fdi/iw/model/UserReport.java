@@ -1,6 +1,5 @@
 package es.ucm.fdi.iw.model;
 
-
 import javax.persistence.*;
 
 import lombok.Data;
@@ -24,40 +23,40 @@ import lombok.NoArgsConstructor;
     name = "UserReport.getAll",
     query = "SELECT e FROM UserReport e"
 )
-public class UserReport {	
-	
-	/**
-	 * Identifier
-	 */
+public class UserReport {
+
+    /**
+     * Identifier
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userreport_id_seq_gen")
     @SequenceGenerator(name = "userreport_id_seq_gen", sequenceName = "userreport_id_seq", allocationSize = 1)
     private long id;
 
-	/**
-	 * User that issued the report 
-	 */
+    /**
+     * User that issued the report
+     */
     @ManyToOne
-    @JoinColumn(name="reportingUser_id")
+    @JoinColumn(name = "reportingUser_id")
     private User reportingUser;
 
-	/**
-	 * User being reported
-	 */
+    /**
+     * User being reported
+     */
     @ManyToOne
-    @JoinColumn(name="reportedUser_id")
+    @JoinColumn(name = "reportedUser_id")
     private User reportedUser;
 
-	/**
-	 * Moderator in charge of taken decisions
-	 */
+    /**
+     * Moderator in charge of taken decisions
+     */
     @ManyToOne
-    @JoinColumn(name="moderatorUser_id")
+    @JoinColumn(name = "moderatorUser_id")
     private User moderatorUser;
 
-	/**
-	 * Explanation given by reportingUser
-	 */
+    /**
+     * Explanation given by reportingUser
+     */
     private String reasons;
 
     /**

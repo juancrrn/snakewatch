@@ -55,37 +55,39 @@ FIXME If this code is unuseful, remove it.
           + "GROUP BY u.username ORDER BY co DESC"
 )
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "player_id", "match_id" }))
-public class MatchPlayer implements Serializable{
+public class MatchPlayer implements Serializable {
 
     /**
-	 * Identifier
-	 * 
-	 * This @SequenceGenerator creates a sequence generator named
-	 * "matchplayer_id_seq_gen" based on a sequence "matchplayer_id_seq" autocreated
-	 * previously by the persistence provider, H2. This sequence will be used
-	 * later to fill the "User.id" field.
-	 * 
-	 * Setting "allocationSize" to 1 allows the allocated sequence space to be
-	 * just one, avoiding id gaps.
-	 */
+     * Identifier
+     * 
+     * This @SequenceGenerator creates a sequence generator named
+     * "matchplayer_id_seq_gen" based on a sequence "matchplayer_id_seq" autocreated
+     * previously by the persistence provider, H2. This sequence will be used
+     * later to fill the "User.id" field.
+     * 
+     * Setting "allocationSize" to 1 allows the allocated sequence space to be
+     * just one, avoiding id gaps.
+     */
     @Id
-	@SequenceGenerator(name = "matchplayer_id_seq_gen", sequenceName = "matchplayer_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "matchplayer_id_seq_gen", sequenceName = "matchplayer_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "matchplayer_id_seq_gen")
-	private long id;
+    private long id;
 
     /**
-	 * Player
-	 * @see www.baeldung.com/jpa-many-to-many
-	 */
+     * Player
+     * 
+     * @see www.baeldung.com/jpa-many-to-many
+     */
 
     @ManyToOne
     @JoinColumn(name = "player_id")
     private User player;
 
     /**
-	 * Match
-	 * @see www.baeldung.com/jpa-many-to-many
-	 */
+     * Match
+     * 
+     * @see www.baeldung.com/jpa-many-to-many
+     */
     @ManyToOne
     @JoinColumn(name = "match_id")
     private Match match;
@@ -93,8 +95,10 @@ public class MatchPlayer implements Serializable{
     /**
      * Position in the ranking of the match.
      * 
-     * <p> - Starting from 1 (for winner)
-     * <p> - Null if the match hasn't ended yet.
+     * <p>
+     * - Starting from 1 (for winner)
+     * <p>
+     * - Null if the match hasn't ended yet.
      */
     private int position;
 }

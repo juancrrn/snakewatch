@@ -23,11 +23,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Settings {	
-	
-	/**
-	 * Identifier
-	 */
+public class Settings {
+
+    /**
+     * Identifier
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")

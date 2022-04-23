@@ -34,13 +34,13 @@ import lombok.Data;
 )
 @Data
 public class Message implements Serializable {
-	
+
 	/**
 	 * Identifier
 	 */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
+	@SequenceGenerator(name = "gen", sequenceName = "gen")
 	private long id;
 
 	/**
@@ -59,12 +59,12 @@ public class Message implements Serializable {
 	 * Text
 	 */
 	private String text;
-		
+
 	/**
 	 * Date sent
 	 */
 	private LocalDateTime dateSent;
-		
+
 	/**
 	 * Date read
 	 */
