@@ -32,22 +32,4 @@ public class Skin {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
     private long id;
-
-    /*
-    @Getter
-    @AllArgsConstructor
-    private static class Transfer {
-        private long id;
-    }
-    
-    @Override
-    public Transfer toTransfer() {
-		return new Transfer(id,	roomname, received.size(), sent.size());
-    }
-
-    @Override
-    public String toString() {
-        return toTransfer().toString();
-    }
-    */
 }

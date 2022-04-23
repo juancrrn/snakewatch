@@ -81,27 +81,6 @@ public class Room {
 	@OneToMany(mappedBy = "room")
 	private List<RoomUser> roomUsers = new ArrayList<>();
 
-
-
-
     @OneToMany(mappedBy = "room")
     private List<Match> matches = new ArrayList<>();
-/*
-    @Getter
-    @AllArgsConstructor
-    private static class Transfer {
-        private long id;
-        private String roomname;
-    }
-    
-    @Override
-    public Transfer toTransfer() {
-		return new Transfer(id,	roomname, received.size(), sent.size());
-    }
-
-	@Override
-	public String toString() {
-		return toTransfer().toString();
-	}
-*/
 }

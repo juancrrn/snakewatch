@@ -72,22 +72,4 @@ public class UserReport {
 
     @Column(nullable = false)
     private Status status;
-
-    /*
-    @Getter
-    @AllArgsConstructor
-    private static class Transfer {
-        private long id;
-    }
-    
-    @Override
-    public Transfer toTransfer() {
-		return new Transfer(id,	roomname, received.size(), sent.size());
-    }
-
-	@Override
-	public String toString() {
-		return toTransfer().toString();
-	}
-    */
 }
