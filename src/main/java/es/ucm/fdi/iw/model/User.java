@@ -16,23 +16,21 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQueries({
-	@NamedQuery(name="User.getUsers",
-        query="SELECT u FROM User u"),
-	@NamedQuery(name="User.byId",
-        query="SELECT u FROM User u "
-            + "WHERE u.id = :id AND u.enabled = TRUE"),
-    @NamedQuery(name="User.byUsername",
-        query="SELECT u FROM User u "
-            + "WHERE u.username = :username AND u.enabled = TRUE"),
-    @NamedQuery(name="User.hasUsername",
-        query="SELECT COUNT(u) "
-            + "FROM User u "
-            + "WHERE u.username = :username"),
-	@NamedQuery(name="User.getAllUsersExceptMe",
-		query="SELECT u FROM User u "
-			+ "WHERE u.username != :username AND u.enabled = TRUE")
-})
+@NamedQuery(name="User.getUsers",
+	query="SELECT u FROM User u")
+@NamedQuery(name="User.byId",
+	query="SELECT u FROM User u "
+		+ "WHERE u.id = :id AND u.enabled = TRUE")
+@NamedQuery(name="User.byUsername",
+	query="SELECT u FROM User u "
+		+ "WHERE u.username = :username AND u.enabled = TRUE")
+@NamedQuery(name="User.hasUsername",
+	query="SELECT COUNT(u) "
+		+ "FROM User u "
+		+ "WHERE u.username = :username")
+@NamedQuery(name="User.getAllUsersExceptMe",
+	query="SELECT u FROM User u "
+		+ "WHERE u.username != :username AND u.enabled = TRUE")
 @Table(name="IWUser")
 public class User /*implements Transferable<User.Transfer>*/ {
 
