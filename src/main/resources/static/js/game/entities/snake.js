@@ -15,8 +15,10 @@ export default class Snake {
     this.head = new SnakePart(this, pos);
     this.parts.push(this.head);
     if (this.snakesGroup !== null) this.snakesGroup.addMultiple(this.parts);
-    this.scene.physics.add.overlap(this.head, this.snakesGroup, this.die, null, this);
+    this.scene.physics.add.overlap(this.head, this.snakesGroup, this.onCollision, null, this);
     this.scene.physics.add.collider(this.head, this.scene.wallsLayer);
+
+    this.scene.setCellState(pos, false);
 
     this.dir = Math.floor(Math.random() * 4);
     this.lastDir;
@@ -28,7 +30,7 @@ export default class Snake {
    * Handles the movement of the snake each cycle
    */
   processTick() {
-    this.chooseNextMove()
+    this.chooseNextMove();
     if (!this.dead) {
       // Calculate next position
       let dest = this.nextPos();
@@ -46,8 +48,23 @@ export default class Snake {
           let tail = new SnakePart(this, tailPos, true);
           if (this.snakesGroup !== null) this.snakesGroup.add(tail);
           this.parts.push(tail);
+        } else {
+          // Mark the no longer occupied cell as empty
+          this.scene.setCellState(tailPos, true);
         }
+
+        // Mark the target cell as occupied
+        this.scene.setCellState(dest, false);
       }
+    }
+  }
+
+  /**
+   * Handles delayed death of the snake when it collides with another
+   */
+  handleDeath() {
+    if (!this.dead && this.collided !== undefined) {
+      this.die(this.collided);
     }
   }
 
@@ -62,11 +79,32 @@ export default class Snake {
   }
 
   /**
+   * Handles collision between snakes
+   * @param {SnakePart} one
+   * @param {SnakePart} other
+   */
+  onCollision(one, other) {
+    if (this === one.snake) {
+      this.collided = other.snake;
+    } else {
+      this.collided = one.snake;
+    }
+  }
+
+  /**
    * Handles death of the snake
    */
-  die() {
-    this.parts.forEach((part) => part.destroy(), this);
+  die(why) {
+    let headPos = this.head.pos;
+    this.parts.forEach((part) => part.die(), this);
     this.dead = true;
+
+    if (why instanceof Snake) {
+      // If the other snake is not goind to die, restore the state of the cell
+      if (why.collided === undefined) this.scene.setCellState(headPos, false);
+    } else if (why !== undefined) { // If collided with a wall, restore the state of the cell
+      this.scene.setCellState(headPos, false);
+    }
   }
 
   /**

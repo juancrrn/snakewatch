@@ -14,6 +14,12 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
 
   update() {}
 
+  die() {
+    // Mark the no longer occupied cell as empty
+    this.scene.setCellState(this.pos, true);
+    this.destroy();
+  }
+
   moveTo(pos) {
     let oldPos = this.pos;
     this.pos = pos;

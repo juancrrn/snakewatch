@@ -28,19 +28,26 @@ export default class Level extends Phaser.Scene {
     this.groundLayer = this.map.createLayer('ground', tileset);
     this.wallsLayer = this.map.createLayer('walls', tileset);
 
-    // Create food
-    this.food = new Food(this, { x: 6, y: 6 });
+    // Store empty cells
+    this.cells = new Set();
+    for (let i = 0; i < 625; i++) this.cells.add(i);
+
+    // Mark walls as occupied cells
+    this.map.forEachTile((wall) => this.cells.delete(wall.x + wall.y * 25), this, 0, 0, 25, 25, { isNotEmpty: true })
 
     this.snakesGroup = this.physics.add.group();
     // Create player
-    this.player = new PlayerSnake(this, this.snakesGroup, { x: 4, y: 2 }, 'white');
+    this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white');
     
     // Create bots
     this.bots = [];
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 7, y: 6 }, 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 12, y: 14 }, 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 14, y: 2 }, 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 3, y: 19 }, 'red'));
+    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+
+    // Create food
+    this.food = new Food(this, this.getEmptyCell());
 
     // Cursors
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -61,6 +68,10 @@ export default class Level extends Phaser.Scene {
       callbackScope: this,
       loop: true
     })
+
+    // Let some logic be delayed
+    this.ticked = false;
+    this.events.on('update', () => this.postTick(), this);
   }
 
   /**
@@ -71,9 +82,9 @@ export default class Level extends Phaser.Scene {
    */
   onCollision(o1, o2) {
     if (o1 instanceof SnakePart) {
-      o1.snake.die();
+      o1.snake.die(o2);
     } else if (o2 instanceof SnakePart) {
-      o2.snake.die();
+      o2.snake.die(o1);
     }
   }
 
@@ -84,15 +95,25 @@ export default class Level extends Phaser.Scene {
     this.bots.forEach(bot => bot.processTick());
     this.player.processTick();
 
-    const messageGameState = {
-      type: "GameState",
-      message: this.exportToJson()
-    }
-    ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageGameState));
-    
+    this.food.processTick();
+    this.ticked = true;
   }
 
-  
+  postTick() {
+    if (this.ticked) {
+      this.ticked = false;
+
+      this.bots.forEach(bot => bot.handleDeath());
+      this.player.handleDeath();
+
+      const messageGameState = {
+        type: "GameState",
+        message: this.exportToJson()
+      }
+
+      ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageGameState));
+    }
+  }
 
   /**
    * Checks if the snake would crash when moving to the new position
@@ -126,12 +147,22 @@ export default class Level extends Phaser.Scene {
    * @returns The position of the empty cell
    */
   getEmptyCell() {
-    let pos;
-    do {
-      pos = { x: Math.floor(Math.random() * 25), y: Math.floor(Math.random() * 25) }
-    } while (this.isOccupied(pos));
+    let cell = [...this.cells][Math.floor(Math.random() * this.cells.size)];
 
-    return pos;
+    return cell === undefined ? null : { x: cell % 25, y: ~~(cell / 25) };
+  }
+
+  /**
+   * Changes the state of the given position to be empty or not
+   * @param pos The position of which to change the state of
+   * @param {boolean} empty If is empty or not
+   */
+  setCellState(pos, empty) {
+    if (empty) {
+      this.cells.add(pos.x + pos.y * 25);
+    } else {
+      this.cells.delete(pos.x + pos.y * 25);
+    }
   }
 
   exportToJson(){
