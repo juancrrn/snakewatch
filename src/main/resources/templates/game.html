@@ -16,7 +16,7 @@
 
 
 
-    <script th:inline="javascript">
+    <script id="matchConstJs" th:inline="javascript">
       const SCRIPTURL = [[@{/js/game/game.js}]];
       const ROOM = [[${room.id}]] 
       const ADMIN = [[${admin}]];
@@ -25,9 +25,9 @@
       const CLIENTURL = [[@{/rooms/go_to_match/__${match.id}__/__${room.id}__}]];
     </script>
     
-    <script th:if="${admin}" type="text/javascript" th:src="@{/js/WebSockets/matchAdmin.js}"></script>
+    <script th:if="${admin}" type="module" th:src="@{/js/WebSockets/matchAdmin.js}"></script>
 
-    <script th:unless="${admin}" type="text/javascript" th:src="@{/js/WebSockets/matchPlayer.js}"></script>
+    <script th:unless="${admin}" type="module" th:src="@{/js/WebSockets/matchPlayer.js}"></script>
 
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>

@@ -3,6 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function init(){
         ws.subscribe("/topic/match" + MATCH);
+
+        const messageIsPlayer = {
+          type: "imPlayer",
+          message: USERSESSIONAME
+        }
+
+        ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageIsPlayer));
     }
 
     function loadGame(){
@@ -14,10 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(init, 500);
 
-    setTimeout(loadGame, 1000);
+    setTimeout(loadGame, 1500);
 
-    ws.receive = (json) => {
-      // TODO: importFromJson(json) para pintar el estado del juego
+    ws.receive = (text) => {
+      if(text.type=="GameState"){
+        alert("HELLOOO");
+      }
     }
 
   })

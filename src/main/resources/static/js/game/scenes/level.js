@@ -2,7 +2,6 @@ import BotSnake from '../entities/botSnake.js';
 import Food from '../entities/food.js';
 import PlayerSnake from '../entities/playerSnake.js';
 import SnakePart from '../entities/snakePart.js';
-
 /**
  * Scene that represents the current match and level
  */
@@ -85,7 +84,11 @@ export default class Level extends Phaser.Scene {
     this.bots.forEach(bot => bot.processTick());
     this.player.processTick();
 
-    ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(this.exportToJson()));
+    const messageGameState = {
+      type: "GameState",
+      message: this.exportToJson()
+    }
+    //ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageGameState));
   }
 
   /**

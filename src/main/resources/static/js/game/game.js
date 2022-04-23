@@ -6,7 +6,6 @@ import Spectator from'./scenes/spectator.js';
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
  */
 
-
 let config = {
     type: Phaser.CANVAS,
     canvas: document.getElementById('canvas'),

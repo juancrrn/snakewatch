@@ -1,4 +1,9 @@
+
+
 document.addEventListener("DOMContentLoaded", () => {
+
+    let playersNames = [USERSESSIONAME];
+    
 
     function init(){
       
@@ -12,15 +17,23 @@ document.addEventListener("DOMContentLoaded", () => {
         ws.stompClient.send("/topic/room" + ROOM,ws.headers, JSON.stringify(messageStartMatch));
     }
 
+
     function loadGame(){
-        let script = document.createElement('script');
-        script.src= SCRIPTURL;
-        script.type = "module";
-        document.body.appendChild(script);
+        let scriptGame = document.createElement('script');
+        scriptGame.src= SCRIPTURL;
+        scriptGame.type = "module";
+        document.body.appendChild(scriptGame);
     }
+
 
     setTimeout(init, 500);
 
-    setTimeout(loadGame, 1000);
+    setTimeout(loadGame, 1500);
+
+    ws.receive = (text) => {
+        if(text.type=="imPlayer"){
+            playersNames.push(text.message);      
+        }
+    }
 
   })
