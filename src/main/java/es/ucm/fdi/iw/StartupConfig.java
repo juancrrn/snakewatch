@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
  * 
  * When context is refreshed, i. e. when the app starts, this component enables
  * or disables debugging based in the "es.ucm.fdi.debug" enviroment variable.
- * Also sets the date format.
+ * It also sets the date format.
  * 
  * @author mfreire
  */
