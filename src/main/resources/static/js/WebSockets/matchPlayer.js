@@ -3,13 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function init(){
         ws.subscribe("/topic/match" + MATCH);
-
-        const messageIsPlayer = {
-          type: "imPlayer",
-          message: USERSESSIONAME
-        }
-
-        ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageIsPlayer));
     }
 
     function loadGame(){
