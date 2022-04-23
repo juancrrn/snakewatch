@@ -315,8 +315,8 @@ public class UserController {
 		long userId = ((User)session.getAttribute("u")).getId();		
 		User u = entityManager.find(User.class, userId);
 		log.info("Generating message list for user {} ({} messages)", 
-				u.getUsername(), u.getReceived().size());
-		return  u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+				u.getUsername(), u.getReceivedMessages().size());
+		return  u.getReceivedMessages().stream().map(Transferable::toTransfer).collect(Collectors.toList());
 	}
 	*/
     

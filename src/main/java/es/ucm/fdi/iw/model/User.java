@@ -77,14 +77,14 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	 */
 	@OneToMany
 	@JoinColumn(name = "sender_id")
-	private List<Message> sent = new ArrayList<>();
+	private List<Message> sentMessages = new ArrayList<>();
 	
 	/**
 	 * Messages received
 	 */
 	@OneToMany
 	@JoinColumn(name = "recipient_id")	
-	private List<Message> received = new ArrayList<>();		
+	private List<Message> receivedMessages = new ArrayList<>();		
 
 	/**
 	 * List of matches (MatchPlayer class) that the user has played
@@ -136,7 +136,7 @@ public class User /*implements Transferable<User.Transfer>*/ {
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id,	username, received.size(), sent.size());
+		return new Transfer(id,	username, receivedMessages.size(), sentMessages.size());
 	}
 	
 	@Override
