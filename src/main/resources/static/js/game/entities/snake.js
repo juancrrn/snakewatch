@@ -73,7 +73,7 @@ export default class Snake {
    * @param dir The direction to move to
    */
   setDir(dir) {
-    if (dir % 2 !== this.lastDir % 2) {
+    if (dir % 2 !== this.lastDir % 2 || this.lastDir === dir) {
       this.dir = dir;
     }
   }
