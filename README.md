@@ -14,7 +14,8 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
 - [Vistas](#vistas)
 - [Documentación del proyecto](#documentación-del-proyecto)  
     - [Clases de Spring Boot](#clases-de-spring-boot)
-    - [Clases del dominio](#clases-del-dominio)
+    - [Clases de modelos del dominio](#clases-de-modelos-del-dominio)
+    - [Clases de controladores y lógica](#clases-de-controladores-y-lógica)
 - [Desarrollo](#desarrollo)
     - [Herramientas](#herramientas)
 - [Referencias, _cheat sheets_ y _shortcuts_](#referencias-cheat-sheets-y-shortcuts)
@@ -86,9 +87,11 @@ Estos usuarios son muy similares a los "Guests" en el sentido de que no necesita
 
 Este diagrama muestra, de forma resumida y con un formato parecido a UML, la funcionalidad de las clases de configuración y arranque de Spring Boot utilizadas en el proyecto.
 
-### Clases del dominio
+### Clases de modelos del dominio
 
+### Clases de controladores y lógica
 
+Se ha seguido la plantilla de la asignatura en cuanto a implementar la lógica de servicios dentro de los controladores.
 
 ## Desarrollo
 
@@ -120,7 +123,7 @@ Además, se han utilizado las siguientes extensiones de VS Code:
 
 Ejecutar tests del proyecto:
 
-```console
+```shell
 $ mvn test
 ```
 
