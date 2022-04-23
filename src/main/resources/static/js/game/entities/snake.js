@@ -134,5 +134,9 @@ export default class Snake {
     for (let idx = 0; idx < this.parts.length; idx++) {
       this.parts[idx].importFromJson(tempPartsArray[idx]);
     }
+    for (let indx = this.parts.length; indx < tempPartsArray.length; indx++) {
+      this.parts.push(new SnakePart(this, { x: this.head.pos.x, y: this.head.pos.y }));
+      this.parts[indx].importFromJson(tempPartsArray[indx]);
+    }
   }
 }

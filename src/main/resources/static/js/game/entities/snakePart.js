@@ -28,6 +28,7 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
   importFromJson(json){
     this.pos.x = json.x;
     this.pos.y = json.y;
+    this.setPosition(this.pos.x * 20 + 10, this.pos.y * 20 + 10);
   }
 
 }
