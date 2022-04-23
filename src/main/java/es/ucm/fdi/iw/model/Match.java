@@ -13,7 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-
+import java.io.Serializable;
 import java.time.*;
 
 
@@ -39,7 +39,7 @@ import lombok.NoArgsConstructor;
     query = "SELECT m FROM Match m JOIN Room r ON r.id=m.room.id "
           + "WHERE r.id= :roomId ORDER BY m.date DESC"
 )
-public class Match {	
+public class Match implements Serializable {	
 	
 	/**
 	 * Identifier

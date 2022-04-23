@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ import lombok.Data;
 		  + "WHERE m.recipient.id = :userId AND m.dateRead = null"
 )
 @Data
-public class Message {
+public class Message implements Serializable {
 	
 	/**
 	 * Identifier

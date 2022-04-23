@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +44,7 @@ FIXME If this code is unuseful, remove it.
 		  + "WHERE u.username != :username AND u.enabled = TRUE"
 )
 @Table(name="IWUser")
-public class User {
+public class User implements Serializable {
 
 	/**
 	 * Identifier

@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 import lombok.Data;
@@ -28,7 +31,7 @@ import lombok.NoArgsConstructor;
     name = "Level.getAll",
     query = "SELECT l FROM Level l"
 )
-public class Level {
+public class Level implements Serializable {
 
     /**
 	 * Identifier

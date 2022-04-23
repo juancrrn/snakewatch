@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ import lombok.NoArgsConstructor;
     name = "Room.getAll",
     query = "SELECT r FROM Room r"
 )
-public class Room {	
+public class Room implements Serializable {	
 	
 	/**
 	 * Identifier

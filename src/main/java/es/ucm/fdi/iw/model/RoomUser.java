@@ -1,5 +1,7 @@
 package es.ucm.fdi.iw.model;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.NamedQuery;
@@ -43,7 +45,7 @@ FIXME If this code is unuseful, remove it.
 	query = "SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId"
 )
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "room_id" }))
-public class RoomUser{
+public class RoomUser implements Serializable {
 
     /**
 	 * Identifier
