@@ -79,7 +79,16 @@ Estos usuarios son muy similares a los "Guests" en el sentido de que no necesita
 
 ### Clases de Spring Boot
 
+<p align="center">
+    <img alt="Diagrama pseudo-UML de clases de Spring Boot" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/spring-classes-pseudo-uml.png?raw=true">
+</p>
+<p align="center"><sup>Diagrama pseudo-UML de clases de Spring Boot</sup></p>
+
+Este diagrama muestra, de forma resumida y con un formato parecido a UML, la funcionalidad de las clases de configuración y arranque de Spring Boot utilizadas en el proyecto.
+
 ### Clases del dominio
+
+
 
 ## Desarrollo
 
