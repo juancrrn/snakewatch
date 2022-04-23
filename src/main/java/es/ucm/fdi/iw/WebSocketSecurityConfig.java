@@ -14,8 +14,8 @@ import es.ucm.fdi.iw.model.User;
 @Configuration
 public class WebSocketSecurityConfig
       extends AbstractSecurityWebSocketMessageBrokerConfigurer { 
-
 	
+    @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
             .simpSubscribeDestMatchers("/topic/admin")	// only admins can subscribe
