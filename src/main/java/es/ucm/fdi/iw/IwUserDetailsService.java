@@ -37,12 +37,12 @@ public class IwUserDetailsService implements UserDetailsService {
 	        ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
 	        for (String r : u.getRoles().split("[,]")) {
 	        	roles.add(new SimpleGrantedAuthority("ROLE_" + r));
-		        log.info("Roles for " + username + " include " + roles.get(roles.size()-1));
+		        log.info("Roles for {} include {}", username, roles.get(roles.size()-1));
 	        }
 	        return new org.springframework.security.core.userdetails.User(
 	        		u.getUsername(), u.getPassword(), roles); 
 	    } catch (Exception e) {
-    		log.info("No such user: " + username + " (error = " + e.getMessage() + ")");
+    		log.info("No such user: {} (error = {})", username, e.getMessage());
     		throw new UsernameNotFoundException(username);
     	}
     }
