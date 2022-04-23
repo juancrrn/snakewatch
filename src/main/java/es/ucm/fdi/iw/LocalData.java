@@ -14,24 +14,25 @@ import org.apache.commons.logging.LogFactory;
  * 
  * @author mfreire
  */
-public class LocalData {    	    
-	private static Log log = LogFactory.getLog(LocalData.class);
+public class LocalData {   
+
+    private static Log log = LogFactory.getLog(LocalData.class);
 
     private File baseFolder;
     
     public LocalData(File baseFolder) {
-		this.baseFolder = baseFolder;
-    	log.info("base folder is " + baseFolder.getAbsolutePath());
-    	if (!baseFolder.isDirectory()) {
-    		if (baseFolder.exists()) {
-    			log.error("exists and is not a directory -- cannot create: " + baseFolder);
-    		} else if ( ! baseFolder.mkdirs()){
-    			log.error("could not be created -- check permissions " + baseFolder);        			
-    		}
-    	} else {
-    		log.info("using already-existing base folder :-)");
-    	}
-    	baseFolder.mkdirs();
+        this.baseFolder = baseFolder;
+        log.info("base folder is " + baseFolder.getAbsolutePath());
+        if (! baseFolder.isDirectory()) {
+            if (baseFolder.exists()) {
+                log.error("exists and is not a directory -- cannot create: " + baseFolder);
+            } else if ( ! baseFolder.mkdirs()){
+                log.error("could not be created -- check permissions " + baseFolder);                			
+            }
+        } else {
+            log.info("using already-existing base folder :-)");
+        }
+        baseFolder.mkdirs();
     }
     
     /**
@@ -43,11 +44,11 @@ public class LocalData {
      * created if absent.
      */
     public File getFolder(String folderName) {
-    	File folder = new File(baseFolder, folderName);
-    	if ( ! folder.exists()) {
-    		folder.mkdirs();
-    	}
-    	return folder;
+        File folder = new File(baseFolder, folderName);
+        if ( ! folder.exists()) {
+            folder.mkdirs();
+        }
+        return folder;
     }
     
     /**
@@ -60,6 +61,6 @@ public class LocalData {
      * does not exist, it *will* be created (as by a call to getFolder).
      */
     public File getFile(String folderName, String fileName) {
-    	return new File(getFolder(folderName), fileName);
+        return new File(getFolder(folderName), fileName);
     }
 }
