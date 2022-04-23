@@ -4,7 +4,27 @@ Snakewatch es una aplicación web dedicada al videojuego de la serpiente o _Snak
 
 El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Grado en Ingeniería Informática de la Universidad Complutense de Madrid, y utiliza tecnologías como Spring, Maven y Thymeleaf.
 
-## Autores
+##### Table of Contents
+
+- [Propuesta de proyecto y funcionalidad](#propuesta-de-proyecto-y-funcionalidad)
+    - [La serpiente](#la-serpiente)
+    - [Catch](#catch)
+    - [Roles de usuario](#roles-de-usuario)
+- [Funcionalidad desarrollada](#funcionalidad-desarrollada)
+- [Vistas](#vistas)
+- [Documentación del proyecto](#documentación-del-proyecto)  
+    - [Clases de Spring Boot](#clases-de-spring-boot)
+    - [Clases del dominio](#clases-del-dominio)
+- [Desarrollo](#desarrollo)
+    - [Herramientas](#herramientas)
+- [Referencias, _cheat sheets_ y _shortcuts_](#referencias-cheat-sheets-y-shortcuts)
+    - [Maven y ejecución](#maven-y-ejecución)
+    - [Spring y componentes](#spring-y-componentes)
+    - [Thymeleaf](#thymeleaf)
+    - [Guías de Spring](#guías-de-spring)
+    - [Base de datos](#base-de-datos)
+
+##### Autores
 
 - Daniel Marín Irún
 - Juan Carrión Molina
@@ -12,13 +32,15 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
 - Óscar Caro Navarro
 - Óscar Molano Buitrago
 
-## La serpiente
+## Propuesta de proyecto
+
+### La serpiente
 
 En resumen, la dinámica del juego consiste en que el jugador controla una criatura larga y delgada, similar a una serpiente, que se mueve sobre un plano delimitado recogiendo alimentos. El jugador debe evitar que la serpiente se golpee contra su propia cola o contra las paredes que delimitan el plano.
 
 Se pueden obtener más detalles en la [página de Wikipedia de la serpiente](https://es.wikipedia.org/wiki/La_serpiente_(videojuego)).
 
-## Propuesta de proyecto
+### Catch
 
 > ¿Viciado al Elden Ring o al God of war Ragnarök? Si eres más de clásicos, ¡estás de suerte! Con Snakewatch podrás jugar al mítico y legendario Snake con tus amigos. Gracias a su entorno multijugador, la partida se sincronizará para que luchéis por ver quién es el amo del mapa. ¡Sé el último en sobrevivir y álzate con la victoria!
 
@@ -36,33 +58,54 @@ Se pueden obtener más detalles en la [página de Wikipedia de la serpiente](htt
 Estos usuarios son muy similares a los "Guests" en el sentido de que no necesitan registrarse y no se guardará ninguna información para ellos, sin embargo, lo que los define es que requieren la clave del juego para poder verlo.
 - **Administrador**: Los altos mandos de la plataforma. Solo actúa cuando se notifican muchos reportes a una persona. Son los que pueden eliminar a usuarios de forma temporal o permanente de la aplicación.
 
+## Funcionalidad desarrollada
+
+### A
+
+### B
+
+### C
+
 ## Vistas
 
-### Lobby
+- **Lobby**: La pantalla de lobby es la pantalla de inicio del juego, donde un usuario una vez se ha registrado en la aplicación web podrá seleccionar como desee jugar, si multijugador (play online) o un jugador solo (levels), así como observar otras partidas (spectate). También podrá acceder a su perfil, a los rankings o en caso de ser administrador a la pantalla de administrador.
+- **Perfil de usuario**: La pantalla de perfil incluirá el perfil del usuario con su respectivo nombre y foto de perfil, así como los amigos que tiene, el número total de partidas jugadas y ganadas y un historial con las partidas recientes.
+- **Niveles**: La pantalla de niveles es la pantalla de un solo jugador, en la que el usuario podrá seleccionar el nivel al que desee jugar, donde habrá distintas dificultades por nivel, al seleccionar el nivel tendrá que superar la dificultad que incluya dicho nivel.
+- **Administrador**: La pantalla de administrador únicamente será accesible para aquellos usuarios con el rol de administrador, en la cual se incluirá una lista de aquellos usuarios que han sido reportados donde el administrador podrá ver el motivo de su reporte y si banea o no a dicho usuario.
+- **Juego**: La pantalla de juego es la pantalla de multijugador donde varios jugadores podrán entrar a jugar simultáneamente, se enfrentarán entre ellos y ganará aquel que sea el último en quedar de pie.
+- **Rankings**: La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego o lo que es lo mismo, los jugadores que hayan ganado más veces en el modo de juego multijugador. Se mostrará el nombre del usuario junto a las victorias conseguidas y la posición que ocupa en el top.
 
-La pantalla de lobby es la pantalla de inicio del juego, donde un usuario una vez se ha registrado en la aplicación web podrá seleccionar como desee jugar, si multijugador (play online) o un jugador solo (levels), así como observar otras partidas (spectate). También podrá acceder a su perfil, a los rankings o en caso de ser administrador a la pantalla de administrador.
+## Documentación del proyecto
 
-### Perfil de usuario
+### Clases de Spring Boot
 
-La pantalla de perfil incluirá el perfil del usuario con su respectivo nombre y foto de perfil, así como los amigos que tiene, el número total de partidas jugadas y ganadas y un historial con las partidas recientes.
+### Clases del dominio
 
-### Niveles
+## Desarrollo
 
-La pantalla de niveles es la pantalla de un solo jugador, en la que el usuario podrá seleccionar el nivel al que desee jugar, donde habrá distintas dificultades por nivel, al seleccionar el nivel tendrá que superar la dificultad que incluya dicho nivel.
+### Herramientas
 
-### Administrador
+Para el desarrollo en equipo, se ha utilizado Visual Studio Code como editor. Como sistema de control de versiones, se ha utilizado Git o, más concretamente, GitHub. De GitHub también se ha utilizado la herramienta de proyectos para realizar la planificación y la distribución de tareas.
 
-La pantalla de administrador únicamente será accesible para aquellos usuarios con el rol de administrador, en la cual se incluirá una lista de aquellos usuarios que han sido reportados donde el administrador podrá ver el motivo de su reporte y si banea o no a dicho usuario.
+Además, se han utilizado las siguientes extensiones de VS Code:
 
-### Juego
+- [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack):
+    - [Language Support for Java(TM) by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.java)
+    - [Debugger for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)
+    - [Test Runner for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-test)
+    - [Maven for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven)
+    - [Project Manager for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency)
+    - [IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
+- [Spring Boot Extension Pack](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-boot-dev-pack)
+    - [Spring Boot Tools](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-spring-boot)
+    - [Spring Initializr Java Support](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-initializr)
+    - [Spring Boot Dashboard](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-boot-dashboard)
+- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
+- [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+- [Checkstyle for Java](https://marketplace.visualstudio.com/items?itemName=shengchen.vscode-checkstyle)
+- [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
 
-La pantalla de juego es la pantalla de multijugador donde varios jugadores podrán entrar a jugar simultáneamente, se enfrentarán entre ellos y ganará aquel que sea el último en quedar de pie.
-
-### Rankings
-
-La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego o lo que es lo mismo, los jugadores que hayan ganado más veces en el modo de juego multijugador. Se mostrará el nombre del usuario junto a las victorias conseguidas y la posición que ocupa en el top.
-
-## Referencias, documentación, cheat sheets y shortcuts
+## Referencias, _cheat sheets_ y _shortcuts_
 
 ### Maven y ejecución
 
@@ -111,25 +154,3 @@ A través de un `import.sql`.
 
 - Ant tasks for schema creation and documentation: https://developer.jboss.org/docs/DOC-14011
 - Using Hibernate import.sql: http://christopherlakey.com/articles/import-sql.html
-
-## Desarrollo
-
-Para el desarrollo en equipo, se ha utilizado Visual Studio Code como editor. Como sistema de control de versiones, se ha utilizado Git o, más concretamente, GitHub. De GitHub también se ha utilizado la herramienta de proyectos para realizar la planificación y la distribución de tareas.
-
-Además, se han utilizado las siguientes extensiones de VS Code:
-
-- [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack):
-    - [Language Support for Java(TM) by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.java)
-    - [Debugger for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)
-    - [Test Runner for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-test)
-    - [Maven for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven)
-    - [Project Manager for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency)
-    - [IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
-- [Spring Boot Extension Pack](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-boot-dev-pack)
-    - [Spring Boot Tools](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-spring-boot)
-    - [Spring Initializr Java Support](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-initializr)
-    - [Spring Boot Dashboard](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-boot-dashboard)
-- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
-- [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
-- [Checkstyle for Java](https://marketplace.visualstudio.com/items?itemName=shengchen.vscode-checkstyle)
-- [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
