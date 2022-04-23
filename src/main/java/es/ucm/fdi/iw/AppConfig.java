@@ -17,9 +17,6 @@ import org.springframework.core.env.Environment;
 @Configuration	
 public class AppConfig {
 
-	@Autowired
-	private Environment env;
-	
 	/**
 	 * Declares a LocalData bean.
 	 * 
@@ -27,8 +24,8 @@ public class AppConfig {
 	 * `@Autowired LocalData localData`, and have it initialized
 	 * with the result of this method. 
 	 */	
-    @Bean(name="localData")
-    public LocalData getLocalData() {
+    @Bean(name = "localData")
+    public LocalData getLocalData(@Autowired Environment env) {
     	return new LocalData(new File(env.getProperty("es.ucm.fdi.base-path")));
     } 
     
