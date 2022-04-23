@@ -24,18 +24,31 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQueries({
-    @NamedQuery(name="MatchPlayer.getMatchPlayers",
-        query="SELECT mp FROM MatchPlayer mp"),
-    @NamedQuery(name="MatchPlayer.byPlayerId",
-        query="SELECT mp FROM MatchPlayer mp WHERE mp.player.id = :playerId"),
-    @NamedQuery(name="MatchPlayer.getWinnerById",
-        query="SELECT COUNT(mp) FROM MatchPlayer mp WHERE mp.position=1 AND mp.player.id = :playerId"),
-    @NamedQuery(name="MatchPlayer.rankingGlobal",
-    query="SELECT u.username, COUNT(mp.player.id) as co FROM MatchPlayer mp JOIN User u ON u.id=mp.player.id WHERE mp.position=1 GROUP BY u.username ORDER BY co DESC"),
-    @NamedQuery(name="MatchPlayer.rankingEntreFechas",
-    query="SELECT u.username, COUNT(mp.player.id) as co FROM MatchPlayer mp JOIN Match m ON mp.match.id=m.id JOIN User u ON u.id=mp.player.id WHERE position=1 AND date>= :fechaInicial AND date<= :fechaFinal GROUP BY u.username ORDER BY co DESC")
-})
+@NamedQuery(
+    name = "MatchPlayer.getMatchPlayers",
+    query = "SELECT mp FROM MatchPlayer mp"
+)
+@NamedQuery(
+    name = "MatchPlayer.byPlayerId",
+    query = "SELECT mp FROM MatchPlayer mp"
+          + "WHERE mp.player.id = :playerId"
+)
+@NamedQuery(
+    name = "MatchPlayer.getWinnerById",
+    query = "SELECT COUNT(mp) FROM MatchPlayer mp"
+          + "WHERE mp.position=1 AND mp.player.id = :playerId"
+)
+@NamedQuery(
+    name = "MatchPlayer.rankingGlobal",
+    query = "SELECT u.username, COUNT(mp.player.id) as co FROM MatchPlayer mp"
+          + "JOIN User u ON u.id=mp.player.id WHERE mp.position=1 GROUP BY u.username ORDER BY co DESC"
+)
+@NamedQuery(
+    name = "MatchPlayer.rankingEntreFechas",
+    query = "SELECT u.username, COUNT(mp.player.id) as co FROM MatchPlayer mp"
+          + "JOIN Match m ON mp.match.id=m.id JOIN User u ON u.id=mp.player.id"
+          + "WHERE position=1 AND date>= :fechaInicial AND date<= :fechaFinal GROUP BY u.username ORDER BY co DESC"
+)
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "player_id", "match_id" }))
 public class MatchPlayer implements Serializable{
 

@@ -2,7 +2,6 @@ package es.ucm.fdi.iw.model;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,16 +22,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQueries({
-	@NamedQuery(name="RoomUser.getRoomUsers",
-	query="SELECT ru FROM RoomUser ru"),
-	@NamedQuery(name="RoomUser.getRoomUser",
-	query="SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId AND ru.room.id= :roomId"),
-	@NamedQuery(name="RoomUser.getUsersOfRoom",
-	query="SELECT ru FROM RoomUser ru WHERE ru.room.id= :roomId"),
-	@NamedQuery(name="RoomUser.getUserInRooms",
-	query="SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId")
-})
+@NamedQuery(
+	name = "RoomUser.getRoomUsers",
+	query = "SELECT ru FROM RoomUser ru"
+)
+@NamedQuery(
+	name = "RoomUser.getRoomUser",
+	query = "SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId AND ru.room.id= :roomId"
+)
+@NamedQuery(
+	name = "RoomUser.getUsersOfRoom",
+	query = "SELECT ru FROM RoomUser ru WHERE ru.room.id= :roomId"
+)
+@NamedQuery(
+	name = "RoomUser.getUserInRooms",
+	query = "SELECT ru FROM RoomUser ru WHERE ru.user.id= :userId"
+)
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "room_id" }))
 public class RoomUser{
 

@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
@@ -30,11 +29,11 @@ import lombok.Data;
  * @version 0.0.1
  */
 @Entity
-@NamedQueries({
-	@NamedQuery(name="Message.countUnread",
-	query="SELECT COUNT(m) FROM Message m "
-			+ "WHERE m.recipient.id = :userId AND m.dateRead = null")
-})
+@NamedQuery(
+	name = "Message.countUnread",
+	query = "SELECT COUNT(m) FROM Message m "
+		  + "WHERE m.recipient.id = :userId AND m.dateRead = null"
+)
 @Data
 public class Message {
 	

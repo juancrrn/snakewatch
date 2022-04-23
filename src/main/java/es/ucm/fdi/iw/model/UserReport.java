@@ -20,7 +20,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQuery(name = "UserReport.getAll", query = "SELECT e FROM UserReport e")
+@NamedQuery(
+    name = "UserReport.getAll",
+    query = "SELECT e FROM UserReport e"
+)
 public class UserReport {	
 	
 	/**

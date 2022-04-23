@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -35,10 +34,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQueries({
-    @NamedQuery(name="Match.getRoomsMatches",
-    query="SELECT m FROM Match m JOIN Room r ON r.id=m.room.id WHERE r.id= :roomId ORDER BY m.date DESC")
-})
+@NamedQuery(
+    name = "Match.getRoomsMatches",
+    query = "SELECT m FROM Match m JOIN Room r ON r.id=m.room.id WHERE r.id= :roomId ORDER BY m.date DESC"
+)
 public class Match {	
 	
 	/**

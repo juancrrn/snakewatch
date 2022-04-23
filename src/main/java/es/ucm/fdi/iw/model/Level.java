@@ -24,11 +24,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQueries({
-    @NamedQuery(name="Level.getLevels",
-            query="SELECT l FROM Level l "
-                    )
-})
+@NamedQuery(
+    name = "Level.getLevels",
+    query = "SELECT l FROM Level l "
+)
 public class Level {
 
     /**
