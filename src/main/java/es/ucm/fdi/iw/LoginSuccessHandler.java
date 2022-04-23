@@ -53,7 +53,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		  To know more about the “SameSite“ attribute, read 
 		  https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie/SameSite
 		*/
-		addSameSiteCookieAttribute(response);
+		this.addSameSiteCookieAttribute(response);
 
 		String username = ((org.springframework.security.core.userdetails.User)
 				authentication.getPrincipal()).getUsername();
