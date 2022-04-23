@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
             query="SELECT l FROM Level l "
                     )
 })
-public class Level /*implements Transferable<Room.Transfer>*/ {
+public class Level {
 
     /**
 	 * Identifier

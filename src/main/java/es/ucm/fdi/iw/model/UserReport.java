@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @NamedQuery(name = "UserReport.getAll", query = "SELECT e FROM UserReport e")
-public class UserReport /*implements Transferable<Room.Transfer>*/ {	
+public class UserReport {	
 	
 	/**
 	 * Identifier

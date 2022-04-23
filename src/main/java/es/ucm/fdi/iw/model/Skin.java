@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Skin /*implements Transferable<Room.Transfer>*/ {	
+public class Skin {	
 	
 	/**
 	 * Identifier

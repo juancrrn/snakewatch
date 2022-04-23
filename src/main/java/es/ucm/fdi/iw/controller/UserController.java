@@ -5,7 +5,6 @@ import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.RoomUser;
-//import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
 
@@ -303,22 +302,6 @@ public class UserController {
 		// TODO: call fillModelWithInfo
 		return "user";
     }
-    
-    /**
-     * Returns JSON with all received messages
-     */
-	/*
-    @GetMapping(path = "received", produces = "application/json")
-	@Transactional // para no recibir resultados inconsistentes
-	@ResponseBody  // para indicar que no devuelve vista, sino un objeto (jsonizado)
-	public List<Message.Transfer> retrieveMessages(HttpSession session) {
-		long userId = ((User)session.getAttribute("u")).getId();		
-		User u = entityManager.find(User.class, userId);
-		log.info("Generating message list for user {} ({} messages)", 
-				u.getUsername(), u.getReceivedMessages().size());
-		return  u.getReceivedMessages().stream().map(Transferable::toTransfer).collect(Collectors.toList());
-	}
-	*/
     
     /**
      * Returns JSON with count of unread messages 

@@ -34,7 +34,6 @@ import lombok.NoArgsConstructor;
     @NamedQuery(name="Room.getRooms",
         query="SELECT r FROM Room r")
 })
-// ToDo: implements Transferable<Room.Transfer>
 public class Room {	
 	
 	/**

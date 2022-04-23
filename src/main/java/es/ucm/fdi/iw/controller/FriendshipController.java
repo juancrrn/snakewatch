@@ -2,7 +2,6 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Friendship;
-//import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 
 

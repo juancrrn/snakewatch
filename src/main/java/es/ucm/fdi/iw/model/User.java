@@ -32,7 +32,7 @@ import java.util.List;
 	query="SELECT u FROM User u "
 		+ "WHERE u.username != :username AND u.enabled = TRUE")
 @Table(name="IWUser")
-public class User /*implements Transferable<User.Transfer>*/ {
+public class User {
 
 	/**
 	 * Identifier
@@ -129,26 +129,4 @@ public class User /*implements Transferable<User.Transfer>*/ {
         String roleName = role.name();
         return Arrays.asList(roles.split(",")).contains(roleName);
     }
-	
-	/*
-    @Getter
-    @AllArgsConstructor
-    public static class Transfer {
-		private long id;
-        private String username;
-		private int totalReceived;
-		private int totalSent;
-    }
-
-	@Override
-    public Transfer toTransfer() {
-		return new Transfer(id,	username, receivedMessages.size(), sentMessages.size());
-	}
-	
-	@Override
-	public String toString() {
-		return toTransfer().toString();
-	}
-	*/
 }
-

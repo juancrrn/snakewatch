@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Settings /*implements Transferable<Room.Transfer>*/ {	
+public class Settings {	
 	
 	/**
 	 * Identifier

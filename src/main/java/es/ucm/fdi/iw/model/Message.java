@@ -36,7 +36,7 @@ import lombok.Data;
 			+ "WHERE m.recipient.id = :userId AND m.dateRead = null")
 })
 @Data
-public class Message /*implements Transferable<Message.Transfer>*/ {
+public class Message {
 	
 	//private static Logger log = LogManager.getLogger(Message.class);	
 	
