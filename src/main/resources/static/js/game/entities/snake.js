@@ -19,7 +19,7 @@ export default class Snake {
     this.scene.physics.add.collider(this.head, this.scene.wallsLayer);
 
     this.dir = Math.floor(Math.random() * 4);
-    this.lastDir = this.dir;
+    this.lastDir;
   }
 
   chooseNextMove() {}
