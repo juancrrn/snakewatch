@@ -56,7 +56,7 @@ public class RootController {
     @GetMapping("/levels")
     public String levels(Model model) {
         List<Level> levels = entityManager
-            .createNamedQuery("Level.getLevels", Level.class)
+            .createNamedQuery("Level.getAll", Level.class)
             .getResultList();
         model.addAttribute("levels", levels); 
         return "levels";

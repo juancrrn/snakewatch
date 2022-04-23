@@ -24,10 +24,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+/*
+FIXME If this code is unuseful, remove it.
 @NamedQuery(
     name = "MatchPlayer.getMatchPlayers",
     query = "SELECT mp FROM MatchPlayer mp"
 )
+*/
 @NamedQuery(
     name = "MatchPlayer.byPlayerId",
     query = "SELECT mp FROM MatchPlayer mp"

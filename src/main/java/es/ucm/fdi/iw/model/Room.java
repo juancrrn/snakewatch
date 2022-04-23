@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @NamedQuery(
-    name = "Room.getRooms",
+    name = "Room.getAll",
     query = "SELECT r FROM Room r"
 )
 public class Room {	

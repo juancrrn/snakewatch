@@ -60,7 +60,7 @@ public class RoomsController {
 
         Long userId = ((User)session.getAttribute("u")).getId();
         List<Room> rooms = entityManager
-            .createNamedQuery("Room.getRooms", Room.class)
+            .createNamedQuery("Room.getAll", Room.class)
             .getResultList();
 
         List<Boolean> isUserInRooms = new ArrayList<>();

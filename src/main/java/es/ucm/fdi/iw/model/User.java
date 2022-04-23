@@ -16,9 +16,12 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+/*
+FIXME If this code is unuseful, remove it.
 @NamedQuery(
 	name = "User.getUsers",
 	query = "SELECT u FROM User u")
+*/
 @NamedQuery(
 	name = "User.byId",
 	query = "SELECT u FROM User u "

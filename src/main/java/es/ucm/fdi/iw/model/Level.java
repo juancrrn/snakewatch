@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @NamedQuery(
-    name = "Level.getLevels",
+    name = "Level.getAll",
     query = "SELECT l FROM Level l "
 )
 public class Level {
