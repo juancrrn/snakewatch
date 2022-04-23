@@ -31,7 +31,7 @@ public class AdminController {
 
     @Autowired
     private EntityManager entityManager;
-    
+
     /**
      * List all users' reports
      *
@@ -39,7 +39,8 @@ public class AdminController {
      */
     @GetMapping("/")
     public String index(Model model) {
-        List<UserReport> reports = entityManager.createNamedQuery("UserReport.getAll", UserReport.class).getResultList();
+        List<UserReport> reports = entityManager.createNamedQuery("UserReport.getAll", UserReport.class)
+                .getResultList();
         model.addAttribute("reports", reports);
         return "admin";
     }

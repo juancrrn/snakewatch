@@ -29,16 +29,16 @@ public class RootController {
 
     @Autowired
     private EntityManager entityManager;
-    
-	/**
+
+    /**
      * Home view
      */
     @GetMapping("/")
-    public String lobby(Model model) {       
+    public String lobby(Model model) {
         return "lobby";
     }
 
-	/**
+    /**
      * Login view
      */
     @GetMapping("/login")
@@ -52,9 +52,9 @@ public class RootController {
     @GetMapping("/levels")
     public String levels(Model model) {
         List<Level> levels = entityManager
-            .createNamedQuery("Level.getAll", Level.class)
-            .getResultList();
-        model.addAttribute("levels", levels); 
+                .createNamedQuery("Level.getAll", Level.class)
+                .getResultList();
+        model.addAttribute("levels", levels);
         return "levels";
     }
 
@@ -62,7 +62,7 @@ public class RootController {
      * Game view
      */
     @GetMapping("/game")
-    public String game(Model model){
+    public String game(Model model) {
         return "game";
     }
 }

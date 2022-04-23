@@ -70,7 +70,7 @@ public class UserController {
 	private EntityManager entityManager;
 
 	@Autowired
-    private LocalData localData;
+	private LocalData localData;
 
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
@@ -78,262 +78,262 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Autowired 
-    private HttpSession session;
+	@Autowired
+	private HttpSession session;
 
-    /**
-     * Exception to use when denying access to unauthorized users.
-     * 
-     * In general, admins are always authorized, but users cannot modify
-     * each other's profiles.
-     */
-	@ResponseStatus(
-		value=HttpStatus.FORBIDDEN, 
-		reason="No eres administrador, y éste no es tu perfil")  // 403
-	public static class NoEsTuPerfilException extends RuntimeException {}
+	/**
+	 * Exception to use when denying access to unauthorized users.
+	 * 
+	 * In general, admins are always authorized, but users cannot modify
+	 * each other's profiles.
+	 */
+	@ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "No eres administrador, y éste no es tu perfil") // 403
+	public static class NoEsTuPerfilException extends RuntimeException {
+	}
 
 	/**
 	 * Encodes a password, so that it can be saved for future checking. Notice
 	 * that encoding the same password multiple times will yield different
 	 * encodings, since encodings contain a randomly-generated salt.
+	 * 
 	 * @param rawPassword to encode
 	 * @return the encoded password (typically a 60-character string)
-	 * for example, a possible encoding of "test" is 
-	 * {bcrypt}$2y$12$XCKz0zjXAP6hsFyVc8MucOzx6ER6IsC1qo5zQbclxhddR1t6SfrHm
+	 *         for example, a possible encoding of "test" is
+	 *         {bcrypt}$2y$12$XCKz0zjXAP6hsFyVc8MucOzx6ER6IsC1qo5zQbclxhddR1t6SfrHm
 	 */
 	public String encodePassword(String rawPassword) {
 		return passwordEncoder.encode(rawPassword);
 	}
 
-    /**
-     * Generates random tokens. From https://stackoverflow.com/a/44227131/15472
-     * @param byteLength
-     * @return
-     */
-    public static String generateRandomBase64Token(int byteLength) {
-        SecureRandom secureRandom = new SecureRandom();
-        byte[] token = new byte[byteLength];
-        secureRandom.nextBytes(token);
-        return Base64.getUrlEncoder().withoutPadding().encodeToString(token); //base64 encoding
-    }
+	/**
+	 * Generates random tokens. From https://stackoverflow.com/a/44227131/15472
+	 * 
+	 * @param byteLength
+	 * @return
+	 */
+	public static String generateRandomBase64Token(int byteLength) {
+		SecureRandom secureRandom = new SecureRandom();
+		byte[] token = new byte[byteLength];
+		secureRandom.nextBytes(token);
+		return Base64.getUrlEncoder().withoutPadding().encodeToString(token); // base64 encoding
+	}
 
 	/**
 	 * Auxiliary method to pass info of the user to the model
 	 */
-	private void fillModelWithInfo(User user, Model model){
+	private void fillModelWithInfo(User user, Model model) {
 		model.addAttribute("user", user);
 
 		// Get their friendships (all, no matter the friendship status)
-        List<Friendship> allFriendships = user.getFriendships();
+		List<Friendship> allFriendships = user.getFriendships();
 
-        // Get friendships on ACCEPTED state
+		// Get friendships on ACCEPTED state
 		List<Friendship> acceptedFr = new ArrayList<>(allFriendships);
-        acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED));
-        model.addAttribute("friendships", acceptedFr);
-        
-        // Get their friend requests (any sender, this user as receiver)
-        List<Friendship> friendRequests = entityManager.createNamedQuery("Friendship.getRequests", Friendship.class)
-            .setParameter("userId", user.getId())
-            .getResultList();
-        model.addAttribute("friendRequests", friendRequests);        
+		acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED));
+		model.addAttribute("friendships", acceptedFr);
 
-        // Get matches that this user has played (as MatchPlayer objects)
-        List<MatchPlayer> matchPlayers = user.getMatchPlayers();
-        model.addAttribute("matchPlayers", matchPlayers);        
-        
-        // Get rooms that this user has joined (as RoomUser objects)
-        List<RoomUser> roomUsers = user.getRoomUsers();
-        model.addAttribute("roomUsers", roomUsers);  
+		// Get their friend requests (any sender, this user as receiver)
+		List<Friendship> friendRequests = entityManager.createNamedQuery("Friendship.getRequests", Friendship.class)
+				.setParameter("userId", user.getId())
+				.getResultList();
+		model.addAttribute("friendRequests", friendRequests);
+
+		// Get matches that this user has played (as MatchPlayer objects)
+		List<MatchPlayer> matchPlayers = user.getMatchPlayers();
+		model.addAttribute("matchPlayers", matchPlayers);
+
+		// Get rooms that this user has joined (as RoomUser objects)
+		List<RoomUser> roomUsers = user.getRoomUsers();
+		model.addAttribute("roomUsers", roomUsers);
 
 		// Check if "user" is the logged user or another person
-		Long loggedUserId = ((User)session.getAttribute("u")).getId();
+		Long loggedUserId = ((User) session.getAttribute("u")).getId();
 		boolean isOwnProfile = user.getId() == loggedUserId;
 		model.addAttribute("isOwnProfile", isOwnProfile);
 	}
 
 	/**
-     * Default user page. Display profile of logged user
-     */
-    @GetMapping("/")
-    public String defaultIndex(Model model) {
+	 * Default user page. Display profile of logged user
+	 */
+	@GetMapping("/")
+	public String defaultIndex(Model model) {
 		// Get logged user
-        Long userId = ((User)session.getAttribute("u")).getId();
+		Long userId = ((User) session.getAttribute("u")).getId();
 		User user = entityManager.find(User.class, userId);
 
-		// Pass info of that user to the model 
-		fillModelWithInfo(user, model);     
-
-        return "user";
-    }
-
-    /**
-     * Display profile of given user (userId passed via url)
-     */
-	@GetMapping("{id}")
-    public String index(@PathVariable long id, Model model, HttpSession session) {
-        // Get user with id given by url
-        User user = entityManager.find(User.class, id);
-        
-		// Pass info of that user to the model 
+		// Pass info of that user to the model
 		fillModelWithInfo(user, model);
 
 		return "user";
 	}
 
-    /**
-     * Alter or create a user
-     */
+	/**
+	 * Display profile of given user (userId passed via url)
+	 */
+	@GetMapping("{id}")
+	public String index(@PathVariable long id, Model model, HttpSession session) {
+		// Get user with id given by url
+		User user = entityManager.find(User.class, id);
+
+		// Pass info of that user to the model
+		fillModelWithInfo(user, model);
+
+		return "user";
+	}
+
+	/**
+	 * Alter or create a user
+	 */
 	@PostMapping("/{id}")
 	@Transactional
 	public String postUser(
 			HttpServletResponse response,
-			@PathVariable long id, 
-			@ModelAttribute User edited, 
-			@RequestParam(required=false) String pass2,
+			@PathVariable long id,
+			@ModelAttribute User edited,
+			@RequestParam(required = false) String pass2,
 			Model model, HttpSession session) {
 
-        User requester = (User)session.getAttribute("u");
-        User target = null;
-        if (id == -1 && requester.hasRole(Role.ADMIN)) {
-            // create new user with random password
-            target = new User();
-            target.setPassword(encodePassword(generateRandomBase64Token(12)));
-            target.setEnabled(true);
-            entityManager.persist(target);
-            entityManager.flush(); // forces DB to add user & assign valid id
-            id = target.getId();   // retrieve assigned id from DB
-        }
-        
-        // retrieve requested user
-        target = entityManager.find(User.class, id);
-        model.addAttribute("user", target);
-		
+		User requester = (User) session.getAttribute("u");
+		User target = null;
+		if (id == -1 && requester.hasRole(Role.ADMIN)) {
+			// create new user with random password
+			target = new User();
+			target.setPassword(encodePassword(generateRandomBase64Token(12)));
+			target.setEnabled(true);
+			entityManager.persist(target);
+			entityManager.flush(); // forces DB to add user & assign valid id
+			id = target.getId(); // retrieve assigned id from DB
+		}
+
+		// retrieve requested user
+		target = entityManager.find(User.class, id);
+		model.addAttribute("user", target);
+
 		if (requester.getId() != target.getId() &&
-				! requester.hasRole(Role.ADMIN)) {
+				!requester.hasRole(Role.ADMIN)) {
 			throw new NoEsTuPerfilException();
 		}
-		
+
 		if (edited.getPassword() != null) {
-            if ( ! edited.getPassword().equals(pass2)) {
-                // FIXME: complain
-            } else {
-                // save encoded version of password
-                target.setPassword(encodePassword(edited.getPassword()));
-            }
-		}		
+			if (!edited.getPassword().equals(pass2)) {
+				// FIXME: complain
+			} else {
+				// save encoded version of password
+				target.setPassword(encodePassword(edited.getPassword()));
+			}
+		}
 		target.setUsername(edited.getUsername());
 		target.setFirstName(edited.getFirstName());
 		target.setLastName(edited.getLastName());
 
 		// update user session so that changes are persisted in the session, too
-        if (requester.getId() == target.getId()) {
-            session.setAttribute("u", target);
-        }
+		if (requester.getId() == target.getId()) {
+			session.setAttribute("u", target);
+		}
 
 		// TODO: call fillModelWithInfo
 		return "user";
-	}	
+	}
 
-    /**
-     * Returns the default profile pic
-     * 
-     * @return
-     */
-    private static InputStream defaultPic() {
-	    return new BufferedInputStream(Objects.requireNonNull(
-            UserController.class.getClassLoader().getResourceAsStream(
-                "static/img/default-pic.jpg")));
-    }
+	/**
+	 * Returns the default profile pic
+	 * 
+	 * @return
+	 */
+	private static InputStream defaultPic() {
+		return new BufferedInputStream(Objects.requireNonNull(
+				UserController.class.getClassLoader().getResourceAsStream(
+						"static/img/default-pic.jpg")));
+	}
 
-    /**
-     * Downloads a profile pic for a user id
-     * 
-     * @param id
-     * @return
-     * @throws IOException
-     */
-    @GetMapping("{id}/pic")
-    public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
-        File f = localData.getFile("pics", ""+id+".jpg");
-        InputStream in = new BufferedInputStream(f.exists() ?
-            new FileInputStream(f) : UserController.defaultPic());
-        return os -> FileCopyUtils.copy(in, os);
-    }
+	/**
+	 * Downloads a profile pic for a user id
+	 * 
+	 * @param id
+	 * @return
+	 * @throws IOException
+	 */
+	@GetMapping("{id}/pic")
+	public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
+		File f = localData.getFile("pics", "" + id + ".jpg");
+		InputStream in = new BufferedInputStream(f.exists() ? new FileInputStream(f) : UserController.defaultPic());
+		return os -> FileCopyUtils.copy(in, os);
+	}
 
-    /**
-     * Uploads a profile pic for a user id
-     * 
-     * @param id
-     * @return
-     * @throws IOException
-     */
-    @PostMapping("{id}/pic")
-    public String setPic(@RequestParam("photo") MultipartFile photo, @PathVariable long id, 
-        HttpServletResponse response, HttpSession session, Model model) throws IOException {
+	/**
+	 * Uploads a profile pic for a user id
+	 * 
+	 * @param id
+	 * @return
+	 * @throws IOException
+	 */
+	@PostMapping("{id}/pic")
+	public String setPic(@RequestParam("photo") MultipartFile photo, @PathVariable long id,
+			HttpServletResponse response, HttpSession session, Model model) throws IOException {
 
-        User target = entityManager.find(User.class, id);
-        model.addAttribute("user", target);
-		
+		User target = entityManager.find(User.class, id);
+		model.addAttribute("user", target);
+
 		// check permissions
-		User requester = (User)session.getAttribute("u");
+		User requester = (User) session.getAttribute("u");
 		if (requester.getId() != target.getId() &&
-				! requester.hasRole(Role.ADMIN)) {
-            throw new NoEsTuPerfilException();
+				!requester.hasRole(Role.ADMIN)) {
+			throw new NoEsTuPerfilException();
 		}
-		
+
 		log.info("Updating photo for user {}", id);
-		File f = localData.getFile("user", ""+id);
+		File f = localData.getFile("user", "" + id);
 		if (photo.isEmpty()) {
 			log.info("failed to upload photo: emtpy file?");
 		} else {
-			try (BufferedOutputStream stream =
-					new BufferedOutputStream(new FileOutputStream(f))) {
+			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(f))) {
 				byte[] bytes = photo.getBytes();
 				stream.write(bytes);
-                log.info("Uploaded photo for {} into {}!", id, f.getAbsolutePath());
+				log.info("Uploaded photo for {} into {}!", id, f.getAbsolutePath());
 			} catch (Exception e) {
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				log.warn("Error uploading " + id + " ", e);
 			}
 		}
 
 		// TODO: call fillModelWithInfo
 		return "user";
-    }
-    
-    /**
-     * Returns JSON with count of unread messages 
-     */
+	}
+
+	/**
+	 * Returns JSON with count of unread messages
+	 */
 	@GetMapping(path = "unread", produces = "application/json")
 	@ResponseBody
 	public String checkUnread(HttpSession session) {
-		long userId = ((User)session.getAttribute("u")).getId();		
+		long userId = ((User) session.getAttribute("u")).getId();
 		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
-			.setParameter("userId", userId)
-			.getSingleResult();
+				.setParameter("userId", userId)
+				.getSingleResult();
 		session.setAttribute("unread", unread);
 		return "{\"unread\": " + unread + "}";
-    }
-    
-    /**
-     * Posts a message to a user.
-     * @param id of target user (source user is obtained from session attributes)
-     * @param o JSON-ized message, similar to {"message": "text goes here"}
-     * @throws JsonProcessingException
-     */
-    @PostMapping("/{id}/msg")
+	}
+
+	/**
+	 * Posts a message to a user.
+	 * 
+	 * @param id of target user (source user is obtained from session attributes)
+	 * @param o  JSON-ized message, similar to {"message": "text goes here"}
+	 * @throws JsonProcessingException
+	 */
+	@PostMapping("/{id}/msg")
 	@ResponseBody
 	@Transactional
-	public String postMsg(@PathVariable long id, 
-			@RequestBody JsonNode o, Model model, HttpSession session) 
-		throws JsonProcessingException {
-		
+	public String postMsg(@PathVariable long id,
+			@RequestBody JsonNode o, Model model, HttpSession session)
+			throws JsonProcessingException {
+
 		String text = o.get("message").asText();
 		User u = entityManager.find(User.class, id);
 		User sender = entityManager.find(
-				User.class, ((User)session.getAttribute("u")).getId());
+				User.class, ((User) session.getAttribute("u")).getId());
 		model.addAttribute("user", u);
-		
+
 		// construye mensaje, lo guarda en BD
 		Message m = new Message();
 		m.setRecipient(u);
@@ -342,7 +342,7 @@ public class UserController {
 		m.setText(text);
 		entityManager.persist(m);
 		entityManager.flush(); // to get Id before commit
-		
+
 		// construye json
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode rootNode = mapper.createObjectNode();
@@ -351,11 +351,11 @@ public class UserController {
 		rootNode.put("text", text);
 		rootNode.put("id", m.getId());
 		String json = mapper.writeValueAsString(rootNode);
-		
+
 		log.info("Sending a message to {} with contents '{}'", id, json);
 
-		messagingTemplate.convertAndSend("/user/"+u.getUsername()+"/queue/updates", json);
+		messagingTemplate.convertAndSend("/user/" + u.getUsername() + "/queue/updates", json);
 		return "{\"result\": \"message sent.\"}";
-	}		
+	}
 
 }

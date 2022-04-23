@@ -53,11 +53,9 @@ public class FriendshipController {
      * In general, admins are always authorized, but users cannot modify each
      * other's profiles.
      */
-    @ResponseStatus(
-        value = HttpStatus.FORBIDDEN, 
-        reason = "You are not an admin an this profile is not your own."
-    )
-    public static class NotOwnProfileException extends RuntimeException {}
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "You are not an admin an this profile is not your own.")
+    public static class NotOwnProfileException extends RuntimeException {
+    }
 
     /**
      * Check the state of friendship between the current user and other user.
@@ -66,34 +64,37 @@ public class FriendshipController {
      *
      * @param otherUser the user to check friendship status with
      * @param model
-     * @param sesion current session used for this request
+     * @param sesion    current session used for this request
      * @return status of friendship between both users
      */
     @PostMapping("/state/{otherUserId}")
     @ResponseBody
     @Transactional
     public String getFriendStatus(@PathVariable long otherUserId, Model model, HttpSession session) {
-        User loggedUser = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        User loggedUser = entityManager.find(User.class, ((User) session.getAttribute("u")).getId());
         User otherUser = entityManager.find(User.class, otherUserId);
-        
+
         boolean isFriends = false;
         boolean requestSent = false;
         boolean requestReceived = false;
 
         List<Friendship> acceptedFr = new ArrayList<>(loggedUser.getFriendships());
-        acceptedFr.removeIf(f -> (f.getStatus() != Friendship.Status.ACCEPTED || f.getUser2().getId() != otherUser.getId()));
+        acceptedFr.removeIf(
+                f -> (f.getStatus() != Friendship.Status.ACCEPTED || f.getUser2().getId() != otherUser.getId()));
         if (!acceptedFr.isEmpty()) {
             isFriends = true;
         }
 
         List<Friendship> pendingFr = new ArrayList<>(loggedUser.getFriendships());
-        pendingFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != otherUser.getId()));
+        pendingFr.removeIf(
+                f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != otherUser.getId()));
         if (!pendingFr.isEmpty()) {
             requestSent = true;
         }
 
         List<Friendship> pendingReceivedFr = new ArrayList<>(otherUser.getFriendships());
-        pendingReceivedFr.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
+        pendingReceivedFr.removeIf(
+                f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
         if (!pendingReceivedFr.isEmpty()) {
             requestReceived = true;
         }
@@ -112,15 +113,14 @@ public class FriendshipController {
         }
 
         return json.toString();
-    }    
-
+    }
 
     /**
      * Send a friend request from current user to other user
      *
      * @param otherUser the user to send the request to
      * @param model
-     * @param sesion current session used for this request
+     * @param sesion    current session used for this request
      * @return request result status
      */
     // FIXME Change path to "/requests/{recipientId}/send/"
@@ -128,7 +128,7 @@ public class FriendshipController {
     @ResponseBody
     @Transactional
     public String sendFriendReq(@PathVariable long otherUserId, Model model, HttpSession session) {
-        User loggedUser = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        User loggedUser = entityManager.find(User.class, ((User) session.getAttribute("u")).getId());
         User receiver = entityManager.find(User.class, otherUserId);
 
         // TODO If Friendship's default status is PENDING, put that in the constructor.
@@ -139,19 +139,19 @@ public class FriendshipController {
         entityManager.persist(friendship);
         entityManager.flush();
 
-        // TODO Remove if not needed    
+        // TODO Remove if not needed
         log.info("Sending a friend request from '{}' to '{}'", loggedUser.getUsername(), receiver.getUsername());
 
         // FIXME Create a JSONObject and transform it to string
         return "{\"result\": \"ok\"}";
-    }    
+    }
 
     /**
      * Accept the friend request sent from other user to current user
-
+     * 
      * @param otherUserId the user who sent the request
      * @param model
-     * @param session current session used for this request
+     * @param session     current session used for this request
      * @return request result status
      */
     // FIXME Change path to "/requests/{senderId}/accept/"
@@ -159,12 +159,13 @@ public class FriendshipController {
     @ResponseBody
     @Transactional
     public String acceptFriendReq(@PathVariable long otherUserId, Model model, HttpSession session) {
-        User loggedUser = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        User loggedUser = entityManager.find(User.class, ((User) session.getAttribute("u")).getId());
         User sender = entityManager.find(User.class, otherUserId);
 
         List<Friendship> frList = new ArrayList<>(sender.getFriendships());
-        frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
-        
+        frList.removeIf(
+                f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
+
         Long frId = frList.get(0).getId();
         Friendship frRequest = entityManager.find(Friendship.class, frId);
 
@@ -181,22 +182,22 @@ public class FriendshipController {
         loggedUser.getFriendships().add(fr2);
         entityManager.merge(sender);
         entityManager.merge(loggedUser);
-        
+
         entityManager.flush();
-        
-        // Registrar accion en logs        
+
+        // Registrar accion en logs
         log.info("Accepting the friend request from '{}' to '{}'", sender.getUsername(), loggedUser.getUsername());
 
         // FIXME Create a JSONObject and transform it to string
         return "{\"result\": \"friend request sent.\"}";
-    }    
+    }
 
     /**
      * Reject the friend request sent from other user to current user
-
+     * 
      * @param otherUser the user who sent the request
      * @param model
-     * @param session current session used for this request
+     * @param session   current session used for this request
      * @return request result status
      */
     // FIXME Change path to "/requests/{senderId}/reject/"
@@ -204,12 +205,13 @@ public class FriendshipController {
     @ResponseBody
     @Transactional
     public String rejectFriendReq(@PathVariable long otherUserId, Model model, HttpSession session) {
-        User loggedUser = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        User loggedUser = entityManager.find(User.class, ((User) session.getAttribute("u")).getId());
         User sender = entityManager.find(User.class, otherUserId);
 
         List<Friendship> frList = new ArrayList<>(sender.getFriendships());
-        frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
-        
+        frList.removeIf(
+                f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
+
         Long frId = frList.get(0).getId();
         Friendship frRequest = entityManager.find(Friendship.class, frId);
 
@@ -221,13 +223,14 @@ public class FriendshipController {
 
         // FIXME Create a JSONObject and transform it to string
         return "{\"result\": \"friend request rejected.\"}";
-    }    
+    }
 
     /**
      * Cancel the friend request sent from current user to other user
+     * 
      * @param otherUserId the user to whom the request was sent
      * @param model
-     * @param session current session used for this request
+     * @param session     current session used for this request
      * @return request result status
      */
     // FIXME Change path to "/requests/{recipientId}/cancel/"
@@ -235,11 +238,11 @@ public class FriendshipController {
     @ResponseBody
     @Transactional
     public String cancelFriendReq(@PathVariable long otherUserId, Model model, HttpSession session) {
-        User loggedUser = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        User loggedUser = entityManager.find(User.class, ((User) session.getAttribute("u")).getId());
 
         List<Friendship> frList = new ArrayList<>(loggedUser.getFriendships());
         frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != otherUserId));
-        
+
         Long frId = frList.get(0).getId();
         Friendship frRequest = entityManager.find(Friendship.class, frId);
 
@@ -251,14 +254,14 @@ public class FriendshipController {
 
         // FIXME Create a JSONObject and transform it to string
         return "{\"result\": \"friend request canceled.\"}";
-    }    
+    }
 
     /**
      * Removes the friendship between current user and other user
      *
      * @param otherUserId the user to unfriend
      * @param model
-     * @param session current session used for this request
+     * @param session     current session used for this request
      * @return request result status
      */
     // FIXME Change path to "/requests/{friendId}/delete/"
@@ -270,7 +273,11 @@ public class FriendshipController {
         User friend = entityManager.find(User.class, otherUserId);
 
         List<Friendship> loggedInUserFriendships = new ArrayList<>(loggedInUser.getFriendships());
-        // FIXME This seems obvious but if you have to retrieve an entity it is bad if you retrieve them all and then remove the ones you do not want or need
+        /**
+         * FIXME This seems obvious but if you have to retrieve an entity it is
+         * bad if you retrieve them all and then remove the ones you do not want
+         * or need
+         */
         loggedInUserFriendships.removeIf(f -> (f.getUser2().getId() != friend.getId()));
         // FIXME Better to store the friendship and then get the id where needed
         Long loggedInUserFriendshipId = loggedInUserFriendships.get(0).getId();
@@ -292,7 +299,7 @@ public class FriendshipController {
         entityManager.merge(loggedInUser);
         entityManager.merge(friend);
         entityManager.flush();
-        
+
         // FIXME Remove if not required
         log.info("Removing friendship between '{}' to '{}'", loggedInUser.getUsername(), friend.getUsername());
 

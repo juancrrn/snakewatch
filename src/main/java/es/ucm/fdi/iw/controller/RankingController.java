@@ -42,25 +42,25 @@ public class RankingController {
 
         LocalDate initialMonthDate = LocalDate.of(nowDate.getYear(), nowDate.getMonthValue(), 1);
 
-        LocalDate initialWeekDate = nowDate.with(WeekFields.of(Locale.FRANCE).dayOfWeek(),1);
-        
+        LocalDate initialWeekDate = nowDate.with(WeekFields.of(Locale.FRANCE).dayOfWeek(), 1);
+
         List<Object[]> globalRanking = entityManager
-            .createNamedQuery("MatchPlayer.rankingGlobal", Object[].class)
-            .getResultList();
-        
+                .createNamedQuery("MatchPlayer.rankingGlobal", Object[].class)
+                .getResultList();
+
         // FIXME Change named query to English
         List<Object[]> monthRanking = entityManager
-        .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
-        .setParameter("fechaInicial", initialMonthDate)
-        .setParameter("fechaFinal", nowDate)
-        .getResultList();
-        
+                .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
+                .setParameter("fechaInicial", initialMonthDate)
+                .setParameter("fechaFinal", nowDate)
+                .getResultList();
+
         List<Object[]> weekRanking = entityManager
-        .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
-        .setParameter("fechaInicial", initialWeekDate)
-        .setParameter("fechaFinal", nowDate)
-        .getResultList();
-        
+                .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
+                .setParameter("fechaInicial", initialWeekDate)
+                .setParameter("fechaFinal", nowDate)
+                .getResultList();
+
         model.addAttribute("weekRanking", weekRanking);
 
         model.addAttribute("monthRanking", monthRanking);

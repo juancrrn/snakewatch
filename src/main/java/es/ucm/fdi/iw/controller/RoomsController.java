@@ -39,25 +39,25 @@ public class RoomsController {
     @Autowired
     private EntityManager entityManager;
 
-    @Autowired 
+    @Autowired
     private HttpSession session;
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
-    
-    @GetMapping
-    public String getRooms(Model model){
 
-        Long userId = ((User)session.getAttribute("u")).getId();
+    @GetMapping
+    public String getRooms(Model model) {
+
+        Long userId = ((User) session.getAttribute("u")).getId();
         List<Room> rooms = entityManager
-            .createNamedQuery("Room.getAll", Room.class)
-            .getResultList();
+                .createNamedQuery("Room.getAll", Room.class)
+                .getResultList();
 
         List<Boolean> isUserInRooms = new ArrayList<>();
-        for (Room room : rooms){
+        for (Room room : rooms) {
             Boolean aux = false;
-            for (RoomUser ru : room.getRoomUsers()){
-                if (ru.getUser().getId() == userId){
+            for (RoomUser ru : room.getRoomUsers()) {
+                if (ru.getUser().getId() == userId) {
                     aux = true;
                 }
             }
@@ -66,7 +66,7 @@ public class RoomsController {
 
         List<List<Object>> roomsInfo = new ArrayList<>();
 
-        for(int i=0; i<rooms.size();i++){
+        for (int i = 0; i < rooms.size(); i++) {
             List<Object> o = new ArrayList<>();
             o.add(rooms.get(i));
             o.add(isUserInRooms.get(i));
@@ -81,11 +81,11 @@ public class RoomsController {
     @MessageMapping
     @Transactional
     public String joinRoom(@PathVariable long roomId, Model model)
-    throws JsonProcessingException {
+            throws JsonProcessingException {
         Room room = entityManager.find(Room.class, roomId);
-        Long joinUserId = ((User)session.getAttribute("u")).getId();
-		User joinUser = entityManager.find(User.class, joinUserId);
-       
+        Long joinUserId = ((User) session.getAttribute("u")).getId();
+        User joinUser = entityManager.find(User.class, joinUserId);
+
         RoomUser ru = new RoomUser();
         ru.setAdmin(false);
         ru.setRoom(room);
@@ -106,27 +106,26 @@ public class RoomsController {
         return getRoom(roomId, model);
     }
 
-
     @GetMapping("{roomId}")
     public String getRoom(@PathVariable long roomId, Model model) {
 
         Room room = entityManager.find(Room.class, roomId);
         model.addAttribute("room", room);
 
-        Long sessionUserId = ((User)session.getAttribute("u")).getId();
-        
+        Long sessionUserId = ((User) session.getAttribute("u")).getId();
+
         boolean isAdmin = false;
 
         List<Match> matches = room.getMatches();
         // Ordenar los players de cada match segun su posicion de resultado
-        for(int i=0; i < matches.size();i++){
+        for (int i = 0; i < matches.size(); i++) {
             matches.get(i).getMatchPlayers().sort(Comparator.comparing(MatchPlayer::getPosition));
         }
 
         model.addAttribute("matches", matches);
 
-        for(int i=0; i < room.getRoomUsers().size();i++){
-            if(room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId()==sessionUserId){
+        for (int i = 0; i < room.getRoomUsers().size(); i++) {
+            if (room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId() == sessionUserId) {
                 isAdmin = true;
                 break;
             }
@@ -136,17 +135,16 @@ public class RoomsController {
         return "room";
     }
 
-
     @PostMapping("create_room")
     @Transactional
     public String createRoom(Model model) {
 
-        Room room= new Room();
+        Room room = new Room();
         room.setVisibility(RoomType.PUBLIC);
         room.setMaxUsers(5);
 
-        Long adminId = ((User)session.getAttribute("u")).getId();
-		User adminUser = entityManager.find(User.class, adminId);
+        Long adminId = ((User) session.getAttribute("u")).getId();
+        User adminUser = entityManager.find(User.class, adminId);
 
         RoomUser ruAdmin = new RoomUser();
 
@@ -163,7 +161,8 @@ public class RoomsController {
 
     @PostMapping("/edit_room/{roomId}")
     @Transactional
-    public String editRoom(@PathVariable long roomId, @RequestParam String roomVisibility, @RequestParam int maxPlayers, Model model){
+    public String editRoom(@PathVariable long roomId, @RequestParam String roomVisibility, @RequestParam int maxPlayers,
+            Model model) {
         Room room = entityManager.find(Room.class, roomId);
 
         room.setVisibility(RoomType.valueOf(roomVisibility));
@@ -177,16 +176,16 @@ public class RoomsController {
     @PostMapping("/leave_room/{roomId}")
     @Transactional
     public String leaveRoom(@PathVariable long roomId, Model model)
-    throws JsonProcessingException {
-        Long leaveUserId =  ((User)session.getAttribute("u")).getId();
+            throws JsonProcessingException {
+        Long leaveUserId = ((User) session.getAttribute("u")).getId();
         User leaveUser = entityManager.find(User.class, leaveUserId);
 
         RoomUser ru = entityManager
-            .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
-            .setParameter("roomId", roomId)
-            .setParameter("userId", leaveUser.getId())
-            .getSingleResult();
-        
+                .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
+                .setParameter("roomId", roomId)
+                .setParameter("userId", leaveUser.getId())
+                .getSingleResult();
+
         entityManager.remove(ru);
         entityManager.flush();
 
@@ -202,10 +201,9 @@ public class RoomsController {
         return "redirect:/rooms";
     }
 
-
     @PostMapping("/delete_room/{roomId}")
     @Transactional
-    public String deleteRoom(@PathVariable long roomId, Model model){
+    public String deleteRoom(@PathVariable long roomId, Model model) {
 
         Room r = entityManager.find(Room.class, roomId);
 
@@ -214,7 +212,7 @@ public class RoomsController {
                 .setParameter("roomId", roomId)
                 .getResultList();
 
-        for(int i=0; i<roomUsers.size();i++){
+        for (int i = 0; i < roomUsers.size(); i++) {
             entityManager.remove(roomUsers.get(i));
         }
         entityManager.remove(r);
@@ -222,14 +220,12 @@ public class RoomsController {
         return "redirect:/rooms";
     }
 
-
-
     @GetMapping("/go_to_match/{matchId}/{roomId}")
-    public String goToMatch(@PathVariable long matchId, @PathVariable long roomId, Model model){
+    public String goToMatch(@PathVariable long matchId, @PathVariable long roomId, Model model) {
 
         Match match = entityManager.find(Match.class, matchId);
         Room room = entityManager.find(Room.class, roomId);
-    
+
         model.addAttribute("room", room);
         model.addAttribute("match", match);
         model.addAttribute("admin", false);
@@ -237,23 +233,21 @@ public class RoomsController {
         return getMatch(roomId, model);
     }
 
-
     @GetMapping("/get_match/{roomId}")
     @Transactional
-    public String getMatch(@PathVariable long roomId, Model model){
+    public String getMatch(@PathVariable long roomId, Model model) {
 
         Room room = entityManager.find(Room.class, roomId);
 
-        Long sessionUserId = ((User)session.getAttribute("u")).getId();
+        Long sessionUserId = ((User) session.getAttribute("u")).getId();
 
-        for(int i=0; i< room.getRoomUsers().size();i++){
-            if(room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId()==sessionUserId){
-                Match match = new Match(); 
+        for (int i = 0; i < room.getRoomUsers().size(); i++) {
+            if (room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId() == sessionUserId) {
+                Match match = new Match();
 
                 match.setRoom(room);
                 match.setDate(LocalDate.now());
                 match.setStatus(Status.WAITING);
-
 
                 model.addAttribute("room", room);
                 model.addAttribute("match", match);
@@ -266,6 +260,5 @@ public class RoomsController {
 
         return "game";
     }
-
 
 }
