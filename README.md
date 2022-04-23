@@ -6,24 +6,33 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
 
 ##### Table of Contents
 
-- [Propuesta de proyecto y funcionalidad](#propuesta-de-proyecto-y-funcionalidad)
+- [Snakewatch](#snakewatch)
+        - [Table of Contents](#table-of-contents)
+        - [Autores](#autores)
+  - [Propuesta de proyecto](#propuesta-de-proyecto)
     - [La serpiente](#la-serpiente)
     - [Catch](#catch)
     - [Roles de usuario](#roles-de-usuario)
-- [Funcionalidad desarrollada](#funcionalidad-desarrollada)
-- [Vistas](#vistas)
-- [Documentación del proyecto](#documentación-del-proyecto)  
+  - [Funcionalidad desarrollada](#funcionalidad-desarrollada)
+    - [A](#a)
+    - [B](#b)
+    - [C](#c)
+  - [Vistas](#vistas)
+  - [Documentación del proyecto](#documentación-del-proyecto)
     - [Clases de Spring Boot](#clases-de-spring-boot)
     - [Clases de modelos del dominio](#clases-de-modelos-del-dominio)
     - [Clases de controladores y lógica](#clases-de-controladores-y-lógica)
-- [Desarrollo](#desarrollo)
+  - [Desarrollo](#desarrollo)
+    - [Dependencias del proyecto de Java](#dependencias-del-proyecto-de-java)
     - [Herramientas](#herramientas)
-- [Referencias, _cheat sheets_ y _shortcuts_](#referencias-cheat-sheets-y-shortcuts)
+  - [Referencias, _cheat sheets_ y _shortcuts_](#referencias-cheat-sheets-y-shortcuts)
     - [Maven y ejecución](#maven-y-ejecución)
     - [Spring y componentes](#spring-y-componentes)
     - [Thymeleaf](#thymeleaf)
     - [Guías de Spring](#guías-de-spring)
     - [Base de datos](#base-de-datos)
+      - [H2 Console](#h2-console)
+      - [Importación en el arranque](#importación-en-el-arranque)
 
 ##### Autores
 
@@ -95,6 +104,28 @@ Se ha seguido la plantilla de la asignatura en cuanto a implementar la lógica d
 
 ## Desarrollo
 
+### Dependencias del proyecto de Java
+
+El proyecto de Java se basa en las siguientes dependencias:
+
+- [Spring Boot](https://spring.io/projects/spring-boot)
+    - [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)
+    - [Spring Security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
+    - [Spring Thymeleaf](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf)
+    - [Spring Web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
+    - [Spring Websocket](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket)
+    - [Spring Test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
+- [Thymeleaf](https://www.thymeleaf.org/)
+    - [Thymeleaf Spring Security 5 extra](https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5)
+- [Spring Security](https://spring.io/projects/spring-security)
+    - [Spring Security Messaging](https://mvnrepository.com/artifact/org.springframework.security/spring-security-messaging)
+    - [Spring Security Test](https://mvnrepository.com/artifact/org.springframework.security/spring-security-test)
+- [Base de datos H2](https://mvnrepository.com/artifact/com.h2database/h2)
+- [Anotaciones Lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)
+- [Karate para pruebas](https://mvnrepository.com/artifact/com.intuit.karate/karate-junit5)
+- [JSON](https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple)
+- [Java Bean Validation API](https://mvnrepository.com/artifact/javax.validation/validation-api)
+
 ### Herramientas
 
 Para el desarrollo en equipo, se ha utilizado Visual Studio Code como editor. Como sistema de control de versiones, se ha utilizado Git o, más concretamente, GitHub. De GitHub también se ha utilizado la herramienta de proyectos para realizar la planificación y la distribución de tareas.
@@ -112,10 +143,11 @@ Además, se han utilizado las siguientes extensiones de VS Code:
     - [Spring Boot Tools](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-spring-boot)
     - [Spring Initializr Java Support](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-initializr)
     - [Spring Boot Dashboard](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-boot-dashboard)
-- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
-- [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+- [Lombok Annotations Support for VS Code](https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok)
 - [Checkstyle for Java](https://marketplace.visualstudio.com/items?itemName=shengchen.vscode-checkstyle)
 - [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
+- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
+- [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 
 ## Referencias, _cheat sheets_ y _shortcuts_
 
