@@ -10,9 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
-
 import lombok.Data;
 
 /**
@@ -36,8 +33,6 @@ import lombok.Data;
 )
 @Data
 public class Message {
-	
-	//private static Logger log = LogManager.getLogger(Message.class);	
 	
 	/**
 	 * Identifier

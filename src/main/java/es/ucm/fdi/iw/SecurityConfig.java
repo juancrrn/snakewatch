@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
-		// by default in Spring Security 5, a wrapped new BCryptPasswordEncoder();
+		// By default in Spring Security 5, a wrapped new BCryptPasswordEncoder()
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder(); 
 	}	
 	

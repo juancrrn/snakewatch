@@ -45,9 +45,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-//import java.util.List;
 import java.util.Objects;
-//import java.util.stream.Collectors;
 
 /**
  * User management
@@ -192,7 +190,7 @@ public class UserController {
 			@PathVariable long id, 
 			@ModelAttribute User edited, 
 			@RequestParam(required=false) String pass2,
-			Model model, HttpSession session) throws IOException {
+			Model model, HttpSession session) {
 
         User requester = (User)session.getAttribute("u");
         User target = null;

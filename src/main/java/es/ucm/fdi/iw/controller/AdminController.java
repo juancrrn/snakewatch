@@ -35,7 +35,7 @@ public class AdminController {
     /**
      * List all users' reports
      *
-     * TODO: unnecesary/removable?
+     * FIXME Remove if unused
      */
     @GetMapping("/")
     public String index(Model model) {

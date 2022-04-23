@@ -9,14 +9,9 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -26,11 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchPlayer;
@@ -43,8 +35,6 @@ import es.ucm.fdi.iw.model.Room.RoomType;
 @Controller
 @RequestMapping("rooms")
 public class RoomsController {
-    
-    private static final Logger log = LogManager.getLogger(RoomsController.class);
 
     @Autowired
     private EntityManager entityManager;
@@ -118,8 +108,7 @@ public class RoomsController {
 
 
     @GetMapping("{roomId}")
-    public String getRoom(@PathVariable long roomId, Model model)
-    throws JsonProcessingException {
+    public String getRoom(@PathVariable long roomId, Model model) {
 
         Room room = entityManager.find(Room.class, roomId);
         model.addAttribute("room", room);
@@ -150,8 +139,7 @@ public class RoomsController {
 
     @PostMapping("create_room")
     @Transactional
-    public String createRoom(Model model)
-    throws JsonProcessingException {
+    public String createRoom(Model model) {
 
         Room room= new Room();
         room.setVisibility(RoomType.PUBLIC);

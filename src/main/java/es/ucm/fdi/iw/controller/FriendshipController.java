@@ -1,9 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
-import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.User;
-
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,12 +46,6 @@ public class FriendshipController {
 
     @Autowired
     private EntityManager entityManager;
-
-    @Autowired
-    private LocalData localData;
-
-    @Autowired 
-    private HttpSession session;
 
     /**
      * Exception to use when denying access to unauthorized users.
