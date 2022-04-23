@@ -40,7 +40,7 @@
         {
          "columns":2,
          "firstgid":1,
-         "image":"..\/assets\/tiles\/snake_tileset.png",
+         "image":"..\/img\/snake_tileset.png",
          "imageheight":40,
          "imagewidth":40,
          "margin":0,
