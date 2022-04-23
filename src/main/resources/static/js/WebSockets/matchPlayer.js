@@ -16,10 +16,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(loadGame, 1500);
 
-    ws.receive = (text) => {
-      if(text.type=="GameState"){
-        alert("HELLOOO");
-      }
-    }
-
   })

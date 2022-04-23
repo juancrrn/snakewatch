@@ -88,8 +88,11 @@ export default class Level extends Phaser.Scene {
       type: "GameState",
       message: this.exportToJson()
     }
-    //ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageGameState));
+    ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageGameState));
+    
   }
+
+  
 
   /**
    * Checks if the snake would crash when moving to the new position

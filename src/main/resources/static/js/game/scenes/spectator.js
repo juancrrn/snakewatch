@@ -51,6 +51,11 @@ export default class Spectator extends Phaser.Scene {
     this.cursors.right.on('down', () => this.player.setDir(1), this);
     this.cursors.down.on('down', () => this.player.setDir(2), this);
     this.cursors.left.on('down', () => this.player.setDir(3), this);
+    ws.receive = (text) => {
+      if(text.type=="GameState"){
+        this.importFromJson(text.message);
+      }
+    }
   }
 
   exportToJson() {
@@ -62,9 +67,10 @@ export default class Spectator extends Phaser.Scene {
   }
 
   importFromJson(json) {
-    this.food.importFromJson(this.json.food);
+    
+    this.food.importFromJson(json.food);
     //this.bots.map(b => b.importFromJson(this.json.snakes));
-    this.player.importFromJson(this.json.player);
+    this.player.importFromJson(json.player);
     //this.json.snakes.map(s => s.importFromJson());
   }
 }
