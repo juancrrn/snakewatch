@@ -133,7 +133,7 @@ Para el desarrollo en equipo, se ha utilizado Visual Studio Code como editor. Co
 Además, se han utilizado las siguientes extensiones de VS Code:
 
 - [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack):
-    - [Language Support for Java(TM) by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.java)
+    - [Language Support for Java(TM) by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.java) (se ha usado también para formatear el código)
     - [Debugger for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)
     - [Test Runner for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-test)
     - [Maven for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven)
