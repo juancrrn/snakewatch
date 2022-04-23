@@ -89,6 +89,8 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	/**
 	 * List of matches (MatchPlayer class) that the user has played
 	 * @see www.baeldung.com/jpa-many-to-many
+	 * 
+	 * FIXME Esto debería ser "matches: List<Match>"...
 	 */
 	@OneToMany(mappedBy = "player")
 	private List<MatchPlayer> matchPlayers = new ArrayList<>();
@@ -100,6 +102,8 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	 * That's why this list is mapped only to "user1"
 	 * 
 	 * @see www.baeldung.com/jpa-many-to-many
+	 * 
+	 * FIXME Esto debería ser "friends: List<User>"...
 	 */
 	@OneToMany(mappedBy = "user1")
 	private List<Friendship> friendships = new ArrayList<>();
