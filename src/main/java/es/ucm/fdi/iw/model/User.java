@@ -112,6 +112,8 @@ public class User /*implements Transferable<User.Transfer>*/ {
 	/**
 	 * List of rooms that this user has joined (as RoomUser class)
 	 * @see www.baeldung.com/jpa-many-to-many
+	 * 
+	 * FIXME Esto debería ser "rooms: List<Room>"...
 	 */
 	@OneToMany(fetch=FetchType.EAGER, mappedBy= "user")
 	private List<RoomUser> roomUsers = new ArrayList<>();
