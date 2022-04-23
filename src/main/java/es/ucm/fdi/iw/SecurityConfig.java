@@ -89,12 +89,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 
 	 * This can be used to auto-login into the site after creating new users, for example.
 	 */
-	 @Bean
-	 @Override
-	 public AuthenticationManager authenticationManagerBean() throws Exception {
-	     return super.authenticationManagerBean();
-	 }
-	 
-	 @Autowired
-	 private LoginSuccessHandler loginSuccessHandler;
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+	
+	@Autowired
+	private LoginSuccessHandler loginSuccessHandler;
 }
