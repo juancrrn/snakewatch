@@ -88,6 +88,46 @@ export default class Level extends Phaser.Scene {
     ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(this.exportToJson()));
   }
 
+  /**
+   * Checks if the snake would crash when moving to the new position
+   * @param pos The position to check
+   * @returns True if the position is occupied. False otherwise
+   */
+  isOccupied(pos) {
+    return (pos.x < 0 || pos.x >= 25) || (pos.y < 0 || pos.y >= 25) || this.isSnake(pos) || this.isWall(pos);
+  }
+
+  /**
+   * Checks if there is a snake at the given position
+   * @param pos The position to check
+   * @returns True if there is a snake at the given position. False otherwise
+   */
+  isSnake(pos) {
+    return this.physics.overlapRect(pos.x * 20 + 10, pos.y * 20 + 10, 0, 0, true, false).length > 0;
+  }
+
+  /**
+   * Checks if there is a wall at the given position
+   * @param pos The position to check
+   * @returns True if there is a wall at the given position. False otherwise
+   */
+  isWall(pos) {
+    return this.map.getTileAt(pos.x, pos.y) !== null;
+  }
+
+  /**
+   * Gets a cell that is not occupied and is not a wall
+   * @returns The position of the empty cell
+   */
+  getEmptyCell() {
+    let pos;
+    do {
+      pos = { x: Math.floor(Math.random() * 25), y: Math.floor(Math.random() * 25) }
+    } while (this.isOccupied(pos));
+
+    return pos;
+  }
+
   exportToJson(){
     return {
       food: this.food.exportJson(),
