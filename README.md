@@ -17,9 +17,9 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
     - [Funcionalidad de amistad entre usuarios](#funcionalidad-de-amistad-entre-usuarios)
     - [Funcionalidad de clasificaciones o _rankings_](#funcionalidad-de-clasificaciones-o-rankings)
     - [Funcionalidad de base de juego](#funcionalidad-de-base-de-juego)
+    - [Funcionalidad de multijugador en juego](#funcionalidad-de-multijugador-en-juego)
     - [Funcionalidad de reporte de usuarios](#funcionalidad-de-reporte-de-usuarios)
     - [Funcionalidad de niveles de juego](#funcionalidad-de-niveles-de-juego)
-    - [Funcionalidad de multijugador en juego](#funcionalidad-de-multijugador-en-juego)
     - [Funcionalidad de skins de juego](#funcionalidad-de-skins-de-juego)
     - [Funcionalidad de salas de juego privadas](#funcionalidad-de-salas-de-juego-privadas)
   - [Vistas](#vistas)
@@ -30,9 +30,10 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
     - [Juego](#juego)
     - [Rankings](#rankings)
   - [Documentación del proyecto](#documentación-del-proyecto)
-    - [Clases de Spring Boot](#clases-de-spring-boot)
-    - [Clases de modelos del dominio](#clases-de-modelos-del-dominio)
-    - [Clases de controladores y lógica](#clases-de-controladores-y-lógica)
+    - [Clases de Java de Spring Boot](#clases-de-java-de-spring-boot)
+    - [Clases de Java de modelos del dominio](#clases-de-java-de-modelos-del-dominio)
+    - [Clases de Java de controladores y lógica](#clases-de-java-de-controladores-y-lógica)
+    - [Lógica de juego en el cliente en JavaScript](#lógica-de-juego-en-el-cliente-en-javascript)
   - [Desarrollo](#desarrollo)
     - [Dependencias del proyecto de Java](#dependencias-del-proyecto-de-java)
     - [Herramientas](#herramientas)
@@ -108,23 +109,23 @@ A partir de la base proporcionada para la asignatura, se ha construido la funcio
 > ☕ Clases Java relacionadas:   
 > 📄 Ficheros JavaScript relacionados:
 
-### Funcionalidad de reporte de usuarios
+### Funcionalidad de multijugador en juego
 
 > Estado: 🚧 funcionalidad en proceso de implementación
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de reporte de usuarios
+
+> Estado: 📅 funcionalidad planificada
 > 
 > ☕ Clases Java relacionadas:   
 > 📄 Ficheros JavaScript relacionados:
 
 ### Funcionalidad de niveles de juego
 
-> Estado: 🚧 funcionalidad en proceso de implementación
-> 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
-
-### Funcionalidad de multijugador en juego
-
-> Estado: 🚧 funcionalidad en proceso de implementación
+> Estado: 📅 funcionalidad planificada
 > 
 > ☕ Clases Java relacionadas:   
 > 📄 Ficheros JavaScript relacionados:
@@ -145,6 +146,7 @@ A partir de la base proporcionada para la asignatura, se ha construido la funcio
 
 ## Vistas
 
+> ⚠️ Sección pendiente de actualización
 
 ### Lobby
 
@@ -172,7 +174,7 @@ La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego
 
 ## Documentación del proyecto
 
-### Clases de Spring Boot
+### Clases de Java de Spring Boot
 
 <p align="center">
     <img alt="Diagrama pseudo-UML de clases de Spring Boot" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/spring-classes-pseudo-uml.png?raw=true">
@@ -181,11 +183,19 @@ La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego
 
 Este diagrama muestra, de forma resumida y con un formato parecido a UML, la funcionalidad de las clases de configuración y arranque de Spring Boot utilizadas en el proyecto.
 
-### Clases de modelos del dominio
+### Clases de Java de modelos del dominio
 
-### Clases de controladores y lógica
+> ⚠️ Sección pendiente de actualización
+
+### Clases de Java de controladores y lógica
+
+> ⚠️ Sección pendiente de actualización
 
 Se ha seguido la plantilla de la asignatura en cuanto a implementar la lógica de servicios dentro de los controladores.
+
+### Lógica de juego en el cliente en JavaScript
+
+> ⚠️ Sección pendiente de actualización
 
 ## Desarrollo
 
