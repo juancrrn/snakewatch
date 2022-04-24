@@ -1,23 +1,33 @@
-# Snakewatch
+# Snakewatch Server
 
 Snakewatch es una aplicación web dedicada al videojuego de la serpiente o _Snake_ en versión _online_ y multijugador.
 
+Concretamente, Snakewatch Server es es la aplicación web que sirve el _front end_ y mantiene en ejecución un _back end_ para gestionar peticiones.
+
 El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Grado en Ingeniería Informática de la Universidad Complutense de Madrid, y utiliza tecnologías como Spring, Maven y Thymeleaf.
 
-##### Table of Contents
+**Índice de contenidos**
 
-- [Snakewatch](#snakewatch)
-        - [Table of Contents](#table-of-contents)
-        - [Autores](#autores)
+- [Snakewatch Server](#snakewatch-server)
   - [Propuesta de proyecto](#propuesta-de-proyecto)
     - [La serpiente](#la-serpiente)
-    - [Catch](#catch)
-    - [Roles de usuario](#roles-de-usuario)
-  - [Funcionalidad desarrollada](#funcionalidad-desarrollada)
-    - [A](#a)
-    - [B](#b)
-    - [C](#c)
+    - [_Catch_](#catch)
+  - [Funcionalidad](#funcionalidad)
+    - [Funcionalidad de gestión de acceso, usuarios y roles](#funcionalidad-de-gestión-de-acceso-usuarios-y-roles)
+    - [Funcionalidad de amistad entre usuarios](#funcionalidad-de-amistad-entre-usuarios)
+    - [Funcionalidad de clasificaciones o _rankings_](#funcionalidad-de-clasificaciones-o-rankings)
+    - [Funcionalidad de reporte de usuarios](#funcionalidad-de-reporte-de-usuarios)
+    - [Funcionalidad de base de juego](#funcionalidad-de-base-de-juego)
+    - [Funcionalidad de niveles de juego](#funcionalidad-de-niveles-de-juego)
+    - [Funcionalidad de multijugador en juego](#funcionalidad-de-multijugador-en-juego)
+    - [Funcionalidad de skins de juego](#funcionalidad-de-skins-de-juego)
   - [Vistas](#vistas)
+    - [Lobby](#lobby)
+    - [Perfil de usuario](#perfil-de-usuario)
+    - [Niveles](#niveles)
+    - [Administrador](#administrador)
+    - [Juego](#juego)
+    - [Rankings](#rankings)
   - [Documentación del proyecto](#documentación-del-proyecto)
     - [Clases de Spring Boot](#clases-de-spring-boot)
     - [Clases de modelos del dominio](#clases-de-modelos-del-dominio)
@@ -31,10 +41,8 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
     - [Thymeleaf](#thymeleaf)
     - [Guías de Spring](#guías-de-spring)
     - [Base de datos](#base-de-datos)
-      - [H2 Console](#h2-console)
-      - [Importación en el arranque](#importación-en-el-arranque)
 
-##### Autores
+**Autores**
 
 - Daniel Marín Irún
 - Juan Carrión Molina
@@ -50,40 +58,109 @@ En resumen, la dinámica del juego consiste en que el jugador controla una criat
 
 Se pueden obtener más detalles en la [página de Wikipedia de la serpiente](https://es.wikipedia.org/wiki/La_serpiente_(videojuego)).
 
-### Catch
+### _Catch_
 
 > ¿Viciado al Elden Ring o al God of war Ragnarök? Si eres más de clásicos, ¡estás de suerte! Con Snakewatch podrás jugar al mítico y legendario Snake con tus amigos. Gracias a su entorno multijugador, la partida se sincronizará para que luchéis por ver quién es el amo del mapa. ¡Sé el último en sobrevivir y álzate con la victoria!
 
-### Roles de usuario
+## Funcionalidad
 
-- **Usuario guest**: Solo podrá unirse a una sesión existente y no podrá alojar la suya propia. No tendrán acceso a ninguna de las características secundarias, como equipar skins o aparecer en los rankings. De este usuario no se guardará información.
-- **Usuarios registrados**: Estos usuarios poseen un perfil propio que les permite:
-    - Crear sesión
-    - Participar en los rankings
-    - Obtener y/o cambiar skins
-    - Consultar historial de partidas
-    - Reportar usuarios, para que los administradores comprueben la respectiva cuenta y tomen las medidas oportunas.
-    - Una vez que un usuario haya iniciado sesión, podrá acceder a la vista de usuario desde la que puede administrar la configuración de su cuenta (cambiar nombre de usuario, contraseña) o en la configuración del juego, como skins, títulos o consultar los rankings, etc.
-- **Usuario espectador**: Estos usuarios solo podrán ver los juegos en curso. Por lo general, estos son usuarios a los que les gusta transmitir partidos y hacer comentarios en vivo.
-Estos usuarios son muy similares a los "Guests" en el sentido de que no necesitan registrarse y no se guardará ninguna información para ellos, sin embargo, lo que los define es que requieren la clave del juego para poder verlo.
-- **Administrador**: Los altos mandos de la plataforma. Solo actúa cuando se notifican muchos reportes a una persona. Son los que pueden eliminar a usuarios de forma temporal o permanente de la aplicación.
+### Funcionalidad de gestión de acceso, usuarios y roles
 
-## Funcionalidad desarrollada
+> Estado: ✅ funcionalidad implementada
+> 
+> ☕ Clases Java relacionadas: `User`, `SecurityConfig`, `LoginSuccessHandler`, `IwUserDetailsService`  
+> 📄 Ficheros JavaScript relacionados:
 
-### A
+A partir de la base proporcionada para la asignatura, se ha construido la funcionalidad de gestión de acceso, usuarios y roles.
 
-### B
+**Roles de usuario**
 
-### C
+- **Usuario invitado o _guest_**:
+  - Solo podrá ver las páginas públicas.
+  - Con respecto a la lógica de juego, solo podrá unirse a una sesión existente y no podrá alojar la suya propia. No tendrá acceso a ninguna de las características secundarias, como equipar skins o aparecer en los rankings. No se guardará su información.
+- **Usuario registrado**:
+  - Poseerá un perfil propio persistente.
+  - Con respecto a la lógica de juego, podrá crear una sesión, participar en las clasificaciones o _rankings_, personalizar pieles o _skins_, consultar historiales de partidas, reportar a usuarios y configurar su cuenta.
+- **Usuario espectador**:
+  - Pueden observar el desarrollo de una partida, ya sean invitados o registrados.
+- **Administrador**:
+  - Tienen la capacidad de gestionar la plataforma, ver reportes y, especialmente, de actuar ante reportes de usuarios.
+
+### Funcionalidad de amistad entre usuarios
+
+> Estado: ✅ funcionalidad implementada
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de clasificaciones o _rankings_
+
+> Estado: ✅ funcionalidad implementada
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de reporte de usuarios
+
+> Estado: ✅ funcionalidad implementada
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de base de juego
+
+> Estado: ✅ funcionalidad implementada
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de niveles de juego
+
+> Estado: 🚧 funcionalidad en proceso de implementación
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de multijugador en juego
+
+> Estado: 🚧 funcionalidad en proceso de implementación
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de skins de juego
+
+> Estado: 📅 funcionalidad planificada
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
 
 ## Vistas
 
-- **Lobby**: La pantalla de lobby es la pantalla de inicio del juego, donde un usuario una vez se ha registrado en la aplicación web podrá seleccionar como desee jugar, si multijugador (play online) o un jugador solo (levels), así como observar otras partidas (spectate). También podrá acceder a su perfil, a los rankings o en caso de ser administrador a la pantalla de administrador.
-- **Perfil de usuario**: La pantalla de perfil incluirá el perfil del usuario con su respectivo nombre y foto de perfil, así como los amigos que tiene, el número total de partidas jugadas y ganadas y un historial con las partidas recientes.
-- **Niveles**: La pantalla de niveles es la pantalla de un solo jugador, en la que el usuario podrá seleccionar el nivel al que desee jugar, donde habrá distintas dificultades por nivel, al seleccionar el nivel tendrá que superar la dificultad que incluya dicho nivel.
-- **Administrador**: La pantalla de administrador únicamente será accesible para aquellos usuarios con el rol de administrador, en la cual se incluirá una lista de aquellos usuarios que han sido reportados donde el administrador podrá ver el motivo de su reporte y si banea o no a dicho usuario.
-- **Juego**: La pantalla de juego es la pantalla de multijugador donde varios jugadores podrán entrar a jugar simultáneamente, se enfrentarán entre ellos y ganará aquel que sea el último en quedar de pie.
-- **Rankings**: La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego o lo que es lo mismo, los jugadores que hayan ganado más veces en el modo de juego multijugador. Se mostrará el nombre del usuario junto a las victorias conseguidas y la posición que ocupa en el top.
+
+### Lobby
+
+La pantalla de lobby es la pantalla de inicio del juego, donde un usuario una vez se ha registrado en la aplicación web podrá seleccionar como desee jugar, si multijugador (play online) o un jugador solo (levels), así como observar otras partidas (spectate). También podrá acceder a su perfil, a los rankings o en caso de ser administrador a la pantalla de administrador.
+
+### Perfil de usuario
+
+La pantalla de perfil incluirá el perfil del usuario con su respectivo nombre y foto de perfil, así como los amigos que tiene, el número total de partidas jugadas y ganadas y un historial con las partidas recientes.
+
+### Niveles
+
+La pantalla de niveles es la pantalla de un solo jugador, en la que el usuario podrá seleccionar el nivel al que desee jugar, donde habrá distintas dificultades por nivel, al seleccionar el nivel tendrá que superar la dificultad que incluya dicho nivel.
+
+### Administrador
+
+La pantalla de administrador únicamente será accesible para aquellos usuarios con el rol de administrador, en la cual se incluirá una lista de aquellos usuarios que han sido reportados donde el administrador podrá ver el motivo de su reporte y si banea o no a dicho usuario.
+
+### Juego
+
+La pantalla de juego es la pantalla de multijugador donde varios jugadores podrán entrar a jugar simultáneamente, se enfrentarán entre ellos y ganará aquel que sea el último en quedar de pie.
+
+### Rankings
+
+La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego o lo que es lo mismo, los jugadores que hayan ganado más veces en el modo de juego multijugador. Se mostrará el nombre del usuario junto a las victorias conseguidas y la posición que ocupa en el top.
 
 ## Documentación del proyecto
 
@@ -188,11 +265,11 @@ $ mvn test
 
 ### Base de datos
 
-#### H2 Console
+**H2 Console**
 
 Acceso a H2 Console desde `http://localhost:8080/h2/`.
 
-#### Importación en el arranque
+**Importación en el arranque**
 
 A través de un `import.sql`.
 
