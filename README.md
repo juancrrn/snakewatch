@@ -36,6 +36,7 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
     - [Lógica de JavaScript en el cliente](#lógica-de-javascript-en-el-cliente)
   - [Desarrollo](#desarrollo)
     - [Dependencias del proyecto de Java](#dependencias-del-proyecto-de-java)
+    - [Dependencias de la lógica de JavaScript en el cliente](#dependencias-de-la-lógica-de-javascript-en-el-cliente)
     - [Herramientas](#herramientas)
   - [Referencias, _cheat sheets_ y _shortcuts_](#referencias-cheat-sheets-y-shortcuts)
     - [Maven y ejecución](#maven-y-ejecución)
@@ -249,6 +250,12 @@ El proyecto de Java se basa en las siguientes dependencias:
 - [Karate para pruebas](https://mvnrepository.com/artifact/com.intuit.karate/karate-junit5)
 - [JSON](https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple)
 - [Java Bean Validation API](https://mvnrepository.com/artifact/javax.validation/validation-api)
+
+### Dependencias de la lógica de JavaScript en el cliente
+
+La lógica de JavaScript en el cliente se basa en las siguientes dependencias:
+
+- [Phaser](http://phaser.io/)
 
 ### Herramientas
 
