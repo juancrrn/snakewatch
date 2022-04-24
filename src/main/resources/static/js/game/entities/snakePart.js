@@ -37,7 +37,8 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
         oldPos.dir = pos.dir;
       }
     } else if (this !== this.snake.parts.at(-1) || this.snake.parts.length !== this.snake.size) {
-      this.setFrame(pos.turn ? 2 : 1);
+      this.frameId = pos.turn ? 2 : 1;
+      this.setFrame(this.frameId);
       if ((pos.dir + 1) % 4 === oldPos.dir) this.setAngle(this.angle - 90);
     }
 
@@ -49,7 +50,7 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
    * @returns JSON object containing current state
    */
   toJSON() {
-    return { x: this.pos.x, y: this.pos.y, dir: this.pos.dir, frame: this.frameId };
+    return { x: this.pos.x, y: this.pos.y, angle: this.angle, frame: this.frameId };
   }
 
   /**
@@ -58,8 +59,7 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
   fromJSON(json) {
     this.pos.x = json.x;
     this.pos.y = json.y;
-    this.pos.dir = json.dir;
-    this.setAngle(90 * json.dir);
+    this.setAngle(json.angle);
     this.setFrame(json.frame);
     this.setPosition(this.pos.x * 20 + 10, this.pos.y * 20 + 10);
   }
