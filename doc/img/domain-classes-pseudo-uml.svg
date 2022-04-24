@@ -1,0 +1,1463 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (1:1.1+202202050950+0a00cf5339)"
+   sodipodi:docname="domain-classes-pseudo-uml.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1"
+     inkscape:cx="369.5"
+     inkscape:cy="388.5"
+     inkscape:window-width="1422"
+     inkscape:window-height="1016"
+     inkscape:window-x="1138"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer2"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect52178"
+       is_visible="true"
+       lpeversion="1"
+       satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,2.6458333,0,1 @ F,0,0,1,0,2.6458333,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="10"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path33789" />
+    </marker>
+    <marker
+       id="ExperimentalArrow"
+       refX="5.0"
+       refY="3.0"
+       orient="auto-start-reverse"
+       inkscape:stockid="ExperimentalArrow"
+       inkscape:isstock="true">
+      <path
+         style="fill:context-stroke"
+         d="m 10,3 -10,3 0,-6 z"
+         id="path34021" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path33795" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-50"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-96" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-50-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-96-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-50-8-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-96-5-1" />
+    </marker>
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect52178-5"
+       is_visible="true"
+       lpeversion="1"
+       satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,2.6458333,0,1 @ F,0,0,1,0,2.6458333,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="10"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-50-8-1-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-96-5-1-4" />
+    </marker>
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect52178-5-8"
+       is_visible="true"
+       lpeversion="1"
+       satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,2.6458333,0,1 @ F,0,0,1,0,2.6458333,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="10"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-50-8-10"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-96-5-3" />
+    </marker>
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect52178-0"
+       is_visible="true"
+       lpeversion="1"
+       satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,2.6458333,0,1 @ F,0,0,1,0,2.6458333,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="10"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-50-8-1-8-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-96-5-1-4-4" />
+    </marker>
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect52178-5-8-4"
+       is_visible="true"
+       lpeversion="1"
+       satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,2.6458333,0,1 @ F,0,0,1,0,2.6458333,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="10"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-53"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33789-8" />
+    </marker>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Fondo">
+    <rect
+       style="vector-effect:none;fill:#f9ffff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+       id="rect66569"
+       width="296.78635"
+       height="174.93073"
+       x="0.13353218"
+       y="0.53503585"
+       rx="2.9217937"
+       ry="2.9217937"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/spring-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g24828"
+       transform="translate(103.83268)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
+         id="rect31"
+         width="63.442245"
+         height="63.630192"
+         x="12.9462"
+         y="17.803116"
+         ry="2.9217854"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 12.776061,23.341012 H 76.558575"
+         id="path1324" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 12.776061,28.632679 H 76.558575"
+         id="path1324-4" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="44.659348"
+         y="21.593992"
+         id="text3146"><tspan
+           sodipodi:role="line"
+           id="tspan3144"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="44.659348"
+           y="21.593992">User</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="12.688022"
+         y="13.077935"
+         id="text3146-1-4"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="12.688022"
+           y="13.077935">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="12.688022"
+         y="9.9029379"
+         id="text3146-1-4-6"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="12.688022"
+           y="9.9029379">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="12.688022"
+         y="16.252934"
+         id="text3146-1-6"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-0"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="12.688022"
+           y="16.252934">@Table(name = &quot;IWUser&quot;)</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="16.152357"
+         y="26.935053"
+         id="text3146-1-5"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="26.935053"
+           id="tspan17922">An app's authenticated user.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="16.152357"
+         y="32.226719"
+         id="text3146-1-5-6"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="32.226719"
+           id="tspan17922-8">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="36.038921"
+           id="tspan77802">-username: String</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="39.851124"
+           id="tspan77804">-password: String</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="43.663322"
+           id="tspan77806">-firstName: String</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="47.475525"
+           id="tspan77808">-lastName: String</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="51.287727"
+           id="tspan77810">-enabled: boolean</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="55.09993"
+           id="tspan78562">-roles: String</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="58.912132"
+           id="tspan78894">-sentMessages: List&lt;Message&gt;</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="62.724335"
+           id="tspan78896">-receivedMessages: List&lt;Message&gt;</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="66.536537"
+           id="tspan78898">-matchPlayers: List&lt;MatchPlayer&gt;</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="70.34874"
+           id="tspan78900">-friendships: List&lt;Friendship&gt;</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="74.160934"
+           id="tspan93854">-roomUsers: List&lt;RoomUser&gt;</tspan></text>
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 12.776061,76.257682 H 76.558575"
+         id="path1324-4-0" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="16.152357"
+         y="79.851723"
+         id="text3146-1-5-6-5"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152357"
+           y="79.851723"
+           id="tspan93854-9">+hasRole(): boolean</tspan></text>
+    </g>
+    <g
+       id="g24777"
+       transform="translate(76.520491,47.317113)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
+         id="rect31-3"
+         width="63.442245"
+         height="39.125366"
+         x="145.23785"
+         y="17.803116"
+         ry="2.9217854"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 145.06776,23.341012 h 63.78255"
+         id="path1324-6" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 145.06776,28.632679 h 63.78255"
+         id="path1324-4-7" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="176.95103"
+         y="21.593992"
+         id="text3146-5"><tspan
+           sodipodi:role="line"
+           id="tspan3144-3"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="176.95103"
+           y="21.593992">Match</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="144.97969"
+         y="16.252934"
+         id="text3146-1-4-5"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="144.97969"
+           y="16.252934">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="144.97969"
+         y="13.077935"
+         id="text3146-1-4-6-2"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="144.97969"
+           y="13.077935">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="148.44403"
+         y="26.935053"
+         id="text3146-1-5-7"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="26.935053"
+           id="tspan17922-0">A game match.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="148.44403"
+         y="32.226719"
+         id="text3146-1-5-6-9"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="32.226719"
+           id="tspan17922-8-3">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="36.038921"
+           id="tspan93854-0">-room: Room</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="39.851124"
+           id="tspan5835">-level: Level</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="43.663322"
+           id="tspan5837">-matchPlayers: List&lt;MatchPlayer&gt;</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="47.475525"
+           id="tspan5839">-status: Status</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="51.287727"
+           id="tspan6501">-maxPlayers: int</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="148.44403"
+           y="55.09993"
+           id="tspan6503">-date: LocalDate</tspan></text>
+    </g>
+    <g
+       id="g24797"
+       transform="translate(-100.7121,100.22162)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
+         id="rect31-3-5"
+         width="49.374699"
+         height="35.248737"
+         x="219.28354"
+         y="17.803116"
+         ry="2.9217854"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 219.15114,23.341012 h 49.63955"
+         id="path1324-6-9" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 219.15114,28.632679 h 49.63955"
+         id="path1324-4-7-2" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="243.95422"
+         y="21.593992"
+         id="text3146-5-2"><tspan
+           sodipodi:role="line"
+           id="tspan3144-3-8"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="243.95422"
+           y="21.593992">Message</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="219.0631"
+         y="16.252934"
+         id="text3146-1-4-5-9"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-6-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="219.0631"
+           y="16.252934">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="219.0631"
+         y="13.077935"
+         id="text3146-1-4-6-2-3"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-9-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="219.0631"
+           y="13.077935">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="222.52744"
+         y="26.935053"
+         id="text3146-1-5-7-1"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="222.52744"
+           y="26.935053"
+           id="tspan17922-0-2">A text message.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="222.52744"
+         y="32.226719"
+         id="text3146-1-5-6-9-9"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="222.52744"
+           y="32.226719"
+           id="tspan17922-8-3-3">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="222.52744"
+           y="36.038921"
+           id="tspan6503-4">-sender: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="222.52744"
+           y="39.851124"
+           id="tspan12388">-recipient: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="222.52744"
+           y="43.663322"
+           id="tspan12390">-text: String</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="222.52744"
+           y="47.475525"
+           id="tspan12392">-dateSent: LocalDateTime</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="222.52744"
+           y="51.287727"
+           id="tspan12394">-dateRead: LocalDateTime</tspan></text>
+    </g>
+    <g
+       id="g24756"
+       transform="translate(-75.965744,121.00751)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
+         id="rect31-5"
+         width="48.123093"
+         height="19.754519"
+         x="86.988449"
+         y="17.803116"
+         ry="2.9217851"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 86.8594,23.341012 h 48.38122"
+         id="path1324-2" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 86.8594,28.632679 h 48.38122"
+         id="path1324-4-2" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="111.01812"
+         y="21.593992"
+         id="text3146-7"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="111.01812"
+           y="21.593992">Level</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="86.771347"
+         y="16.252934"
+         id="text3146-1-4-2"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="86.771347"
+           y="16.252934">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="86.771347"
+         y="13.077935"
+         id="text3146-1-4-6-3"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="86.771347"
+           y="13.077935">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="90.235695"
+         y="26.935053"
+         id="text3146-1-5-0"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="90.235695"
+           y="26.935053"
+           id="tspan17922-6">A game level.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="90.235695"
+         y="32.226719"
+         id="text3146-1-5-6-8"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="90.235695"
+           y="32.226719"
+           id="tspan17922-8-5">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="90.235695"
+           y="36.038921"
+           id="tspan93854-4">-representation: String</tspan></text>
+    </g>
+    <g
+       id="g24740"
+       transform="translate(-3.3471836,-42.029113)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
+         id="rect31-5-5"
+         width="53.200546"
+         height="31.704678"
+         x="12.918736"
+         y="102.46977"
+         ry="2.9217849"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 12.776062,108.00769 H 66.26195"
+         id="path1324-2-0" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 12.776062,113.29936 H 66.26195"
+         id="path1324-4-2-3" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="39.479164"
+         y="106.26065"
+         id="text3146-7-6"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5-1"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="39.479164"
+           y="106.26065">Room</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="12.688018"
+         y="100.91959"
+         id="text3146-1-4-2-0"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="12.688018"
+           y="100.91959">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="12.688018"
+         y="97.744591"
+         id="text3146-1-4-6-3-3"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4-2"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="12.688018"
+           y="97.744591">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="16.152365"
+         y="111.60171"
+         id="text3146-1-5-0-0"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152365"
+           y="111.60171"
+           id="tspan17922-6-6">A game room.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="16.152365"
+         y="116.89337"
+         id="text3146-1-5-6-8-1"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152365"
+           y="116.89337"
+           id="tspan17922-8-5-5">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152365"
+           y="120.70557"
+           id="tspan93854-4-5">-visibility: RoomType</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152365"
+           y="124.51778"
+           id="tspan14153">-maxUsers: int</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152365"
+           y="128.32997"
+           id="tspan14155">-roomUsers: List&lt;RoomUser&gt;</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="16.152365"
+           y="132.14218"
+           id="tspan14157">-matches: List&lt;Match&gt;</tspan></text>
+    </g>
+    <g
+       id="g24721"
+       transform="translate(108.1809,39.473979)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
+         id="rect31-5-5-4"
+         width="33.897621"
+         height="16.621393"
+         x="86.950302"
+         y="102.46977"
+         ry="2.9217849"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 86.8594,108.00769 h 34.07944"
+         id="path1324-2-0-7" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 86.8594,113.29936 h 34.07944"
+         id="path1324-4-2-3-6" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="103.92229"
+         y="106.26065"
+         id="text3146-7-6-5"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5-1-6"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="103.92229"
+           y="106.26065">Settings</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="86.771347"
+         y="100.91959"
+         id="text3146-1-4-2-0-9"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9-6-3"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="86.771347"
+           y="100.91959">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="86.771347"
+         y="97.744591"
+         id="text3146-1-4-6-3-3-7"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4-2-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="86.771347"
+           y="97.744591">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="90.235695"
+         y="111.60171"
+         id="text3146-1-5-0-0-5"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="90.235695"
+           y="111.60171"
+           id="tspan17922-6-6-2">An app settings.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="90.235695"
+         y="116.89337"
+         id="text3146-1-5-6-8-1-5"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="90.235695"
+           y="116.89337"
+           id="tspan14157-3">-id: long</tspan></text>
+    </g>
+    <g
+       id="g24706"
+       transform="translate(104.29518,39.473979)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
+         id="rect31-5-5-4-0"
+         width="38.498249"
+         height="16.621393"
+         x="134.58762"
+         y="102.46977"
+         ry="2.9217849"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 134.48442,108.00769 h 38.70476"
+         id="path1324-2-0-7-7" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 134.48442,113.29936 h 38.70476"
+         id="path1324-4-2-3-6-8" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="153.86282"
+         y="106.26065"
+         id="text3146-7-6-5-6"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5-1-6-8"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="153.86282"
+           y="106.26065">Skin</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="134.39635"
+         y="100.91959"
+         id="text3146-1-4-2-0-9-8"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9-6-3-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="134.39635"
+           y="100.91959">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="134.39635"
+         y="97.744591"
+         id="text3146-1-4-6-3-3-7-3"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4-2-4-1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="134.39635"
+           y="97.744591">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="137.86069"
+         y="111.60171"
+         id="text3146-1-5-0-0-5-4"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="137.86069"
+           y="111.60171"
+           id="tspan17922-6-6-2-9">A game snake skin.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="137.86069"
+         y="116.89337"
+         id="text3146-1-5-6-8-1-5-2"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="137.86069"
+           y="116.89337"
+           id="tspan14157-3-0">-id: long</tspan></text>
+    </g>
+    <g
+       id="g34187">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         id="rect31-5-5-4-0-7"
+         width="41.979687"
+         height="35.445759"
+         x="54.634216"
+         y="17.803114"
+         ry="2.9217846"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 54.521693,23.34103 h 42.20514"
+         id="path1324-2-0-7-7-2" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 54.521693,36.57022 h 42.20514"
+         id="path1324-4-2-3-6-8-7" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="75.591461"
+         y="21.593992"
+         id="text3146-7-6-5-6-22"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5-1-6-8-61"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="75.591461"
+           y="21.593992">✱ Friendship</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="54.435524"
+         y="16.252943"
+         id="text3146-1-4-2-0-9-8-0"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9-6-3-4-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="54.435524"
+           y="16.252943">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="54.435524"
+         y="13.07794"
+         id="text3146-1-4-6-3-3-7-3-1"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4-2-4-1-59"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="54.435524"
+           y="13.07794">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="57.899864"
+         y="26.935057"
+         id="text3146-1-5-0-0-5-4-4"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="26.935057"
+           id="tspan17922-6-6-2-9-9">A many-to-many</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="30.747252"
+           id="tspan28912">relationship between</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="34.559464"
+           id="tspan33178">User and User.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="57.899864"
+         y="40.164185"
+         id="text3146-1-5-6-8-1-5-2-0"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="40.164185"
+           id="tspan14157-3-0-9">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="43.976379"
+           id="tspan31584">-user1: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="47.788589"
+           id="tspan31586">-user2: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="51.600784"
+           id="tspan31588">-status: Status</tspan></text>
+    </g>
+    <g
+       id="g24691"
+       transform="translate(12.872059,-84.666656)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264581;stroke-opacity:1"
+         id="rect31-5-5-4-0-6"
+         width="42.352951"
+         height="34.914268"
+         x="187.51466"
+         y="102.46977"
+         ry="2.9217849"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 187.40112,108.00769 h 42.58014"
+         id="path1324-2-0-7-7-8" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 187.40112,113.29936 h 42.58014"
+         id="path1324-4-2-3-6-8-9" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="206.77954"
+         y="106.26065"
+         id="text3146-7-6-5-6-2"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5-1-6-8-6"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="206.77954"
+           y="106.26065">UserReport</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="187.31306"
+         y="100.91959"
+         id="text3146-1-4-2-0-9-8-6"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9-6-3-4-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="187.31306"
+           y="100.91959">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="187.31306"
+         y="97.744591"
+         id="text3146-1-4-6-3-3-7-3-9"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4-2-4-1-5"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="187.31306"
+           y="97.744591">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="190.7774"
+         y="111.60171"
+         id="text3146-1-5-0-0-5-4-0"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="190.7774"
+           y="111.60171"
+           id="tspan17922-6-6-2-9-4">A report of a User.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="190.7774"
+         y="116.89337"
+         id="text3146-1-5-6-8-1-5-2-8"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="190.7774"
+           y="116.89337"
+           id="tspan14157-3-0-7">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="190.7774"
+           y="120.70557"
+           id="tspan23635">-reportingUser: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="190.7774"
+           y="124.51778"
+           id="tspan23637">-reportedUser: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="190.7774"
+           y="128.32997"
+           id="tspan24281">-moderatorUser: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="190.7774"
+           y="132.14218"
+           id="tspan24283">-reasons: String</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="190.7774"
+           y="135.95438"
+           id="tspan24285">-status: Status</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       d="M 96.726832,35.530654 H 116.60874"
+       id="path33686" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-53)"
+       d="M 143.16891,118.02474 V 81.43331"
+       id="path33686-8"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-50-8)"
+       d="M 87.814571,86.36983 V 69.926489 a 2.6458333,2.6458333 45 0 0 -2.645833,-2.645833 h -22.25397"
+       id="path33686-3-6"
+       sodipodi:nodetypes="ccc"
+       inkscape:path-effect="#path-effect52178"
+       inkscape:original-d="M 87.814571,86.36983 V 67.280656 l -24.899803,0" />
+    <g
+       id="g34187-7"
+       transform="translate(14.213904,68.566715)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         id="rect31-5-5-4-0-7-7"
+         width="41.979687"
+         height="35.445759"
+         x="54.634216"
+         y="17.803114"
+         ry="2.9217846"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 54.521693,23.34103 h 42.20514"
+         id="path1324-2-0-7-7-2-6" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 54.521693,36.57022 h 42.20514"
+         id="path1324-4-2-3-6-8-7-7" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="75.591461"
+         y="21.593992"
+         id="text3146-7-6-5-6-22-3"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5-1-6-8-61-6"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="75.591461"
+           y="21.593992">✱ RoomUser</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="54.435524"
+         y="16.252943"
+         id="text3146-1-4-2-0-9-8-0-5"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9-6-3-4-6-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="54.435524"
+           y="16.252943">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="54.435524"
+         y="13.07794"
+         id="text3146-1-4-6-3-3-7-3-1-3"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4-2-4-1-59-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="54.435524"
+           y="13.07794">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="57.899864"
+         y="26.935057"
+         id="text3146-1-5-0-0-5-4-4-4"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="26.935057"
+           id="tspan17922-6-6-2-9-9-8">A many-to-many</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="30.747259"
+           id="tspan28912-1">relationship between</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="34.55946"
+           id="tspan33178-2">User and Room.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="57.899864"
+         y="40.164185"
+         id="text3146-1-5-6-8-1-5-2-0-9"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="40.164185"
+           id="tspan14157-3-0-9-3">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="43.976387"
+           id="tspan31584-9">-user: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="47.788589"
+           id="tspan31586-0">-room: Room</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="51.600788"
+           id="tspan31588-8">-admin: boolean</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-1)"
+       d="M 200.27317,35.530654 H 180.39126"
+       id="path33686-7" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:start;word-spacing:0px;text-anchor:start;stroke-width:0.264583"
+       x="10.744179"
+       y="168.08804"
+       id="text3146-7-6-5-6-22-1"><tspan
+         sodipodi:role="line"
+         id="tspan3144-5-1-6-8-61-1"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:start;text-anchor:start;stroke-width:0.264583"
+         x="10.744179"
+         y="168.08804">✱ Class<tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+   id="tspan44975">: represents a relationship model. Should not be necessary.</tspan></tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-50-8-1-8)"
+       d="M 91.708937,86.36983 V 69.926489 a 2.6458333,2.6458333 135 0 1 2.645833,-2.645833 h 22.25397"
+       id="path33686-3-6-9"
+       sodipodi:nodetypes="ccc"
+       inkscape:path-effect="#path-effect52178-5-8"
+       inkscape:original-d="M 91.708937,86.36983 V 67.280656 h 24.899803" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-50-8-10)"
+       d="M 194.70772,92.190664 V 75.747323 a 2.6458333,2.6458333 45 0 0 -2.64583,-2.645833 h -11.67063"
+       id="path33686-3-6-4"
+       sodipodi:nodetypes="ccc"
+       inkscape:path-effect="#path-effect52178-0"
+       inkscape:original-d="M 194.70772,92.190664 V 73.10149 l -14.31646,0" />
+    <g
+       id="g34187-7-7"
+       transform="translate(121.10706,74.387549)">
+      <rect
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         id="rect31-5-5-4-0-7-7-6"
+         width="41.979687"
+         height="35.445759"
+         x="54.634216"
+         y="17.803114"
+         ry="2.9217846"
+         rx="2.9217861" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 54.521693,23.34103 h 42.20514"
+         id="path1324-2-0-7-7-2-6-3" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 54.521693,36.57022 h 42.20514"
+         id="path1324-4-2-3-6-8-7-7-1" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
+         x="75.591461"
+         y="21.593992"
+         id="text3146-7-6-5-6-22-3-7"><tspan
+           sodipodi:role="line"
+           id="tspan3144-5-1-6-8-61-6-5"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+           x="75.591461"
+           y="21.593992">✱ MatchPlayer</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="54.435524"
+         y="16.252943"
+         id="text3146-1-4-2-0-9-8-0-5-9"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-9-6-3-4-6-6-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="54.435524"
+           y="16.252943">@Data</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="54.435524"
+         y="13.07794"
+         id="text3146-1-4-6-3-3-7-3-1-3-2"><tspan
+           sodipodi:role="line"
+           id="tspan3144-0-7-1-4-2-4-1-59-9-1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#006100;fill-opacity:1;stroke-width:0.264583"
+           x="54.435524"
+           y="13.07794">@Entity</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="57.899864"
+         y="26.935057"
+         id="text3146-1-5-0-0-5-4-4-4-7"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="26.935057"
+           id="tspan17922-6-6-2-9-9-8-8">A many-to-many</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="30.747259"
+           id="tspan28912-1-5">relationship between</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="34.55946"
+           id="tspan33178-2-7">User and Match.</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.264583"
+         x="57.899864"
+         y="40.164185"
+         id="text3146-1-5-6-8-1-5-2-0-9-4"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="40.164185"
+           id="tspan14157-3-0-9-3-1">-id: long</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="43.976387"
+           id="tspan31584-9-8">-user: User</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="47.788589"
+           id="tspan31586-0-5">-match: Match</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="57.899864"
+           y="51.600788"
+           id="tspan31588-8-9">-position: int</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-50-8-1-8-4)"
+       d="M 198.60209,92.190664 V 75.747323 a 2.6458333,2.6458333 135 0 1 2.64583,-2.645833 h 20.34034"
+       id="path33686-3-6-9-7"
+       sodipodi:nodetypes="ccc"
+       inkscape:path-effect="#path-effect52178-5-8-4"
+       inkscape:original-d="M 198.60209,92.190664 V 73.10149 l 22.98617,0" />
+  </g>
+</svg>

@@ -199,11 +199,16 @@ La pantalla de rankings mostrará un top con los 100 mejores jugadores del juego
 <p align="center">
     <img alt="Diagrama pseudo-UML de clases de Spring Boot" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/spring-classes-pseudo-uml.png?raw=true">
 </p>
-<p align="center"><sup>Diagrama pseudo-UML de clases de Spring Boot</sup></p>
+<p align="center"><sup>Diagrama pseudo-UML de clases de Java de Spring Boot</sup></p>
 
 Este diagrama muestra, de forma resumida y con un formato parecido a UML, la funcionalidad de las clases de configuración y arranque de Spring Boot utilizadas en el proyecto.
 
 ### Clases de Java de modelos del dominio
+
+<p align="center">
+    <img alt="Diagrama pseudo-UML de clases de Spring Boot" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/domain-classes-pseudo-uml.png?raw=true">
+</p>
+<p align="center"><sup>Diagrama pseudo-UML de clases de Java del dominio</sup></p>
 
 > ⚠️ Sección pendiente de actualización
 
