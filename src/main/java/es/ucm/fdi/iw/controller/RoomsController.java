@@ -264,15 +264,8 @@ public class RoomsController {
         throws JsonProcessingException {
 
         Room room = entityManager.find(Room.class, roomId);
-
-        List<User> players = new ArrayList<>();
-        
+       
         ArrayNode matchPlayers = (ArrayNode) o.get("message");
-
-        for(JsonNode j: matchPlayers){
-            User u = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", j.textValue()).getSingleResult();
-            players.add(u);
-        }
 
         Match match = new Match();
 
@@ -286,10 +279,11 @@ public class RoomsController {
         entityManager.persist(match);
         entityManager.flush();
 
-        for(User p: players){
+        for(JsonNode j: matchPlayers){
+            User u = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", j.textValue()).getSingleResult();
             MatchPlayer matchPlayer = new MatchPlayer();
             matchPlayer.setMatch(match);
-            matchPlayer.setPlayer(p);
+            matchPlayer.setPlayer(u);
             entityManager.persist(matchPlayer);
             entityManager.flush();
         }

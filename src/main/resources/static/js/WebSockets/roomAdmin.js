@@ -74,13 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let startMatchButton = document.getElementById('startMatchButton');
 
     startMatchButton.onclick = (e) => {
-
-        const messageHaveYouAcceptInvitation = {
-            type: "playersNames",
-            message: gamePlayersNames
-        }
-
-        ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageHaveYouAcceptInvitation));
    
         e.preventDefault();
         go(startMatchButton.parentNode.action, 'POST', {

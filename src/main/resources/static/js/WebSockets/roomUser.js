@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let toast = new bootstrap.Toast(toastHTML);
         toast.show(); 
+
+        imMatchPlayer = true;
     }
     
 
@@ -98,12 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let toast = new bootstrap.Toast(toastHTML);
             toast.show();                  
         }
-    
-        if(text.type=="playersNames"){
-            if(text.message.indexOf(USERSESSIONAME)!=-1){
-                imMatchPlayer = true;
-            }
-        }
+
         if(text.type=="goToMatch"){   
             if(imMatchPlayer){
                 window.location.replace("/rooms/get_match/" + text.message + "/" + ROOM);
