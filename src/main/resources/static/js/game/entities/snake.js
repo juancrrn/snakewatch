@@ -47,7 +47,8 @@ export default class Snake {
 
         // Grow if te snake can eat
         if (this.canEat(dest) || this.parts.length < this.initSize) {
-          let tail = new SnakePart(this, tailPos);
+          let tail = new SnakePart(this, tailPos, 3);
+          if (this.parts.length > 1) this.parts.at(-1).setFrame(1);
           if (this.snakesGroup !== null) this.snakesGroup.add(tail);
           this.parts.push(tail);
         } else {
@@ -127,7 +128,8 @@ export default class Snake {
    * @returns The new position for the snake
    */
   nextPos(dir = this.dir) {
-    let pos = { x: this.head.pos.x, y: this.head.pos.y, dir: dir };
+    let turn = this.dir === this.lastDir ? false : true;
+    let pos = { x: this.head.pos.x, y: this.head.pos.y, dir: dir, turn: turn };
     switch (dir) {
       case 0:
         pos.y--;
