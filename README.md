@@ -212,7 +212,10 @@ Este diagrama muestra, de forma resumida y con un formato parecido a UML, la fun
 
 ### Clases de Java de controladores y lógica
 
-> ⚠️ Sección pendiente de actualización
+<p align="center">
+    <img alt="Diagrama pseudo-UML de clases de Java de controladores y lógica" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/controller-classes-pseudo-uml.png?raw=true">
+</p>
+<p align="center"><sup>Diagrama pseudo-UML de clases de Java de controladores y lógica</sup></p>
 
 Se ha seguido la plantilla de la asignatura en cuanto a implementar la lógica de servicios dentro de los controladores.
 
