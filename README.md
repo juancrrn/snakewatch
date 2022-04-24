@@ -18,10 +18,10 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
     - [Funcionalidad de clasificaciones o _rankings_](#funcionalidad-de-clasificaciones-o-rankings)
     - [Funcionalidad de base de juego](#funcionalidad-de-base-de-juego)
     - [Funcionalidad de multijugador en juego](#funcionalidad-de-multijugador-en-juego)
+    - [Funcionalidad de salas o _rooms_ de juego](#funcionalidad-de-salas-o-rooms-de-juego)
     - [Funcionalidad de reporte de usuarios](#funcionalidad-de-reporte-de-usuarios)
     - [Funcionalidad de niveles de juego](#funcionalidad-de-niveles-de-juego)
     - [Funcionalidad de skins de juego](#funcionalidad-de-skins-de-juego)
-    - [Funcionalidad de salas de juego privadas](#funcionalidad-de-salas-de-juego-privadas)
   - [Vistas](#vistas)
     - [Lobby](#lobby)
     - [Perfil de usuario](#perfil-de-usuario)
@@ -71,7 +71,7 @@ Se pueden obtener más detalles en la [página de Wikipedia de la serpiente](htt
 > Estado: ✅ funcionalidad implementada
 > 
 > ☕ Clases Java relacionadas: `User`, `SecurityConfig`, `LoginSuccessHandler`, `IwUserDetailsService`  
-> 📄 Ficheros JavaScript relacionados:
+> 📄 Ficheros JavaScript relacionados: (...)
 
 A partir de la base proporcionada para la asignatura, se ha construido la funcionalidad de gestión de acceso, usuarios y roles.
 
@@ -88,61 +88,81 @@ A partir de la base proporcionada para la asignatura, se ha construido la funcio
 - **Administrador**:
   - Tienen la capacidad de gestionar la plataforma, ver reportes y, especialmente, de actuar ante reportes de usuarios.
 
+> 📝 Pendiente (TODO): crear página de registro.
+
+> 📝 Pendiente (TODO): mostrar mensajes de error en los formularios de inicio de sesión y registro.
+
 ### Funcionalidad de amistad entre usuarios
 
 > Estado: ✅ funcionalidad implementada
 > 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
 
 ### Funcionalidad de clasificaciones o _rankings_
 
 > Estado: ✅ funcionalidad implementada
 > 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
 
 ### Funcionalidad de base de juego
 
 > Estado: ✅ funcionalidad implementada
 > 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
 
 ### Funcionalidad de multijugador en juego
 
 > Estado: 🚧 funcionalidad en proceso de implementación
 > 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
+
+### Funcionalidad de salas o _rooms_ de juego
+
+> Estado: 🚧 funcionalidad en proceso de implementación
+> 
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
+
+> 📝 Pendiente (TODO): crear nuevas salas.
+
+> 📝 Pendiente (TODO): permitir al administrador de la sala comenzar una nueva partida.
+
+> 📝 Pendiente (TODO): implementar estado de "espera" para las salas, anterior al juego en sí.
+
+> 📝 Pendiente (TODO): lógica de salas privadas.
 
 ### Funcionalidad de reporte de usuarios
 
 > Estado: 📅 funcionalidad planificada
 > 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
 
 ### Funcionalidad de niveles de juego
 
 > Estado: 📅 funcionalidad planificada
 > 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
+
+> 📝 Pendiente (TODO): añadir muros al juego.
+
+> 📝 Pendiente (TODO): cargar el nivel correspondiente desde la pestaña de niveles.
+
+> 📝 Pendiente (TODO): crear niveles por defecto.
+
+> 📝 Pendiente (TODO): permitir al admin subir nuevos niveles como ficheros JSON.
 
 ### Funcionalidad de skins de juego
 
 > Estado: 📅 funcionalidad planificada
 > 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
-
-### Funcionalidad de salas de juego privadas
-
-> Estado: 📅 funcionalidad planificada
-> 
-> ☕ Clases Java relacionadas:   
-> 📄 Ficheros JavaScript relacionados:
+> ☕ Clases Java relacionadas: (...)  
+> 📄 Ficheros JavaScript relacionados: (...)
 
 ## Vistas
 
