@@ -12,17 +12,18 @@ export default class Snake {
     this.initSize = initSize;
     this.dead = false;
 
+    this.dir = Math.floor(Math.random() * 4);
+    this.lastDir;
+    pos.dir = this.dir;
+
     this.parts = [];
-    this.head = new SnakePart(this, pos);
+    this.head = new SnakePart(this, pos, 0);
     this.parts.push(this.head);
     if (this.snakesGroup !== null) this.snakesGroup.addMultiple(this.parts);
     this.scene.physics.add.overlap(this.head, this.snakesGroup, this.onCollision, null, this);
     this.scene.physics.add.collider(this.head, this.scene.wallsLayer);
 
     this.scene.setCellState(pos, false);
-
-    this.dir = Math.floor(Math.random() * 4);
-    this.lastDir;
   }
 
   chooseNextMove() {}
@@ -46,7 +47,7 @@ export default class Snake {
 
         // Grow if te snake can eat
         if (this.canEat(dest) || this.parts.length < this.initSize) {
-          let tail = new SnakePart(this, tailPos, true);
+          let tail = new SnakePart(this, tailPos);
           if (this.snakesGroup !== null) this.snakesGroup.add(tail);
           this.parts.push(tail);
         } else {
@@ -126,7 +127,7 @@ export default class Snake {
    * @returns The new position for the snake
    */
   nextPos(dir = this.dir) {
-    let pos = { x: this.head.pos.x, y: this.head.pos.y };
+    let pos = { x: this.head.pos.x, y: this.head.pos.y, dir: dir };
     switch (dir) {
       case 0:
         pos.y--;
