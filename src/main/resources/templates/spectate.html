@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Rooms — Snakewatch</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <main class="flex-shrink-0">
+        
+        <div class="container">
+            <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow">Ongoing Matches</h1>           
+            <div id = "matchcontainer" class="row justify-content-center">
+                <!--<div th:if="${onGoingMatches.size != 0}" class="card col-12 my-3 px-0 shadow" th:each="m : ${onGoingMatches}">
+                    <div class="card-header bg-info bg-gradient bg-opacity-75">
+                        <h2 class="text-center text-white fst-italic" th:text="'Match ' + ${m.id}"></h2>
+                    </div>
+                    <div class="card-body bg-secondary bg-gradient bg-opacity-10">
+                        <p class="card-text text-center fs-4 text-danger" th:text="' Room ' + ${m.room.id}"></p> 
+                        <form class="card-text text-center" th:action="@{/rooms/get_match/__${m.id}__/__${m.room.id}__}" method="GET">
+                            <button class="w-50 btn btn-outline-info fs-5" type="submit">Spectate</button> 
+                        </form>
+                    </div>
+                </div>-->
+                <div id = "divemptymatches">
+                    <h2  class="text-center text-black fst-italic"> No ongoing matches </h2>
+                </div>
+                
+                <div id="matchdiv" style="display:none;" class="card col-12 my-3 px-0 shadow">
+                    <div class="card-header bg-info bg-gradient bg-opacity-75">
+                        <h2 id = "matchdivtitle" class="text-center text-white fst-italic"></h2>
+                    </div>
+                    <div class="card-body bg-secondary bg-gradient bg-opacity-10">
+                        <p  id = "matchdivroom" class="card-text text-center fs-4 text-danger"></p> 
+                        <form  id="spectatematch" class="card-text text-center">
+                            <button  class="w-50 btn btn-outline-info fs-5" type="submit">Spectate</button> 
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script th:src="@{/js/WebSockets/spectate.js}"></script>
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>

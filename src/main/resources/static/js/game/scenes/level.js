@@ -74,6 +74,9 @@ export default class Level extends Phaser.Scene {
 
     // Broadcast initial game state
     this.broadcastState();
+    go("/rooms/start_match/" + MATCH, 'POST', {})
+    .then(d => e => console.log("happy", e))
+    .catch(e => console.log("sad", e))
   }
 
   /**

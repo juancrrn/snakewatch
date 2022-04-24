@@ -225,7 +225,7 @@ public class RoomsController {
     }
 
     @GetMapping("/get_match/{matchId}/{roomId}")
-    public String goToMatch(@PathVariable long matchId, @PathVariable long roomId, Model model) {
+    public String getMatch(@PathVariable long matchId, @PathVariable long roomId, Model model) {
 
         Match match = entityManager.find(Match.class, matchId);
         Room room = entityManager.find(Room.class, roomId);
@@ -261,7 +261,7 @@ public class RoomsController {
     @ResponseBody
     @MessageMapping
     @Transactional
-    public String getMatch(@PathVariable long roomId, @RequestBody JsonNode o , Model model) 
+    public String createMatch(@PathVariable long roomId, @RequestBody JsonNode o , Model model) 
         throws JsonProcessingException {
 
         Room room = entityManager.find(Room.class, roomId);
@@ -300,6 +300,17 @@ public class RoomsController {
 
     
         return "{\"result\": \"match created.\"}";
+    }
+
+    @PostMapping("start_match/{matchId}")
+    @ResponseBody
+    @Transactional
+    public String startMatch(@PathVariable long matchId, Model model){
+        Match match = entityManager.find(Match.class, matchId);
+        match.setStatus(Status.ONGOING);
+        entityManager.persist(match);
+        entityManager.flush();
+        return "{\"result\": \"match started.\"}";
     }
 
 }

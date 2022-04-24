@@ -38,6 +38,11 @@ import lombok.NoArgsConstructor;
     query = "SELECT m FROM Match m JOIN Room r ON r.id=m.room.id "
           + "WHERE r.id= :roomId ORDER BY m.date DESC"
 )
+@NamedQuery(
+    name = "Match.getOngoingMatches",
+    query = "SELECT m FROM Match m "
+          + "WHERE m.status = :status"
+)
 public class Match implements Serializable {
 
     /**
