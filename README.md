@@ -206,11 +206,9 @@ Este diagrama muestra, de forma resumida y con un formato parecido a UML, la fun
 ### Clases de Java de modelos del dominio
 
 <p align="center">
-    <img alt="Diagrama pseudo-UML de clases de Spring Boot" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/domain-classes-pseudo-uml.png?raw=true">
+    <img alt="Diagrama pseudo-UML de clases de Java del dominio" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/domain-classes-pseudo-uml.png?raw=true">
 </p>
 <p align="center"><sup>Diagrama pseudo-UML de clases de Java del dominio</sup></p>
-
-> ⚠️ Sección pendiente de actualización
 
 ### Clases de Java de controladores y lógica
 
