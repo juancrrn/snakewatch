@@ -33,7 +33,7 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
     - [Clases de Java de Spring Boot](#clases-de-java-de-spring-boot)
     - [Clases de Java de modelos del dominio](#clases-de-java-de-modelos-del-dominio)
     - [Clases de Java de controladores y lógica](#clases-de-java-de-controladores-y-lógica)
-    - [Lógica de juego en el cliente en JavaScript](#lógica-de-juego-en-el-cliente-en-javascript)
+    - [Lógica de JavaScript en el cliente](#lógica-de-javascript-en-el-cliente)
   - [Desarrollo](#desarrollo)
     - [Dependencias del proyecto de Java](#dependencias-del-proyecto-de-java)
     - [Herramientas](#herramientas)
@@ -219,9 +219,12 @@ Este diagrama muestra, de forma resumida y con un formato parecido a UML, la fun
 
 Se ha seguido la plantilla de la asignatura en cuanto a implementar la lógica de servicios dentro de los controladores.
 
-### Lógica de juego en el cliente en JavaScript
+### Lógica de JavaScript en el cliente
 
-> ⚠️ Sección pendiente de actualización
+<p align="center">
+    <img alt="Diagrama pseudo-UML de la lógica de JavaScript en el cliente" src="https://github.com/juancrrn/snakewatch/blob/main/doc/img/javascript-logic-pseudo-uml.png?raw=true">
+</p>
+<p align="center"><sup>Diagrama pseudo-UML de la lógica de JavaScript en el cliente</sup></p>
 
 ## Desarrollo
 
