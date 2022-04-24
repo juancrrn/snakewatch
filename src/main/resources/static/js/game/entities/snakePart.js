@@ -36,7 +36,7 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
         oldPos.turn = true;
         oldPos.dir = pos.dir;
       }
-    } else if (this !== this.snake.parts.at(-1)) {
+    } else if (this !== this.snake.parts.at(-1) || this.snake.parts.length !== this.snake.size) {
       this.setFrame(pos.turn ? 2 : 1);
       if ((pos.dir + 1) % 4 === oldPos.dir) this.setAngle(this.angle - 90);
     }

@@ -5,11 +5,11 @@ import SnakePart from './snakePart.js';
  */
 export default class Snake {
 
-  constructor(scene, snakesGroup, pos, initSize, skin) {
+  constructor(scene, snakesGroup, pos, size, skin) {
     this.scene = scene;
     this.snakesGroup = snakesGroup;
     this.skin = skin;
-    this.initSize = initSize;
+    this.size = size;
     this.dead = false;
 
     this.dir = Math.floor(Math.random() * 4);
@@ -42,13 +42,15 @@ export default class Snake {
         this.die();
 
       } else {
+        // Try to eat
+        if (this.canEat(dest)) this.size++;
+
         // Advance part positions
         let tailPos = this.move(dest);
 
-        // Grow if te snake can eat
-        if (this.canEat(dest) || this.parts.length < this.initSize) {
+        // Grow if should
+        if (this.parts.length < this.size) {
           let tail = new SnakePart(this, tailPos, 3);
-          if (this.parts.length > 1) this.parts.at(-1).setFrame(1);
           if (this.snakesGroup !== null) this.snakesGroup.add(tail);
           this.parts.push(tail);
         } else {
@@ -117,7 +119,7 @@ export default class Snake {
    * @returns If there is food to be eaten at that location
    */
   canEat(pos) {
-    return this.scene.food.canEat(pos);
+    if (this.scene.food.canEat(pos)) this.size++;
   }
 
   /**
