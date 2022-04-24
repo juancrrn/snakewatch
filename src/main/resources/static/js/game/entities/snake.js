@@ -10,6 +10,7 @@ export default class Snake {
     this.snakesGroup = snakesGroup;
     this.skin = skin;
     this.initSize = initSize;
+    this.dead = false;
 
     this.parts = [];
     this.head = new SnakePart(this, pos);
@@ -97,6 +98,7 @@ export default class Snake {
   die(why) {
     let headPos = this.head.pos;
     this.parts.forEach((part) => part.die(), this);
+    this.parts = [];
     this.dead = true;
 
     if (why instanceof Snake) {
@@ -161,20 +163,29 @@ export default class Snake {
     return pos;
   }
 
-  exportJson(){
+  /**
+   * Creates a JSON object representing the current state
+   * @returns JSON object containing current state
+   */
+  toJSON() {
     return {
-      parts: this.parts.map(p => p.exportJson())
+      parts: this.parts.map(p => p.toJSON()),
+      dead: this.dead,
+      skin: this.skin
     };
   }
 
-  importFromJson(json) {
-    var tempPartsArray = json.parts;
-    for (let idx = 0; idx < this.parts.length; idx++) {
-      this.parts[idx].importFromJson(tempPartsArray[idx]);
-    }
-    for (let indx = this.parts.length; indx < tempPartsArray.length; indx++) {
-      this.parts.push(new SnakePart(this, { x: this.head.pos.x, y: this.head.pos.y }));
-      this.parts[indx].importFromJson(tempPartsArray[indx]);
+  /**
+   * Updates current state from the given JSON representation
+   */
+  fromJSON(json) {
+    if (!json.dead) {
+      while (this.parts < json.parts) this.parts.push(new SnakePart(this, { x: 0, y: 0 }));
+      for (let idx = 0; idx < this.parts.length; idx++) {
+        this.parts[idx].fromJSON(json.parts[idx]);
+      }
+    } else if (!this.dead) {
+      this.die();
     }
   }
 }

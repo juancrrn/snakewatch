@@ -27,14 +27,20 @@ export default class SnakePart extends Phaser.GameObjects.Sprite {
     return oldPos;
   }
 
-  exportJson() {
-    return {x: this.pos.x, y: this.pos.y};
+  /**
+   * Creates a JSON object representing the current state
+   * @returns JSON object containing current state
+   */
+  toJSON() {
+    return { x: this.pos.x, y: this.pos.y };
   }
 
-  importFromJson(json){
+  /**
+   * Updates current state from the given JSON representation
+   */
+  fromJSON(json) {
     this.pos.x = json.x;
     this.pos.y = json.y;
     this.setPosition(this.pos.x * 20 + 10, this.pos.y * 20 + 10);
   }
-
 }

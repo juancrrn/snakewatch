@@ -1,7 +1,5 @@
-import BotSnake from '../entities/botSnake.js';
 import Food from '../entities/food.js';
-import PlayerSnake from '../entities/playerSnake.js';
-import SnakePart from '../entities/snakePart.js';
+import Snake from '../entities/snake.js';
 
 /**
  * Scene that represents the current match and level
@@ -30,47 +28,34 @@ export default class Spectator extends Phaser.Scene {
     this.wallsLayer = this.map.createLayer('walls', tileset);
 
     // Create food
-    this.food = new Food(this, { x: 6, y: 6 });
+    this.food = new Food(this, { x: 0, y: 0 });
 
-    this.snakesGroup = null;
-    // Create player
-    this.player = new PlayerSnake(this, this.snakesGroup, { x: 4, y: 2 }, 'white');
-    
-    // Create bots
-    this.bots = [];
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 7, y: 6 }, 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 12, y: 14 }, 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 14, y: 2 }, 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, { x: 3, y: 19 }, 'red'));
+    // Snakes
+    this.snakes = new Map();
 
-    // Cursors
-    this.cursors = this.input.keyboard.createCursorKeys();
-
-    // TODO: en vez de cambiar nueva direccion, pasarla por websocket al propietario
-    this.cursors.up.on('down', () => this.player.setDir(0), this);
-    this.cursors.right.on('down', () => this.player.setDir(1), this);
-    this.cursors.down.on('down', () => this.player.setDir(2), this);
-    this.cursors.left.on('down', () => this.player.setDir(3), this);
     ws.receive = (text) => {
-      if(text.type=="GameState"){
-        this.importFromJson(text.message);
-      }
+      if (text.type=="GameState") this.fromJSON(text.message);
     }
   }
 
-  exportToJson() {
-    return {
-      food: this.food.exportJson(),
-      snakes: this.bots.map(b => b.exportJson()),
-      player: this.player.exportJson()
-    };
-  }
+  setCellState() {}
 
-  importFromJson(json) {
-    
-    this.food.importFromJson(json.food);
-    //this.bots.map(b => b.importFromJson(this.json.snakes));
-    this.player.importFromJson(json.player);
-    //this.json.snakes.map(s => s.importFromJson());
+  /**
+   * Updates current state from the given JSON representation
+   */
+  fromJSON(json) {
+    if (this.time !== json.time) {
+      this.time = json.time;
+      this.snakes.forEach((s) => s.die());
+      this.snakes = new Map();
+    }
+    for (const key in json.snakes) {
+      let snake = json.snakes[key];
+      if (!this.snakes.has(key)) {
+        this.snakes.set(key, new Snake(this, null, { x: 0, y: 0}, 0, snake.skin));
+      }
+      this.snakes.get(key).fromJSON(snake);
+    }
+    this.food.fromJSON(json.food);
   }
 }

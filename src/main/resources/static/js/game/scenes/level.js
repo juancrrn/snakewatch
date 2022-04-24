@@ -37,14 +37,15 @@ export default class Level extends Phaser.Scene {
 
     this.snakesGroup = this.physics.add.group();
     // Create player
+    this.snakes = new Map();
     this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white');
+    this.snakes.set('player', this.player);
     
     // Create bots
-    this.bots = [];
-    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
-    this.bots.push(new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.snakes.set('b1', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.snakes.set('b2', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.snakes.set('b3', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.snakes.set('b4', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
 
     // Create food
     this.food = new Food(this, this.getEmptyCell());
@@ -72,6 +73,11 @@ export default class Level extends Phaser.Scene {
     // Let some logic be delayed
     this.ticked = false;
     this.events.on('update', () => this.postTick(), this);
+
+    this.time = Date.now();
+
+    // Broadcast initial game state
+    this.broadcastState();
   }
 
   /**
@@ -92,8 +98,7 @@ export default class Level extends Phaser.Scene {
    * Calls the tick processing method of all the snakes
    */
   processTick() {
-    this.bots.forEach(bot => bot.processTick());
-    this.player.processTick();
+    this.snakes.forEach(snake => snake.processTick());
 
     this.food.processTick();
     this.ticked = true;
@@ -103,16 +108,18 @@ export default class Level extends Phaser.Scene {
     if (this.ticked) {
       this.ticked = false;
 
-      this.bots.forEach(bot => bot.handleDeath());
-      this.player.handleDeath();
+      this.snakes.forEach(snake => snake.handleDeath());
 
-      const messageGameState = {
-        type: "GameState",
-        message: this.exportToJson()
-      }
-
-      ws.stompClient.send("/topic/match" + MATCH, ws.headers, JSON.stringify(messageGameState));
+      this.broadcastState();
     }
+  }
+
+  /**
+   * Shares current gamestate over websocket
+   */
+  broadcastState() {
+    const body = JSON.stringify({type: "GameState", message: this.toJSON()});
+    ws.stompClient.send("/topic/match" + MATCH, ws.headers, body);
   }
 
   /**
@@ -165,11 +172,13 @@ export default class Level extends Phaser.Scene {
     }
   }
 
-  exportToJson(){
-    return {
-      food: this.food.exportJson(),
-      snakes: this.bots.map(b => b.exportJson()),
-      player: this.player.exportJson()
-    };
+  /**
+   * Creates a JSON object representing the current state
+   * @returns JSON object containing current state
+   */
+  toJSON() {
+    let snakes = {};
+    this.snakes.forEach((v, k) => snakes[k] = v.toJSON());
+    return { food: this.food.toJSON(), snakes: snakes, time: this.time };
   }
 }
