@@ -35,17 +35,17 @@ export default class Level extends Phaser.Scene {
     // Mark walls as occupied cells
     this.map.forEachTile((wall) => this.cells.delete(wall.x + wall.y * 25), this, 0, 0, 25, 25, { isNotEmpty: true })
 
+    // Create players
     this.snakesGroup = this.physics.add.group();
-    // Create player
     this.snakes = new Map();
+
     this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white');
-    this.snakes.set('player', this.player);
-    
-    // Create bots
-    this.snakes.set('b1', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
-    this.snakes.set('b2', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
-    this.snakes.set('b3', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
-    this.snakes.set('b4', new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+    this.snakes.set(USERSESSIONAME, this.player);
+    PLAYERS.forEach((p) => {
+      if (p !== USERSESSIONAME) {
+        this.snakes.set(p, new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+      }
+    });
 
     // Create food
     this.food = new Food(this, this.getEmptyCell());
