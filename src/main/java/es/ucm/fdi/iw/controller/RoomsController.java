@@ -232,6 +232,7 @@ public class RoomsController {
 
         model.addAttribute("room", room);
         model.addAttribute("match", match);
+        model.addAttribute("level", "demo");
 
         List<String> players = new ArrayList<>();
         for(MatchPlayer mp: match.getMatchPlayers()){

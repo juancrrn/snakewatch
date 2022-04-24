@@ -11,7 +11,7 @@ export default class Boot extends Phaser.Scene {
    * Preload game assets
    */
   preload() {
-    this.load.tilemapTiledJSON('tilemap', '/maps/demo.json');
+    this.load.tilemapTiledJSON('tilemap', '/maps/' + LEVEL + '.json');
     this.load.image('tileset', '/img/snake_tileset.png');
 
     this.load.spritesheet('red', '/img/red.png', { frameWidth: 20 });

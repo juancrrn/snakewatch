@@ -13,10 +13,6 @@ export default class Level extends Phaser.Scene {
     super({ key: 'level' });
   }
 
-  preload() {
-    // TODO: load the tilemap of the level selected for this match
-  }
-
   create() {
     // Loads the map
     this.map = this.make.tilemap({
