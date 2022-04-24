@@ -27,7 +27,17 @@ export default class BotSnake extends Snake {
 
         // If the snake would crash, return to current direction
         if (this.scene.isOccupied(dest)) {
-          newDir = this.dir;
+          // If is the first move, try the remaining direction first
+          if (this.lastDir === undefined) {
+            newDir = (this.dir + 2) % 4;
+            dest = this.nextPos(newDir);
+            if (this.scene.isOccupied(dest)) {
+              newDir = this.dir;
+            }
+
+          } else {
+            newDir = this.dir;
+          }
         }
       }
 
