@@ -16,11 +16,12 @@ El proyecto está desarrollado dentro de la asignatura de Ingeniería Web del Gr
     - [Funcionalidad de gestión de acceso, usuarios y roles](#funcionalidad-de-gestión-de-acceso-usuarios-y-roles)
     - [Funcionalidad de amistad entre usuarios](#funcionalidad-de-amistad-entre-usuarios)
     - [Funcionalidad de clasificaciones o _rankings_](#funcionalidad-de-clasificaciones-o-rankings)
-    - [Funcionalidad de reporte de usuarios](#funcionalidad-de-reporte-de-usuarios)
     - [Funcionalidad de base de juego](#funcionalidad-de-base-de-juego)
+    - [Funcionalidad de reporte de usuarios](#funcionalidad-de-reporte-de-usuarios)
     - [Funcionalidad de niveles de juego](#funcionalidad-de-niveles-de-juego)
     - [Funcionalidad de multijugador en juego](#funcionalidad-de-multijugador-en-juego)
     - [Funcionalidad de skins de juego](#funcionalidad-de-skins-de-juego)
+    - [Funcionalidad de salas de juego privadas](#funcionalidad-de-salas-de-juego-privadas)
   - [Vistas](#vistas)
     - [Lobby](#lobby)
     - [Perfil de usuario](#perfil-de-usuario)
@@ -100,16 +101,16 @@ A partir de la base proporcionada para la asignatura, se ha construido la funcio
 > ☕ Clases Java relacionadas:   
 > 📄 Ficheros JavaScript relacionados:
 
-### Funcionalidad de reporte de usuarios
+### Funcionalidad de base de juego
 
 > Estado: ✅ funcionalidad implementada
 > 
 > ☕ Clases Java relacionadas:   
 > 📄 Ficheros JavaScript relacionados:
 
-### Funcionalidad de base de juego
+### Funcionalidad de reporte de usuarios
 
-> Estado: ✅ funcionalidad implementada
+> Estado: 🚧 funcionalidad en proceso de implementación
 > 
 > ☕ Clases Java relacionadas:   
 > 📄 Ficheros JavaScript relacionados:
@@ -129,6 +130,13 @@ A partir de la base proporcionada para la asignatura, se ha construido la funcio
 > 📄 Ficheros JavaScript relacionados:
 
 ### Funcionalidad de skins de juego
+
+> Estado: 📅 funcionalidad planificada
+> 
+> ☕ Clases Java relacionadas:   
+> 📄 Ficheros JavaScript relacionados:
+
+### Funcionalidad de salas de juego privadas
 
 > Estado: 📅 funcionalidad planificada
 > 
