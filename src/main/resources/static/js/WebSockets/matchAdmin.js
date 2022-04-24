@@ -2,19 +2,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    let playersNames = [USERSESSIONAME];
-    
-
-    function init(){
-      
+    function init(){ 
         ws.subscribe("/topic/match" + MATCH); 
-
-        const messageStartMatch = {
-            type: "startMatch",
-            message: CLIENTURL
-        }
-
-        ws.stompClient.send("/topic/room" + ROOM,ws.headers, JSON.stringify(messageStartMatch));
     }
 
 

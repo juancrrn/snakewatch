@@ -15,9 +15,10 @@
     </main>
 
 
-
     <script id="matchConstJs" th:inline="javascript">
       const SCRIPTURL = [[@{/js/game/game.js}]];
+      const PLAYERS = [[${players}]];
+      const NPLAYERS = [[${match.matchPlayers.size}]];
       const ROOM = [[${room.id}]] 
       const ADMIN = [[${admin}]];
       const MATCH = [[${match.id}]];

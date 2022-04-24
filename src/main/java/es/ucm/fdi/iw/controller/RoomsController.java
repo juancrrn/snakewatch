@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchPlayer;
@@ -220,7 +224,7 @@ public class RoomsController {
         return "redirect:/rooms";
     }
 
-    @GetMapping("/go_to_match/{matchId}/{roomId}")
+    @GetMapping("/get_match/{matchId}/{roomId}")
     public String goToMatch(@PathVariable long matchId, @PathVariable long roomId, Model model) {
 
         Match match = entityManager.find(Match.class, matchId);
@@ -228,37 +232,79 @@ public class RoomsController {
 
         model.addAttribute("room", room);
         model.addAttribute("match", match);
-        model.addAttribute("admin", false);
 
-        return getMatch(roomId, model);
-    }
+        List<String> players = new ArrayList<>();
+        for(MatchPlayer mp: match.getMatchPlayers()){
+            players.add(mp.getPlayer().getUsername());
 
-    @GetMapping("/get_match/{roomId}")
-    @Transactional
-    public String getMatch(@PathVariable long roomId, Model model) {
+        }
 
-        Room room = entityManager.find(Room.class, roomId);
+        model.addAttribute("players", players);
 
         Long sessionUserId = ((User) session.getAttribute("u")).getId();
 
-        for (int i = 0; i < room.getRoomUsers().size(); i++) {
-            if (room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId() == sessionUserId) {
-                Match match = new Match();
 
-                match.setRoom(room);
-                match.setDate(LocalDate.now());
-                match.setStatus(Status.WAITING);
-
-                model.addAttribute("room", room);
-                model.addAttribute("match", match);
+        for(RoomUser ru : room.getRoomUsers()){
+            if(ru.isAdmin() && ru.getUser().getId()==sessionUserId && players.indexOf(ru.getUser().getUsername())!=-1){
                 model.addAttribute("admin", true);
-
-                entityManager.persist(match);
-                entityManager.flush();
+                return "game";
             }
         }
 
+        model.addAttribute("admin", false);
+
         return "game";
+    }
+
+    @PostMapping("/create_match/{roomId}")
+    @ResponseBody
+    @MessageMapping
+    @Transactional
+    public String getMatch(@PathVariable long roomId, @RequestBody JsonNode o , Model model) 
+        throws JsonProcessingException {
+
+        Room room = entityManager.find(Room.class, roomId);
+
+        List<User> players = new ArrayList<>();
+        
+        ArrayNode matchPlayers = (ArrayNode) o.get("message");
+
+        for(JsonNode j: matchPlayers){
+            User u = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", j.textValue()).getSingleResult();
+            players.add(u);
+        }
+
+        Match match = new Match();
+
+        match.setRoom(room);
+        match.setDate(LocalDate.now());
+        match.setStatus(Status.WAITING);
+        
+        model.addAttribute("room", room);
+        model.addAttribute("match", match);
+
+        entityManager.persist(match);
+        entityManager.flush();
+
+        for(User p: players){
+            MatchPlayer matchPlayer = new MatchPlayer();
+            matchPlayer.setMatch(match);
+            matchPlayer.setPlayer(p);
+            entityManager.persist(matchPlayer);
+            entityManager.flush();
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
+
+        rootNode.put("type", "goToMatch");
+        rootNode.put("message", match.getId());
+        String json = mapper.writeValueAsString(rootNode);
+
+        messagingTemplate.convertAndSend("/topic/room" + roomId, json);
+
+    
+        return "{\"result\": \"match created.\"}";
     }
 
 }

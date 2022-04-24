@@ -73,13 +73,22 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let startMatchButton = document.getElementById('startMatchButton');
 
-    startMatchButton.onclick = () => {
+    startMatchButton.onclick = (e) => {
+
         const messageHaveYouAcceptInvitation = {
             type: "playersNames",
             message: gamePlayersNames
         }
 
         ws.stompClient.send(ROOMURL, ws.headers, JSON.stringify(messageHaveYouAcceptInvitation));
+   
+        e.preventDefault();
+        go(startMatchButton.parentNode.action, 'POST', {
+            message: gamePlayersNames
+        })
+        .then(d => e => console.log("sad", e))
+        .catch(e => console.log("sad", e))
+
     }
 
     function showToast(text){
@@ -122,7 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 playersReady.innerHTML += "<li class='list-group-item text-primary p-0 border-0 fs-5 bg-transparent'>" + text.message + "</li>";
                 numberOfPlayersReady.innerHTML = gamePlayersNames.length + "/" +  MAXROOMPLAYERS   + " Players Ready";
             }
+        }
 
+        if(text.type=="goToMatch"){   
+            window.location.replace("/rooms/get_match/" + text.message + "/" + ROOM);    
         }
       
     }

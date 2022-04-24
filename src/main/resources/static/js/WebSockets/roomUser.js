@@ -104,10 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 imMatchPlayer = true;
             }
         }
-    
-        if(text.type=="startMatch"){   
+        if(text.type=="goToMatch"){   
             if(imMatchPlayer){
-                window.location.replace(text.message);
+                window.location.replace("/rooms/get_match/" + text.message + "/" + ROOM);
             }         
         }
     

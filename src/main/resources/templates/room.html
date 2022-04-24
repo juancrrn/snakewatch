@@ -188,7 +188,7 @@
                     <p class="text-center text-info fs-5">Waiting for players...</p>
                     <p id="numberOfPlayersReady" class="text-center text-info fs-5 mb-0"></p>
                     <ul id="playersReady"class="list-group list-group-sm text-center" style="list-style:none;"></ul>
-                    <form class="row justify-content-center" th:action="@{/rooms/get_match/__${room.id}__}" method="GET">
+                    <form class="row justify-content-center" th:action="@{/rooms/create_match/__${room.id}__}" method="POST">
                         <button id="startMatchButton" class="w-50 btn btn-outline-info text-center my-2 fs-5">Start Match</button>
                     </form>
                  
@@ -211,6 +211,7 @@
 
     <script th:inline="javascript">
         const ROOMURL = "/topic/room" + [[${room.id}]];
+        const ROOM = [[${room.id}]];
         const USERSESSIONAME = [[${session.u.username}]];
         const MAXROOMPLAYERS = [[${room.maxUsers}]];
         const MATCHURL = [[@{/rooms/get_match/__${room.id}__}]];
