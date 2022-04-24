@@ -301,7 +301,7 @@
        y="0.53503585"
        rx="2.9217937"
        ry="2.9217937"
-       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/spring-classes-pseudo-uml.png"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
        inkscape:export-xdpi="72"
        inkscape:export-ydpi="72" />
   </g>
@@ -311,7 +311,10 @@
      id="layer1">
     <g
        id="g24828"
-       transform="translate(103.83268)">
+       transform="translate(103.83268)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
          id="rect31"
@@ -468,7 +471,10 @@
     </g>
     <g
        id="g24777"
-       transform="translate(76.520491,47.317113)">
+       transform="translate(76.520491,47.317113)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
          id="rect31-3"
@@ -574,7 +580,10 @@
     </g>
     <g
        id="g24797"
-       transform="translate(-100.7121,100.22162)">
+       transform="translate(-100.7121,100.22162)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
          id="rect31-3-5"
@@ -675,7 +684,10 @@
     </g>
     <g
        id="g24756"
-       transform="translate(-75.965744,121.00751)">
+       transform="translate(-75.965744,121.00751)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
          id="rect31-5"
@@ -756,7 +768,10 @@
     </g>
     <g
        id="g24740"
-       transform="translate(-3.3471836,-42.029113)">
+       transform="translate(-3.3471836,-42.029113)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
          id="rect31-5-5"
@@ -852,7 +867,10 @@
     </g>
     <g
        id="g24721"
-       transform="translate(108.1809,39.473979)">
+       transform="translate(108.1809,39.473979)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
          id="rect31-5-5-4"
@@ -928,7 +946,10 @@
     </g>
     <g
        id="g24706"
-       transform="translate(104.29518,39.473979)">
+       transform="translate(104.29518,39.473979)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264582;stroke-opacity:1"
          id="rect31-5-5-4-0"
@@ -1003,7 +1024,10 @@
            id="tspan14157-3-0">-id: long</tspan></text>
     </g>
     <g
-       id="g34187">
+       id="g34187"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
          id="rect31-5-5-4-0-7"
@@ -1104,7 +1128,10 @@
     </g>
     <g
        id="g24691"
-       transform="translate(12.872059,-84.666656)">
+       transform="translate(12.872059,-84.666656)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264581;stroke-opacity:1"
          id="rect31-5-5-4-0-6"
@@ -1206,22 +1233,34 @@
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
        d="M 96.726832,35.530654 H 116.60874"
-       id="path33686" />
+       id="path33686"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-53)"
        d="M 143.16891,118.02474 V 81.43331"
        id="path33686-8"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-50-8)"
        d="M 87.814571,86.36983 V 69.926489 a 2.6458333,2.6458333 45 0 0 -2.645833,-2.645833 h -22.25397"
        id="path33686-3-6"
        sodipodi:nodetypes="ccc"
        inkscape:path-effect="#path-effect52178"
-       inkscape:original-d="M 87.814571,86.36983 V 67.280656 l -24.899803,0" />
+       inkscape:original-d="M 87.814571,86.36983 V 67.280656 l -24.899803,0"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
     <g
        id="g34187-7"
-       transform="translate(14.213904,68.566715)">
+       transform="translate(14.213904,68.566715)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
          id="rect31-5-5-4-0-7-7"
@@ -1323,13 +1362,19 @@
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-1)"
        d="M 200.27317,35.530654 H 180.39126"
-       id="path33686-7" />
+       id="path33686-7"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
     <text
        xml:space="preserve"
        style="font-size:2.96726px;line-height:1.25;font-family:sans-serif;text-align:start;word-spacing:0px;text-anchor:start;stroke-width:0.264583"
        x="10.744179"
        y="168.08804"
-       id="text3146-7-6-5-6-22-1"><tspan
+       id="text3146-7-6-5-6-22-1"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72"><tspan
          sodipodi:role="line"
          id="tspan3144-5-1-6-8-61-1"
          style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:2.96726px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Semi-Bold';text-align:start;text-anchor:start;stroke-width:0.264583"
@@ -1343,17 +1388,26 @@
        id="path33686-3-6-9"
        sodipodi:nodetypes="ccc"
        inkscape:path-effect="#path-effect52178-5-8"
-       inkscape:original-d="M 91.708937,86.36983 V 67.280656 h 24.899803" />
+       inkscape:original-d="M 91.708937,86.36983 V 67.280656 h 24.899803"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-50-8-10)"
        d="M 194.70772,92.190664 V 75.747323 a 2.6458333,2.6458333 45 0 0 -2.64583,-2.645833 h -11.67063"
        id="path33686-3-6-4"
        sodipodi:nodetypes="ccc"
        inkscape:path-effect="#path-effect52178-0"
-       inkscape:original-d="M 194.70772,92.190664 V 73.10149 l -14.31646,0" />
+       inkscape:original-d="M 194.70772,92.190664 V 73.10149 l -14.31646,0"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
     <g
        id="g34187-7-7"
-       transform="translate(121.10706,74.387549)">
+       transform="translate(121.10706,74.387549)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <rect
          style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
          id="rect31-5-5-4-0-7-7-6"
@@ -1458,6 +1512,9 @@
        id="path33686-3-6-9-7"
        sodipodi:nodetypes="ccc"
        inkscape:path-effect="#path-effect52178-5-8-4"
-       inkscape:original-d="M 198.60209,92.190664 V 73.10149 l 22.98617,0" />
+       inkscape:original-d="M 198.60209,92.190664 V 73.10149 l 22.98617,0"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/domain-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
   </g>
 </svg>

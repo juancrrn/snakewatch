@@ -24,7 +24,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.93"
-     inkscape:cx="609.13978"
+     inkscape:cx="596.23656"
      inkscape:cy="228.49462"
      inkscape:window-width="1422"
      inkscape:window-height="1016"
@@ -46,10 +46,16 @@
        x="0.13353218"
        y="0.0058691646"
        rx="2.9217937"
-       ry="2.9217937" />
+       ry="2.9217937"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/spring-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72" />
     <g
        id="g66545"
-       transform="translate(-3.7986313)">
+       transform="translate(-3.7986313)"
+       inkscape:export-filename="/home/x/UCM/snakewatch/doc/img/spring-classes-pseudo-uml.png"
+       inkscape:export-xdpi="72"
+       inkscape:export-ydpi="72">
       <g
          id="g66403"
          transform="translate(41.457405)">
