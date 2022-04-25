@@ -9,15 +9,12 @@ const ws = {
      * Number of retries if connection fails
      */
     retries: 3,
-    /**
-     * Default action when message is received. 
-     */
+    
+    // WARNING: put this 2 lines anywhere where you use ws.receive
+    // const oldReceive = ws.receive;       (OUTSIDE and BEFORE the ws.receive)
+    // oldReceive(text);                    (INSIDE and AT THE END the ws.receive)
     receive: (text) => {
-        console.log(text);
-        let p = document.querySelector("#nav-unread");
-        if (p) {
-            p.textContent = +p.textContent + 1;
-        }
+        // Empty, to be reimplemented with oldReceive call
     },
 
     headers: { 'X-CSRF-TOKEN': config.csrf.value },
@@ -109,7 +106,7 @@ function go(url, method, data = {}) {
  */
 document.addEventListener("DOMContentLoaded", () => {
     if (config.socketUrl) {
-        let subs = config.admin ? ["/topic/admin","/user/queue/updates"] : ["/user/queue/updates"];
+        let subs = config.admin ? ["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"];
         ws.initialize(config.socketUrl, subs);
 
         let p = document.querySelector("#nav-unread");

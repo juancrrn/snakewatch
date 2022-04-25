@@ -13,17 +13,22 @@
             <div class="container-fluid">
                 <!-- nombre del sitio; es un enlace que lleva a la página ppal -->
                 <a class="navbar-brand" th:href="@{/}" href="/">
-                    <img th:src="@{/img/logo.png}" src="/img/logo.png" alt="Snakewatch" width="28" height="28" class="d-inline-block align-middle me-3"><span class="d-inline-block align-middle">Snakewatch</span>
+                    <img th:src="@{/img/logo.png}" src="/img/logo.png" alt="Snakewatch" width="28" height="28"
+                        class="d-inline-block align-middle me-3"><span
+                        class="d-inline-block align-middle">Snakewatch</span>
                 </a>
                 <!-- menu hamburguesa si no cabe todo -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <th:block th:if="${session.u}">
                             <li class="nav-item mx-3">
-                                <a class="nav-link" th:if="${session.u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
+                                <a class="nav-link" th:if="${session.u.hasRole('ADMIN')}"
+                                    th:href="@{/admin/}">Administrar</a>
                             </li>
 
                             <li class="nav-item mx-2">
@@ -34,12 +39,15 @@
                             </li>
                             <li class="nav-item align-self-center me-4">
                                 <button type="button" class="btn btn-outline-primary btn-sm position-relative">
-                                    ✉️ <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+                                    ✉️ <span id="nav-unread"
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99
+                                        <span class="visually-hidden">unread messages</span></span>
                                 </button>
                             </li>
                             <li class="nav-item align-self-center">
                                 <form th:action="@{/logout}" method="post">
-                                    <button id="logout" type="submit" class="btn btn-outline-secondary btn-sm">logout</button>
+                                    <button id="logout" type="submit"
+                                        class="btn btn-outline-secondary btn-sm">logout</button>
                                 </form>
                             </li>
                         </th:block>
@@ -89,7 +97,66 @@
                 </div>
             </div>
         </nav>
+
+        <!-- Notification toast for user messages -->
+        <div class="toast show" style="display: none; position: fixed; bottom: 10px; left:10px;">
+            <div class="toast-header">
+                <strong class="me-auto toast-header-title">Toast Header</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                <p class="toast-body-text">Some text inside the toast body</p>
+            </div>
+        </div>
+
+        <!-- Bootstrap -->
+        <script th:src="@{/js/bootstrap.bundle-5.1.3.js}" src="js/bootstrap.bundle-5.1.3.js"></script>
+
+        <!-- Websockets -->
+        <script th:src="@{/js/stomp.js}" src="js/stomp.js"></script>
+        <script th:src="@{/js/iw.js}" src="js/iw.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                function showToast(title, body) {
+                    let toastHTML = document.querySelector(".toast");
+
+                    // Make it visible (remove display = "none")
+                    toastHTML.style.display = '';
+
+                    // Put sender username in the toast title
+                    toastHTML.querySelector('.toast-header-title').innerHTML = title;
+                    // Put message content on toast body
+                    toastHTML.querySelector('.toast-body-text').innerHTML = body;
+
+                    // Cast it to bootstrap toast and make it show
+                    let toast = new bootstrap.Toast(toastHTML);
+                    toast.show();
+                }
+
+                // Guardar la version previa de ws.receive para no sobreescribirla
+                const oldReceive = ws.receive;
+                
+                ws.receive = (text) => {
+                    // Mostrar mensaje recivido en toast
+                    let p = document.querySelector("#nav-unread");
+                    if (p && text.type == "textMessage") {
+                        p.textContent = +p.textContent + 1;
+                        showToast("Nuevo mensaje de " + text.from, text.text);
+                    }
+                    
+                    // Llamar a la version previa de ws.receive para no sobreescribirla
+                    if (oldReceive != null) {
+                        // Llamar a la antigua version de receive() para no sobreescribirla
+                        oldReceive(text);
+                    }
+                }
+            });
+        </script>
+
+
     </header>
+
 </body>
 
 </html>

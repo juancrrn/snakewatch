@@ -346,6 +346,7 @@ public class UserController {
 		// construye json
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode rootNode = mapper.createObjectNode();
+		rootNode.put("type", "textMessage");
 		rootNode.put("from", sender.getUsername());
 		rootNode.put("to", u.getUsername());
 		rootNode.put("text", text);
