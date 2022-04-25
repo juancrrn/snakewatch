@@ -54,6 +54,9 @@ export default class Level extends Phaser.Scene {
     this.cursors.down.on('down', () => this.player.setDir(2), this);
     this.cursors.left.on('down', () => this.player.setDir(3), this);
 
+    // Add key to toggle game fullscreen
+    this.input.keyboard.addKey('F').on('down', () => this.scale.toggleFullscreen(), this);
+
     // Set level collisions
     this.wallsLayer.setCollisionFromCollisionGroup();
     this.wallsLayer.setTileIndexCallback(2, this.onCollision, this);

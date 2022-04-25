@@ -10,14 +10,11 @@ let config = {
     type: Phaser.CANVAS,
     canvas: document.getElementById('canvas'),
     scale: {
-        //autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 500,
         height: 500,
-        //mode: Phaser.Scale.FIT
+        fullscreenTarget: 'canvas',
     },
-    dom: {
-        createContainer: true
-    },
+    backgroundColor: '#82bb4d',
     pixelArt: true,
     scene: [Boot, Level, Spectator],
     physics: {
