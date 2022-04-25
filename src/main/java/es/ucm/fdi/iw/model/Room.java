@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -87,8 +88,10 @@ public class Room implements Serializable {
      * 
      * @see www.baeldung.com/jpa-many-to-many
      */
-    @OneToMany(mappedBy = "room")
-    private List<RoomUser> roomUsers = new ArrayList<>();
+    @ManyToMany
+    private List<User> users = new ArrayList<>();
+
+    private User owner;
 
     @OneToMany(mappedBy = "room")
     private List<Match> matches = new ArrayList<>();

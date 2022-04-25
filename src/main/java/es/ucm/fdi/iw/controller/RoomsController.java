@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Room;
-import es.ucm.fdi.iw.model.RoomUser;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.Match.Status;
 import es.ucm.fdi.iw.model.Room.RoomType;
@@ -60,8 +59,8 @@ public class RoomsController {
         List<Boolean> isUserInRooms = new ArrayList<>();
         for (Room room : rooms) {
             Boolean aux = false;
-            for (RoomUser ru : room.getRoomUsers()) {
-                if (ru.getUser().getId() == userId) {
+            for (User ru : room.getUsers()) {
+                if (ru.getId() == userId) {
                     aux = true;
                 }
             }
@@ -90,12 +89,8 @@ public class RoomsController {
         Long joinUserId = ((User) session.getAttribute("u")).getId();
         User joinUser = entityManager.find(User.class, joinUserId);
 
-        RoomUser ru = new RoomUser();
-        ru.setAdmin(false);
-        ru.setRoom(room);
-        ru.setUser(joinUser);
-
-        entityManager.persist(ru);
+        room.getUsers().add(joinUser);
+        entityManager.persist(room);
         entityManager.flush();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -124,15 +119,9 @@ public class RoomsController {
 
         model.addAttribute("matches", matches);
 
-        boolean isAdmin = false;
-        for (RoomUser roomUser : room.getRoomUsers()) {
-            if (roomUser.isAdmin() && roomUser.getUser().getId() == sessionUserId) {
-                isAdmin = true;
-                break;
-            }
-        }
+        boolean isOwner = room.getOwner().getId() == sessionUserId;
 
-        model.addAttribute("admin", isAdmin);
+        model.addAttribute("admin", isOwner);
         return "room";
     }
 
@@ -145,17 +134,12 @@ public class RoomsController {
         room.setMaxUsers(5);
 
         // Establecer al usuario como administrador de esta room
-        Long adminId = ((User) session.getAttribute("u")).getId();
-        User adminUser = entityManager.find(User.class, adminId);
-
-        RoomUser ruAdmin = new RoomUser();
-
-        ruAdmin.setAdmin(true);
-        ruAdmin.setRoom(room);
-        ruAdmin.setUser(adminUser);
+        Long ownerId = ((User) session.getAttribute("u")).getId();
+        User owner = entityManager.find(User.class, ownerId);
+        room.setOwner(owner);
+        room.getUsers().add(owner);
 
         entityManager.persist(room);
-        entityManager.persist(ruAdmin);
         entityManager.flush();
 
         return "redirect:/rooms/" + room.getId();
@@ -182,20 +166,20 @@ public class RoomsController {
         Long leaveUserId = ((User) session.getAttribute("u")).getId();
         User leaveUser = entityManager.find(User.class, leaveUserId);
 
-        RoomUser ru = entityManager
-                .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
-                .setParameter("roomId", roomId)
-                .setParameter("userId", leaveUser.getId())
-                .getSingleResult();
+        Room room = entityManager.find(Room.class, roomId);
+        room.getUsers().remove(leaveUser);
+        if(room.getOwner().getId() == leaveUserId){
+            room.setOwner(null);
+        }
 
-        entityManager.remove(ru);
+        entityManager.persist(room);
         entityManager.flush();
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
 
         rootNode.put("type", "leaveRoom");
-        rootNode.put("message", ru.getUser().getUsername());
+        rootNode.put("message", leaveUser.getUsername());
         String json = mapper.writeValueAsString(rootNode);
 
         messagingTemplate.convertAndSend("/topic/room" + roomId, json);
@@ -208,12 +192,9 @@ public class RoomsController {
     public String deleteRoom(@PathVariable long roomId, Model model) {
 
         Room r = entityManager.find(Room.class, roomId);
-        List<RoomUser> roomUsers = r.getRoomUsers();
+        r.getUsers().clear();
+        r.setOwner(null);
 
-        // Eliminar todos los roomusers de esta room
-        for (RoomUser ru :roomUsers) {
-            entityManager.remove(ru);
-        }
         // Eliminar la room
         entityManager.remove(r);
         entityManager.flush();
@@ -251,7 +232,7 @@ public class RoomsController {
         model.addAttribute("admin", false);
         */
         
-        model.addAttribute("admin", match.getOwner().getPlayer().getId() == sessionUserId);        
+        model.addAttribute("admin", match.getOwner().getId() == sessionUserId);        
 
         return "game";
     }

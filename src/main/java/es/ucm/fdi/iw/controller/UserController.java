@@ -4,7 +4,7 @@ import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Message;
-import es.ucm.fdi.iw.model.RoomUser;
+import es.ucm.fdi.iw.model.Room;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
 
@@ -143,8 +143,8 @@ public class UserController {
 		model.addAttribute("matchPlayers", matchPlayers);
 
 		// Get rooms that this user has joined (as RoomUser objects)
-		List<RoomUser> roomUsers = user.getRoomUsers();
-		model.addAttribute("roomUsers", roomUsers);
+		List<Room> rooms = user.getRooms();
+		model.addAttribute("rooms", rooms);
 
 		// Check if "user" is the logged user or another person
 		Long loggedUserId = ((User) session.getAttribute("u")).getId();

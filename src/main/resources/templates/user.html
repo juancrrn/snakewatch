@@ -173,14 +173,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr rowspan="1" th:each="roomUser: ${roomUsers}">
+          <tr rowspan="1" th:each="room: ${rooms}">
             <td colspan="1">
-              <a th:href="@{/rooms/__${roomUser.room.id}__}" th:text="${roomUser.room.id} |">ID</a>
+              <a th:href="@{/rooms/__${room.id}__}" th:text="${room.id} |">ID</a>
             </td>
-            <td colspan="1" th:text="${roomUser.room.visibility}">Privacy</td>
+            <td colspan="1" th:text="${room.visibility}">Privacy</td>
 
-            <td th:each="participant: ${roomUser.room.getRoomUsers()}">
-              <a th:href="@{/user/__${participant.user.id}__}" th:text="| ${participant.user.username} |"></a>
+            <td th:each="participant: ${room.getUsers()}">
+              <a th:href="@{/user/__${participant.id}__}" th:text="| ${participant.username} |"></a>
             </td>
           </tr>
         </tbody>

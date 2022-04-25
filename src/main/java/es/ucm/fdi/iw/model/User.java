@@ -128,8 +128,8 @@ public class User implements Serializable {
 	 * 
 	 *      FIXME Esto debería ser "rooms: List<Room>"...
 	 */
-	@OneToMany(fetch=FetchType.EAGER, mappedBy = "user")
-	private List<RoomUser> roomUsers = new ArrayList<>();
+	@ManyToMany
+	private List<Room> rooms = new ArrayList<>();
 
 	/**
 	 * Checks whether this user has a given role.
