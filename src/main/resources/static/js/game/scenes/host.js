@@ -10,7 +10,7 @@ export default class Level extends Phaser.Scene {
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'level' });
+    super({ key: 'host' });
   }
 
   create() {
@@ -37,9 +37,11 @@ export default class Level extends Phaser.Scene {
 
     this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white');
     this.snakes.set(USERSESSIONAME, this.player);
-    for(let i = 0; i < NBOTS; i++){
-      this.snakes.set(i, new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
-    }
+    PLAYERS.forEach((p) => {
+      if (p !== USERSESSIONAME) {
+        this.snakes.set(p, new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+      }
+    });
 
     // Create food
     this.food = new Food(this, this.getEmptyCell());
@@ -72,16 +74,26 @@ export default class Level extends Phaser.Scene {
     this.events.on('update', () => this.postTick(), this);
 
     this.time = Date.now();
+
+    ws.subscribe("/topic/match" + MATCH, (text) => {
+      if (text.type == "Move") this.onMoveRequest(text.message);
+    });
+
+    // Broadcast initial game state
+    this.broadcastState();
+    go("/rooms/start_match/" + MATCH, 'POST', {})
+    .then(d => e => console.log("happy", e))
+    .catch(e => console.log("sad", e))
   }
 
   /**
    * Handles a movement request from a remote player
    * @param request The received request
    */
-  /*onMoveRequest(request) {
+  onMoveRequest(request) {
     let snake = this.snakes.get(request.user);
     if (snake !== undefined) snake.setDir(request.dir);
-  }*/
+  }
 
   /**
    * Handles collision for two given GameObjects
@@ -102,13 +114,9 @@ export default class Level extends Phaser.Scene {
    */
   processTick() {
     this.snakes.forEach(snake => snake.processTick());
+
     this.food.processTick();
     this.ticked = true;
-    if(this.player.dead){
-      this.timer.destroy();
-      const body = JSON.stringify({type: "finishLevelGame"});
-      ws.stompClient.send("/topic/level/" + USERSESSIONAME, ws.headers, body);
-    }
   }
 
   postTick() {
@@ -116,7 +124,17 @@ export default class Level extends Phaser.Scene {
       this.ticked = false;
 
       this.snakes.forEach(snake => snake.handleDeath());
+
+      this.broadcastState();
     }
+  }
+
+  /**
+   * Shares current gamestate over websocket
+   */
+  broadcastState() {
+    const body = JSON.stringify({type: "GameState", message: this.toJSON()});
+    ws.stompClient.send("/topic/match" + MATCH, ws.headers, body);
   }
 
   /**
@@ -167,5 +185,15 @@ export default class Level extends Phaser.Scene {
     } else {
       this.cells.delete(pos.x + pos.y * 25);
     }
+  }
+
+  /**
+   * Creates a JSON object representing the current state
+   * @returns JSON object containing current state
+   */
+  toJSON() {
+    let snakes = {};
+    this.snakes.forEach((v, k) => snakes[k] = v.toJSON());
+    return { food: this.food.toJSON(), snakes: snakes, time: this.time };
   }
 }

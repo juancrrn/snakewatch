@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Juego - Snakewatch</title>
+    <th:block th:replace="fragments/head :: header" />
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+    <main class="wrap">
+      <div id="gameLevel-container">
+        <canvas id="canvas" style="margin-left: auto; margin-right: auto; display: block;"></canvas>
+      </div>
+        <div id="levelFinishedToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" style="display:none;">
+            <div class="toast-header">
+                <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                <strong class="me-auto">Snakewatch</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body row justify-content-center">
+                <form class="card-text text-center" th:action="@{/levels/play/__${levelName}__}" method="GET">
+                    <button class="w-50 btn btn-outline-info fs-5" type="submit">Retry</button> 
+                </form>
+                <form class="card-text text-center" th:action="@{/}" method="GET">
+                    <button class="w-50 btn btn-outline-info fs-5" type="submit">Exit</button> 
+                </form>
+                
+            </div>
+        </div>  
+    </main>
+
+
+    <script id="levelConstJs" th:inline="javascript">
+      const LEVEL = [[${levelName}]];
+      const NBOTS = [[${nBots}]];
+      const USERSESSIONAME = [[${session.u.username}]];
+    </script>
+
+    <script type="text/javascript">
+
+        function showToast() {
+
+            let toastHTML = document.getElementById('levelFinishedToast');
+            // Put message content on toast body
+            toastHTML.style.display = '';
+            // Cast it to bootstrap toast and make it show
+            let toast = new bootstrap.Toast(toastHTML);
+            toast.show();
+
+        }
+
+        function callback(text) {
+            if(text.type == "finishLevelGame"){
+                showToast();
+            }
+        }
+        function init() {
+            ws.subscribe("/topic/level/" + USERSESSIONAME, callback);
+        }
+        setTimeout(init, 500);
+        
+    </script>
+    
+    <script type="module" th:src="@{/js/game/gameLevel.js}"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>

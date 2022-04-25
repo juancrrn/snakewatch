@@ -30,9 +30,12 @@ public class LevelController {
 
     @GetMapping("/play/{levelName}")
     public String playLevel(@PathVariable String levelName  ,Model model){
-        levelName += ".json";
+        File folder = new File("./src/main/resources/static/levelMaps");
+        String[] foldersList = folder.list();
+        List<String> filesNames = new ArrayList<String>(Arrays.asList(foldersList));
+        model.addAttribute("nBots", filesNames.indexOf(levelName+".json") +1);
         model.addAttribute("levelName", levelName);
-        return "game";
+        return "gameLevel";
     }
 
 
