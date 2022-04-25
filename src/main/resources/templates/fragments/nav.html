@@ -134,19 +134,16 @@
                     toast.show();
                 }
 
-                // Guardar la version previa de ws.receive para no sobreescribirla
-                const oldReceive = ws.receive;
-
-                ws.receive = (text) => {
+                function callback(text) {
                     // Mostrar mensaje recivido en toast
                     let p = document.querySelector("#nav-unread");
                     if (p && text.type == "textMessage") {
                         p.textContent = +p.textContent + 1;
                         showToast("Nuevo mensaje de " + text.from, text.text);
                     }
-                    // Llamar a la antigua version de receive() para no sobreescribirla
-                    if (oldReceive != null) oldReceive(text);
-                }
+                };
+
+                setTimeout(() => ws.subscribe("/user/queue/updates", callback), 500)
             });
         </script>
 

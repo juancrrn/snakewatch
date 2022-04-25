@@ -42,10 +42,11 @@ const ws = {
         }
     },
 
-    subscribe: (sub) => {
+    subCallback: (m) => ws.receive(JSON.parse(m.body)),
+
+    subscribe: (sub, callback = ws.subCallback) => {
         try {
-            ws.stompClient.subscribe(sub,
-                (m) => ws.receive(JSON.parse(m.body))); // fails if non-json received!
+            ws.stompClient.subscribe(sub, (m) => callback(JSON.parse(m.body))); // fails if non-json received!
             console.log("Hopefully subscribed to " + sub);
         } catch (e) {
             console.log("Error, could not subscribe to " + sub, e);
@@ -106,8 +107,7 @@ function go(url, method, data = {}) {
  */
 document.addEventListener("DOMContentLoaded", () => {
     if (config.socketUrl) {
-        let subs = config.admin ? ["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"];
-        ws.initialize(config.socketUrl, subs);
+        ws.initialize(config.socketUrl);
 
         let p = document.querySelector("#nav-unread");
         if (p) {

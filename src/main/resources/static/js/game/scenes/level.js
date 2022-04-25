@@ -75,13 +75,9 @@ export default class Level extends Phaser.Scene {
 
     this.time = Date.now();
 
-    // Listen for remote player moves
-    const oldReceive = ws.receive;
-    ws.receive = (text) => {
+    ws.subscribe("/topic/match" + MATCH, (text) => {
       if (text.type == "Move") this.onMoveRequest(text.message);
-      // Llamar a la antigua version de receive() para no sobreescribirla
-      if (oldReceive != null) oldReceive(text);
-    }
+    });
 
     // Broadcast initial game state
     this.broadcastState();

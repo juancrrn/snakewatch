@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let playersOnlineNames = [];
 
     function init() {
-        ws.subscribe(ROOMURL);
+        ws.subscribe(ROOMURL, callback);
         setInterval(sendMessage, 1000);
         setInterval(actualizeList, 2000);
     }
@@ -103,10 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    // Guardar la version previa de ws.receive para no sobreescribirla
-    const oldReceive = ws.receive;
-
-    ws.receive = (text) => {
+    function callback(text) {
         if (text.type == "joinRoom" || text.type == "leaveRoom") {
             showToast(text);
         }
@@ -132,9 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (text.type == "goToMatch") {
             window.location.replace("/rooms/get_match/" + text.message);
         }
-
-        // Llamar a la antigua version de receive() para no sobreescribirla
-        if (oldReceive != null) oldReceive(text);
     }
 
 

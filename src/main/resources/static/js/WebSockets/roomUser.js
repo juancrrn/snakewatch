@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let imMatchPlayer = false;
 
     function init(){
-        ws.subscribe(ROOMURL);
+        ws.subscribe(ROOMURL, callback);
         setInterval(sendMessage, 1000);
         setInterval(actualizeList, 2000);
     }
@@ -82,11 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         acceptAndRejectMatchToast.style.display = 'none';
     }
     
-     
-    // Guardar la version previa de ws.receive para no sobreescribirla
-    const oldReceive = ws.receive;
-    
-    ws.receive = (text) => {
+    function callback(text) {
         if(text.type=="joinRoom" || text.type=="leaveRoom"){
             showToast(text);
         }
@@ -108,8 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.replace("/rooms/get_match/" + text.message);
             }         
         }
-        // Llamar a la antigua version de receive() para no sobreescribirla
-        if (oldReceive != null) oldReceive(text);
     }
        
     setTimeout(init, 500);

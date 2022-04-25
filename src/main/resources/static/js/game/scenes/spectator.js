@@ -45,13 +45,9 @@ export default class Spectator extends Phaser.Scene {
     // Add key to toggle game fullscreen
     this.input.keyboard.addKey('F').on('down', () => this.scale.toggleFullscreen(), this);
 
-    // Guardar la version previa de ws.receive para no sobreescribirla
-    const oldReceive = ws.receive;
-    ws.receive = (text) => {
+    ws.subscribe("/topic/match" + MATCH, (text) => {
       if (text.type == "GameState") this.fromJSON(text.message);
-      // Llamar a la antigua version de receive() para no sobreescribirla
-      if (oldReceive != null) oldReceive(text);
-    }
+    });
   }
 
   /**
