@@ -22,7 +22,7 @@ export default class Spectator extends Phaser.Scene {
       key: 'tilemap'
     })
 
-    let tileset = this.map.addTilesetImage('tileset','tileset');
+    let tileset = this.map.addTilesetImage('tileset', 'tileset');
 
     this.groundLayer = this.map.createLayer('ground', tileset);
     this.wallsLayer = this.map.createLayer('walls', tileset);
@@ -33,12 +33,16 @@ export default class Spectator extends Phaser.Scene {
     // Snakes
     this.snakes = new Map();
 
+    // Guardar la version previa de ws.receive para no sobreescribirla
+    const oldReceive = ws.receive;
     ws.receive = (text) => {
-      if (text.type=="GameState") this.fromJSON(text.message);
+      if (text.type == "GameState") this.fromJSON(text.message);
+      // Llamar a la antigua version de receive() para no sobreescribirla
+      if (oldReceive != null) oldReceive(text);
     }
   }
 
-  setCellState() {}
+  setCellState() { }
 
   /**
    * Updates current state from the given JSON representation
@@ -52,7 +56,7 @@ export default class Spectator extends Phaser.Scene {
     for (const key in json.snakes) {
       let snake = json.snakes[key];
       if (!this.snakes.has(key)) {
-        this.snakes.set(key, new Snake(this, null, { x: 0, y: 0}, 0, snake.skin));
+        this.snakes.set(key, new Snake(this, null, { x: 0, y: 0 }, 0, snake.skin));
       }
       this.snakes.get(key).fromJSON(snake);
     }

@@ -83,6 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
      
+    // Guardar la version previa de ws.receive para no sobreescribirla
+    const oldReceive = ws.receive;
     
     ws.receive = (text) => {
         if(text.type=="joinRoom" || text.type=="leaveRoom"){
@@ -106,7 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.replace("/rooms/get_match/" + text.message + "/" + ROOM);
             }         
         }
-    
+        // Llamar a la antigua version de receive() para no sobreescribirla
+        if (oldReceive != null) oldReceive(text);
     }
        
     setTimeout(init, 500);
