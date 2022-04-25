@@ -112,24 +112,21 @@ public class RoomsController {
 
     @GetMapping("{roomId}")
     public String getRoom(@PathVariable long roomId, Model model) {
-
+        Long sessionUserId = ((User) session.getAttribute("u")).getId();
         Room room = entityManager.find(Room.class, roomId);
         model.addAttribute("room", room);
 
-        Long sessionUserId = ((User) session.getAttribute("u")).getId();
-
-        boolean isAdmin = false;
-
         List<Match> matches = room.getMatches();
         // Ordenar los players de cada match segun su posicion de resultado
-        for (int i = 0; i < matches.size(); i++) {
-            matches.get(i).getMatchPlayers().sort(Comparator.comparing(MatchPlayer::getPosition));
+        for (Match match : matches) {
+            match.getMatchPlayers().sort(Comparator.comparing(MatchPlayer::getPosition));
         }
 
         model.addAttribute("matches", matches);
 
-        for (int i = 0; i < room.getRoomUsers().size(); i++) {
-            if (room.getRoomUsers().get(i).isAdmin() && room.getRoomUsers().get(i).getUser().getId() == sessionUserId) {
+        boolean isAdmin = false;
+        for (RoomUser roomUser : room.getRoomUsers()) {
+            if (roomUser.isAdmin() && roomUser.getUser().getId() == sessionUserId) {
                 isAdmin = true;
                 break;
             }
@@ -147,6 +144,7 @@ public class RoomsController {
         room.setVisibility(RoomType.PUBLIC);
         room.setMaxUsers(5);
 
+        // Establecer al usuario como administrador de esta room
         Long adminId = ((User) session.getAttribute("u")).getId();
         User adminUser = entityManager.find(User.class, adminId);
 
@@ -210,43 +208,40 @@ public class RoomsController {
     public String deleteRoom(@PathVariable long roomId, Model model) {
 
         Room r = entityManager.find(Room.class, roomId);
+        List<RoomUser> roomUsers = r.getRoomUsers();
 
-        List<RoomUser> roomUsers = entityManager
-                .createNamedQuery("RoomUser.getUsersOfRoom", RoomUser.class)
-                .setParameter("roomId", roomId)
-                .getResultList();
-
-        for (int i = 0; i < roomUsers.size(); i++) {
-            entityManager.remove(roomUsers.get(i));
+        // Eliminar todos los roomusers de esta room
+        for (RoomUser ru :roomUsers) {
+            entityManager.remove(ru);
         }
+        // Eliminar la room
         entityManager.remove(r);
         entityManager.flush();
         return "redirect:/rooms";
     }
 
-    @GetMapping("/get_match/{matchId}/{roomId}")
-    public String getMatch(@PathVariable long matchId, @PathVariable long roomId, Model model) {
+    @GetMapping("/get_match/{matchId}")
+    public String getMatch(@PathVariable long matchId, Model model) {
 
         Match match = entityManager.find(Match.class, matchId);
-        Room room = entityManager.find(Room.class, roomId);
+        Room room = match.getRoom();
 
         model.addAttribute("room", room);
         model.addAttribute("match", match);
         model.addAttribute("level", "demo");
 
+        // Lista con los los "username" de los jugadores 
         List<String> players = new ArrayList<>();
-        for(MatchPlayer mp: match.getMatchPlayers()){
+        for (MatchPlayer mp : match.getMatchPlayers()) {
             players.add(mp.getPlayer().getUsername());
-
         }
 
         model.addAttribute("players", players);
 
         Long sessionUserId = ((User) session.getAttribute("u")).getId();
 
-
-        for(RoomUser ru : room.getRoomUsers()){
-            if(ru.isAdmin() && ru.getUser().getId()==sessionUserId && players.indexOf(ru.getUser().getUsername())!=-1){
+        for (RoomUser ru : room.getRoomUsers()) {
+            if (ru.isAdmin() && ru.getUser().getId() == sessionUserId && players.contains(ru.getUser().getUsername())) {
                 model.addAttribute("admin", true);
                 return "game";
             }
@@ -261,11 +256,12 @@ public class RoomsController {
     @ResponseBody
     @MessageMapping
     @Transactional
-    public String createMatch(@PathVariable long roomId, @RequestBody JsonNode o , Model model) 
-        throws JsonProcessingException {
+    public String createMatch(@PathVariable long roomId, @RequestBody JsonNode o, Model model)
+            throws JsonProcessingException {
 
         Room room = entityManager.find(Room.class, roomId);
-       
+
+        // This json contains the list of players of the match 
         ArrayNode matchPlayers = (ArrayNode) o.get("message");
 
         Match match = new Match();
@@ -273,15 +269,16 @@ public class RoomsController {
         match.setRoom(room);
         match.setDate(LocalDate.now());
         match.setStatus(Status.WAITING);
-        
+
         model.addAttribute("room", room);
         model.addAttribute("match", match);
 
         entityManager.persist(match);
         entityManager.flush();
 
-        for(JsonNode j: matchPlayers){
-            User u = entityManager.createNamedQuery("User.byUsername", User.class).setParameter("username", j.textValue()).getSingleResult();
+        for (JsonNode j : matchPlayers) {
+            User u = entityManager.createNamedQuery("User.byUsername", User.class)
+                    .setParameter("username", j.textValue()).getSingleResult();
             MatchPlayer matchPlayer = new MatchPlayer();
             matchPlayer.setMatch(match);
             matchPlayer.setPlayer(u);
@@ -298,14 +295,13 @@ public class RoomsController {
 
         messagingTemplate.convertAndSend("/topic/room" + roomId, json);
 
-    
         return "{\"result\": \"match created.\"}";
     }
 
     @PostMapping("start_match/{matchId}")
     @ResponseBody
     @Transactional
-    public String startMatch(@PathVariable long matchId, Model model){
+    public String startMatch(@PathVariable long matchId, Model model) {
         Match match = entityManager.find(Match.class, matchId);
         match.setStatus(Status.ONGOING);
         entityManager.persist(match);

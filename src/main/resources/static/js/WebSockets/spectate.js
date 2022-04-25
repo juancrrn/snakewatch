@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     div.id = "match" + d.arrayMatches[i][0];
                     
                     
-                    // "/rooms/get_match/"+ d.arrayMatches[i][0] + "/" + d.arrayMatches[i][1])
+                    // "/rooms/get_match/"+ d.arrayMatches[i][0] )
                     matchcontainer.appendChild(div);
                 }
             }

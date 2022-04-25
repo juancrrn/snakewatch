@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-body bg-secondary bg-gradient bg-opacity-10">
                         <p class="card-text text-center fs-4 text-danger" th:text="' Room ' + ${m.room.id}"></p> 
-                        <form class="card-text text-center" th:action="@{/rooms/get_match/__${m.id}__/__${m.room.id}__}" method="GET">
+                        <form class="card-text text-center" th:action="@{/rooms/get_match/__${m.id}__}" method="GET">
                             <button class="w-50 btn btn-outline-info fs-5" type="submit">Spectate</button> 
                         </form>
                     </div>
