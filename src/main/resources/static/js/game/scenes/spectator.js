@@ -41,6 +41,9 @@ export default class Spectator extends Phaser.Scene {
     this.cursors.down.on('down', () => this.sendMove(2), this);
     this.cursors.left.on('down', () => this.sendMove(3), this);
 
+    // Add key to toggle game fullscreen
+    this.input.keyboard.addKey('F').on('down', () => this.scale.toggleFullscreen(), this);
+
     // Guardar la version previa de ws.receive para no sobreescribirla
     const oldReceive = ws.receive;
     ws.receive = (text) => {
