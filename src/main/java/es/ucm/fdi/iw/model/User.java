@@ -128,7 +128,7 @@ public class User implements Serializable {
 	 * 
 	 *      FIXME Esto debería ser "rooms: List<Room>"...
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "user")
 	private List<RoomUser> roomUsers = new ArrayList<>();
 
 	/**

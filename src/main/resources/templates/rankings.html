@@ -2,75 +2,78 @@
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <title>Rankings - Snakewatch</title>
     <th:block th:replace="fragments/head :: header" />
+    <title>Rankings - Snakewatch</title>
 </head>
 
 <body class="d-flex flex-column h-100">
     <header th:replace="fragments/nav.html :: nav"></header>
 
     <main class="flex-shrink-0">
-        <div class="container-xl">
+        <div class="container">
             <div class="d-flex justify-content-around">
-                <button id="boton_global" class="btn btn-lg btn-primary btn-block" onclick="global()">Ranking Global</button>
-                <button id="boton_mensual" class="btn btn-lg btn-primary btn-block" onclick="mensual()">Ranking Mensual</button>
-                <button id="boton_semanal" class="btn btn-lg btn-primary btn-block" onclick="semanal()">Ranking Semanal</button>
-            </div>
-            <div class="row">
-                <h1 id="titulo_ranking" style="text-align:center">Ranking Global</h1>
+                <div class="dropdown">
+                    <button id="rankingTitle" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ranking
+                    </button>
+                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                        <li id="globalRanking" class="dropdown-item">Global</li>
+                        <li id="monthlyRanking" class="dropdown-item">Monthly</li>
+                        <li id="weeklyRanking" class="dropdown-item">Weekly</li>
+                      </ul>
+                </div>
             </div>
 
             <div class="row">
-                <table id="tabla_global" class="table table-light">
+                <table id="globalTable" class="table table-light">
                     <thead>
                         <tr>
                             <th>Nº</th>
-                            <th>Nombre</th>
-                            <th>Victorias</th>
+                            <th>Name</th>
+                            <th>Victories</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="r,iterator : ${globalRanking}">
-                            <td th:text="${iterator.index} + 1">Puesto</td>
-                            <td th:text="${r[0]}">Nombre</td>
-                            <td th:text="${r[1]}">Victorias</td>
+                            <td th:text="${iterator.index} + 1">Top</td>
+                            <td th:text="${r[0]}">Name</td>
+                            <td th:text="${r[1]}">Victories</td>
                         </tr>                  
                     </tbody>
             
                 </table>
 
-                <table id="tabla_mensual" class="table table-light">
+                <table id="mensualTable" class="table table-light">
                     <thead>
                         <tr>
                             <th>Nº</th>
-                            <th>Nombre</th>
-                            <th>Victorias</th>
+                            <th>Name</th>
+                            <th>Victories</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="r,iterator : ${monthRanking}">
-                            <td th:text="${iterator.index} + 1">Puesto</td>
-                            <td th:text="${r[0]}">Nombre</td>
-                            <td th:text="${r[1]}">Victorias</td>
+                        <tr th:each="r,iterator : ${monthlyRanking}">
+                            <td th:text="${iterator.index} + 1">Top</td>
+                            <td th:text="${r[0]}">Name</td>
+                            <td th:text="${r[1]}">Victories</td>
                         </tr>                  
                     </tbody>
             
                 </table>
 
-                <table id="tabla_semanal" class="table table-light">
+                <table id="semanalTable" class="table table-light">
                     <thead>
                         <tr>
                             <th>Nº</th>
-                            <th>Nombre</th>
-                            <th>Victorias</th>
+                            <th>Name</th>
+                            <th>Victories</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="r,iterator : ${weekRanking}">
-                            <td th:text="${iterator.index} + 1">Puesto</td>
-                            <td th:text="${r[0]}">Nombre</td>
-                            <td th:text="${r[1]}">Victorias</td>
+                        <tr th:each="r,iterator : ${weeklyRanking}">
+                            <td th:text="${iterator.index} + 1">Top</td>
+                            <td th:text="${r[0]}">Name</td>
+                            <td th:text="${r[1]}">Victories</td>
                         </tr>                  
                     </tbody>
             
@@ -83,43 +86,9 @@
     </main>
     
 
-    <script th:inline="javascript">
+    <script th:src="@{/js/funcionalities/ranking.js}" type="text/javascript"></script>
 
-        var titulo_ranking = document.getElementById("titulo_ranking");
-
-        var tabla_global = document.getElementById("tabla_global");
-
-        var tabla_mensual = document.getElementById("tabla_mensual");
-
-        var tabla_semanal = document.getElementById("tabla_semanal");
-
-        tabla_semanal.style.display = "none";
-        tabla_mensual.style.display = "none";
-
-        function global(){
-            titulo_ranking.innerHTML = "Ranking Global";
-            tabla_global.style.display = "table";
-            tabla_mensual.style.display = "none";
-            tabla_semanal.style.display = "none";
-        }
-
-
-        function mensual(){
-            titulo_ranking.innerHTML = "Ranking Mensual";
-            tabla_global.style.display = "none";
-            tabla_mensual.style.display = "table";
-            tabla_semanal.style.display = "none";
-        }
-
-        function semanal(){
-            titulo_ranking.innerHTML = "Ranking Semanal";
-            tabla_global.style.display = "none";
-            tabla_mensual.style.display = "none";
-            tabla_semanal.style.display = "table";
-
-        }
-    </script>
-    <th:block th:replace="fragments/footer.html :: footer" />
+    <th:block th:replace="fragments/footer.html :: footer"/>
 </body>
 
 </html>

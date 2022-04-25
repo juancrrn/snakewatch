@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @version 0.0.1
  */
 @Controller
-@RequestMapping("ranking")
+@RequestMapping("rankings")
 public class RankingController {
 
     @Autowired
@@ -35,8 +35,8 @@ public class RankingController {
     /**
      * Rankings view
      */
-    @GetMapping("/rankings")
-    public String rankings(Model model) {
+    @GetMapping
+    public String getRankings(Model model) {
 
         LocalDate nowDate = LocalDate.now();
 
@@ -45,25 +45,24 @@ public class RankingController {
         LocalDate initialWeekDate = nowDate.with(WeekFields.of(Locale.FRANCE).dayOfWeek(), 1);
 
         List<Object[]> globalRanking = entityManager
-                .createNamedQuery("MatchPlayer.rankingGlobal", Object[].class)
+                .createNamedQuery("MatchPlayer.globalRanking", Object[].class)
                 .getResultList();
 
-        // FIXME Change named query to English
-        List<Object[]> monthRanking = entityManager
-                .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
-                .setParameter("fechaInicial", initialMonthDate)
-                .setParameter("fechaFinal", nowDate)
+        List<Object[]> monthlyRanking = entityManager
+                .createNamedQuery("MatchPlayer.rankingBetweenDates", Object[].class)
+                .setParameter("initialDate", initialMonthDate)
+                .setParameter("nowDate", nowDate)
                 .getResultList();
 
-        List<Object[]> weekRanking = entityManager
-                .createNamedQuery("MatchPlayer.rankingEntreFechas", Object[].class)
-                .setParameter("fechaInicial", initialWeekDate)
-                .setParameter("fechaFinal", nowDate)
+        List<Object[]> weeklyRanking = entityManager
+                .createNamedQuery("MatchPlayer.rankingBetweenDates", Object[].class)
+                .setParameter("initialDate", initialWeekDate)
+                .setParameter("nowDate", nowDate)
                 .getResultList();
 
-        model.addAttribute("weekRanking", weekRanking);
+        model.addAttribute("weeklyRanking", weeklyRanking);
 
-        model.addAttribute("monthRanking", monthRanking);
+        model.addAttribute("monthlyRanking", monthlyRanking);
 
         model.addAttribute("globalRanking", globalRanking);
 
