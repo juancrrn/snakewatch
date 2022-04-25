@@ -34,13 +34,14 @@ export default class Spectator extends Phaser.Scene {
     this.snakes = new Map();
 
     // Cursors
+    if(PLAYERS.indexOf(USERSESSIONAME) != -1){
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.cursors.up.on('down', () => this.sendMove(0), this);
     this.cursors.right.on('down', () => this.sendMove(1), this);
     this.cursors.down.on('down', () => this.sendMove(2), this);
     this.cursors.left.on('down', () => this.sendMove(3), this);
-
+    }
     // Add key to toggle game fullscreen
     this.input.keyboard.addKey('F').on('down', () => this.scale.toggleFullscreen(), this);
 

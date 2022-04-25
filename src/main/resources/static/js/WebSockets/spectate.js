@@ -38,5 +38,5 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(e => console.log("sad", e))
     }
 
-    setInterval(findOngoingMatches, 3000);
+    setInterval(findOngoingMatches, 1000);
 })
