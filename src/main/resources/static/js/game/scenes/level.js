@@ -39,7 +39,7 @@ export default class Level extends Phaser.Scene {
     this.snakes.set(USERSESSIONAME, this.player);
     PLAYERS.forEach((p) => {
       if (p !== USERSESSIONAME) {
-        this.snakes.set(p, new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
+        this.snakes.set(p, new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
       }
     });
 
@@ -75,11 +75,28 @@ export default class Level extends Phaser.Scene {
 
     this.time = Date.now();
 
+    // Listen for remote player moves
+    const oldReceive = ws.receive;
+    ws.receive = (text) => {
+      if (text.type == "Move") this.onMoveRequest(text.message);
+      // Llamar a la antigua version de receive() para no sobreescribirla
+      if (oldReceive != null) oldReceive(text);
+    }
+
     // Broadcast initial game state
     this.broadcastState();
     go("/rooms/start_match/" + MATCH, 'POST', {})
     .then(d => e => console.log("happy", e))
     .catch(e => console.log("sad", e))
+  }
+
+  /**
+   * Handles a movement request from a remote player
+   * @param request The received request
+   */
+  onMoveRequest(request) {
+    let snake = this.snakes.get(request.user);
+    if (snake !== undefined) snake.setDir(request.dir);
   }
 
   /**

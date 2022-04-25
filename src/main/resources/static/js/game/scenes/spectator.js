@@ -33,6 +33,14 @@ export default class Spectator extends Phaser.Scene {
     // Snakes
     this.snakes = new Map();
 
+    // Cursors
+    this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.cursors.up.on('down', () => this.sendMove(0), this);
+    this.cursors.right.on('down', () => this.sendMove(1), this);
+    this.cursors.down.on('down', () => this.sendMove(2), this);
+    this.cursors.left.on('down', () => this.sendMove(3), this);
+
     // Guardar la version previa de ws.receive para no sobreescribirla
     const oldReceive = ws.receive;
     ws.receive = (text) => {
@@ -40,6 +48,14 @@ export default class Spectator extends Phaser.Scene {
       // Llamar a la antigua version de receive() para no sobreescribirla
       if (oldReceive != null) oldReceive(text);
     }
+  }
+
+  /**
+   * Sends the desired move to the host over websocket
+   */
+  sendMove(dir) {
+    const body = JSON.stringify({type: "Move", message: { user: USERSESSIONAME, dir: dir }});
+    ws.stompClient.send("/topic/match" + MATCH, ws.headers, body);
   }
 
   setCellState() { }
