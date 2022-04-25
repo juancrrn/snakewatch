@@ -12,8 +12,8 @@ let monthlyRanking = document.getElementById('monthlyRanking');
 
 let weeklyRanking = document.getElementById('weeklyRanking');
 
-
-globalTable.style.display = "none";
+rankingTitle.innerHTML = "Global Ranking";
+globalTable.style.display = "table";
 mensualTable.style.display = "none";
 semanalTable.style.display = "none";
 

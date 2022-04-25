@@ -12,72 +12,80 @@
     <main class="flex-shrink-0">
         <div class="container">
             <div class="d-flex justify-content-around">
-                <div class="dropdown">
-                    <button id="rankingTitle" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown my-3">
+                    <button id="rankingTitle" class="btn btn-info dropdown-toggle text-white fs-3 w-100 shadow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Ranking
                     </button>
-                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                        <li id="globalRanking" class="dropdown-item">Global</li>
-                        <li id="monthlyRanking" class="dropdown-item">Monthly</li>
-                        <li id="weeklyRanking" class="dropdown-item">Weekly</li>
+                      <ul class="dropdown-menu dropdown-menu-dark w-100" aria-labelledby="rankingTitle">
+                        <li id="globalRanking" class="dropdown-item text-center w-100">Global</li>
+                        <li id="monthlyRanking" class="dropdown-item text-center w-100">Monthly</li>
+                        <li id="weeklyRanking" class="dropdown-item text-center w-100">Weekly</li>
                       </ul>
                 </div>
             </div>
 
             <div class="row">
-                <table id="globalTable" class="table table-light">
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th>Name</th>
-                            <th>Victories</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="r,iterator : ${globalRanking}">
-                            <td th:text="${iterator.index} + 1">Top</td>
-                            <td th:text="${r[0]}">Name</td>
-                            <td th:text="${r[1]}">Victories</td>
-                        </tr>                  
-                    </tbody>
-            
-                </table>
+                <div class="table-responsive">
+                    <table id="globalTable" class="table table-hover caption-top shadow fs-5">
+                        <caption>Global Ranking</caption>
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Top</th>
+                                <th>Name</th>
+                                <th>Victories</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-info">
+                            <tr th:each="r,iterator : ${globalRanking}">
+                                <td th:text="${iterator.index} + 1"></td>
+                                <td th:text="${r[0]}"></td>
+                                <td th:text="${r[1]}"></td>
+                            </tr>                  
+                        </tbody>
+                
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <table id="mensualTable" class="table table-hover caption-top shadow fs-5">
+                        <caption>Monthly Ranking</caption>
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Top</th>
+                                <th>Name</th>
+                                <th>Victories</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-info">
+                            <tr th:each="r,iterator : ${monthlyRanking}">
+                                <td th:text="${iterator.index} + 1"></td>
+                                <td th:text="${r[0]}"></td>
+                                <td th:text="${r[1]}"></td>
+                            </tr>                  
+                        </tbody>
+                
+                    </table>
+                </div>
 
-                <table id="mensualTable" class="table table-light">
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th>Name</th>
-                            <th>Victories</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="r,iterator : ${monthlyRanking}">
-                            <td th:text="${iterator.index} + 1">Top</td>
-                            <td th:text="${r[0]}">Name</td>
-                            <td th:text="${r[1]}">Victories</td>
-                        </tr>                  
-                    </tbody>
-            
-                </table>
-
-                <table id="semanalTable" class="table table-light">
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th>Name</th>
-                            <th>Victories</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="r,iterator : ${weeklyRanking}">
-                            <td th:text="${iterator.index} + 1">Top</td>
-                            <td th:text="${r[0]}">Name</td>
-                            <td th:text="${r[1]}">Victories</td>
-                        </tr>                  
-                    </tbody>
-            
-                </table>
+                <div class="table-responsive">
+                    <table id="semanalTable" class="table table-hover caption-top shadow fs-5">
+                        <caption>Weekly Ranking</caption>
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Top</th>
+                                <th>Name</th>
+                                <th>Victories</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-info">
+                            <tr th:each="r,iterator : ${weeklyRanking}">
+                                <td th:text="${iterator.index} + 1"></td>
+                                <td th:text="${r[0]}"></td>
+                                <td th:text="${r[1]}"></td>
+                            </tr>                  
+                        </tbody>
+                
+                    </table>
+                </div>       
             </div>
               
         </div>
