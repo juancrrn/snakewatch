@@ -240,6 +240,7 @@ public class RoomsController {
 
         Long sessionUserId = ((User) session.getAttribute("u")).getId();
 
+        /*
         for (RoomUser ru : room.getRoomUsers()) {
             if (ru.isAdmin() && ru.getUser().getId() == sessionUserId && players.contains(ru.getUser().getUsername())) {
                 model.addAttribute("admin", true);
@@ -248,6 +249,9 @@ public class RoomsController {
         }
 
         model.addAttribute("admin", false);
+        */
+        
+        model.addAttribute("admin", match.getOwner().getPlayer().getId() == sessionUserId);        
 
         return "game";
     }

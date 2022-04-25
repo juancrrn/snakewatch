@@ -85,6 +85,21 @@ public class Match implements Serializable {
     @OneToMany(mappedBy = "match")
     private List<MatchPlayer> matchPlayers = new ArrayList<>();
 
+    public MatchPlayer getOwner(){
+        RoomUser admin = null;
+        for (RoomUser roomUser : this.room.getRoomUsers()){
+            if(roomUser.isAdmin()){
+                admin = roomUser;
+            }
+        }
+        for (MatchPlayer matchPlayer : this.getMatchPlayers()){
+            if(matchPlayer.getPlayer().getId() == admin.getUser().getId()){
+                return matchPlayer;
+            }
+        }
+        return null;
+    }
+
     /**
      * Status
      * 
