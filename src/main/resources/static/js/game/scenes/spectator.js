@@ -13,7 +13,7 @@ export default class Spectator extends Phaser.Scene {
   }
 
   preload() {
-    // TODO: load the tilemap of the level selected for this match
+    // TODO: load the tilemap of the level selected for this match xxx
   }
 
   create() {

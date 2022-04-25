@@ -47,18 +47,6 @@ public class RootController {
     }
 
     /**
-     * Levels view
-     */
-    @GetMapping("/levels")
-    public String levels(Model model) {
-        List<Level> levels = entityManager
-                .createNamedQuery("Level.getAll", Level.class)
-                .getResultList();
-        model.addAttribute("levels", levels);
-        return "levels";
-    }
-
-    /**
      * Game view
      */
     @GetMapping("/game")
