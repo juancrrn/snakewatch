@@ -43,17 +43,10 @@ class MatchTests {
         User player2 = new User();
         player2.setEnabled(true);
         player2.setUsername("player2");
-        player2.setPassword("testpassword");    
+        player2.setPassword("testpassword"); 
         
-        RoomUser roomUser1 = new RoomUser();
-        roomUser1.setAdmin(false);
-        roomUser1.setRoom(room);
-        roomUser1.setUser(player1);
-
-        RoomUser roomUser2 = new RoomUser();
-        roomUser2.setAdmin(false);
-        roomUser2.setRoom(room);
-        roomUser2.setUser(player2);
+        room.getUsers().add(player1);
+        room.getUsers().add(player2);
 
         Match match = new Match();
         match.setMaxPlayers(5);        
@@ -75,9 +68,7 @@ class MatchTests {
         this.entityManager.persist(level);
         this.entityManager.persist(room);
         this.entityManager.persist(player1);
-        this.entityManager.persist(player2);
-        this.entityManager.persist(roomUser1);
-        this.entityManager.persist(roomUser2); 
+        this.entityManager.persist(player2); 
         this.entityManager.persist(match);
         this.entityManager.persist(matchPlayer1);
         this.entityManager.persist(matchPlayer2);

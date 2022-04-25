@@ -40,26 +40,18 @@ class RoomTests {
         player1.setUsername("testPlayer");
         player1.setPassword("testpassword0");
    
-        // Create the relation between the user and the room
-        RoomUser roomUser1 = new RoomUser();
-        roomUser1.setAdmin(false);
-        roomUser1.setRoom(room);
-        roomUser1.setUser(player1);
+        room.getUsers().add(player1);
+        room.setOwner(player1);
 
         this.entityManager.persist(room);
         this.entityManager.persist(player1);
-        this.entityManager.persist(roomUser1);
         
         this.entityManager.flush();
         
         // Fetch the list of users inside the room created earlier
-        List<RoomUser> roomUsers = entityManager
-        .createNamedQuery("RoomUser.getRoom", RoomUser.class)
-        .setParameter("roomId", room.getId())
-        .getResultList();
 
         // Assert that our User exists in said list fetched previously
-        assertTrue(roomUsers.contains(roomUser1));
+        assertTrue(room.getUsers().contains(player1));
 
 	}
 
@@ -83,43 +75,22 @@ class RoomTests {
         player.setUsername("testPlayertest");
         player.setPassword("testpassword000");
    
-        // Create the relation between the user and the room1
-        RoomUser roomUser1 = new RoomUser();
-        roomUser1.setAdmin(false);
-        roomUser1.setRoom(room1);
-        roomUser1.setUser(player);
+        room1.getUsers().add(player);
+        room1.setOwner(player);
 
-        // Create the relation between the user and the room2
-        RoomUser roomUser2 = new RoomUser();
-        roomUser2.setAdmin(false);
-        roomUser2.setRoom(room2);
-        roomUser2.setUser(player);
+        room2.getUsers().add(player);
+        room2.setOwner(player);
+
 
         this.entityManager.persist(player);
-
         this.entityManager.persist(room1);
-        this.entityManager.persist(roomUser1);
-
         this.entityManager.persist(room2);
-        this.entityManager.persist(roomUser2);
         
         this.entityManager.flush();
         
-        // Fetch the RoomUser where the userId is that of our user and roomId is that of room1
-        RoomUser userRooms1 = entityManager
-        .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
-        .setParameter("userId", player.getId())
-        .setParameter("roomId", room1.getId()).getSingleResult();
-
-        // Fetch the RoomUser where the userId is that of our user and roomId is that of room2
-        RoomUser userRooms2 = entityManager
-        .createNamedQuery("RoomUser.getRoomUser", RoomUser.class)
-        .setParameter("userId", player.getId())
-        .setParameter("roomId", room2.getId()).getSingleResult();
-
         // Make sure that our user is in fact the same User fetched from both queries done previously
-        assertEquals(player, userRooms1.getUser());
-        assertEquals(player, userRooms2.getUser());
+        assertTrue(room1.getUsers().contains(player));
+        assertTrue(room2.getUsers().contains(player));
 	}
 
 	
