@@ -12,22 +12,7 @@
     <main class="flex-shrink-0">
         <div class="container">
             Select Level
-            <table class="table table-light">
-                <thead>
-                  <tr rowspan="1">
-                    <th colspan="1">Level Id</th>
-                    <th colspan="1">Level Rep</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr rowspan="1" th:each="level: ${levels}">
-                    <td colspan="1">
-                      <a th:href="@{/match/play/__${level.id}__}" th:text="${level.id}">ID</a>
-                    </td>
-                    <td colspan="1" th:text="${level.representation}">Rep</td>
-                  </tr>
-                </tbody>
-              </table>
+            
         </div>
         
     </main>

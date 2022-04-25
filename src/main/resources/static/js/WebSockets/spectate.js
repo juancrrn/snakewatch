@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     let matchcontainer = document.getElementById("matchcontainer");
                     let spectatebtn = document.getElementById("spectatematch");
-                    spectatebtn.setAttribute("action", "/rooms/get_match/"+ d.arrayMatches[i][0] + "/" + d.arrayMatches[i][1]);
+                    spectatebtn.setAttribute("action", "/rooms/get_match/"+ d.arrayMatches[i][0]);
                     spectatebtn.setAttribute("method", "GET");
 
                     div.setAttribute("class", "card col-12 my-3 px-0 shadow");

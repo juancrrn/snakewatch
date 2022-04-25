@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (text.type == "goToMatch") {
-            window.location.replace("/rooms/get_match/" + text.message + "/" + ROOM);
+            window.location.replace("/rooms/get_match/" + text.message);
         }
 
         // Llamar a la antigua version de receive() para no sobreescribirla

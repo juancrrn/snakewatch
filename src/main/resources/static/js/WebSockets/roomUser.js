@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(text.type=="goToMatch"){   
             if(imMatchPlayer){
-                window.location.replace("/rooms/get_match/" + text.message + "/" + ROOM);
+                window.location.replace("/rooms/get_match/" + text.message);
             }         
         }
         // Llamar a la antigua version de receive() para no sobreescribirla
