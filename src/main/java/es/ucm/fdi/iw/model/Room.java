@@ -90,6 +90,9 @@ public class Room implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
+    /**
+     * Owner of the room
+     */
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
@@ -100,4 +103,13 @@ public class Room implements Serializable {
      */
     @OneToMany(mappedBy = "room")
     private List<Match> matches = new ArrayList<>();
+
+
+    public Room(User owner, RoomType visibility, int maxUsers){
+        this.maxUsers = maxUsers;        
+        this.visibility = visibility;
+
+        this.owner = owner;
+        this.users.add(owner);
+    }
 }

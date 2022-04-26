@@ -73,11 +73,10 @@ public class Friendship implements Serializable {
     private Status status;
 
     
-    public Friendship(User user1, User user2) {
+    public Friendship(User user1, User user2, Status status) {
         this.user1 = user1;
         this.user2 = user2;
-        this.status = Status.ACCEPTED;
-        // TODO: should start as PENDING, and then be updated to ACCEPTED
+        this.status = status;
         // TODO: when creating a new Friendship, we should add 2 instances on the
         // database: (u1, u2) y (u2,u1)
     }

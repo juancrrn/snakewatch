@@ -7,10 +7,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.oracle.truffle.js.builtins.ConsoleBuiltins.Console;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import es.ucm.fdi.iw.model.Friendship.Status;
 
 /**
  * Usage: "mvn test" on console
@@ -29,41 +33,28 @@ class UserTests {
     @Test
     @Transactional
     void newUser() {
-        User user = new User();
-
-        user.setEnabled(true);
-        user.setUsername("testuser");
-        user.setPassword("testpassword");
-
+        User user = new User("testuser", "testpassword", true, false);
         this.entityManager.persist(user);
         this.entityManager.flush();
 
         User userInBD = entityManager.createNamedQuery("User.byUsername", User.class)
                 .setParameter("username", user.getUsername()).getSingleResult();
 
-        assertEquals(9, userInBD.getId());
+        assertNotNull(userInBD);
     }
 
     @Test
     @Transactional
     void newFriendship() {
 
-        User user1 = new User();
-        user1.setEnabled(true);
-        user1.setUsername("testuser1");
-        user1.setPassword("testpassword");
-
-        User user2 = new User();
-        user2.setEnabled(true);
-        user2.setUsername("testuser2");
-        user2.setPassword("testpassword");
-
+        User user1 = new User("testuser1", "testpassword", true, false);
+        User user2 = new User("testuser2", "testpassword", true, false);
         this.entityManager.persist(user1);
         this.entityManager.persist(user2);
         this.entityManager.flush();
 
-        Friendship friendship1 = new Friendship(user1, user2);
-        Friendship friendship2 = new Friendship(user2, user1);
+        Friendship friendship1 = new Friendship(user1, user2, Status.ACCEPTED);
+        Friendship friendship2 = new Friendship(user2, user1, Status.ACCEPTED);
         entityManager.persist(friendship1);
         entityManager.persist(friendship2);
         entityManager.flush();

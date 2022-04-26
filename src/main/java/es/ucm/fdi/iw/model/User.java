@@ -115,6 +115,16 @@ public class User implements Serializable {
 	@ManyToMany(mappedBy = "users")
 	private List<Room> rooms = new ArrayList<>();
 
+
+	public User(String username, String password, boolean enabled, boolean isAdmin){
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+		this.roles = Role.USER.toString();
+		if(isAdmin) this.roles += "," + Role.ADMIN.toString();
+	}
+
+
 	/**
 	 * Checks whether this user has a given role.
 	 * 
