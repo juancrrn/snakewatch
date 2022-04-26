@@ -25,6 +25,11 @@ VALUES
     (NEXT VALUE FOR room_id_seq, 0, 5),
     (NEXT VALUE FOR room_id_seq, 1, 5);
 
+INSERT INTO Room_Users (room_id, user_id) 
+VALUES 
+    (1, 1),
+    (2, 2),
+    (3, 3);
 
 INSERT INTO Match (id, room_id, level_id, status, max_players, date) 
 VALUES 
@@ -33,7 +38,33 @@ VALUES
     (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, CURDATE()),
     (NEXT VALUE FOR match_id_seq, 1, 1, 3, 5, CURDATE());
 
+INSERT INTO Match_player (id, player_id, match_id, position) 
+VALUES 
+    (NEXT VALUE FOR matchplayer_id_seq, 1, 1, 1),
+    (NEXT VALUE FOR matchplayer_id_seq, 2, 1, 2),
+    (NEXT VALUE FOR matchplayer_id_seq, 3, 1, 3),
+    (NEXT VALUE FOR matchplayer_id_seq, 4, 1, 4);
 
+INSERT INTO Match_player (id, player_id, match_id, position) 
+VALUES 
+    (NEXT VALUE FOR matchplayer_id_seq, 1, 2, 1),
+    (NEXT VALUE FOR matchplayer_id_seq, 2, 2, 2),
+    (NEXT VALUE FOR matchplayer_id_seq, 3, 2, 3),
+    (NEXT VALUE FOR matchplayer_id_seq, 4, 2, 4);
+
+INSERT INTO Match_player (id, player_id, match_id, position) 
+VALUES 
+    (NEXT VALUE FOR matchplayer_id_seq, 1, 3, 2),
+    (NEXT VALUE FOR matchplayer_id_seq, 2, 3, 1),
+    (NEXT VALUE FOR matchplayer_id_seq, 3, 3, 4),
+    (NEXT VALUE FOR matchplayer_id_seq, 4, 3, 3);
+
+INSERT INTO Match_player (id, player_id, match_id, position) 
+VALUES 
+    (NEXT VALUE FOR matchplayer_id_seq, 1, 4, 3),
+    (NEXT VALUE FOR matchplayer_id_seq, 2, 4, 4),
+    (NEXT VALUE FOR matchplayer_id_seq, 3, 4, 1),
+    (NEXT VALUE FOR matchplayer_id_seq, 4, 4, 2);
 
 INSERT INTO User_report (id, reasons, status, moderator_user_id, reported_user_id, reporting_user_id) 
 VALUES 

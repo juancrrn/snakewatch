@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,10 +32,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQuery(
-    name = "Room.getAll",
-    query = "SELECT r FROM Room r"
-)
+@NamedQuery(name = "Room.getAll", query = "SELECT r FROM Room r")
 public class Room implements Serializable {
 
     /**
@@ -76,23 +74,28 @@ public class Room implements Serializable {
      * 
      * <p>
      * If null, the match has no maximum.
-     * <p>
-     * TODO: check this constraint when adding new users to the room
      */
 
     @Size(min = 2, max = 6, message = "Minimum 2 players, Maximum 6 players in a Room")
     private int maxUsers;
 
     /**
-     * List of users in this room (as RoomUser objects)
+     * List of users in this room
      * 
      * @see www.baeldung.com/jpa-many-to-many
      */
     @ManyToMany
+    @JoinTable(name = "room_users", 
+        joinColumns = @JoinColumn(name = "room_id"), 
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
     private User owner;
 
+    
+    /**
+     * List of matches played in this room
+     */
     @OneToMany(mappedBy = "room")
     private List<Match> matches = new ArrayList<>();
 }

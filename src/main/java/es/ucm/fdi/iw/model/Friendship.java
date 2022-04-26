@@ -31,11 +31,6 @@ import lombok.NoArgsConstructor;
     query = "SELECT frq FROM Friendship frq "
           + "WHERE frq.user2.id =: userId AND frq.status = 0"
 )
-@NamedQuery(
-    name = "Friendship.getFriends",
-    query = "SELECT fr FROM Friendship fr "
-          + "WHERE fr.user1.id =: userId"
-)
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user1_id", "user2_id" }))
 public class Friendship implements Serializable {
 
@@ -77,6 +72,7 @@ public class Friendship implements Serializable {
     @Column(nullable = false)
     private Status status;
 
+    
     public Friendship(User user1, User user2) {
         this.user1 = user1;
         this.user2 = user2;
@@ -85,4 +81,5 @@ public class Friendship implements Serializable {
         // TODO: when creating a new Friendship, we should add 2 instances on the
         // database: (u1, u2) y (u2,u1)
     }
+    
 }

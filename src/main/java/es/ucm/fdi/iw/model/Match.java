@@ -19,17 +19,7 @@ import java.time.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Match model
- * 
- * @author Daniel Marín Irún
- * @author Juan Carrión Molina
- * @author Mohamed Ghanem
- * @author Óscar Caro Navarro
- * @author Óscar Molano Buitrago
- * 
- * @version 0.0.1
- */
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -65,15 +55,9 @@ public class Match implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_id_seq_gen")
     private long id;
 
-    /**
-     * Room
-     */
     @ManyToOne
     private Room room;
 
-    /**
-     * Level
-     */
     @ManyToOne
     private Level level;
 
@@ -85,17 +69,17 @@ public class Match implements Serializable {
     @OneToMany(mappedBy = "match")
     private List<MatchPlayer> matchPlayers = new ArrayList<>();
 
+    /**
+     * Get the owner of this match (which is the owner of the whole room)
+     */
     public User getOwner(){        
         return this.room.getOwner();     
     }
 
     /**
-     * Status
+     * Status:
      * 
-     * - Waiting
-     * - Ongoing
-     * - Paused
-     * - Ended
+     * <p> Waiting, Ongoing, Paused, Ended
      */
     public enum Status {
         WAITING,
@@ -112,8 +96,6 @@ public class Match implements Serializable {
      * 
      * <p>
      * If null, the match has no maximum.
-     * <p>
-     * TODO: check this constraint when adding new players to the match
      */
     private int maxPlayers;
 

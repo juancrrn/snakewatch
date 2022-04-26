@@ -10,18 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * An authorized user of the system.
- */
+
 @Entity
 @Data
 @NoArgsConstructor
-/*
-FIXME If this code is unuseful, remove it.
-@NamedQuery(
-	name = "User.getUsers",
-	query = "SELECT u FROM User u")
-*/
 @NamedQuery(
 	name = "User.byId",
 	query = "SELECT u FROM User u "
@@ -38,11 +30,7 @@ FIXME If this code is unuseful, remove it.
 		  + "FROM User u "
 		  + "WHERE u.username = :username"
 )
-@NamedQuery(
-	name = "User.getAllUsersExceptMe",
-	query = "SELECT u FROM User u "
-		  + "WHERE u.username != :username AND u.enabled = TRUE"
-)
+@NamedQuery(name = "User.getAll", query = "SELECT u FROM User u")
 @Table(name = "IWUser")
 public class User implements Serializable {
 
@@ -76,6 +64,8 @@ public class User implements Serializable {
 
 	/**
 	 * Roles
+	 * <p> - USER: standard user
+     * <p> - ADMIN: administrators with privileges
 	 */
 	public enum Role {
 		USER, // normal users
@@ -85,14 +75,14 @@ public class User implements Serializable {
 	private String roles; // split by ',' to separate roles
 
 	/**
-	 * Messages sent
+	 * Messages sent by this user
 	 */
 	@OneToMany
 	@JoinColumn(name = "sender_id")
 	private List<Message> sentMessages = new ArrayList<>();
 
 	/**
-	 * Messages received
+	 * Messages received by this user
 	 */
 	@OneToMany
 	@JoinColumn(name = "recipient_id")
@@ -102,8 +92,6 @@ public class User implements Serializable {
 	 * List of matches (MatchPlayer class) that the user has played
 	 * 
 	 * @see www.baeldung.com/jpa-many-to-many
-	 * 
-	 *      FIXME Esto debería ser "matches: List<Match>"...
 	 */
 	@OneToMany(mappedBy = "player")
 	private List<MatchPlayer> matchPlayers = new ArrayList<>();
@@ -115,20 +103,16 @@ public class User implements Serializable {
 	 * That's why this list is mapped only to "user1"
 	 * 
 	 * @see www.baeldung.com/jpa-many-to-many
-	 * 
-	 *      FIXME Esto debería ser "friends: List<User>"...
 	 */
 	@OneToMany(mappedBy = "user1")
 	private List<Friendship> friendships = new ArrayList<>();
 
 	/**
-	 * List of rooms that this user has joined (as RoomUser class)
+	 * List of rooms that this user has joined
 	 * 
 	 * @see www.baeldung.com/jpa-many-to-many
-	 * 
-	 *      FIXME Esto debería ser "rooms: List<Room>"...
 	 */
-	@ManyToMany
+	@ManyToMany(mappedBy = "users")
 	private List<Room> rooms = new ArrayList<>();
 
 	/**

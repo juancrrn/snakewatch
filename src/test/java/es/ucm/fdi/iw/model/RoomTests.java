@@ -47,12 +47,10 @@ class RoomTests {
         this.entityManager.persist(player1);
         
         this.entityManager.flush();
-        
-        // Fetch the list of users inside the room created earlier
 
-        // Assert that our User exists in said list fetched previously
-        assertTrue(room.getUsers().contains(player1));
-
+        // Assert that our User has been properly inserted in the room database
+        Room roomReloaded = entityManager.find(Room.class, room.getId());
+        assertTrue(roomReloaded.getUsers().contains(player1));
 	}
 
     @Test
@@ -88,9 +86,11 @@ class RoomTests {
         
         this.entityManager.flush();
         
-        // Make sure that our user is in fact the same User fetched from both queries done previously
-        assertTrue(room1.getUsers().contains(player));
-        assertTrue(room2.getUsers().contains(player));
+        // Assert that our User has been properly inserted in the room database
+        Room room1Reloaded = entityManager.find(Room.class, room1.getId());
+        Room room2Reloaded = entityManager.find(Room.class, room2.getId());
+        assertTrue(room1Reloaded.getUsers().contains(player));
+        assertTrue(room2Reloaded.getUsers().contains(player));
 	}
 
 	
