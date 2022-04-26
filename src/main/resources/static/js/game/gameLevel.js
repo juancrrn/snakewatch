@@ -1,6 +1,5 @@
-import Boot from './scenes/boot.js';
-import Host from './scenes/host.js';
-import Spectator from'./scenes/spectator.js';
+import BootLevel from './scenes/bootLevel.js';
+import Level from './scenes/level.js';
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -16,7 +15,7 @@ let config = {
     },
     backgroundColor: '#82bb4d',
     pixelArt: true,
-    scene: [Boot, Host, Spectator],
+    scene: [BootLevel, Level],
     physics: {
         default: 'arcade',
         arcade: {

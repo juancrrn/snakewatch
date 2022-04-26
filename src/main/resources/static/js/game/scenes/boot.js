@@ -25,7 +25,7 @@ export default class Boot extends Phaser.Scene {
   create() {
     // TODO: cargar level o spectator dependiendo de si es el propietario o espectador
     if(ADMIN){
-      this.scene.start('level');
+      this.scene.start('host');
     }
     else{
       this.scene.start('spectator');

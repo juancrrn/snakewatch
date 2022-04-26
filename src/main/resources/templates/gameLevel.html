@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Level Game - Snakewatch</title>
+   
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+    <main class="wrap">
+      <div id="gameLevel-container">
+        <canvas id="canvas" style="margin-left: auto; margin-right: auto; display: block;"></canvas>
+      </div>
+        <div id="levelFinishedToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" style="display:none;">
+            <div class="toast-header">
+                <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                <strong class="me-auto">Snakewatch</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body row justify-content-around">
+                <p class="col-12 fs-5 text-center">Do you want to try again?</p>
+                <form class="col-4 text-center" th:action="@{/levels/play/__${levelName}__}" method="GET">
+                    <button class="w-100 btn btn-outline-success fs-5" type="submit">Retry</button> 
+                </form>
+                <form class="col-4 text-center" th:action="@{/}" method="GET">
+                    <button class="w-100 btn btn-outline-danger fs-5" type="submit">Exit</button> 
+                </form>
+                
+            </div>
+        </div>  
+    </main>
+
+
+    <script id="levelConstJs" th:inline="javascript">
+      const LEVEL = [[${levelName}]];
+      const NBOTS = [[${nBots}]];
+      const USERSESSIONAME = [[${session.u.username}]];
+    </script>
+
+    <script type="text/javascript" th:src="@{/js/WebSockets/levelWS.js}"></script>
+    
+    <script type="module" th:src="@{/js/game/gameLevel.js}"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+</body>
+
+</html>
