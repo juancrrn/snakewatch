@@ -18,3 +18,12 @@ Ctrl + b + d # Desconectarse de la sesión
 ```console
 $ mvn test -Dtest=ExternalRunner
 ```
+
+## Configuracion del laboratorio para examen
+En escritorio: 
+1. abrir carpeta "Publicacion Docente de Ficheros en LABs" > "ALUMNO recogida docente"
+  - Izq: local
+  - Dcha: servidores lab
+2. Ir a /publico/todos/iw (en parte dcha)
+3. Copiar los 4 ficheros de dentro a la parte izq, en la ruta local que eligas (U:/hlocal/...)
+4. Seguir los pasos indicados en fichero "como_montar_entorno_iw_en_windows"
