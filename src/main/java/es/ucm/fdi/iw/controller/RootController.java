@@ -46,11 +46,4 @@ public class RootController {
         return "login";
     }
 
-    /**
-     * Game view
-     */
-    @GetMapping("/game")
-    public String game(Model model) {
-        return "game";
-    }
 }

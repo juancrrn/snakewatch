@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="fragments/head :: header" />
-    <title>Niveles — Snakewatch</title>
+    <title>Levels — Snakewatch</title>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -11,26 +11,43 @@
 
     <main class="flex-shrink-0">
         <div class="container">
-            Select Level
-            <div th:each="level:${levelMaps}" class="card mb-3">
-              <div class="row g-0">
-                <div class="col-md-4">
+          <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4">Levels</h1> 
+          <div class="row justify-content-center">
+            <div th:each="level:${levelMaps}" class="card col-8 mb-3 shadow bg-info bg-gradient bg-opacity-10">
+              <div class="row g-0 justify-content-around">
+                <div class="col-md-5">
                   <img th:src="@{/img/logo.png}" class="img-fluid rounded-start">
                 </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title" th:text="'Level ' + ${level}"></h5>
-                    <form class="card-text text-center" th:action="@{/levels/play/__${level}__}" method="GET">
-                      <button id="entry" class="w-50 btn btn-outline-info fs-5" type="submit">Play</button> 
+                <div class="col-md-5">
+                  <div class="card-body w-100">
+                    <h5 class="card-title text-primary fs-4" th:text="'Level ' + ${level}"></h5>
+                    <form class="card-text text-primary fs-4" th:action="@{/levels/play/__${level}__}" method="GET">
+                      <button class="w-50 btn btn-outline-info fs-5" type="submit">Play</button> 
                     </form>
                   </div>
                 </div>
                 
               </div>
             </div>
+          </div>  
+          
+          <div th:if="${session.u.hasRole('ADMIN')}" class="row justify-content-around">
+            <form class="col-6" th:action="@{/levels/load_level}" method="POST" enctype="multipart/form-data">
+              <div class="input-group">
+                <input type="file" name="file" accept=".json" class="form-control" id="inputFile" aria-describedby="inputFile" aria-label="Upload">
+                <button class="btn btn-outline-info" type="submit" id="inputFile">Upload File</button>
+              </div> 
+            </form>
+          </div>
         </div>
         
     </main>
+
+    <script type="text/javascript">
+
+
+    </script>
+
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
 </html>
