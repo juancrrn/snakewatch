@@ -295,4 +295,34 @@ public class RoomsController {
         return "{\"result\": \"match started.\"}";
     }
 
+    @PostMapping("/finish_match/{matchId}")
+    @ResponseBody
+    @Transactional
+    public String finishMatch(@PathVariable long matchId, @RequestBody JsonNode o, Model model)
+            throws JsonProcessingException {
+        
+        Match match = entityManager.find(Match.class, matchId);
+
+
+        ArrayNode a = (ArrayNode) o.get("message");
+
+        for(JsonNode j: a){
+            MatchPlayer mp = entityManager.
+                createNamedQuery("MatchPlayer.byPlayerUsername", MatchPlayer.class)
+                .setParameter("matchId", matchId)
+                .setParameter("playerUserName", j.textValue())
+                .getSingleResult();
+            mp.setPosition(1);
+            entityManager.persist(mp);
+            entityManager.flush();
+        }
+        
+        match.setStatus(Status.ENDED);
+        entityManager.persist(match);
+        entityManager.flush();
+        
+
+        return "{\"result\": \"match finished.\"}";
+    }
+
 }

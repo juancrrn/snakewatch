@@ -109,6 +109,12 @@ export default class Snake {
     this.parts = [];
     this.dead = true;
 
+    const messageEliminatePlayer = {
+      type: "playerDeath",
+      message: USERSESSIONAME
+    }
+
+    ws.stompClient.send("/topic/match" + matchMedia, ws.headers, JSON.stringify(messageEliminatePlayer));
     if (why instanceof Snake) {
       // If the other snake is not goind to die, restore the state of the cell
       if (why.collided === undefined) this.scene.setCellState(headPos, false);

@@ -43,6 +43,9 @@ export default class Level extends Phaser.Scene {
       }
     });
 
+    this.results = [];
+    this.contador = NPLAYERS;
+
     // Create food
     this.food = new Food(this, this.getEmptyCell());
 
@@ -77,6 +80,16 @@ export default class Level extends Phaser.Scene {
 
     ws.subscribe("/topic/match" + MATCH, (text) => {
       if (text.type == "Move") this.onMoveRequest(text.message);
+      if(text.type == "playerDeath"){
+
+        let p = {
+          playerName: text.message,
+          position: this.contador
+        }
+
+        this.results.push(p);
+        this.contador-=1; 
+      }
     });
 
     // Broadcast initial game state
@@ -122,8 +135,27 @@ export default class Level extends Phaser.Scene {
   postTick() {
     if (this.ticked) {
       this.ticked = false;
-
       this.snakes.forEach(snake => snake.handleDeath());
+
+      let alivePlayers = 0;
+
+      this.snakes.forEach(snake => {
+        if(!snake.dead){
+          alivePlayers+=1;
+        }
+      });
+
+      if(alivePlayers<=1){
+
+          go("/rooms/finish_match/" + MATCH, 'POST', {
+            message: ["admin", "user1"]
+          })
+          .then(d => {console.log("happy", d)})
+          .catch(e => console.log("sad", e))
+
+          this.timer.destroy();
+        
+      }
 
       this.broadcastState();
     }

@@ -17,6 +17,11 @@ import lombok.NoArgsConstructor;
           + "WHERE mp.player.id = :playerId"
 )
 @NamedQuery(
+    name = "MatchPlayer.byPlayerUsername",
+    query = "SELECT mp FROM MatchPlayer mp "
+          + "WHERE mp.match.id = :matchId AND mp.player.username= :playerUserName"
+)
+@NamedQuery(
     name = "MatchPlayer.getWinnerById",
     query = "SELECT COUNT(mp) FROM MatchPlayer mp "
           + "WHERE mp.position=1 AND mp.player.id = :playerId"

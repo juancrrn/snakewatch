@@ -58,9 +58,6 @@ public class Match implements Serializable {
     @ManyToOne
     private Room room;
 
-    @ManyToOne
-    private Level level;
-
     /**
      * List of players (MatchPlayer class) that have participated in this match
      * 
