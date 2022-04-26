@@ -115,6 +115,9 @@ public class User implements Serializable {
 	@ManyToMany(mappedBy = "users")
 	private List<Room> rooms = new ArrayList<>();
 
+	@OneToMany(mappedBy = "player")
+	private List<UserLevel> userLevels = new ArrayList<>();
+
 
 	public User(String username, String password, boolean enabled, boolean isAdmin){
 		this.username = username;

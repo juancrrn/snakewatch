@@ -72,3 +72,15 @@ VALUES
     (NEXT VALUE FOR userreport_id_seq, 'Cheater', 1, 1, 3, 4),
     (NEXT VALUE FOR userreport_id_seq, 'Cheater', 2, 1, 4, 2),
     (NEXT VALUE FOR userreport_id_seq, 'Cheater', 0, 1, 2, 3);
+
+INSERT INTO Level (id)
+VALUES 
+(NEXT VALUE FOR level_id_seq),
+(NEXT VALUE FOR level_id_seq),
+(NEXT VALUE FOR level_id_seq);
+
+INSERT INTO User_Level (id, player_id, level_id, highscore)
+VALUES 
+(NEXT VALUE FOR userlevel_id_seq, 1, 1, 4),
+(NEXT VALUE FOR userlevel_id_seq, 1, 2, 1),
+(NEXT VALUE FOR userlevel_id_seq, 3, 3, 10);

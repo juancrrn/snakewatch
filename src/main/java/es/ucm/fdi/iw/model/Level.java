@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -52,6 +54,7 @@ public class Level implements Serializable {
 	@SequenceGenerator(name = "level_id_seq_gen", sequenceName = "level_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "level_id_seq_gen")
 	private long id;
-
-	private String representation;
+	
+	@OneToMany(mappedBy = "level")
+    private List<UserLevel> userLevels = new ArrayList<>();
 }
