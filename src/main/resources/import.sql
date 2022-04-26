@@ -19,11 +19,11 @@ VALUES
 INSERT INTO Level (id, representation) 
 VALUES (NEXT VALUE FOR level_id_seq, 'tmp');
 
-INSERT INTO Room (id, visibility, max_users) 
+INSERT INTO Room (id, visibility, max_users, owner_id) 
 VALUES 
-    (NEXT VALUE FOR room_id_seq, 0, 6),
-    (NEXT VALUE FOR room_id_seq, 0, 5),
-    (NEXT VALUE FOR room_id_seq, 1, 5);
+    (NEXT VALUE FOR room_id_seq, 0, 6, 1),
+    (NEXT VALUE FOR room_id_seq, 0, 5, 2),
+    (NEXT VALUE FOR room_id_seq, 1, 5, 3);
 
 INSERT INTO Room_Users (room_id, user_id) 
 VALUES 

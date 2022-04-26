@@ -72,6 +72,7 @@ public class RoomsController {
         for (int i = 0; i < rooms.size(); i++) {
             List<Object> o = new ArrayList<>();
             o.add(rooms.get(i));
+            o.add(rooms.get(i).getOwner());
             o.add(isUserInRooms.get(i));
             roomsInfo.add(o);
         }
