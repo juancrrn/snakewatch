@@ -16,9 +16,6 @@ VALUES
     (NEXT VALUE FOR friendship_id_seq, 2, 4, 1),
     (NEXT VALUE FOR friendship_id_seq, 4, 2, 1);
 
-INSERT INTO Level (id, representation) 
-VALUES (NEXT VALUE FOR level_id_seq, 'tmp');
-
 INSERT INTO Room (id, visibility, max_users, owner_id) 
 VALUES 
     (NEXT VALUE FOR room_id_seq, 0, 6, 1),
