@@ -40,12 +40,7 @@ public class SpectateController {
     private SimpMessagingTemplate messagingTemplate;
     
     @GetMapping
-    public String spectate(Model model){
-        List<Match> onGoingMatches = entityManager
-                .createNamedQuery("Match.getOngoingMatches", Match.class)
-                .setParameter("status", Status.ONGOING)
-                .getResultList();
-        model.addAttribute("onGoingMatches", onGoingMatches);   
+    public String spectate(Model model){ 
         return "spectate";
     }
 

@@ -54,11 +54,24 @@ public class LevelController {
     }
 
     @PostMapping("load_level")
-    public String loadLevel(@RequestParam("file") MultipartFile file , Model model ) 
+    public String loadLevel(@RequestParam("file") MultipartFile file , Model model, RedirectAttributes attributes) 
         throws IOException {
 
-       
-        if(file==null || file.isEmpty() || !file.getOriginalFilename().endsWith(".json")){
+        File folder = new File("./src/main/resources/static/levelMaps");
+        String[] foldersList = folder.list();
+        List<String> filesNames = new ArrayList<String>(Arrays.asList(foldersList));
+
+        if(file.isEmpty() || file==null){
+            attributes.addFlashAttribute("message", "You must choose a file!!!!");
+            return "redirect:/levels";
+        }
+
+        else if(!file.getOriginalFilename().endsWith(".json")){
+            attributes.addFlashAttribute("message", "File must be json type!!!!");
+            return "redirect:/levels";
+        }
+        else if(filesNames.indexOf(file.getOriginalFilename())!=-1){
+            attributes.addFlashAttribute("message", "A file with the same name already exists!!!!");
             return "redirect:/levels";
         }
 
@@ -70,6 +83,5 @@ public class LevelController {
        
         return "redirect:/levels";
     }
-
 
 }
