@@ -11,6 +11,8 @@
 
     <main class="flex-shrink-0">
         <div class="container">
+
+         
           <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4">Levels</h1> 
           <div class="row justify-content-center">
             <div th:each="level:${levelMaps}" class="card col-8 mb-3 shadow bg-info bg-gradient bg-opacity-10">
@@ -34,18 +36,35 @@
           <div th:if="${session.u.hasRole('ADMIN')}" class="row justify-content-around">
             <form class="col-6" th:action="@{/levels/load_level}" method="POST" enctype="multipart/form-data">
               <div class="input-group">
-                <input type="file" name="file" accept=".json" class="form-control" id="inputFile" aria-describedby="inputFile" aria-label="Upload">
-                <button class="btn btn-outline-info" type="submit" id="inputFile">Upload File</button>
+                <input type="file" name="file" accept=".json" class="form-control" id="fileInput" aria-describedby="fileButton" aria-label="Upload">
+                <button class="btn btn-outline-info" type="submit" id="fileButton">Upload File</button>
               </div> 
             </form>
+          </div>
+        </div>
+
+        <div th:if="${message}" id="fileUploadErrorToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" style="display:block;">
+          <div class="toast-header">
+              <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+              <strong class="me-auto">Snakewatch</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body row justify-content-center">
+              <p class="text-center fs-5" th:text="${message}"></p>
           </div>
         </div>
         
     </main>
 
     <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', () => {
+        let toastHTML = document.getElementById('fileUploadErrorToast');
 
-
+        if(toastHTML){
+          let toast = new bootstrap.Toast(toastHTML);
+          toast.show();
+        }
+      })
     </script>
 
     <th:block th:replace="fragments/footer.html :: footer" />
