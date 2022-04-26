@@ -15,7 +15,7 @@
          
           <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4">Levels</h1> 
           <div class="row justify-content-center">
-            <div th:each="level:${levelMaps}" class="card col-8 mb-3 shadow bg-info bg-gradient bg-opacity-10">
+            <div th:each="level,iterStat:${levelMaps}" class="card col-8 mb-3 shadow bg-info bg-gradient bg-opacity-10">
               <div class="row g-0 justify-content-around">
                 <div class="col-md-5">
                   <img th:src="@{/img/logo.png}" class="img-fluid rounded-start">
@@ -23,6 +23,7 @@
                 <div class="col-md-5">
                   <div class="card-body w-100">
                     <h5 class="card-title text-primary fs-4" th:text="'Level ' + ${level}"></h5>
+                    <h5 class="card-title text-secondary fs-4" th:text="'Highscore ' + ${highScores[iterStat.index]}"></h5>
                     <form class="card-text text-primary fs-4" th:action="@{/levels/play/__${level}__}" method="GET">
                       <button class="w-50 btn btn-outline-info fs-5" type="submit">Play</button> 
                     </form>

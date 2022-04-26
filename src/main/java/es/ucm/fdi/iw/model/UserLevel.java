@@ -17,6 +17,10 @@ import lombok.NoArgsConstructor;
     name = "UserLevel.getUserLevel",
     query = "SELECT l FROM UserLevel l WHERE l.player.id =: userId AND l.level.id =: levelId"
 )
+@NamedQuery(
+    name = "UserLevel.getUserLevelHighscores",
+    query = "SELECT l FROM UserLevel l WHERE l.player.id =: userId"
+)
 public class UserLevel implements Serializable {
 
     /**

@@ -44,6 +44,7 @@ public class LevelController {
     @GetMapping
     public String getLevels(Model model){
         try{
+            Long userId = ((User) session.getAttribute("u")).getId();
             File folder = new File("./src/main/resources/static/levelMaps");
             File[] foldersList = folder.listFiles();
             List<String> filesNames = new ArrayList<>();
@@ -51,6 +52,21 @@ public class LevelController {
                 String f = foldersList[i].getName();
                 filesNames.add(f.substring(0, f.lastIndexOf(".") ));
             }
+            //
+            List<UserLevel> userLevelHighscoresResults = entityManager
+            .createNamedQuery("UserLevel.getUserLevelHighscores", UserLevel.class)
+            .setParameter("userId", userId)
+            .getResultList();
+            List<Integer> userLevelHighscores = new ArrayList<>();
+            for(String f: filesNames){
+                userLevelHighscores.add(0);
+            }
+            for(int i = 0; i < userLevelHighscoresResults.size(); i++){
+                userLevelHighscores.set((int)(userLevelHighscoresResults.get(i).getLevel().getId()-1), userLevelHighscoresResults.get(i).getHighscore());
+            }
+            
+            model.addAttribute("highScores", userLevelHighscores);
+            //
             model.addAttribute("levelMaps", filesNames);
         }
         catch(IllegalArgumentException e){
@@ -68,25 +84,15 @@ public class LevelController {
         Long userId = ((User) session.getAttribute("u")).getId();
         User user = entityManager.find(User.class, userId);
         Level level = entityManager.find(Level.class, levelId);
-        System.out.println("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
-        System.out.println(userId);
-        System.out.println("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
-        System.out.println("LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-        System.out.println(level.getId());
-        System.out.println("LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
         UserLevel userLevel = null;
         try {
             userLevel = entityManager
             .createNamedQuery("UserLevel.getUserLevel", UserLevel.class)
             .setParameter("userId", userId)
             .setParameter("levelId", level.getId())
-            .getSingleResult(); 
-            System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-            
-            
+            .getSingleResult();             
         } catch (NoResultException e) {
-            //TODO: handle exception
-        }
+            }
         if(userLevel == null){
             userLevel = new UserLevel(user, level, scorePlayer);
         }
