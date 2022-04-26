@@ -4,7 +4,6 @@
 <head>
     <th:block th:replace="fragments/head :: header" />
     <title>Level Game - Snakewatch</title>
-   
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -30,6 +29,8 @@
                 
             </div>
         </div>  
+        <h4 class="text-center" th:text="'Score:  ' "></h4>
+        <h4 id="scoreDiv"class="text-center" th:text="0 "></h4>
     </main>
 
 
@@ -48,5 +49,6 @@
 
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
+
 
 </html>

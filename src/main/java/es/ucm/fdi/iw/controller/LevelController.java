@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,6 +44,16 @@ public class LevelController {
        
         return "levels";
     }
+
+    @PostMapping("score/{scorePlayer}")
+    @ResponseBody
+    @Transactional
+    public String getScore(@PathVariable long scorePlayer ,Model model){
+        
+        return "{\"score\": " + scorePlayer + "}";
+    }
+
+    
 
     @GetMapping("/play/{levelName}")
     public String playLevel(@PathVariable String levelName  ,Model model){

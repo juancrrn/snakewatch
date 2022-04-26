@@ -10,6 +10,7 @@ export default class Snake {
     this.snakesGroup = snakesGroup;
     this.skin = skin;
     this.size = size;
+    this.score = 0;
     this.dead = false;
 
     this.dir = Math.floor(Math.random() * 4);
@@ -43,7 +44,10 @@ export default class Snake {
 
       } else {
         // Try to eat
-        if (this.canEat(dest)) this.size++;
+        if (this.canEat(dest)){ 
+          this.size++;
+          this.score++;
+        }
 
         // Advance part positions
         let tailPos = this.move(dest);
@@ -119,7 +123,10 @@ export default class Snake {
    * @returns If there is food to be eaten at that location
    */
   canEat(pos) {
-    if (this.scene.food.canEat(pos)) this.size++;
+    if (this.scene.food.canEat(pos)){
+       this.size++;
+       this.score++;
+      }
   }
 
   /**

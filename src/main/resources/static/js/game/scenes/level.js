@@ -19,7 +19,7 @@ export default class Level extends Phaser.Scene {
       key: 'tilemap'
     })
 
-    let tileset = this.map.addTilesetImage('tileset','tileset');
+    let tileset = this.map.addTilesetImage('tileset', 'tileset');
 
     this.groundLayer = this.map.createLayer('ground', tileset);
     this.wallsLayer = this.map.createLayer('walls', tileset);
@@ -37,7 +37,7 @@ export default class Level extends Phaser.Scene {
 
     this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white');
     this.snakes.set(USERSESSIONAME, this.player);
-    for(let i = 0; i < NBOTS; i++){
+    for (let i = 0; i < NBOTS; i++) {
       this.snakes.set(i, new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
     }
 
@@ -103,11 +103,18 @@ export default class Level extends Phaser.Scene {
   processTick() {
     this.snakes.forEach(snake => snake.processTick());
     this.food.processTick();
+    let scoreDiv = document.getElementById("scoreDiv");
+    scoreDiv.innerHTML = (this.player.score);
     this.ticked = true;
-    if(this.player.dead){
+
+    if (this.player.dead) {
       this.timer.destroy();
-      const body = JSON.stringify({type: "finishLevelGame"});
+      const body = JSON.stringify({ type: "finishLevelGame" });
       ws.stompClient.send("/topic/level/" + USERSESSIONAME, ws.headers, body);
+      go("/levels/score/" + this.player.score, 'POST', {})
+        .then(d => {
+        })
+        .catch(e => console.log("sad", e))
     }
   }
 
@@ -117,7 +124,10 @@ export default class Level extends Phaser.Scene {
 
       this.snakes.forEach(snake => snake.handleDeath());
     }
+
+
   }
+
 
   /**
    * Checks if the snake would crash when moving to the new position
