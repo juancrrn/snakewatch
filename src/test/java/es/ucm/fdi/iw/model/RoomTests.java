@@ -29,28 +29,31 @@ class RoomTests {
 	@Transactional
 	void userJoinsRoom() {
 
+        // Create a new User with userName = testPlayer and password = testpassword0
+        User player = new User();
+        player.setEnabled(true);
+        player.setUsername("testPlayer");
+        player.setPassword("testpassword0");
+        entityManager.persist(player);
+        entityManager.flush();
+
         // Create a new Room with max capacity = 10 and type = PUBLIC
         Room room = new Room();
         room.setMaxUsers(10);
         room.setVisibility(Room.RoomType.PUBLIC);
+        entityManager.persist(room); 
+        entityManager.flush();
 
-        // Create a new User with userName = testPlayer and password = testpassword0
-        User player1 = new User();
-        player1.setEnabled(true);
-        player1.setUsername("testPlayer");
-        player1.setPassword("testpassword0");
-   
-        room.getUsers().add(player1);
-        room.setOwner(player1);
-
-        this.entityManager.persist(room);
-        this.entityManager.persist(player1);
+        // Add player to room (as owner also)   
+        room.getUsers().add(player);
+        room.setOwner(player);
         
-        this.entityManager.flush();
+        entityManager.persist(room);        
+        entityManager.flush();
 
         // Assert that our User has been properly inserted in the room database
         Room roomReloaded = entityManager.find(Room.class, room.getId());
-        assertTrue(roomReloaded.getUsers().contains(player1));
+        assertTrue(roomReloaded.getUsers().contains(player));
 	}
 
     @Test

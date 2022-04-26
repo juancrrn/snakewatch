@@ -90,6 +90,8 @@ public class Room implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     
