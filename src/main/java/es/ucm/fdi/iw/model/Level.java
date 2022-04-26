@@ -33,6 +33,7 @@ import lombok.NoArgsConstructor;
     name = "Level.getAll",
     query = "SELECT l FROM Level l"
 )
+
 public class Level implements Serializable {
 
 	/**

@@ -12,6 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "player_id", "level_id" }))
+
+@NamedQuery(
+    name = "UserLevel.getUserLevel",
+    query = "SELECT l FROM UserLevel l WHERE l.player.id =: userId AND l.level.id =: levelId"
+)
 public class UserLevel implements Serializable {
 
     /**
@@ -39,4 +44,10 @@ public class UserLevel implements Serializable {
     private Level level;
 
     private int highscore;
+
+    public UserLevel(User player, Level level, int highscore){
+        this.player = player;
+        this.level = level;
+        this.highscore = highscore;
+    }
 }

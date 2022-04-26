@@ -111,9 +111,8 @@ export default class Level extends Phaser.Scene {
       this.timer.destroy();
       const body = JSON.stringify({ type: "finishLevelGame" });
       ws.stompClient.send("/topic/level/" + USERSESSIONAME, ws.headers, body);
-      go("/levels/score/" + this.player.score, 'POST', {})
-        .then(d => {
-        })
+      go("/levels/score/" + LEVEL + "/" + this.player.score, 'POST', {})
+        .then(d => e => console.log("happy", e))
         .catch(e => console.log("sad", e))
     }
   }

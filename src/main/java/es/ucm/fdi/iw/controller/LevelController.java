@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +26,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import es.ucm.fdi.iw.model.Level;
+import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.UserLevel;
+
 @Controller
+
 @RequestMapping("levels")
 public class LevelController {
     
+    @Autowired
+    private EntityManager entityManager;
+
+    @Autowired
+    private HttpSession session;
+
     @GetMapping
     public String getLevels(Model model){
         try{
@@ -45,12 +60,46 @@ public class LevelController {
         return "levels";
     }
 
-    @PostMapping("score/{scorePlayer}")
+    @PostMapping("score/{levelId}/{scorePlayer}")
     @ResponseBody
     @Transactional
-    public String getScore(@PathVariable long scorePlayer ,Model model){
+    public String updateHighscore(@PathVariable long levelId, @PathVariable int scorePlayer ,Model model){
         
-        return "{\"score\": " + scorePlayer + "}";
+        Long userId = ((User) session.getAttribute("u")).getId();
+        User user = entityManager.find(User.class, userId);
+        Level level = entityManager.find(Level.class, levelId);
+        System.out.println("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+        System.out.println(userId);
+        System.out.println("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+        System.out.println("LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+        System.out.println(level.getId());
+        System.out.println("LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+        UserLevel userLevel = null;
+        try {
+            userLevel = entityManager
+            .createNamedQuery("UserLevel.getUserLevel", UserLevel.class)
+            .setParameter("userId", userId)
+            .setParameter("levelId", level.getId())
+            .getSingleResult(); 
+            System.out.println("FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+            
+            
+        } catch (NoResultException e) {
+            //TODO: handle exception
+        }
+        if(userLevel == null){
+            userLevel = new UserLevel(user, level, scorePlayer);
+        }
+        else{
+            if(userLevel.getHighscore() < scorePlayer){
+                userLevel.setHighscore(scorePlayer);
+            }
+        }
+        entityManager.persist(userLevel);
+        entityManager.flush();
+        
+        
+        return "{\"score\": \"yes.\"}";
     }
 
     
