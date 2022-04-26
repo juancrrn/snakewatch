@@ -298,25 +298,25 @@ public class RoomsController {
     @PostMapping("/finish_match/{matchId}")
     @ResponseBody
     @Transactional
-    public String finishMatch(@PathVariable long matchId, @RequestBody JsonNode o, Model model)
-            throws JsonProcessingException {
+    public String finishMatch(@PathVariable long matchId, @RequestBody JsonNode o, Model model) {
         
         Match match = entityManager.find(Match.class, matchId);
 
+        ArrayNode matchPlayers = (ArrayNode) o.get("message");
 
-        ArrayNode a = (ArrayNode) o.get("message");
+        for(JsonNode j: matchPlayers){
 
-        for(JsonNode j: a){
             MatchPlayer mp = entityManager.
                 createNamedQuery("MatchPlayer.byPlayerUsername", MatchPlayer.class)
                 .setParameter("matchId", matchId)
-                .setParameter("playerUserName", j.textValue())
+                .setParameter("playerUserName", j.get("playerName").textValue())
                 .getSingleResult();
-            mp.setPosition(1);
+
+            mp.setPosition(j.get("position").asInt());
             entityManager.persist(mp);
             entityManager.flush();
         }
-        
+
         match.setStatus(Status.ENDED);
         entityManager.persist(match);
         entityManager.flush();

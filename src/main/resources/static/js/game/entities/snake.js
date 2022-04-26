@@ -5,14 +5,15 @@ import SnakePart from './snakePart.js';
  */
 export default class Snake {
 
-  constructor(scene, snakesGroup, pos, size, skin) {
+  constructor(scene, snakesGroup, pos, size, skin, username) {
     this.scene = scene;
     this.snakesGroup = snakesGroup;
     this.skin = skin;
     this.size = size;
     this.score = 0;
+    this.gamePosition = 0;
     this.dead = false;
-
+    this.username = username;
     this.dir = Math.floor(Math.random() * 4);
     this.lastDir;
     pos.dir = this.dir;
@@ -109,12 +110,6 @@ export default class Snake {
     this.parts = [];
     this.dead = true;
 
-    const messageEliminatePlayer = {
-      type: "playerDeath",
-      message: USERSESSIONAME
-    }
-
-    ws.stompClient.send("/topic/match" + matchMedia, ws.headers, JSON.stringify(messageEliminatePlayer));
     if (why instanceof Snake) {
       // If the other snake is not goind to die, restore the state of the cell
       if (why.collided === undefined) this.scene.setCellState(headPos, false);
