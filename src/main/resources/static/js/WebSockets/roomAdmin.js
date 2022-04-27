@@ -74,13 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let startMatchButton = document.getElementById('startMatchButton');
 
     startMatchButton.onclick = (e) => {
-
-        e.preventDefault();
-        go(startMatchButton.parentNode.action, 'POST', {
-            message: gamePlayersNames
-        })
-            .then(d => e => console.log("sad", e))
-            .catch(e => console.log("sad", e))
+        
+                e.preventDefault();
+                go(startMatchButton.parentNode.action, 'POST', {
+                    message: gamePlayersNames
+                })
+                .then(d  => console.log("happy", d))
+                .catch(e => console.log("sad", e))
 
     }
 
@@ -123,6 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 gamePlayersNames.push(text.message);
                 playersReady.innerHTML += "<li class='list-group-item text-primary p-0 border-0 fs-5 bg-transparent'>" + text.message + "</li>";
                 numberOfPlayersReady.innerHTML = gamePlayersNames.length + "/" + MAXROOMPLAYERS + " Players Ready";
+                if(gamePlayersNames.length>1){
+                    startMatchButton.style.display = 'block';
+                }
             }
         }
 
