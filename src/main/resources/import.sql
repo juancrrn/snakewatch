@@ -28,12 +28,12 @@ VALUES
     (2, 2),
     (3, 3);
 
-INSERT INTO Match (id, room_id, status, max_players, date) 
+INSERT INTO Match (id, room_id, status, date) 
 VALUES 
-    (NEXT VALUE FOR match_id_seq, 1, 3, 5, CURDATE()),
-    (NEXT VALUE FOR match_id_seq, 1, 3, 5, CURDATE()),
-    (NEXT VALUE FOR match_id_seq, 1, 3, 5, CURDATE()),
-    (NEXT VALUE FOR match_id_seq, 1, 3, 5, CURDATE());
+    (NEXT VALUE FOR match_id_seq, 1, 3, CURDATE()),
+    (NEXT VALUE FOR match_id_seq, 1, 3, CURDATE()),
+    (NEXT VALUE FOR match_id_seq, 1, 3, CURDATE()),
+    (NEXT VALUE FOR match_id_seq, 1, 3, CURDATE());
 
 INSERT INTO Match_player (id, player_id, match_id, position) 
 VALUES 

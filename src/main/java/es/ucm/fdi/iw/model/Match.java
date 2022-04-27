@@ -94,7 +94,6 @@ public class Match implements Serializable {
      * <p>
      * If null, the match has no maximum.
      */
-    private int maxPlayers;
 
     private LocalDate date;
 }
