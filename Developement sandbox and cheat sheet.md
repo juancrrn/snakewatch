@@ -2,15 +2,27 @@
 
 ## SSH y máquina virtual
 
+Conectarse al servidor con ssh:
+```
+$ ssh contenedor
+```
 Los comandos que se lanzan sobre SSH mueren cuando termina la conexión. Tmux permite solucionar esto.
 
 ```console
 $ tmux new -s iw
+$ rm -rf snakewatch
 $ git clone https://github.com/juancrrn/snakewatch
+```
+Cambiar el modo de compilacion a debug=false y lanzarlo
+```
+$ nano snakewatch/src/main/resources/application.properties
 $ cd snakewatch
 $ mvn spring-boot:run
-
-Ctrl + b + d # Desconectarse de la sesión
+```
+Desconectarse de la sesion tmux y del servidor
+```
+Ctrl + b + d     # Desconectarse de la sesión
+$ exit           # Desconectarse del servidor
 ```
 
 ## Tests con Maven y Karate
