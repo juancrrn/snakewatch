@@ -36,36 +36,33 @@
 
                   <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
                   <form th:action="@{/friendship/send_req/__${user.id}__/}" method="POST">
-                    <button id="friendship-send-button" class="btn btn-secondary" type="submit" style="display: none;">Solicitar amistad</button>
+                    <button id="friendship-send-button" class="btn btn-secondary" type="submit"
+                      style="display: none;">Solicitar amistad</button>
                   </form>
 
                   <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
                   <form th:action="@{/friendship/cancel_req/__${user.id}__/}" method="POST">
-                    <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit" style="display: none;">Cancelar solicitud de
-                      amistad enviada</button>
+                    <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit"
+                      style="display: none;">Cancelar solicitud de amistad enviada</button>
                   </form>
 
                   <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
                   <form th:action="@{/friendship/accept_req/__${user.id}__/}" method="POST">
-                    <button id="friendship-request-accept-button" class="btn btn-success" type="submit" style="display: none;">Aceptar solicitud de
-                      amistad</button>
+                    <button id="friendship-request-accept-button" class="btn btn-success" type="submit"
+                      style="display: none;">Aceptar solicitud de amistad</button>
                   </form>
 
                   <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
                   <form th:action="@{/friendship/finish/__${user.id}__/}" method="POST">
-                    <button id="friendship-finish-button" class="btn btn-light" type="submit" style="display: none;">Dejar de ser amigos</button>
+                    <button id="friendship-finish-button" class="btn btn-secondary" type="submit"
+                      style="display: none;">Dejar de ser amigos</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <form th:if="${not isOwnProfile}" th:action="@{/user/__${user.id}__/msg}" method="POST">
-        <input type="text" id="message" placeholder="escribe a este usuario" />
-        <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
-      </form>
+      </div>   
 
       <div class="row justify-content-md-center">
         <div class="col-3">
@@ -86,6 +83,13 @@
           </div>
         </div>
       </div>
+
+      <div class="row mb-4 justify-content-md-center">
+        <form class="card-body text-center" th:if="${not isOwnProfile}" th:action="@{/user/__${user.id}__/msg}" method="POST">
+          <input type="text" id="message" placeholder="escribe a este usuario" />
+          <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
+        </form>
+      </div>   
 
       <h3>Partidas</h3>
 
@@ -113,35 +117,37 @@
 
       <span style="display: inline-block; width: 40px; height: 50px;"></span>
 
-      <h3 th:if="${isOwnProfile}">Solicitudes de amistad recibidas</h3>
+      <div id="request-block" th:if="${isOwnProfile}">
+        <h3>Solicitudes de amistad recibidas</h3>
 
-      <table th:if="${isOwnProfile}" class="table table-light">
-        <thead>
-          <tr rowspan="1">
-            <th colspan="1">Friend Request Id</th>
-            <th colspan="1">Sender Id</th>
-            <th colspan="1">Sender Username</th>
-            <th colspan="1">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr rowspan="1" th:each="request: ${friendRequests}">
-            <td colspan="1" th:text="${request.id}">ID</td>
-            <td colspan="1" th:text="${request.user1.id}">Nombre</td>
-            <td colspan="1">
-              <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
-            </td>
-            <td colspan="1">
-              <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" method="POST">
-                <button id="accept_friend_req" class="btn btn-secondary" type="submit">Aceptar</button>
-              </form>
-              <form th:action="@{/friendship/reject_req/__${request.user1.id}__/}" method="POST">
-                <button id="reject_friend_req" class="btn btn-secondary" type="submit">Rechazar</button>
-              </form>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <table class="table table-light" >
+          <thead>
+            <tr rowspan="1">
+              <th colspan="1">Friend Request Id</th>
+              <th colspan="1">Sender Id</th>
+              <th colspan="1">Sender Username</th>
+              <th colspan="1">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="request-row" rowspan="1" th:each="request: ${friendRequests}">
+              <td colspan="1" th:text="${request.id}">ID</td>
+              <td colspan="1" th:text="${request.user1.id}">Nombre</td>
+              <td colspan="1">
+                <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
+              </td>
+              <td colspan="1">
+                <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
+                  <button id="request-accept-button" class="btn btn-success" type="submit">Aceptar</button>
+                </form>
+                <form th:action="@{/friendship/reject_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
+                  <button id="request-reject-button" class="btn btn-danger" type="submit">Rechazar</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3 th:if="${isOwnProfile}">Amigos</h3>
 
@@ -290,9 +296,56 @@
           })
           .catch(e => console.log("sad", e))
       }
-    
+
     });
 
+  </script>
+
+  <script th:if="${isOwnProfile}">
+    document.addEventListener("DOMContentLoaded", () => {
+      // Manejar la seccion de solicitudes recibidas: aceptar o rechazar cada solicitud
+
+      const requestContainer = document.getElementById("request-block");
+      var requestRows = document.getElementsByClassName("request-row");       // Una row para cada solicitud
+
+      if(requestRows.length <= 0){
+        requestContainer.style.display = 'none';
+      }
+
+      for (let i = 0; i < requestRows.length; i++) {
+        let row = requestRows[i];
+
+        // Boton de aceptar la solicitud: aceptarla a traves de ayax y ocultar esta row
+        let acceptRequestButton = row.querySelector('#request-accept-button');
+        acceptRequestButton.onclick = (e) => {
+          e.preventDefault();
+          go(acceptRequestButton.parentNode.action, 'POST', {})
+            .then(d => {
+              row.remove();
+              // Ocultar row. Si ya no queda ninguna row mas, ocultar la seccion de solicitudes entera
+              if (requestRows.length <= 0) {
+                requestContainer.style.display = 'none';
+              }
+            })
+            .catch(e => console.log("sad", e))
+        }
+
+        // Boton de rechazar la solicitud: rechazarla a traves de ayax y ocultar esta row
+        let rejectRequestButton = row.querySelector('#request-reject-button');
+        rejectRequestButton.onclick = (e) => {
+          e.preventDefault();
+          go(rejectRequestButton.parentNode.action, 'POST', {})
+            .then(d => {
+              row.style.display = 'none';
+              // Ocultar row. Si ya no queda ninguna row mas, ocultar la seccion de solicitudes entera
+              if (requestRows.length <= 0) {
+                requestContainer.style.display = 'none';
+              }
+            })
+            .catch(e => console.log("sad", e))
+        }
+      }
+    });
   </script>
 </body>
 

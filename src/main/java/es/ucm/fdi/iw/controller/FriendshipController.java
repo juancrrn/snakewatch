@@ -189,7 +189,7 @@ public class FriendshipController {
         log.info("Accepting the friend request from '{}' to '{}'", sender.getUsername(), loggedUser.getUsername());
 
         // FIXME Create a JSONObject and transform it to string
-        return "{\"result\": \"friend request sent.\"}";
+        return "{\"result\": \"ok\"}";
     }
 
     /**
