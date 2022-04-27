@@ -34,8 +34,7 @@ export default class Level extends Phaser.Scene {
     // Create players
     this.snakesGroup = this.physics.add.group();
     this.snakes = new Map();
-    this.results = [];
-    this.contador = NPLAYERS;
+
     this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white', USERSESSIONAME);
     this.snakes.set(USERSESSIONAME, this.player);
     PLAYERS.forEach((p) => {
@@ -44,6 +43,8 @@ export default class Level extends Phaser.Scene {
       }
     });
 
+    this.results = [];
+    this.counter = NPLAYERS;
 
     // Create food
     this.food = new Food(this, this.getEmptyCell());
@@ -79,6 +80,11 @@ export default class Level extends Phaser.Scene {
 
     ws.subscribe("/topic/match" + MATCH, (text) => {
       if (text.type == "Move") this.onMoveRequest(text.message);
+      if(text.type == "deathPlayer"){
+        let pos = this.results.indexOf(text.message);
+        this.results[pos].position = this.contador;
+        this.contador--; 
+      }
     });
 
     // Broadcast initial game state
@@ -134,42 +140,38 @@ export default class Level extends Phaser.Scene {
         }
         else{
           if(snake.gamePosition==0){
-    
-            snake.gamePosition = this.contador;
             this.results.push({
-              playerName: snake.username,
-              position: snake.gamePosition
-            })
-            this.contador-=1;
+              playerName:  snake.username,
+              position: this.counter
+            });
+            snake.gamePosition = this.counter;
+            this.counter-=1;
           }
-    
+          
         }
-      });
+      })
 
       if(alivePlayers<=1){
-        
+
           if(alivePlayers==1){
             this.snakes.forEach(snake => {
               if(snake.gamePosition==0){
-                snake.gamePosition = this.contador;
                 this.results.push({
-                  playerName: snake.username,
-                  position: snake.gamePosition
-                })
-                this.contador-=1;
+                  playerName:  snake.username,
+                  position: this.counter
+                });
+                snake.gamePosition = this.counter;
+                this.counter-=1;
               }
-            }) 
-            
+            })
           }
+          this.timer.destroy();
           
           go("/rooms/finish_match/" + MATCH, 'POST', {
             message: this.results
           })
-          .then(d => {console.log("happy", d)})
+          .then(d => console.log("happy", d))
           .catch(e => console.log("sad", e))
-
-          this.timer.destroy();
-        
       }
 
       this.broadcastState();
