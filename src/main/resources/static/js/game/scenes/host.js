@@ -1,7 +1,7 @@
-import BotSnake from '../entities/botSnake.js';
 import Food from '../entities/food.js';
 import PlayerSnake from '../entities/playerSnake.js';
 import SnakePart from '../entities/snakePart.js';
+
 /**
  * Scene that represents the current match and level
  */
@@ -76,22 +76,17 @@ export default class Level extends Phaser.Scene {
     this.ticked = false;
     this.events.on('update', () => this.postTick(), this);
 
-    this.time = Date.now();
+    this.startTime = Date.now();
 
     ws.subscribe("/topic/match" + MATCH, (text) => {
       if (text.type == "Move") this.onMoveRequest(text.message);
-      if(text.type == "deathPlayer"){
-        let pos = this.results.indexOf(text.message);
-        this.results[pos].position = this.contador;
-        this.contador--; 
-      }
     });
 
     // Broadcast initial game state
     this.broadcastState();
     go("/rooms/start_match/" + MATCH, 'POST', {})
-    .then(d => e => console.log("happy", e))
-    .catch(e => console.log("sad", e))
+    .then(d => console.log("Success", d))
+    .catch(e => console.log("Error", e))
   }
 
   /**
@@ -135,43 +130,41 @@ export default class Level extends Phaser.Scene {
       let alivePlayers = 0;
 
       this.snakes.forEach(snake => {
-        if(!snake.dead){
-          alivePlayers+=1;
-        }
-        else{
-          if(snake.gamePosition==0){
+        if (!snake.dead) {
+          alivePlayers++;
+        } else {
+          if (snake.gamePosition == 0) {
             this.results.push({
               playerName:  snake.username,
               position: this.counter
             });
             snake.gamePosition = this.counter;
-            this.counter-=1;
+            this.counter--;
           }
-          
         }
       })
 
-      if(alivePlayers<=1){
-
-          if(alivePlayers==1){
-            this.snakes.forEach(snake => {
-              if(snake.gamePosition==0){
-                this.results.push({
-                  playerName:  snake.username,
-                  position: this.counter
-                });
-                snake.gamePosition = this.counter;
-                this.counter-=1;
-              }
-            })
-          }
-          this.timer.destroy();
-          
-          go("/rooms/finish_match/" + MATCH, 'POST', {
-            message: this.results
+      if (alivePlayers <= 1 ) {
+        if (alivePlayers == 1) {
+          this.snakes.forEach(snake => {
+            if (snake.gamePosition == 0) {
+              this.results.push({
+                playerName:  snake.username,
+                position: this.counter
+              });
+              snake.gamePosition = this.counter;
+              this.counter--;
+            }
           })
-          .then(d => console.log("happy", d))
-          .catch(e => console.log("sad", e))
+        }
+
+        this.timer.destroy();
+
+        go("/rooms/finish_match/" + MATCH, 'POST', {
+          message: this.results
+        })
+        .then(d => console.log("Success", d))
+        .catch(e => console.log("Error", e))
       }
 
       this.broadcastState();
@@ -243,6 +236,6 @@ export default class Level extends Phaser.Scene {
   toJSON() {
     let snakes = {};
     this.snakes.forEach((v, k) => snakes[k] = v.toJSON());
-    return { food: this.food.toJSON(), snakes: snakes, time: this.time };
+    return { food: this.food.toJSON(), snakes: snakes, time: this.startTime };
   }
 }

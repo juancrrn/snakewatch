@@ -2,6 +2,7 @@ import BotSnake from '../entities/botSnake.js';
 import Food from '../entities/food.js';
 import PlayerSnake from '../entities/playerSnake.js';
 import SnakePart from '../entities/snakePart.js';
+
 /**
  * Scene that represents the current match and level
  */
@@ -71,17 +72,8 @@ export default class Level extends Phaser.Scene {
     this.ticked = false;
     this.events.on('update', () => this.postTick(), this);
 
-    this.time = Date.now();
+    this.scoreText = document.getElementById("scoreDiv");
   }
-
-  /**
-   * Handles a movement request from a remote player
-   * @param request The received request
-   */
-  /*onMoveRequest(request) {
-    let snake = this.snakes.get(request.user);
-    if (snake !== undefined) snake.setDir(request.dir);
-  }*/
 
   /**
    * Handles collision for two given GameObjects
@@ -103,17 +95,17 @@ export default class Level extends Phaser.Scene {
   processTick() {
     this.snakes.forEach(snake => snake.processTick());
     this.food.processTick();
-    let scoreDiv = document.getElementById("scoreDiv");
-    scoreDiv.innerHTML = (this.player.score);
     this.ticked = true;
+
+    this.scoreText.innerHTML = this.player.score;
 
     if (this.player.dead) {
       this.timer.destroy();
       const body = JSON.stringify({ type: "finishLevelGame" });
       ws.stompClient.send("/topic/level/" + USERSESSIONAME, ws.headers, body);
       go("/levels/score/" + LEVEL + "/" + this.player.score, 'POST', {})
-        .then(d => e => console.log("happy", e))
-        .catch(e => console.log("sad", e))
+        .then(d => console.log("Success", d))
+        .catch(e => console.log("Error", e))
     }
   }
 
@@ -123,10 +115,7 @@ export default class Level extends Phaser.Scene {
 
       this.snakes.forEach(snake => snake.handleDeath());
     }
-
-
   }
-
 
   /**
    * Checks if the snake would crash when moving to the new position

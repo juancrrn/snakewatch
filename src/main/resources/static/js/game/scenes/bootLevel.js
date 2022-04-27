@@ -23,7 +23,7 @@
      * Start the level scene
      */
     create() {
-        this.scene.start('level');
+      this.scene.start('level');
     }
   }
   

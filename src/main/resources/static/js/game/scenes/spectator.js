@@ -12,11 +12,6 @@ export default class Spectator extends Phaser.Scene {
     super({ key: 'spectator' });
   }
 
-  preload() {
-    // TODO: load the tilemap of the level selected for this match xxx
-    //this.load.tilemapTiledJSON('tilemap', '/levelMaps/3.json');
-  }
-
   create() {
     // Loads the map
     this.map = this.make.tilemap({
@@ -65,8 +60,8 @@ export default class Spectator extends Phaser.Scene {
    * Updates current state from the given JSON representation
    */
   fromJSON(json) {
-    if (this.time !== json.time) {
-      this.time = json.time;
+    if (this.startTime !== json.time) {
+      this.startTime = json.time;
       this.snakes.forEach((s) => s.die());
       this.snakes = new Map();
     }
