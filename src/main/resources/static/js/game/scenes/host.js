@@ -53,6 +53,18 @@ export default class Level extends Phaser.Scene {
       fontSize: 14
     });
 
+
+
+    // Create food
+    this.food = new Food(this, this.getEmptyCell());
+
+
+    this.add.text(390, 0, "Top    Scores", {
+      color: '#FFFFFF',
+      fontStyle: 'italic',
+      fontSize: 14
+    });
+
     let cont = 0;
     this.snakes.forEach(snake => {
       let texto =  this.add.text(370,(cont+1) * 15, snake.gamePosition + " " + snake.username + "    " + snake.score, {
@@ -63,10 +75,6 @@ export default class Level extends Phaser.Scene {
       this.texts.push(texto);
       cont++;
     });
-
-
-    // Create food
-    this.food = new Food(this, this.getEmptyCell());
 
     // Cursors
     this.cursors = this.input.keyboard.createCursorKeys();
