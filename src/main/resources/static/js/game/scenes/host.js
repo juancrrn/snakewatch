@@ -45,6 +45,25 @@ export default class Level extends Phaser.Scene {
 
     this.results = [];
     this.counter = NPLAYERS;
+    this.texts = [];
+    //Create Texts
+    this.add.text(390, 0, "Top    Scores", {
+      color: '#FFFFFF',
+      fontStyle: 'italic',
+      fontSize: 14
+    });
+
+    let cont = 0;
+    this.snakes.forEach(snake => {
+      let texto =  this.add.text(370,(cont+1) * 15, snake.gamePosition + " " + snake.username + "    " + snake.score, {
+        color: '#FFFFFF',
+        fontStyle: 'italic',
+        fontSize: 14
+      });
+      this.texts.push(texto);
+      cont++;
+    });
+
 
     // Create food
     this.food = new Food(this, this.getEmptyCell());
@@ -148,17 +167,19 @@ export default class Level extends Phaser.Scene {
 
       snakeScores.sort(function(a,b){
         if(a.score < b.score){
-          return -1;
+          return 1;
         }
         if(a.score > b.score){
-          return 1;
+          return -1;
         }
         return 0;
       });
 
 
       snakeScores.forEach(snakeScore => {
-        this.snakes.get(snakeScore.name).gamePosition = snakeScores.indexOf(snakeScore) + 1;
+        let index =  snakeScores.indexOf(snakeScore);
+        this.snakes.get(snakeScore.name).gamePosition = index + 1;
+        this.texts[index].setText((index + 1) + " " + snakeScore.name + "    " + snakeScore.score);
       });
 
       if (alivePlayers <= 1 ) {
@@ -252,7 +273,11 @@ export default class Level extends Phaser.Scene {
    */
   toJSON() {
     let snakes = {};
+    let texts =[];
     this.snakes.forEach((v, k) => snakes[k] = v.toJSON());
-    return { food: this.food.toJSON(), snakes: snakes, time: this.startTime };
+    this.texts.forEach(t => {
+      texts.push(t.text);
+    })
+    return { food: this.food.toJSON(), snakes: snakes, time: this.startTime, texts: texts};
   }
 }

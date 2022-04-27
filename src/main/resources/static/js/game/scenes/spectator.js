@@ -29,6 +29,26 @@ export default class Spectator extends Phaser.Scene {
     // Snakes
     this.snakes = new Map();
 
+
+    this.texts = [];
+    //Create Texts
+    this.add.text(390, 0, "Top    Scores", {
+      color: '#FFFFFF',
+      fontStyle: 'italic',
+      fontSize: 14
+    });
+
+    let cont = 0;
+    PLAYERS.forEach(p => {
+      let texto =  this.add.text(370,(cont+1) * 15, 1 + " " + p + "    " + 0, {
+        color: '#FFFFFF',
+        fontStyle: 'italic',
+        fontSize: 14
+      });
+      this.texts.push(texto);
+      cont++;
+    });
+
     // Cursors
     if(PLAYERS.indexOf(USERSESSIONAME) != -1){
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -73,5 +93,8 @@ export default class Spectator extends Phaser.Scene {
       this.snakes.get(key).fromJSON(snake);
     }
     this.food.fromJSON(json.food);
+    this.texts.forEach(t =>{
+      t.setText(json.texts[this.texts.indexOf(t)]); 
+    });
   }
 }
