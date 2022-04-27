@@ -13,6 +13,18 @@
       <div id="game-container">
         <canvas id="canvas" style="margin-left: auto; margin-right: auto; display: block;"></canvas>
       </div>
+      <div id="finishGameToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" style="display:none;">
+        <div class="toast-header">
+            <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+            <strong class="me-auto">Snakewatch</strong>
+        </div>
+        <div id="finishGameToastBody" class="toast-body row justify-content-around">
+          <div class="row justify-content-around">
+            <p class="col-4 text-center fs-5">Top</p>
+            <p class="col-4 text-center fs-5">Scores</p>
+          </div>
+        </div>
+    </div>
     </main>
 
 

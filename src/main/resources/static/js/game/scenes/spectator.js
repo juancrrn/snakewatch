@@ -63,6 +63,61 @@ export default class Spectator extends Phaser.Scene {
 
     ws.subscribe("/topic/match" + MATCH, (text) => {
       if (text.type == "GameState") this.fromJSON(text.message);
+      if (text.type == "finishMatch"){
+       
+        let toastHTML = document.getElementById('finishGameToast');
+        let finishGameToastBody = document.getElementById('finishGameToastBody');
+
+        text.message.forEach(r => {
+          let divR = document.createElement('div');
+          divR.setAttribute("class", "row justify-content-around");
+          let p1 = document.createElement('p');
+          let p2 = document.createElement('p');
+          switch(text.message.indexOf(r)){
+            case 0:
+            p1.style.color = 'gold';
+            break;
+            case 1:
+            p1.style.color = 'silver';
+            break;
+            case 2:
+            p1.style.color = 'brown';
+            break;
+            default:
+            p1.style.color = 'grey';
+          }
+          p1.setAttribute("class", "col-4 text-center fs-5");
+          p2.setAttribute("class", "col-4 text-center fs-5");
+          p1.innerHTML = r.position + ". " + r.playerName;
+          p2.innerHTML = r.score;
+          divR.appendChild(p1);
+          divR.appendChild(p2);   
+          finishGameToastBody.appendChild(divR);
+        });
+
+
+        let backButton = document.createElement("button");
+        
+        backButton.setAttribute("class", "w-50 btn btn-outline-danger text-center fs-5");
+        if(PLAYERS.indexOf(USERSESSIONAME)!=-1){
+          backButton.innerHTML = 'Go Back To Room';
+          backButton.onclick = () => {
+            window.location.replace("/rooms/" + ROOM);
+          }
+        }
+        else{
+          backButton.innerHTML = 'Go Back To Spectate';
+          backButton.onclick = () => {
+            window.location.replace("/spectate");
+          }
+        }
+       
+        finishGameToastBody.appendChild(backButton);
+      
+        toastHTML.style.display = '';
+        let toast = new bootstrap.Toast(toastHTML);
+        toast.show();
+      }
     });
   }
 

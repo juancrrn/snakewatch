@@ -298,12 +298,16 @@ public class RoomsController {
     @PostMapping("/finish_match/{matchId}")
     @ResponseBody
     @Transactional
-    public String finishMatch(@PathVariable long matchId, @RequestBody JsonNode o, Model model) {
+    public String finishMatch(@PathVariable long matchId, @RequestBody JsonNode o, Model model) 
+        throws JsonProcessingException {
         
         Match match = entityManager.find(Match.class, matchId);
 
-        ArrayNode matchPlayers = (ArrayNode) o.get("message");
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
 
+        ArrayNode matchPlayers = (ArrayNode) o.get("message");
+        ArrayNode results = rootNode.putArray("message");
         for(JsonNode j: matchPlayers){
 
             MatchPlayer mp = entityManager.
@@ -311,7 +315,7 @@ public class RoomsController {
                 .setParameter("matchId", matchId)
                 .setParameter("playerUserName", j.get("playerName").textValue())
                 .getSingleResult();
-
+            results.add(j);
             mp.setPosition(j.get("position").asInt());
             entityManager.persist(mp);
             entityManager.flush();
@@ -321,6 +325,11 @@ public class RoomsController {
         entityManager.persist(match);
         entityManager.flush();
         
+        rootNode.put("type", "finishMatch");
+        
+        String json = mapper.writeValueAsString(rootNode);
+
+        messagingTemplate.convertAndSend("/topic/match" + matchId, json);
 
         return "{\"result\": \"match finished.\"}";
     }

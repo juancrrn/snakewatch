@@ -107,6 +107,50 @@ export default class Level extends Phaser.Scene {
 
     ws.subscribe("/topic/match" + MATCH, (text) => {
       if (text.type == "Move") this.onMoveRequest(text.message);
+      if (text.type == "finishMatch"){
+        let toastHTML = document.getElementById('finishGameToast');
+        let finishGameToastBody = document.getElementById('finishGameToastBody');
+
+        text.message.forEach(r => {
+          let divR = document.createElement('div');
+          divR.setAttribute("class", "row justify-content-around");
+          let p1 = document.createElement('p');
+          let p2 = document.createElement('p');
+          switch(text.message.indexOf(r)){
+            case 0:
+            p1.style.color = 'gold';
+            break;
+            case 1:
+            p1.style.color = 'silver';
+            break;
+            case 2:
+            p1.style.color = 'brown';
+            break;
+            default:
+            p1.style.color = 'grey';
+          }
+          p1.setAttribute("class", "col-4 text-center fs-5");
+          p2.setAttribute("class", "col-4 text-center fs-5");
+          p1.innerHTML = r.position + ". " + r.playerName;
+          p2.innerHTML = r.score;
+          divR.appendChild(p1);
+          divR.appendChild(p2);   
+          finishGameToastBody.appendChild(divR);
+        });
+
+
+        let backButton = document.createElement("button");
+        backButton.setAttribute("class", "w-50 btn btn-outline-danger text-center fs-5");
+        backButton.innerHTML = 'Go Back To Room';       
+        backButton.onclick = () => {
+          window.location.replace("/rooms/" + ROOM);
+        }
+        
+        finishGameToastBody.appendChild(backButton);
+        toastHTML.style.display = '';
+        let toast = new bootstrap.Toast(toastHTML);
+        toast.show();
+      }
     });
 
     // Broadcast initial game state
@@ -164,9 +208,10 @@ export default class Level extends Phaser.Scene {
         if (!snake.dead) {
           alivePlayers++;
         } else {         
-            this.results.push({
+            this.results.unshift({
               playerName:  snake.username,
-              position: this.counter
+              position: this.counter,
+              score: snake.score
             });
             snake.gamePosition = this.counter;
             this.counter--;
@@ -194,9 +239,10 @@ export default class Level extends Phaser.Scene {
         if (alivePlayers == 1) {
           this.snakes.forEach(snake => {
             if(!snake.dead){
-              this.results.push({
+              this.results.unshift({
                 playerName:  snake.username,
-                position: this.counter
+                position: this.counter,
+                score: snake.score
               });
               snake.gamePosition = this.counter;
               this.counter--;
