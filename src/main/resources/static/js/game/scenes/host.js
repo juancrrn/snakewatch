@@ -128,26 +128,43 @@ export default class Level extends Phaser.Scene {
       this.snakes.forEach(snake => snake.handleDeath());
 
       let alivePlayers = 0;
-
+      let snakeScores = [];
       this.snakes.forEach(snake => {
+        snakeScores.push({
+          name: snake.username,
+          score: snake.score
+        })
         if (!snake.dead) {
           alivePlayers++;
-        } else {
-          if (snake.gamePosition == 0) {
+        } else {         
             this.results.push({
               playerName:  snake.username,
               position: this.counter
             });
             snake.gamePosition = this.counter;
             this.counter--;
-          }
         }
       })
+
+      snakeScores.sort(function(a,b){
+        if(a.score < b.score){
+          return -1;
+        }
+        if(a.score > b.score){
+          return 1;
+        }
+        return 0;
+      });
+
+
+      snakeScores.forEach(snakeScore => {
+        this.snakes.get(snakeScore.name).gamePosition = snakeScores.indexOf(snakeScore) + 1;
+      });
 
       if (alivePlayers <= 1 ) {
         if (alivePlayers == 1) {
           this.snakes.forEach(snake => {
-            if (snake.gamePosition == 0) {
+            if(!snake.dead){
               this.results.push({
                 playerName:  snake.username,
                 position: this.counter
