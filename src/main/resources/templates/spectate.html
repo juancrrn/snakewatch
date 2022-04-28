@@ -17,8 +17,25 @@
                 <div id = "divemptymatches">
                     <h2  class="text-center text-black fst-italic"> No ongoing matches </h2>
                 </div>
+
+                <div id="matchdiv" style="display:none;" class="card col-8 mb-3 shadow bg-info bg-gradient bg-opacity-10 px-0 mx-0">
+                    <div class="row g-0 justify-content-between">
+                      <div class="col-md-4 bg-info bg-gradient bg-opacity-75">
+                        <h2 id = "matchdivtitle" class="text-center text-white fst-italic"></h2>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-body w-100">
+                          <h5 id = "matchdivroom" class="card-title text-center text-danger fs-4" th:text="'Level ' + ${level}"></h5>
+                          <form  id="spectatematch" class="card-text text-center fs-4">
+                            <button  class="w-100 btn btn-outline-info fs-5" type="submit">Spectate</button> 
+                        </form>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
                 
-                <div id="matchdiv" style="display:none;" class="card col-12 my-3 px-0 shadow">
+                <!--<div id="matchdiv" style="display:none;" class="card col-12 my-3 px-0 shadow">
                     <div class="card-header bg-info bg-gradient bg-opacity-75">
                         <h2 id = "matchdivtitle" class="text-center text-white fst-italic"></h2>
                     </div>
@@ -28,7 +45,7 @@
                             <button  class="w-50 btn btn-outline-info fs-5" type="submit">Spectate</button> 
                         </form>
                     </div>
-                </div>
+                </div>-->
 
             </div>
         </div>

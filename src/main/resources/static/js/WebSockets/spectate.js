@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     spectatebtn.setAttribute("action", "/rooms/get_match/"+ d.arrayMatches[i][0]);
                     spectatebtn.setAttribute("method", "GET");
 
-                    div.setAttribute("class", "card col-12 my-3 px-0 shadow");
+                    div.setAttribute("class", "card col-8 mb-3 shadow bg-info bg-gradient bg-opacity-10 px-0 mx-0");
 
                     div.innerHTML = divmatch.innerHTML;
                     div.style.display="block";
