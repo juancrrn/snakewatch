@@ -48,23 +48,19 @@ export default class Level extends Phaser.Scene {
     this.counter = NPLAYERS;
     this.texts = [];
     //Create Texts
-    this.add.text(390, 0, "Top    Scores", {
-      color: '#FFFFFF',
-      fontStyle: 'italic',
-      fontSize: 14
-    });
-
-
+   
 
     // Create food
     this.food = new Food(this, this.getEmptyCell());
 
 
-    this.add.text(390, 0, "Top    Scores", {
+    let topScoreText = this.add.text(390, 0, "Top    Scores", {
       color: '#FFFFFF',
       fontStyle: 'italic',
       fontSize: 14
     });
+
+    topScoreText.setDepth(1);
 
     let cont = 0;
     this.snakes.forEach(snake => {
@@ -73,6 +69,7 @@ export default class Level extends Phaser.Scene {
         fontStyle: 'italic',
         fontSize: 14
       });
+      texto.setDepth(1);
       this.texts.push(texto);
       cont++;
     });
@@ -109,17 +106,21 @@ export default class Level extends Phaser.Scene {
       loop: true
     })
 
-    this.add.text(205, 0, "Remaining Time", {
+    let remainingTimeText = this.add.text(190, 0, "Remaining Time", {
       color: '#FFFFFF',
       fontStyle: 'italic',
       fontSize: 14
     });
 
-    this.timeText = this.add.text(235, 15, this.timeInMinutesSeconds(this.timeToFinish), {
+    remainingTimeText.setDepth(1);
+
+    this.timeText = this.add.text(230, 15, this.timeInMinutesSeconds(this.timeToFinish), {
       color: '#FFFFFF',
       fontStyle: 'italic',
       fontSize: 14
     });
+
+    this.timeText.setDepth(1);
 
     // Let some logic be delayed
     this.ticked = false;
@@ -229,6 +230,7 @@ export default class Level extends Phaser.Scene {
   checkfinishGame(){
     let alivePlayers = 0;
     let snakeScores = [];
+    let deadSnakes = [];
     this.snakes.forEach(snake => {
       snakeScores.push({
         name: snake.username,
@@ -236,16 +238,45 @@ export default class Level extends Phaser.Scene {
       })
       if (!snake.dead) {
         alivePlayers++;
-      } else {         
-          this.results.unshift({
-            playerName:  snake.username,
-            position: this.counter,
-            score: snake.score
-          });
-          snake.gamePosition = this.counter;
-          this.counter--;
+      } else { 
+        deadSnakes.push({
+          name: snake.username,
+          score: snake.score
+        });         
       }
     });
+
+
+    if(deadSnakes.length > 1){
+
+      deadSnakes.sort(function(a,b){
+        if(a.score < b.score){
+          return 1;
+        }
+        if(a.score > b.score){
+          return -1;
+        }
+        return 0;
+      });
+  
+      for(let i=deadSnakes.length-1; i >= 0;i--){
+        this.results.unshift({
+          playerName: deadSnakes[i].name,
+          position: i + 1,
+          score: deadSnakes[i].score
+        });
+        this.counter--;
+      }
+    }
+    else if (deadSnakes.length==1){
+      this.results.unshift({
+        playerName: deadSnakes[0].name,
+        position: this.counter,
+        score: deadSnakes[0].score
+      });
+      this.counter--;
+    }
+    
 
     snakeScores.sort(function(a,b){
       if(a.score < b.score){
@@ -266,17 +297,20 @@ export default class Level extends Phaser.Scene {
 
    
     if (alivePlayers <= 1) {
-        this.snakes.forEach(snake => {
-          if(!snake.dead){
-            this.results.unshift({
-              playerName:  snake.username,
-              position: this.counter,
-              score: snake.score
-            });
-            snake.gamePosition = this.counter;
-            this.counter--;
-          }
-        })     
+        if(alivePlayers == 1){
+          this.snakes.forEach(snake => {
+            if(!snake.dead){
+              this.results.unshift({
+                playerName:  snake.username,
+                position: this.counter,
+                score: snake.score
+              });
+              snake.gamePosition = this.counter;
+              this.counter--;
+            }
+          })
+        }
+             
       this.finishGame();
     }
 

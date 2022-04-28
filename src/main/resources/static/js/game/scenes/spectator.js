@@ -31,12 +31,15 @@ export default class Spectator extends Phaser.Scene {
 
 
     this.texts = [];
+
     //Create Texts
-    this.add.text(390, 0, "Top    Scores", {
+    let topScoreText = this.add.text(390, 0, "Top    Scores", {
       color: '#FFFFFF',
       fontStyle: 'italic',
       fontSize: 14
     });
+
+    topScoreText.setDepth(1);
 
     let cont = 0;
     PLAYERS.forEach(p => {
@@ -45,21 +48,26 @@ export default class Spectator extends Phaser.Scene {
         fontStyle: 'italic',
         fontSize: 14
       });
+      texto.setDepth(1);
       this.texts.push(texto);
       cont++;
     });
 
-    this.add.text(205, 0, "Remaining Time", {
+    let remainingTimeText = this.add.text(190, 0, "Remaining Time", {
       color: '#FFFFFF',
       fontStyle: 'italic',
       fontSize: 14
     });
 
-    this.timeText = this.add.text(235, 15, "1:30", {
+    remainingTimeText.setDepth(1);
+
+    this.timeText = this.add.text(230, 15, "1:30", {
       color: '#FFFFFF',
       fontStyle: 'italic',
       fontSize: 14
     });
+
+    this.timeText.setDepth(1);
 
     // Cursors
     if(PLAYERS.indexOf(USERSESSIONAME) != -1){
