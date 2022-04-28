@@ -44,6 +44,7 @@ export default class Level extends Phaser.Scene {
     });
 
     this.results = [];
+
     this.counter = NPLAYERS;
     this.texts = [];
     //Create Texts
@@ -97,6 +98,13 @@ export default class Level extends Phaser.Scene {
       callback: this.processTick,
       callbackScope: this,
       loop: true
+    })
+
+
+    this.finishGameTimer = this.time.addEvent({
+      delay: 100000,
+      callback: this.completeResults,
+      callbackScope: this
     })
 
     // Let some logic be delayed
@@ -197,17 +205,55 @@ export default class Level extends Phaser.Scene {
     if (this.ticked) {
       this.ticked = false;
       this.snakes.forEach(snake => snake.handleDeath());
+      this.checkfinishGame();
 
-      let alivePlayers = 0;
-      let snakeScores = [];
-      this.snakes.forEach(snake => {
-        snakeScores.push({
-          name: snake.username,
-          score: snake.score
-        })
-        if (!snake.dead) {
-          alivePlayers++;
-        } else {         
+      this.broadcastState();
+    }
+  }
+
+
+  checkfinishGame(){
+    let alivePlayers = 0;
+    let snakeScores = [];
+    this.snakes.forEach(snake => {
+      snakeScores.push({
+        name: snake.username,
+        score: snake.score
+      })
+      if (!snake.dead) {
+        alivePlayers++;
+      } else {         
+          this.results.unshift({
+            playerName:  snake.username,
+            position: this.counter,
+            score: snake.score
+          });
+          snake.gamePosition = this.counter;
+          this.counter--;
+      }
+    });
+
+    snakeScores.sort(function(a,b){
+      if(a.score < b.score){
+        return 1;
+      }
+      if(a.score > b.score){
+        return -1;
+      }
+      return 0;
+    });
+
+
+    snakeScores.forEach(snakeScore => {
+      let index =  snakeScores.indexOf(snakeScore);
+      this.snakes.get(snakeScore.name).gamePosition = index + 1;
+      this.texts[index].setText((index + 1) + " " + snakeScore.name + "    " + snakeScore.score);
+    });
+
+   
+    if (alivePlayers <= 1) {
+        this.snakes.forEach(snake => {
+          if(!snake.dead){
             this.results.unshift({
               playerName:  snake.username,
               position: this.counter,
@@ -215,54 +261,58 @@ export default class Level extends Phaser.Scene {
             });
             snake.gamePosition = this.counter;
             this.counter--;
-        }
-      })
-
-      snakeScores.sort(function(a,b){
-        if(a.score < b.score){
-          return 1;
-        }
-        if(a.score > b.score){
-          return -1;
-        }
-        return 0;
-      });
-
-
-      snakeScores.forEach(snakeScore => {
-        let index =  snakeScores.indexOf(snakeScore);
-        this.snakes.get(snakeScore.name).gamePosition = index + 1;
-        this.texts[index].setText((index + 1) + " " + snakeScore.name + "    " + snakeScore.score);
-      });
-
-      if (alivePlayers <= 1 ) {
-        if (alivePlayers == 1) {
-          this.snakes.forEach(snake => {
-            if(!snake.dead){
-              this.results.unshift({
-                playerName:  snake.username,
-                position: this.counter,
-                score: snake.score
-              });
-              snake.gamePosition = this.counter;
-              this.counter--;
-            }
-          })
-        }
-
-        this.timer.destroy();
-
-        go("/rooms/finish_match/" + MATCH, 'POST', {
-          message: this.results
-        })
-        .then(d => console.log("Success", d))
-        .catch(e => console.log("Error", e))
-      }
-
-      this.broadcastState();
+          }
+        })     
+      this.finishGame();
     }
+
   }
 
+
+  completeResults(){
+    let snakeScores = [];
+    this.snakes.forEach(snake => {
+      if(!snake.dead){
+        snakeScores.push({
+          name: snake.username,
+          score: snake.score
+        });
+      }
+    })
+
+    
+    snakeScores.sort(function(a,b){
+      if(a.score < b.score){
+        return 1;
+      }
+      if(a.score > b.score){
+        return -1;
+      }
+      return 0;
+    });
+
+
+    for(let i = snakeScores.length -1; i>=0;i--){
+      this.results.unshift({
+        playerName: snakeScores[i].name,
+        position: i + 1,
+        score: snakeScores[i].score
+      });
+    }
+
+    this.finishGame();
+
+  }
+
+  finishGame(){
+    go("/rooms/finish_match/" + MATCH, 'POST', {
+      message: this.results
+    })
+    .then(d => console.log("Success", d))
+    .catch(e => console.log("Error", e))
+    this.timer.destroy();
+    this.finishGameTimer.destroy();
+  }
   /**
    * Shares current gamestate over websocket
    */
@@ -334,4 +384,5 @@ export default class Level extends Phaser.Scene {
     })
     return { food: this.food.toJSON(), snakes: snakes, time: this.startTime, texts: texts};
   }
+
 }

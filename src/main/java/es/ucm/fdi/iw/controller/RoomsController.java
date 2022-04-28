@@ -206,6 +206,8 @@ public class RoomsController {
     public String getMatch(@PathVariable long matchId, Model model) {
 
         Match match = entityManager.find(Match.class, matchId);
+
+        if(match.getStatus()!=Status.ENDED){
         Room room = match.getRoom();
 
         model.addAttribute("room", room);
@@ -222,20 +224,15 @@ public class RoomsController {
 
         Long sessionUserId = ((User) session.getAttribute("u")).getId();
 
-        /*
-        for (RoomUser ru : room.getRoomUsers()) {
-            if (ru.isAdmin() && ru.getUser().getId() == sessionUserId && players.contains(ru.getUser().getUsername())) {
-                model.addAttribute("admin", true);
-                return "game";
-            }
-        }
-
-        model.addAttribute("admin", false);
-        */
         
         model.addAttribute("admin", match.getOwner().getId() == sessionUserId);        
 
+
         return "game";
+        }
+        else{
+            return "redirect:/rooms/" + match.getRoom().getId();
+        }
     }
 
     @PostMapping("/create_match/{roomId}")
