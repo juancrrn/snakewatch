@@ -100,12 +100,26 @@ export default class Level extends Phaser.Scene {
       loop: true
     })
 
+    this.timeToFinish = 90;
 
     this.finishGameTimer = this.time.addEvent({
-      delay: 100000,
-      callback: this.completeResults,
-      callbackScope: this
+      delay: 1000,
+      callback: this.processSecond,
+      callbackScope: this,
+      loop: true
     })
+
+    this.add.text(205, 0, "Remaining Time", {
+      color: '#FFFFFF',
+      fontStyle: 'italic',
+      fontSize: 14
+    });
+
+    this.timeText = this.add.text(235, 15, this.timeInMinutesSeconds(this.timeToFinish), {
+      color: '#FFFFFF',
+      fontStyle: 'italic',
+      fontSize: 14
+    });
 
     // Let some logic be delayed
     this.ticked = false;
@@ -304,6 +318,27 @@ export default class Level extends Phaser.Scene {
 
   }
 
+
+  timeInMinutesSeconds(seconds){
+    //Minutes
+    var minutes = Math.floor(seconds/60);
+    // Seconds
+    var partInSeconds = seconds%60;
+    // Adds left zeros to seconds
+    partInSeconds = partInSeconds.toString().padStart(2,'0');
+
+    return `${minutes}:${partInSeconds}`;
+  }
+
+  processSecond(){
+    this.timeToFinish-=1;
+
+    this.timeText.setText(this.timeInMinutesSeconds(this.timeToFinish));
+    if(this.timeToFinish==0){
+      this.completeResults();
+    }
+  }
+
   finishGame(){
     go("/rooms/finish_match/" + MATCH, 'POST', {
       message: this.results
@@ -312,6 +347,8 @@ export default class Level extends Phaser.Scene {
     .catch(e => console.log("Error", e))
     this.timer.destroy();
     this.finishGameTimer.destroy();
+    this.timer = undefined;
+    this.finishGameTimer = undefined;
   }
   /**
    * Shares current gamestate over websocket
@@ -382,7 +419,7 @@ export default class Level extends Phaser.Scene {
     this.texts.forEach(t => {
       texts.push(t.text);
     })
-    return { food: this.food.toJSON(), snakes: snakes, time: this.startTime, texts: texts};
+    return { food: this.food.toJSON(), snakes: snakes, time: this.startTime, texts: texts, timeText: this.timeText.text};
   }
 
 }

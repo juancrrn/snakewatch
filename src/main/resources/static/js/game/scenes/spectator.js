@@ -49,6 +49,18 @@ export default class Spectator extends Phaser.Scene {
       cont++;
     });
 
+    this.add.text(205, 0, "Remaining Time", {
+      color: '#FFFFFF',
+      fontStyle: 'italic',
+      fontSize: 14
+    });
+
+    this.timeText = this.add.text(235, 15, "1:30", {
+      color: '#FFFFFF',
+      fontStyle: 'italic',
+      fontSize: 14
+    });
+
     // Cursors
     if(PLAYERS.indexOf(USERSESSIONAME) != -1){
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -151,5 +163,6 @@ export default class Spectator extends Phaser.Scene {
     this.texts.forEach(t =>{
       t.setText(json.texts[this.texts.indexOf(t)]); 
     });
+    this.timeText.setText(json.timeText);
   }
 }
