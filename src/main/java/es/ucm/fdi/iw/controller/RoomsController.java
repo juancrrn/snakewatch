@@ -207,7 +207,9 @@ public class RoomsController {
 
         Match match = entityManager.find(Match.class, matchId);
 
-        if(match.getStatus()!=Status.ENDED){
+        Long sessionUserId = ((User) session.getAttribute("u")).getId();
+        User sessionUser = entityManager.find(User.class, sessionUserId);
+
         Room room = match.getRoom();
 
         model.addAttribute("room", room);
@@ -222,16 +224,23 @@ public class RoomsController {
 
         model.addAttribute("players", players);
 
-        Long sessionUserId = ((User) session.getAttribute("u")).getId();
-
         
         model.addAttribute("admin", match.getOwner().getId() == sessionUserId);        
 
+        if(match.getStatus()!=Status.ENDED){
 
-        return "game";
+            return "game";
+
         }
         else{
-            return "redirect:/rooms/" + match.getRoom().getId();
+
+            if(players.indexOf(sessionUser.getUsername())==-1){
+                return "redirect:/spectate";
+            }
+            else{
+                return "redirect:/rooms/" + match.getRoom().getId();
+            }
+           
         }
     }
 
