@@ -11,9 +11,9 @@ export default class Snake {
     this.skin = skin;
     this.size = size;
     this.score = 0;
-    this.gamePosition = 1;
     this.dead = false;
     this.username = username;
+    this.lastSecondLive = 90;
     this.putInResult = false;
     this.dir = Math.floor(Math.random() * 4);
     this.lastDir;

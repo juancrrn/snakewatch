@@ -111,7 +111,7 @@ export default class Spectator extends Phaser.Scene {
           }
           p1.setAttribute("class", "col-4 text-center fs-5");
           p2.setAttribute("class", "col-4 text-center fs-5");
-          p1.innerHTML = r.position + ". " + r.playerName;
+          p1.innerHTML = (text.message.indexOf(r) + 1) + ". " + r.playerName;
           p2.innerHTML = r.score;
           divR.appendChild(p1);
           divR.appendChild(p2);   

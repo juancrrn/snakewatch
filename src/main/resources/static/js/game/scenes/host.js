@@ -156,7 +156,7 @@ export default class Level extends Phaser.Scene {
           }
           p1.setAttribute("class", "col-4 text-center fs-5");
           p2.setAttribute("class", "col-4 text-center fs-5");
-          p1.innerHTML = r.position + ". " + r.playerName;
+          p1.innerHTML = (text.message.indexOf(r) + 1) + ". " + r.playerName;
           p2.innerHTML = r.score;
           divR.appendChild(p1);
           divR.appendChild(p2);   
@@ -232,125 +232,102 @@ export default class Level extends Phaser.Scene {
   checkfinishGame(){
     let alivePlayers = 0;
     let snakeScores = [];
-    let deadSnakes = [];
     this.snakes.forEach(snake => {
-      snakeScores.push({
-        name: snake.username,
-        score: snake.score
+      snakeScores.unshift({
+        playerName: snake.username,
+        score: snake.score, 
+        lastSecondLive: snake.lastSecondLive
       })
       if (!snake.dead) {
         alivePlayers++;
+        snake.lastSecondLive = this.timeToFinish;
       } 
       else { 
         if(!snake.putInResult){
-          deadSnakes.push({
-            name: snake.username,
-            score: snake.score
+          this.results.unshift({
+            playerName: snake.username,
+            score: snake.score,
+            lastSecondLive: this.timeToFinish
           });      
+          snake.putInResult = true;
+          snake.lastSecondLive = this.timeToFinish;
         }           
       }
     });
 
-
-    if(deadSnakes.length >= 1){
-
-      deadSnakes.sort(function(a,b){
-        if(a.score < b.score){
-          return 1;
-        }
-        if(a.score > b.score){
-          return -1;
-        }
-        return 0;
-      });
-  
-      for(let i=deadSnakes.length-1; i >= 0;i--){
-        this.results.unshift({
-          playerName: deadSnakes[i].name,
-          position: this.counter,
-          score: deadSnakes[i].score
-        });
-        this.snakes.get(deadSnakes[i].name).gamePosition = this.counter;
-        this.snakes.get(deadSnakes[i].name).putInResult = true;
-        this.counter--;
-      }
-    }
-    
-
-    snakeScores.sort(function(a,b){
-      if(a.score < b.score){
-        return 1;
-      }
-      if(a.score > b.score){
-        return -1;
-      }
-      return 0;
-    });
-
+    this.sortList(snakeScores);
 
     snakeScores.forEach(snakeScore => {
       let index =  snakeScores.indexOf(snakeScore);
-      this.snakes.get(snakeScore.name).gamePosition = index + 1;
-      this.texts[index].setText((index + 1) + " " + snakeScore.name + "    " + snakeScore.score);
+      this.texts[index].setText((index + 1) + " " + snakeScore.playerName + "    " + snakeScore.score);
     });
-
    
     if (alivePlayers <= 1) {
-        if(alivePlayers == 1){
-          this.snakes.forEach(snake => {
-            if(!snake.dead && !snake.putInResult){
+      if(alivePlayers==1){
+        this.snakes.forEach(snake => {
+          if(!snake.dead && !snake.putInResult){
+            if(this.timeToFinish > 0){
               this.results.unshift({
                 playerName:  snake.username,
-                position: this.counter,
-                score: snake.score
+                score: snake.score,
+                lastSecondLive: this.timeToFinish - 1
               });
-              snake.gamePosition = this.counter;
               snake.putInResult = true;
-              this.counter--;
-            }
-          })
-        }
-             
+              snake.lastSecondLive = this.timeToFinish;
+            }        
+          }
+        })     
+      }   
+      this.sortList(this.results);
       this.finishGame();
     }
 
   }
 
 
-  completeResults(){
-    let snakeScores = [];
-    this.snakes.forEach(snake => {
-      if(!snake.dead && !snake.putInResult){
-        snakeScores.push({
-          name: snake.username,
-          score: snake.score
-        });
-      }
-    })
 
-    
-    snakeScores.sort(function(a,b){
+  sortList(list){
+    list.sort(function(a,b){
+      if(a.lastSecondLive < b.lastSecondLive){
+        return -1;
+      }
+      if(a.lastSecondLive > b.lastSecondLive){
+        return 1;
+      }
+
       if(a.score < b.score){
         return 1;
       }
       if(a.score > b.score){
         return -1;
       }
+
+      if(a.playerName < b.playerName){
+        return -1;
+      }
+      if(a.playerName > b.playerName){
+        return 1;
+      }
       return 0;
     });
+  }
 
 
-    for(let i = snakeScores.length -1; i>=0;i--){
-      this.results.unshift({
-        playerName: snakeScores[i].name,
-        position: this.counter,
-        score: snakeScores[i].score
-      });
-      this.snakes.get(snakeScores[i].name).gamePosition = this.counter;
-      this.snakes.get(snakeScores[i].name).putInResult = true;
-      this.counter--;
-    }
+  completeResults(){
 
+    this.snakes.forEach(snake => {
+      if(!snake.dead && !snake.putInResult){
+        this.results.unshift({
+          playerName:  snake.username,
+          score: snake.score,
+          lastSecondLive: this.timeToFinish
+        });
+        snake.putInResult = true;
+        snake.lastSecondLive = this.timeToFinish;
+      }
+    })
+  
+    this.sortList(this.results);
     this.finishGame();
 
   }

@@ -313,16 +313,18 @@ public class RoomsController {
         ObjectNode rootNode = mapper.createObjectNode();
 
         ArrayNode matchPlayers = (ArrayNode) o.get("message");
+ 
         ArrayNode results = rootNode.putArray("message");
-        for(JsonNode j: matchPlayers){
 
+        for(int i=0; i < matchPlayers.size();i++){
+            JsonNode j = matchPlayers.get(i);
             MatchPlayer mp = entityManager.
                 createNamedQuery("MatchPlayer.byPlayerUsername", MatchPlayer.class)
                 .setParameter("matchId", matchId)
                 .setParameter("playerUserName", j.get("playerName").textValue())
                 .getSingleResult();
             results.add(j);
-            mp.setPosition(j.get("position").asInt());
+            mp.setPosition(i+1);
             entityManager.persist(mp);
             entityManager.flush();
         }
