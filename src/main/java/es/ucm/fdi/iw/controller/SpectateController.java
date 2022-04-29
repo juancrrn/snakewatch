@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.model.Match;
+import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Match.Status;
+import es.ucm.fdi.iw.model.User;
 
 @Controller
 @RequestMapping("spectate")
@@ -47,10 +49,21 @@ public class SpectateController {
     @GetMapping("get_ongoing_matches")
     @ResponseBody
     public String getOngoingMatches() throws JsonProcessingException{
+
+        Long sessionUserId = ((User) session.getAttribute("u")).getId();
+        User u = entityManager.find(User.class, sessionUserId);
+
         List<Match> onGoingMatches = entityManager
                 .createNamedQuery("Match.getOngoingMatches", Match.class)
                 .setParameter("status", Status.ONGOING)
                 .getResultList();
+
+        for(MatchPlayer mp: u.getMatchPlayers()){
+            if(onGoingMatches.indexOf(mp.getMatch())!=-1){
+                onGoingMatches.remove(mp.getMatch());
+            }
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
         ArrayNode arrayMatches = rootNode.putArray("arrayMatches");

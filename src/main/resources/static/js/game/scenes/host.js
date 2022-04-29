@@ -133,7 +133,9 @@ export default class Level extends Phaser.Scene {
       if (text.type == "finishMatch"){
         let toastHTML = document.getElementById('finishGameToast');
         let finishGameToastBody = document.getElementById('finishGameToastBody');
-
+        let topScoresDiv = document.getElementById('topScoresDiv');
+        finishGameToastBody.innerHTML = '';
+        finishGameToastBody.appendChild(topScoresDiv);
         text.message.forEach(r => {
           let divR = document.createElement('div');
           divR.setAttribute("class", "row justify-content-around");
@@ -238,16 +240,19 @@ export default class Level extends Phaser.Scene {
       })
       if (!snake.dead) {
         alivePlayers++;
-      } else { 
-        deadSnakes.push({
-          name: snake.username,
-          score: snake.score
-        });         
+      } 
+      else { 
+        if(!snake.putInResult){
+          deadSnakes.push({
+            name: snake.username,
+            score: snake.score
+          });      
+        }           
       }
     });
 
 
-    if(deadSnakes.length > 1){
+    if(deadSnakes.length >= 1){
 
       deadSnakes.sort(function(a,b){
         if(a.score < b.score){
@@ -262,19 +267,13 @@ export default class Level extends Phaser.Scene {
       for(let i=deadSnakes.length-1; i >= 0;i--){
         this.results.unshift({
           playerName: deadSnakes[i].name,
-          position: i + 1,
+          position: this.counter,
           score: deadSnakes[i].score
         });
+        this.snakes.get(deadSnakes[i].name).gamePosition = this.counter;
+        this.snakes.get(deadSnakes[i].name).putInResult = true;
         this.counter--;
       }
-    }
-    else if (deadSnakes.length==1){
-      this.results.unshift({
-        playerName: deadSnakes[0].name,
-        position: this.counter,
-        score: deadSnakes[0].score
-      });
-      this.counter--;
     }
     
 
@@ -299,13 +298,14 @@ export default class Level extends Phaser.Scene {
     if (alivePlayers <= 1) {
         if(alivePlayers == 1){
           this.snakes.forEach(snake => {
-            if(!snake.dead){
+            if(!snake.dead && !snake.putInResult){
               this.results.unshift({
                 playerName:  snake.username,
                 position: this.counter,
                 score: snake.score
               });
               snake.gamePosition = this.counter;
+              snake.putInResult = true;
               this.counter--;
             }
           })
@@ -320,7 +320,7 @@ export default class Level extends Phaser.Scene {
   completeResults(){
     let snakeScores = [];
     this.snakes.forEach(snake => {
-      if(!snake.dead){
+      if(!snake.dead && !snake.putInResult){
         snakeScores.push({
           name: snake.username,
           score: snake.score
@@ -343,9 +343,12 @@ export default class Level extends Phaser.Scene {
     for(let i = snakeScores.length -1; i>=0;i--){
       this.results.unshift({
         playerName: snakeScores[i].name,
-        position: i + 1,
+        position: this.counter,
         score: snakeScores[i].score
       });
+      this.snakes.get(snakeScores[i].name).gamePosition = this.counter;
+      this.snakes.get(snakeScores[i].name).putInResult = true;
+      this.counter--;
     }
 
     this.finishGame();

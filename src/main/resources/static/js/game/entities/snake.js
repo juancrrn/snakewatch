@@ -14,6 +14,7 @@ export default class Snake {
     this.gamePosition = 1;
     this.dead = false;
     this.username = username;
+    this.putInResult = false;
     this.dir = Math.floor(Math.random() * 4);
     this.lastDir;
     pos.dir = this.dir;

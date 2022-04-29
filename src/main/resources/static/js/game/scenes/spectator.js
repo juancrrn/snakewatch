@@ -87,6 +87,9 @@ export default class Spectator extends Phaser.Scene {
        
         let toastHTML = document.getElementById('finishGameToast');
         let finishGameToastBody = document.getElementById('finishGameToastBody');
+        let topScoresDiv = document.getElementById('topScoresDiv');
+        finishGameToastBody.innerHTML = '';
+        finishGameToastBody.appendChild(topScoresDiv);
 
         text.message.forEach(r => {
           let divR = document.createElement('div');
