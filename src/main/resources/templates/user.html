@@ -12,84 +12,84 @@
   <main class="flex-shrink-0">
     <div class="container">
 
-      <div class="row mt-5 mb-2">
-        <div class="col text-center">
-          <img class="rounded-circle" style="width: 64px; height: 64px;" th:src="@{/user/{id}/pic(id=${session.u.id})}">
-        </div>
-      </div>
+      <div class="row card justify-content-md-center pb-3 mb-5" style="outline: 3px solid burlywood; background-color: bisque;">
 
-      <div class="row mb-4">
-        <div class="col text-center">
-          <h1 th:text="${user.username}"></h1>
-        </div>
-      </div>
-
-      <div class="row mb-4 justify-content-md-center" th:if="${not isOwnProfile}">
-        <div class="col-6">
-          <div class="card">
-            <div class="card-body text-center">
-              <div class="d-flex justify-content-around">
-                <div>
-
-                  <!-- temporary message while loading info -->
-                  <p id="friendship-loading"> Cargando... </p>
-
-                  <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
-                  <form th:action="@{/friendship/send_req/__${user.id}__/}" method="POST">
-                    <button id="friendship-send-button" class="btn btn-secondary" type="submit"
-                      style="display: none;">Solicitar amistad</button>
-                  </form>
-
-                  <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
-                  <form th:action="@{/friendship/cancel_req/__${user.id}__/}" method="POST">
-                    <button id="friendship-request-cancel-button" class="btn btn-secondary" type="submit"
-                      style="display: none;">Cancelar solicitud de amistad enviada</button>
-                  </form>
-
-                  <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
-                  <form th:action="@{/friendship/accept_req/__${user.id}__/}" method="POST">
-                    <button id="friendship-request-accept-button" class="btn btn-success" type="submit"
-                      style="display: none;">Aceptar solicitud de amistad</button>
-                  </form>
-
-                  <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
-                  <form th:action="@{/friendship/finish/__${user.id}__/}" method="POST">
-                    <button id="friendship-finish-button" class="btn btn-secondary" type="submit"
-                      style="display: none;">Dejar de ser amigos</button>
-                  </form>
-                </div>
-              </div>
+        <div class="row">
+          <div class="col-4" >
+            <div class="text-center mt-4 mb-1">
+              <img class="rounded-circle" style="width: 250px; height: 250px;" th:src="@{/user/{id}/pic(id=${user.id})}">
             </div>
+            <h1 class="text-center mt-2">
+              <b th:text="${user.username}"></b>
+            </h1>
           </div>
-        </div>
-      </div>   
 
-      <div class="row justify-content-md-center">
-        <div class="col-3">
-          <div class="card">
-            <div class="card-body text-center">
-              <p th:text="${friendships.size()}"></p>
-              amigos
+          <div class="col-4" style="margin-top: auto; margin-bottom: auto;">
+            <div class="text-center m-4">
+              <img style="width: 110px; height: 110px;" src="/img/friends.png">
             </div>
+            <h2 class="text-center" th:text="| ${friendships.size()} Amigos|">Amigos</h2>
+          </div>     
+          
+          <div class="col-4" style="margin-top: auto; margin-bottom: auto;">
+            <div class="text-center m-4">
+              <img style="width: 130px; height: 130px;" src="/img/videogame.png">
+            </div>
+            <h2 class="text-center" th:text="| ${matchPlayers.size()} Partidas|">partidas</h2>
           </div>
         </div>
 
-        <div class="col-3">
-          <div class="card">
-            <div class="card-body text-center">
-              <p th:text="${matchPlayers.size()}"></p>
-              partidas
-            </div>
+        <div class="row mt-4" th:if="${not isOwnProfile}">
+          <div class="col-4 text-center" style="margin-top: auto; margin-bottom: auto;">
+
+            <!-- temporary message while loading info -->
+            <p id="friendship-loading"> Cargando... </p>
+
+            <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
+            <form th:action="@{/friendship/send_req/__${user.id}__/}" method="POST">
+              <button id="friendship-send-button" class="btn btn-primary" style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit"> 
+                <b>Solicitar amistad</b>
+              </button>
+            </form>
+
+            <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
+            <form th:action="@{/friendship/cancel_req/__${user.id}__/}" method="POST">
+              <button id="friendship-request-cancel-button" class="btn btn-danger" style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit"> 
+                <b>Cancelar solicitud de amistad</b>
+              </button>
+            </form>
+
+            <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
+            <form th:action="@{/friendship/accept_req/__${user.id}__/}" method="POST">
+              <button id="friendship-request-accept-button" class="btn btn-success" 
+              style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit">
+                <b>Aceptar solicitud de amistad</b>
+              </button>
+            </form>
+
+            <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
+            <form th:action="@{/friendship/finish/__${user.id}__/}" method="POST">
+              <button id="friendship-finish-button" class="btn btn-warning" 
+              style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit">
+                <b>Dejar de ser amigos</b>
+              </button>
+            </form>
+          </div>    
+          
+          <div class="col-8" style="margin-top: auto; margin-bottom: auto; text-align: center;">            
+            <form class="card-body text-center d-flex" style="border-radius: 10px; padding: 8px; outline: 3px solid chocolate; background-color: cornsilk;" th:action="@{/user/__${user.id}__/msg}" method="POST">
+              <input type="text" id="message" style="width: 90%; text-indent: 10px;" 
+              placeholder="Envía un mensaje a este usuario" />
+              <button id="sendmsg" style="margin-left: auto; margin-right: auto; width: 50px; height: 50px; border-radius: 50px; background-color: lightcyan;" class="btn btn-secondary ml-2" type="submit">
+                <img style="width: 30px; height: 30px;" src="/img/send.png">
+              </button>
+            </form>            
           </div>
         </div>
+
       </div>
 
-      <div class="row mb-4 justify-content-md-center">
-        <form class="card-body text-center" th:if="${not isOwnProfile}" th:action="@{/user/__${user.id}__/msg}" method="POST">
-          <input type="text" id="message" placeholder="escribe a este usuario" />
-          <button id="sendmsg" class="btn btn-secondary" type="submit">Enviar</button>
-        </form>
-      </div>   
+
 
       <h3>Partidas</h3>
 
@@ -213,6 +213,7 @@
         })
           .then(d => console.log("happy", d))
           .catch(e => console.log("sad", e))
+          document.getElementById("message").value = ""
       }
 
       let frLoadingMessage = document.getElementById("friendship-loading");
