@@ -359,4 +359,32 @@ public class UserController {
 		return "{\"result\": \"message sent.\"}";
 	}
 
+	@GetMapping("/signup")
+    public String signup(Model model){
+        return "signup";
+    }
+
+	@PostMapping("/signup")
+	@ResponseBody
+	@Transactional
+	public String signup(@RequestBody JsonNode o, Model model) throws JsonProcessingException {
+
+		String username = o.get("username").asText();
+		String password = o.get("password").asText();
+		String firstName = o.get("first_name").asText();
+		String lastName = o.get("last_name").asText();
+
+		if(!username.isEmpty() && !password.isEmpty()){
+			User user = new User(username, encodePassword(password), true, false);
+
+			if(!firstName.isEmpty()) user.setFirstName(firstName);
+			if(!lastName.isEmpty()) user.setLastName(lastName);
+
+			entityManager.persist(user);
+			entityManager.flush();
+		}
+		return "{}";
+	}
+
+
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Sign Up — Snakewatch</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <main class="flex-shrink-0">
+        <div class="container">
+            <form id="form" class="form-signin" method="post" th:action="@{/user/signup}">
+                <h2 class="form-signin-heading">Please sign up</h2>
+                <p>
+                    <label for="username" class="visually-hidden">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username"
+                        required="required">
+                </p>
+
+                <p>
+                    <label for="password" class="visually-hidden">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                        required="required">
+                </p>
+                <p>
+                    <label for="first_name" class="visually-hidden">First name</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First name">
+                </p>
+                <p>
+                    <label for="last_name" class="visually-hidden">Last name</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last name">
+                </p>
+                <button id="send" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            </form>
+        </div>
+    </main>
+
+    <th:block th:replace="fragments/footer.html :: footer" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let form = document.getElementById("form");
+            form.onsubmit = (e) => {
+                e.preventDefault();
+                go(form.action, 'POST', {
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value,
+                    first_name: document.getElementById("first_name").value,
+                    last_name: document.getElementById("last_name").value
+                })
+                    .then(d => window.location.replace("/login"))
+                    .catch(e => console.log("sad", e))
+            }
+        });
+    </script>
+
+</body>
+
+</html>
