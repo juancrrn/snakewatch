@@ -222,14 +222,14 @@ export default class Level extends Phaser.Scene {
     if (this.ticked) {
       this.ticked = false;
       this.snakes.forEach(snake => snake.handleDeath());
-      this.checkfinishGame();
+      this.actualizeGameState();
 
       this.broadcastState();
     }
   }
 
 
-  checkfinishGame(){
+  actualizeGameState(){
     let alivePlayers = 0;
     let snakeScores = [];
     this.snakes.forEach(snake => {
@@ -255,7 +255,7 @@ export default class Level extends Phaser.Scene {
       }
     });
 
-    this.sortList(snakeScores);
+    this.sortPlayersData(snakeScores);
 
     snakeScores.forEach(snakeScore => {
       let index =  snakeScores.indexOf(snakeScore);
@@ -278,7 +278,7 @@ export default class Level extends Phaser.Scene {
           }
         })     
       }   
-      this.sortList(this.results);
+      this.sortPlayersData(this.results);
       this.finishGame();
     }
 
@@ -286,7 +286,7 @@ export default class Level extends Phaser.Scene {
 
 
 
-  sortList(list){
+  sortPlayersData(list){
     list.sort(function(a,b){
       if(a.lastSecondLive < b.lastSecondLive){
         return -1;
@@ -327,7 +327,7 @@ export default class Level extends Phaser.Scene {
       }
     })
   
-    this.sortList(this.results);
+    this.sortPlayersData(this.results);
     this.finishGame();
 
   }
