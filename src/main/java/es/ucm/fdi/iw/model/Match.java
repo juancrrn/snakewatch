@@ -73,6 +73,13 @@ public class Match implements Serializable {
         return this.room.getOwner();     
     }
 
+    public User getMatchWinner(){
+        for(MatchPlayer mp : this.matchPlayers){
+            if(mp.getPosition() == 1) return mp.getPlayer();
+        }
+        return null;
+    }
+
     /**
      * Status:
      * 
