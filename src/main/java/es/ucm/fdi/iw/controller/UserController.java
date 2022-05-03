@@ -246,7 +246,7 @@ public class UserController {
 						"static/img/default-pic.jpg")));
 	}
 
-	/**
+		/**
 	 * Downloads a profile pic for a user id
 	 * 
 	 * @param id
@@ -255,7 +255,7 @@ public class UserController {
 	 */
 	@GetMapping("{id}/pic")
 	public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
-		File f = localData.getFile("pics", "" + id + ".jpg");
+		File f = localData.getFile("user_pics", "" + id);
 		InputStream in = new BufferedInputStream(f.exists() ? new FileInputStream(f) : UserController.defaultPic());
 		return os -> FileCopyUtils.copy(in, os);
 	}
@@ -272,17 +272,15 @@ public class UserController {
 			HttpServletResponse response, HttpSession session, Model model) throws IOException {
 
 		User target = entityManager.find(User.class, id);
-		model.addAttribute("user", target);
 
 		// check permissions
 		User requester = (User) session.getAttribute("u");
-		if (requester.getId() != target.getId() &&
-				!requester.hasRole(Role.ADMIN)) {
+		if (requester.getId() != target.getId() && !requester.hasRole(Role.ADMIN)) {
 			throw new NoEsTuPerfilException();
 		}
 
 		log.info("Updating photo for user {}", id);
-		File f = localData.getFile("user", "" + id);
+		File f = localData.getFile("user_pics", "" + id);
 		if (photo.isEmpty()) {
 			log.info("failed to upload photo: emtpy file?");
 		} else {
@@ -296,8 +294,8 @@ public class UserController {
 			}
 		}
 
-		// TODO: call fillModelWithInfo
-		return "user";
+		fillModelWithInfo(target, model);
+		return "redirect:/user/" + target.getId();
 	}
 
 	/**
