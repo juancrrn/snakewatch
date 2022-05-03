@@ -14,19 +14,19 @@
         <div class="container">
             <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow">Rooms</h1>           
             <div class="row justify-content-center">
-                <div class="card col-12 my-3 px-0 shadow" th:each="roomInfo : ${roomsInfo}">
+                <div class="card col-12 my-3 px-0 shadow" th:each="roomInfo : ${roomsInfo}" th:if="${roomInfo[0].visibility.toString()=='PUBLIC' || (roomInfo[0].visibility.toString()=='PRIVATE' && roomInfo[2])}">
                     <div class="card-header bg-info bg-gradient bg-opacity-75">
                         <h2 class="text-center text-white fst-italic" th:text="'Room ' + ${roomInfo[0].id}"></h2>
                     </div>
                     <div class="card-body bg-secondary bg-gradient bg-opacity-10">
                         <h3 class="card-title text-center text-info" th:text="'Room´s Leader: ' + ${roomInfo[1].username}"></h3> 
                         <p class="card-text text-center fs-4 text-danger" th:text="${roomInfo[0].visibility} + ' Room'"></p>
-                        <p class="card-text text-center fs-4 text-warning" th:text="'Players Online: ' + ${roomInfo[0].users.size} + '/' + ${roomInfo[0].maxUsers}"></p>
-                        <form th:if="${not roomInfo[2]}" class="card-text text-center" th:action="@{/rooms/join/__${roomInfo[0].id}__}" method="GET">
-                            <button id="join" class="w-50 btn btn-outline-info fs-5" type="submit">Join</button> 
+                        <p class="card-text text-center fs-4 text-warning" th:text="'Players In Room: ' + ${roomInfo[0].users.size} + '/' + ${roomInfo[0].maxUsers}"></p>
+                        <form th:if="${!roomInfo[2]}" class="card-text text-center" th:action="@{/rooms/join/__${roomInfo[0].id}__}" method="GET">
+                            <button id="join" class="h-100 w-50 btn btn-outline-info fs-5" type="submit">Join</button> 
                         </form> 
-                        <form th:if="${roomInfo[2]}"class="card-text text-center" th:action="@{/rooms/__${roomInfo[0].id}__}" method="GET">
-                            <button id="entry" class="w-50 btn btn-outline-info fs-5" type="submit">Entry</button> 
+                        <form th:if="${roomInfo[2]}" class="card-text text-center" th:action="@{/rooms/__${roomInfo[0].id}__}" method="GET">
+                            <button id="entry" class="h-100 w-50 btn btn-outline-info fs-5" type="submit">Entry</button> 
                         </form>
                     </div>
                     
@@ -34,7 +34,7 @@
 
                 <div class="row justify-content-center">
                     <form class="col-4 text-center" th:action="@{/rooms/create_room}" method="POST">
-                        <button class="w-100 btn btn-outline-success fs-5" type="submit">Create Room</button>
+                        <button class="h-100 w-100 btn btn-outline-success fs-5" type="submit">Create Room</button>
                     </form>
                 </div>
             </div>

@@ -31,6 +31,11 @@ import lombok.NoArgsConstructor;
     query = "SELECT frq FROM Friendship frq "
           + "WHERE frq.user2.id =: userId AND frq.status = 0"
 )
+@NamedQuery(
+    name = "Friendship.getFriends",
+    query = "SELECT frq FROM Friendship frq "
+          + "WHERE frq.user1.id =: userId AND frq.status = 1"
+)
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "user1_id", "user2_id" }))
 public class Friendship implements Serializable {
 

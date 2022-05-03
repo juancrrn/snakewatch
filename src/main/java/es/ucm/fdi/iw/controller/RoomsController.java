@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Room;
@@ -200,6 +201,31 @@ public class RoomsController {
         entityManager.remove(r);
         entityManager.flush();
         return "redirect:/rooms";
+    }
+
+    @PostMapping("invite_friends_to_room/{roomId}")
+    @MessageMapping
+    @ResponseBody
+    public String sendInvitationsToJoinPrivateRoom(@PathVariable long roomId, Model model) 
+        throws JsonProcessingException{
+
+        Long sessionUserId = ((User) session.getAttribute("u")).getId();
+        List<Friendship> friendships = entityManager
+                .createNamedQuery("Friendship.getFriends", Friendship.class)
+                .setParameter("userId", sessionUserId)
+                .getResultList();
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
+        
+        rootNode.put("type", "roomInvitation");
+
+        for(Friendship f: friendships){
+            rootNode.put("message", roomId);
+            String json = mapper.writeValueAsString(rootNode);
+            messagingTemplate.convertAndSend("/user/" + f.getUser2().getUsername() + "/queue/updates", json);
+        }
+        return "{\"result\": \"invitations sent.\"}";
     }
 
     @GetMapping("/get_match/{matchId}")

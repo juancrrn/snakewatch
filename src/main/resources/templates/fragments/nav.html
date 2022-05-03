@@ -102,7 +102,7 @@
         </nav>
 
         <!-- Notification toast for user messages -->
-        <div class="toast show" style="display: none; position: fixed; bottom: 10px; left:10px;">
+        <div class="toast show position-absolute bottom-0 start-0" style="display: none; z-index: 2">
             <div class="toast-header">
                 <strong class="me-auto toast-header-title">Toast Header</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
@@ -143,6 +143,10 @@
                     if (p && text.type == "textMessage") {
                         p.textContent = +p.textContent + 1;
                         showToast("Nuevo mensaje de " + text.from, text.text);
+                    }
+                    if(text.type == "roomInvitation"){
+                        p.textContent = +p.textContent + 1;
+                        showToast("Nuevo mensaje de room invitation", text.message);
                     }
                 };
 

@@ -44,10 +44,27 @@ document.addEventListener("DOMContentLoaded", () => {
         editForm.style.display = 'none';
     }
 
-    let sendInvitationsButton = document.getElementById('sendInvitationsButton');
+
+    let inviteFriendsButton = document.getElementById('inviteFriendsButton');
+
+    inviteFriendsButton.onclick = (e) => {
+        e.preventDefault();
+        go(inviteFriendsButton.parentNode.action, 'POST', {})
+        .then(d => {
+            let toastHTML = document.getElementById('friendsInvitationsSentToast');
+
+            toastHTML.style.display = '';
+
+            let toast = new bootstrap.Toast(toastHTML);
+            toast.show();
+        })
+        .catch(e => console.log("Error", e))
+    }
+
+    let inviteGameButton = document.getElementById('inviteGameButton');
 
 
-    sendInvitationsButton.onclick = () => {
+    inviteGameButton.onclick = () => {
         const messageAdmin = {
             type: "matchInvitation"
         }

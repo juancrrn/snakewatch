@@ -25,7 +25,7 @@
                     <h5 class="card-title text-primary fs-4" th:text="'Level ' + ${level}"></h5>
                     <h5 class="card-title text-secondary fs-4" th:text="'Highscore ' + ${highScores[iterStat.index]}"></h5>
                     <form class="card-text text-primary fs-4" th:action="@{/levels/play/__${level}__}" method="GET">
-                      <button class="w-50 btn btn-outline-info fs-5" type="submit">Play</button> 
+                      <button class="h-100 w-50 btn btn-outline-info fs-5" type="submit">Play</button> 
                     </form>
                   </div>
                 </div>
