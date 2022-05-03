@@ -22,6 +22,11 @@
             <h1 class="text-center mt-2">
               <b th:text="${user.username}"></b>
             </h1>
+            <div th:if="${isOwnProfile}" class="border border-2 border-tertiary rounded">              
+              <form th:action="@{/user/__${user.id}__/pic}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="photo" accept="image/jpeg,image/png" onchange="javascript:this.form.submit();">
+              </form>
+            </div>
           </div>
 
           <div class="col-4" style="margin-top: auto; margin-bottom: auto;">
