@@ -22,9 +22,10 @@
             <h1 class="text-center mt-2">
               <b th:text="${user.username}"></b>
             </h1>
-            <div th:if="${isOwnProfile}" class="border border-2 border-tertiary rounded">              
+            <div th:if="${isOwnProfile}" class="mt-3 mb-1" style="text-align: center;">              
               <form th:action="@{/user/__${user.id}__/pic}" method="POST" enctype="multipart/form-data">
-                <input type="file" name="photo" accept="image/jpeg,image/png" onchange="javascript:this.form.submit();">
+                <input style="display:none;" id="files" type="file" name="photo" accept="image/jpeg,image/png" onchange="javascript:this.form.submit();">
+                <label for="files" class="py-1 px-3" style="outline: 3px solid darkturquoise;border-radius: 50px;background: aliceblue;">Cambiar imagen</label>
               </form>
             </div>
           </div>
