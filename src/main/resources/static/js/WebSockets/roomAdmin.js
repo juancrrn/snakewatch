@@ -44,22 +44,23 @@ document.addEventListener("DOMContentLoaded", () => {
         editForm.style.display = 'none';
     }
 
+    if(ROOMVISIBILITY == 'PRIVATE'){
+        let inviteFriendsButton = document.getElementById('inviteFriendsButton');
 
-    let inviteFriendsButton = document.getElementById('inviteFriendsButton');
-
-    inviteFriendsButton.onclick = (e) => {
-        e.preventDefault();
-        go(inviteFriendsButton.parentNode.action, 'POST', {})
-        .then(d => {
-            let toastHTML = document.getElementById('friendsInvitationsSentToast');
-
-            toastHTML.style.display = '';
-
-            let toast = new bootstrap.Toast(toastHTML);
-            toast.show();
-        })
-        .catch(e => console.log("Error", e))
-    }
+        inviteFriendsButton.onclick = (e) => {
+            e.preventDefault();
+            go(inviteFriendsButton.parentNode.action, 'POST', {})
+            .then(d => {
+                let toastHTML = document.getElementById('friendsInvitationsSentToast');
+    
+                toastHTML.style.display = '';
+    
+                let toast = new bootstrap.Toast(toastHTML);
+                toast.show();
+            })
+            .catch(e => console.log("Error", e))
+        }
+    }   
 
     let inviteGameButton = document.getElementById('inviteGameButton');
 

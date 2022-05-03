@@ -144,10 +144,6 @@
                         p.textContent = +p.textContent + 1;
                         showToast("Nuevo mensaje de " + text.from, text.text);
                     }
-                    if(text.type == "roomInvitation"){
-                        p.textContent = +p.textContent + 1;
-                        showToast("Nuevo mensaje de room invitation", text.message);
-                    }
                 };
 
                 setTimeout(() => ws.subscribe("/user/queue/updates", callback), 500)

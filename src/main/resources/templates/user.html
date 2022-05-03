@@ -28,7 +28,7 @@
       <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-player" role="tabpanel" aria-labelledby="pills-player-tab">
           <div class="row card justify-content-md-center pb-3 mb-5 my-3" style="outline: 3px solid burlywood; background-color: bisque;">
-
+            
             <div class="row">
               <div class="col-4" >
                 <div class="text-center mt-4 mb-1">
@@ -107,8 +107,28 @@
                 </form>            
               </div>
             </div>
-    
           </div>
+          <div class="row justify-content-center">
+            <button th:if="${isOwnProfile}" id="roomInvitationsButton" type="button" class="w-25 btn btn-info shadow position-relative fs-4" data-bs-toggle="modal" data-bs-target="#roomInvitationsModal">
+              Room Invitations
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+            </button>
+
+            <div class="modal fade" id="roomInvitationsModal" tabindex="-1" aria-labelledby="ModalBody" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="ModalBody">Room Invitations</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <ul id="roomInvitationsModalBody" style="list-style:none;"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
         <div class="tab-pane fade" id="pills-matches" role="tabpanel" aria-labelledby="pills-matches-tab">
           <div class="table-responsive">
@@ -129,7 +149,7 @@
                   <td th:text="| ${matchPlayer.position}º|"></td>
                   <td>
                     <a th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}" th:href="@{/user/__${matchPlayerOthers.player.id}__}"
-                      th:text="| ${matchPlayerOthers.player.username} |" style="margin-right: 16px;" ></a>
+                      th:text="| ${matchPlayerOthers.player.username} |" style="margin-right: 16px; text-decoration: none;" ></a>
                   </td>
                 </tr>
               </tbody>
@@ -155,7 +175,7 @@
                     <td colspan="1" th:text="${request.id}">ID</td>
                     <td colspan="1" th:text="${request.user1.id}">Name</td>
                     <td colspan="1">
-                      <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
+                      <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |" styñe="text-decoration: none;"></a>
                     </td>
                     <td colspan="1">
                       <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
@@ -185,7 +205,7 @@
                 <tr rowspan="1" th:each="friendship: ${friendships}">
                   <td colspan="1" th:text="${friendship.user2.id}">ID</td>
                   <td colspan="1">
-                    <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |"></a>
+                    <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |" style="text-decoration: none;"></a>
                   </td>
                 </tr>
               </tbody>
@@ -208,12 +228,12 @@
               <tbody class="table-info">
                 <tr rowspan="1" th:each="room: ${rooms}">
                   <td colspan="1">
-                    <a th:href="@{/rooms/__${room.id}__}" th:text="${room.id} |">ID</a>
+                    <a th:href="@{/rooms/__${room.id}__}" th:text="${room.id} |" style="text-decoration: none;">ID</a>
                   </td>
                   <td colspan="1" th:text="${room.visibility}">Privacy</td>
   
                   <td th:each="participant: ${room.getUsers()}">
-                    <a th:href="@{/user/__${participant.id}__}" th:text="| ${participant.username} |"></a>
+                    <a th:href="@{/user/__${participant.id}__}" th:text="| ${participant.username} |" style="text-decoration: none;"></a>
                   </td>
                 </tr>
               </tbody>
@@ -231,153 +251,9 @@
     var G_FRIENDSHIP_STATE_URL = [[@{/friendship/state/__${user.id}__/}]];
   </script>
 
-  <script th:if="${not isOwnProfile}">
-    document.addEventListener("DOMContentLoaded", () => {
+  <script th:if="${not isOwnProfile}" th:src="@{/js/funcionalities/otherUser.js}"></script>
 
-      // envio de mensajes con AJAX
-      let b = document.getElementById("sendmsg");
-      b.onclick = (e) => {
-        e.preventDefault();
-        go(b.parentNode.action, 'POST', {
-          message: document.getElementById("message").value
-        })
-          .then(d => console.log("happy", d))
-          .catch(e => console.log("sad", e))
-          document.getElementById("message").value = ""
-      }
-
-      let frLoadingMessage = document.getElementById("friendship-loading");
-      let frSendButton = document.getElementById("friendship-send-button");
-      let frCancelButton = document.getElementById("friendship-request-cancel-button");
-      let frAcceptButton = document.getElementById("friendship-request-accept-button");
-      let frFinishButton = document.getElementById("friendship-finish-button");
-
-      function hideAll() {
-        frLoadingMessage.style.display = 'none';
-        frSendButton.style.display = 'none';
-        frCancelButton.style.display = 'none';
-        frAcceptButton.style.display = 'none';
-        frFinishButton.style.display = 'none';
-      }
-
-      // Get friendship status and show corresponding button
-      go(G_FRIENDSHIP_STATE_URL, 'POST', {})
-        .then(d => {
-          hideAll();
-
-          if (d.result === "friends") {
-            frFinishButton.style.display = 'inline-block';
-          }
-          else if (d.result === "request sent") {
-            frCancelButton.style.display = 'inline-block';
-          }
-          else if (d.result === "request received") {
-            frAcceptButton.style.display = 'inline-block';
-          }
-          else {
-            frSendButton.style.display = 'inline-block';
-          }
-        })
-        .catch(e => {
-          hideAll();
-          console.log("Error loading friendship status", e)
-        })
-
-
-      // Accion de frSendButton: envio de solicitudes de amistad
-      frSendButton.onclick = (e) => {
-        e.preventDefault();
-        go(frSendButton.parentNode.action, 'POST', {})
-          .then(d => {
-            hideAll();
-            frCancelButton.style.display = 'inline-block';
-          })
-          .catch(e => console.log("sad", e))
-      }
-
-      // Accion de frCancelButton: cancelar solicitud de amistad enviada
-      frCancelButton.onclick = (e) => {
-        e.preventDefault();
-        go(frCancelButton.parentNode.action, 'POST', {})
-          .then(d => {
-            hideAll();
-            frSendButton.style.display = 'inline-block';
-          })
-          .catch(e => console.log("sad", e))
-      }
-
-      // Accion de frAcceptButton: aceptar solicitud de amistad recibida
-      frAcceptButton.onclick = (e) => {
-        e.preventDefault();
-        go(frAcceptButton.parentNode.action, 'POST', {})
-          .then(d => {
-            hideAll();
-            frFinishButton.style.display = 'inline-block';
-          })
-          .catch(e => console.log("sad", e))
-      }
-
-      // Accion de frFinishButton: eliminar amigo
-      frFinishButton.onclick = (e) => {
-        e.preventDefault();
-        go(frFinishButton.parentNode.action, 'POST', {})
-          .then(d => {
-            hideAll();
-            frSendButton.style.display = 'inline-block';
-          })
-          .catch(e => console.log("sad", e))
-      }
-
-    });
-
-  </script>
-
-  <script th:if="${isOwnProfile}">
-    document.addEventListener("DOMContentLoaded", () => {
-      // Manejar la seccion de solicitudes recibidas: aceptar o rechazar cada solicitud
-
-      const requestContainer = document.getElementById("request-block");
-      var requestRows = document.getElementsByClassName("request-row");       // Una row para cada solicitud
-
-      if(requestRows.length <= 0){
-        requestContainer.style.display = 'none';
-      }
-
-      for (let i = 0; i < requestRows.length; i++) {
-        let row = requestRows[i];
-
-        // Boton de aceptar la solicitud: aceptarla a traves de ayax y ocultar esta row
-        let acceptRequestButton = row.querySelector('#request-accept-button');
-        acceptRequestButton.onclick = (e) => {
-          e.preventDefault();
-          go(acceptRequestButton.parentNode.action, 'POST', {})
-            .then(d => {
-              row.remove();
-              // Ocultar row. Si ya no queda ninguna row mas, ocultar la seccion de solicitudes entera
-              if (requestRows.length <= 0) {
-                requestContainer.style.display = 'none';
-              }
-            })
-            .catch(e => console.log("sad", e))
-        }
-
-        // Boton de rechazar la solicitud: rechazarla a traves de ayax y ocultar esta row
-        let rejectRequestButton = row.querySelector('#request-reject-button');
-        rejectRequestButton.onclick = (e) => {
-          e.preventDefault();
-          go(rejectRequestButton.parentNode.action, 'POST', {})
-            .then(d => {
-              row.style.display = 'none';
-              // Ocultar row. Si ya no queda ninguna row mas, ocultar la seccion de solicitudes entera
-              if (requestRows.length <= 0) {
-                requestContainer.style.display = 'none';
-              }
-            })
-            .catch(e => console.log("sad", e))
-        }
-      }
-    });
-  </script>
+  <script th:if="${isOwnProfile}" th:src="@{/js/funcionalities/userSession.js}"></script>
 </body>
 
 </html>
