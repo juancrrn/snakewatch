@@ -10,30 +10,34 @@
     <header th:replace="fragments/nav.html :: nav"></header>
 
     <main class="flex-shrink-0">
-        <div class="container">
-            <form id="form" class="form-signin" method="post" th:action="@{/user/signup}">
-                <h2 class="form-signin-heading">Please sign up</h2>
-                <p>
-                    <label for="username" class="visually-hidden">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username"
-                        required="required">
-                </p>
-
-                <p>
-                    <label for="password" class="visually-hidden">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password"
-                        required="required">
-                </p>
-                <p>
-                    <label for="first_name" class="visually-hidden">First name</label>
-                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First name">
-                </p>
-                <p>
-                    <label for="last_name" class="visually-hidden">Last name</label>
-                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last name">
-                </p>
-                <button id="send" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
-            </form>
+        <div class="container" style="text-align: center;">
+            <div class="card mx-auto p-5 mt-4" style="width: 450px; outline: 1px solid gainsboro;">
+                <form id="form" class="form-signin"  method="post" th:action="@{/user/signup}">
+                    <h2 class="form-signin-heading my-0">Sign up</h2>
+                    <img class="my-4" th:src="@{/img/logo.png}" src="/img/logo.png" alt="Snakewatch" width="28" height="28">
+                    
+                    <p>
+                        <label for="username" class="visually-hidden">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username"
+                            required="required">
+                    </p>
+    
+                    <p>
+                        <label for="password" class="visually-hidden">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                            required="required" minlength="8">
+                    </p>
+                    <p>
+                        <label for="first_name" class="visually-hidden">First name</label>
+                        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First name">
+                    </p>
+                    <p>
+                        <label for="last_name" class="visually-hidden">Last name</label>
+                        <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last name">
+                    </p>
+                    <button id="send" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+                </form>
+            </div>
         </div>
     </main>
 
