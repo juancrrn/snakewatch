@@ -11,193 +11,217 @@
 
   <main class="flex-shrink-0">
     <div class="container">
+      <ul class="nav nav-tabs nav-justified bg-info bg-gradient bg-opacity-50 border-bottom border-5 my-2" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active fs-4 text-black" id="pills-player-tab" data-bs-toggle="pill" data-bs-target="#pills-player" type="button" role="tab" aria-controls="pills-player" aria-selected="true">Player</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link fs-4 text-black" id="pills-matches-tab" data-bs-toggle="pill" data-bs-target="#pills-matches" type="button" role="tab" aria-controls="pills-matches" aria-selected="false">Matches</button>
+        </li>
+        <li th:if="${isOwnProfile}" class="nav-item" role="presentation">
+          <button class="nav-link fs-4 text-black" id="pills-friends-tab" data-bs-toggle="pill" data-bs-target="#pills-friends" type="button" role="tab" aria-controls="pills-friends" aria-selected="false">Friends</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link fs-4 text-black" id="pills-rooms-tab" data-bs-toggle="pill" data-bs-target="#pills-rooms" type="button" role="tab" aria-controls="pills-rooms" aria-selected="false">Rooms</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-player" role="tabpanel" aria-labelledby="pills-player-tab">
+          <div class="row card justify-content-md-center pb-3 mb-5 my-3" style="outline: 3px solid burlywood; background-color: bisque;">
 
-      <div class="row card justify-content-md-center pb-3 mb-5" style="outline: 3px solid burlywood; background-color: bisque;">
-
-        <div class="row">
-          <div class="col-4" >
-            <div class="text-center mt-4 mb-1">
-              <img class="rounded-circle" style="width: 250px; height: 250px;" th:src="@{/user/{id}/pic(id=${user.id})}">
+            <div class="row">
+              <div class="col-4" >
+                <div class="text-center mt-4 mb-1">
+                  <img class="rounded-circle" style="width: 250px; height: 250px;" th:src="@{/user/{id}/pic(id=${user.id})}">
+                </div>
+                <h1 class="text-center mt-2">
+                  <b th:text="${user.username}"></b>
+                </h1>
+                <div th:if="${isOwnProfile}" class="mt-3 mb-1" style="text-align: center;">              
+                  <form th:action="@{/user/__${user.id}__/pic}" method="POST" enctype="multipart/form-data">
+                    <input style="display:none;" id="files" type="file" name="photo" accept="image/jpeg,image/png" onchange="javascript:this.form.submit();">
+                    <label for="files" class="py-1 px-3" style="outline: 3px solid darkturquoise;border-radius: 50px;background: aliceblue;">Cambiar imagen</label>
+                  </form>
+                </div>
+              </div>
+    
+              <div class="col-4" style="margin-top: auto; margin-bottom: auto;">
+                <div class="text-center m-4">
+                  <img style="width: 110px; height: 110px;" src="/img/friends.png">
+                </div>
+                <h2 class="text-center" th:text="| ${friendships.size()} Amigos|">Amigos</h2>
+              </div>     
+              
+              <div class="col-4" style="margin-top: auto; margin-bottom: auto;">
+                <div class="text-center m-4">
+                  <img style="width: 130px; height: 130px;" src="/img/videogame.png">
+                </div>
+                <h2 class="text-center" th:text="| ${matchPlayers.size()} Partidas|">partidas</h2>
+              </div>
             </div>
-            <h1 class="text-center mt-2">
-              <b th:text="${user.username}"></b>
-            </h1>
-            <div th:if="${isOwnProfile}" class="mt-3 mb-1" style="text-align: center;">              
-              <form th:action="@{/user/__${user.id}__/pic}" method="POST" enctype="multipart/form-data">
-                <input style="display:none;" id="files" type="file" name="photo" accept="image/jpeg,image/png" onchange="javascript:this.form.submit();">
-                <label for="files" class="py-1 px-3" style="outline: 3px solid darkturquoise;border-radius: 50px;background: aliceblue;">Cambiar imagen</label>
-              </form>
+    
+            <div class="row mt-4" th:if="${not isOwnProfile}">
+              <div class="col-4 text-center" style="margin-top: auto; margin-bottom: auto;">
+    
+                <!-- temporary message while loading info -->
+                <p id="friendship-loading"> Cargando... </p>
+    
+                <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
+                <form th:action="@{/friendship/send_req/__${user.id}__/}" method="POST">
+                  <button id="friendship-send-button" class="btn btn-primary" style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit"> 
+                    <b>Solicitar amistad</b>
+                  </button>
+                </form>
+    
+                <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
+                <form th:action="@{/friendship/cancel_req/__${user.id}__/}" method="POST">
+                  <button id="friendship-request-cancel-button" class="btn btn-danger" style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit"> 
+                    <b>Cancelar solicitud de amistad</b>
+                  </button>
+                </form>
+    
+                <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
+                <form th:action="@{/friendship/accept_req/__${user.id}__/}" method="POST">
+                  <button id="friendship-request-accept-button" class="btn btn-success" 
+                  style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit">
+                    <b>Aceptar solicitud de amistad</b>
+                  </button>
+                </form>
+    
+                <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
+                <form th:action="@{/friendship/finish/__${user.id}__/}" method="POST">
+                  <button id="friendship-finish-button" class="btn btn-warning" 
+                  style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit">
+                    <b>Dejar de ser amigos</b>
+                  </button>
+                </form>
+              </div>    
+              
+              <div class="col-8" style="margin-top: auto; margin-bottom: auto; text-align: center;">            
+                <form class="card-body text-center d-flex" style="border-radius: 10px; padding: 8px; outline: 3px solid chocolate; background-color: cornsilk;" th:action="@{/user/__${user.id}__/msg}" method="POST">
+                  <input type="text" id="message" style="width: 90%; text-indent: 10px;" 
+                  placeholder="Envía un mensaje a este usuario" />
+                  <button id="sendmsg" style="margin-left: auto; margin-right: auto; width: 50px; height: 50px; border-radius: 50px; background-color: lightcyan;" class="btn btn-secondary ml-2" type="submit">
+                    <img style="width: 30px; height: 30px;" src="/img/send.png">
+                  </button>
+                </form>            
+              </div>
             </div>
-          </div>
-
-          <div class="col-4" style="margin-top: auto; margin-bottom: auto;">
-            <div class="text-center m-4">
-              <img style="width: 110px; height: 110px;" src="/img/friends.png">
-            </div>
-            <h2 class="text-center" th:text="| ${friendships.size()} Amigos|">Amigos</h2>
-          </div>     
-          
-          <div class="col-4" style="margin-top: auto; margin-bottom: auto;">
-            <div class="text-center m-4">
-              <img style="width: 130px; height: 130px;" src="/img/videogame.png">
-            </div>
-            <h2 class="text-center" th:text="| ${matchPlayers.size()} Partidas|">partidas</h2>
+    
           </div>
         </div>
-
-        <div class="row mt-4" th:if="${not isOwnProfile}">
-          <div class="col-4 text-center" style="margin-top: auto; margin-bottom: auto;">
-
-            <!-- temporary message while loading info -->
-            <p id="friendship-loading"> Cargando... </p>
-
-            <!-- Usuario loggeado y "user" no son amigos todavia: enviar solicitud -->
-            <form th:action="@{/friendship/send_req/__${user.id}__/}" method="POST">
-              <button id="friendship-send-button" class="btn btn-primary" style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit"> 
-                <b>Solicitar amistad</b>
-              </button>
-            </form>
-
-            <!-- Usuario loggeado ha enviado solicitud a "user": permitir cancelarla -->
-            <form th:action="@{/friendship/cancel_req/__${user.id}__/}" method="POST">
-              <button id="friendship-request-cancel-button" class="btn btn-danger" style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit"> 
-                <b>Cancelar solicitud de amistad</b>
-              </button>
-            </form>
-
-            <!-- "user" ha enviado una solicitud a usuario loggeado: permitir aceptarla -->
-            <form th:action="@{/friendship/accept_req/__${user.id}__/}" method="POST">
-              <button id="friendship-request-accept-button" class="btn btn-success" 
-              style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit">
-                <b>Aceptar solicitud de amistad</b>
-              </button>
-            </form>
-
-            <!-- Usuario loggeado y "user" son amigos: permitir acabar la amistad -->
-            <form th:action="@{/friendship/finish/__${user.id}__/}" method="POST">
-              <button id="friendship-finish-button" class="btn btn-warning" 
-              style="width: 280px; height: 55px; border-radius: 50px; display: none;" type="submit">
-                <b>Dejar de ser amigos</b>
-              </button>
-            </form>
-          </div>    
-          
-          <div class="col-8" style="margin-top: auto; margin-bottom: auto; text-align: center;">            
-            <form class="card-body text-center d-flex" style="border-radius: 10px; padding: 8px; outline: 3px solid chocolate; background-color: cornsilk;" th:action="@{/user/__${user.id}__/msg}" method="POST">
-              <input type="text" id="message" style="width: 90%; text-indent: 10px;" 
-              placeholder="Envía un mensaje a este usuario" />
-              <button id="sendmsg" style="margin-left: auto; margin-right: auto; width: 50px; height: 50px; border-radius: 50px; background-color: lightcyan;" class="btn btn-secondary ml-2" type="submit">
-                <img style="width: 30px; height: 30px;" src="/img/send.png">
-              </button>
-            </form>            
+        <div class="tab-pane fade" id="pills-matches" role="tabpanel" aria-labelledby="pills-matches-tab">
+          <div class="table-responsive">
+            <table class="table table-hover caption-top shadow fs-5">
+              <caption>Matches</caption>
+              <thead class="table-primary">
+                <tr>
+                  <th>Match</th>
+                  <th>Room</th>
+                  <th>Top</th>
+                  <th>Participants</th>
+                </tr>
+              </thead>
+              <tbody class="table-info">
+                <tr th:each="matchPlayer: ${matchPlayers}">
+                  <td th:text="| # ${matchPlayer.match.id} |"></td>
+                  <td th:text="| ${matchPlayer.match.room.id} |"></td>
+                  <td th:text="| ${matchPlayer.position}º|"></td>
+                  <td>
+                    <a th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}" th:href="@{/user/__${matchPlayerOthers.player.id}__}"
+                      th:text="| ${matchPlayerOthers.player.username} |" style="margin-right: 16px;" ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          
         </div>
-
+        <div th:if="${isOwnProfile}" class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
+          <div id="request-block">
+            <div class="table-responsive">
+              <table class="table table-hover caption-top shadow fs-5">
+                <caption>Friend Requests</caption>
+                <thead class="table-primary">
+                  <tr rowspan="1">
+                    <th colspan="1">Friend Request Id</th>
+                    <th colspan="1">Sender Id</th>
+                    <th colspan="1">Sender Username</th>
+                    <th colspan="1">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="table-info">
+                  <tr class="request-row" rowspan="1" th:each="request: ${friendRequests}">
+                    <td colspan="1" th:text="${request.id}">ID</td>
+                    <td colspan="1" th:text="${request.user1.id}">Name</td>
+                    <td colspan="1">
+                      <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
+                    </td>
+                    <td colspan="1">
+                      <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
+                        <button id="request-accept-button" class="btn btn-success" type="submit">Accept</button>
+                      </form>
+                      <form th:action="@{/friendship/reject_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
+                        <button id="request-reject-button" class="btn btn-danger" type="submit">Reject</button>
+                      </form>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>    
+          </div>
+    
+         
+          <div class="table-responsive">
+            <table class="table table-hover caption-top shadow fs-5">
+              <caption>Friends</caption>
+              <thead class="table-primary">
+                <tr rowspan="1">
+                  <th colspan="1">Friend Id</th>
+                  <th colspan="1">Friend Username</th>
+                </tr>
+              </thead>
+              <tbody class="table-info">
+                <tr rowspan="1" th:each="friendship: ${friendships}">
+                  <td colspan="1" th:text="${friendship.user2.id}">ID</td>
+                  <td colspan="1">
+                    <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |"></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+        <div class="tab-pane fade" id="pills-rooms" role="tabpanel" aria-labelledby="pills-rooms-tab">
+          
+          <div class="table-responsive">
+            <table class="table table-hover caption-top shadow fs-5">
+              <caption>Rooms</caption>
+              <thead class="table-primary">
+                <tr rowspan="1">
+                  <th colspan="1">Room Id</th>
+                  <th colspan="1">Room Privacy</th>
+                  <th colspan="1">Room Users</th>
+                </tr>
+              </thead>
+              <tbody class="table-info">
+                <tr rowspan="1" th:each="room: ${rooms}">
+                  <td colspan="1">
+                    <a th:href="@{/rooms/__${room.id}__}" th:text="${room.id} |">ID</a>
+                  </td>
+                  <td colspan="1" th:text="${room.visibility}">Privacy</td>
+  
+                  <td th:each="participant: ${room.getUsers()}">
+                    <a th:href="@{/user/__${participant.id}__}" th:text="| ${participant.username} |"></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
       </div>
-
-
-
-      <h3>Partidas</h3>
-
-      <table class="table table-light">
-        <thead>
-          <tr>
-            <th>Partida</th>
-            <th>Sala</th>
-            <th>Resultado</th>
-            <th>Participantes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="matchPlayer: ${matchPlayers}">
-            <td th:text="| # ${matchPlayer.match.id} |"></td>
-            <td th:text="| ${matchPlayer.match.room.id} |"></td>
-            <td th:text="| ${matchPlayer.position} º|"></td>
-            <td>
-              <a th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}" th:href="@{/user/__${matchPlayerOthers.player.id}__}"
-                th:text="| ${matchPlayerOthers.player.username} |" style="margin-right: 16px;" ></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <span style="display: inline-block; width: 40px; height: 50px;"></span>
-
-      <div id="request-block" th:if="${isOwnProfile}">
-        <h3>Solicitudes de amistad recibidas</h3>
-
-        <table class="table table-light" >
-          <thead>
-            <tr rowspan="1">
-              <th colspan="1">Friend Request Id</th>
-              <th colspan="1">Sender Id</th>
-              <th colspan="1">Sender Username</th>
-              <th colspan="1">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="request-row" rowspan="1" th:each="request: ${friendRequests}">
-              <td colspan="1" th:text="${request.id}">ID</td>
-              <td colspan="1" th:text="${request.user1.id}">Nombre</td>
-              <td colspan="1">
-                <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |"></a>
-              </td>
-              <td colspan="1">
-                <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
-                  <button id="request-accept-button" class="btn btn-success" type="submit">Aceptar</button>
-                </form>
-                <form th:action="@{/friendship/reject_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
-                  <button id="request-reject-button" class="btn btn-danger" type="submit">Rechazar</button>
-                </form>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3 th:if="${isOwnProfile}">Amigos</h3>
-
-      <table th:if="${isOwnProfile}" class="table table-light">
-        <thead>
-          <tr rowspan="1">
-            <th colspan="1">Friend Id</th>
-            <th colspan="1">Friend Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr rowspan="1" th:each="friendship: ${friendships}">
-            <td colspan="1" th:text="${friendship.user2.id}">ID</td>
-            <td colspan="1">
-              <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |"></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3>Salas de juego</h3>
-
-      <table class="table table-light">
-        <thead>
-          <tr rowspan="1">
-            <th colspan="1">Room Id</th>
-            <th colspan="1">Room Privacy</th>
-            <th colspan="1">Room Users</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr rowspan="1" th:each="room: ${rooms}">
-            <td colspan="1">
-              <a th:href="@{/rooms/__${room.id}__}" th:text="${room.id} |">ID</a>
-            </td>
-            <td colspan="1" th:text="${room.visibility}">Privacy</td>
-
-            <td th:each="participant: ${room.getUsers()}">
-              <a th:href="@{/user/__${participant.id}__}" th:text="| ${participant.username} |"></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
     </div>
   </main>
 
