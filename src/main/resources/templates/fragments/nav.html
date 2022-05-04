@@ -102,7 +102,7 @@
         </nav>
 
         <!-- Notification toast for user messages -->
-        <div class="toast show position-absolute bottom-0 start-0" style="display: none; z-index: 2">
+        <div id="newMessageToast" class="toast show position-absolute bottom-0 start-0" style="display: none; z-index: 2">
             <div class="toast-header">
                 <strong class="me-auto toast-header-title">Toast Header</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
@@ -110,6 +110,15 @@
             <div class="toast-body">
                 <p class="toast-body-text">Some text inside the toast body</p>
             </div>
+        </div>
+
+        <div id="roomInvitationToast" class="toast show position-absolute bottom-0 start-0" style="display: none; z-index: 2">
+            <div class="toast-header">
+                <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                <strong class="me-auto">Snakewatch</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div id="roomInvitationToastBody" class="toast-body"></div>
         </div>
 
         <!-- Bootstrap -->
@@ -121,16 +130,50 @@
 
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-                function showToast(title, body) {
-                    let toastHTML = document.querySelector(".toast");
+                function showToast(toastId, title, body) {
+                    let toastHTML = document.getElementById(toastId);
 
                     // Make it visible (remove display = "none")
                     toastHTML.style.display = '';
 
-                    // Put sender username in the toast title
-                    toastHTML.querySelector('.toast-header-title').innerHTML = title;
-                    // Put message content on toast body
-                    toastHTML.querySelector('.toast-body-text').innerHTML = body;
+                    if(toastId == 'newMessageToast'){
+                        // Put sender username in the toast title
+                        toastHTML.querySelector('.toast-header-title').innerHTML = title;
+                        // Put message content on toast body
+                        toastHTML.querySelector('.toast-body-text').innerHTML = body;
+                    }
+                    else if(toastId == 'roomInvitationToast'){
+                        let roomInvitationToastBody = document.getElementById('roomInvitationToastBody');
+                        roomInvitationToastBody.innerHTML = '';
+                        let div = document.createElement('div');
+                        div.setAttribute("class", "row justify-content-around");
+                        let p = document.createElement('p');
+                        p.setAttribute("class", "fs-5 text-center fw-bold");
+                        p.innerHTML = body.from + " invites you to join Room " + body.message;
+                        let rejectb = document.createElement('button');
+                        let acceptb = document.createElement('button');
+                        let form = document.createElement('form');
+                        form.setAttribute("class", "col-4 text-center");
+                        form.setAttribute("action", "/rooms/join/" + body.message);
+                        form.setAttribute("method", "GET");
+                        rejectb.setAttribute("class", "col-4 btn btn-outline-danger fs-5 text-center");
+                        acceptb.setAttribute("class", "h-100 w-100 btn btn-outline-success fs-5 text-center");
+                        acceptb.setAttribute("type", "submit");
+                        
+                        rejectb.innerHTML = "Reject";
+                        acceptb.innerHTML = "Accept";
+
+                        form.appendChild(acceptb);
+                        
+                        rejectb.onclick = () => {
+                            toastHTML.style.display = 'none';
+                        }
+                       
+                        div.appendChild(p);
+                        div.appendChild(rejectb);
+                        div.appendChild(form);
+                        roomInvitationToastBody.appendChild(div);
+                    }
 
                     // Cast it to bootstrap toast and make it show
                     let toast = new bootstrap.Toast(toastHTML);
@@ -142,7 +185,10 @@
                     let p = document.querySelector("#nav-unread");
                     if (p && text.type == "textMessage") {
                         p.textContent = +p.textContent + 1;
-                        showToast("Nuevo mensaje de " + text.from, text.text);
+                        showToast("newMessageToast","Nuevo mensaje de " + text.from, text.text);
+                    }
+                    if(text.type == "PrivateRoomInvitation"){
+                        showToast("roomInvitationToast",null, text.text);
                     }
                 };
 

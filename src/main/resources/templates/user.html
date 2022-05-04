@@ -108,26 +108,6 @@
               </div>
             </div>
           </div>
-          <div class="row justify-content-center">
-            <button th:if="${isOwnProfile}" id="roomInvitationsButton" type="button" class="w-25 btn btn-info shadow position-relative fs-4" data-bs-toggle="modal" data-bs-target="#roomInvitationsModal">
-              Room Invitations
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
-            </button>
-
-            <div class="modal fade" id="roomInvitationsModal" tabindex="-1" aria-labelledby="ModalBody" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="ModalBody">Room Invitations</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <ul id="roomInvitationsModalBody" style="list-style:none;"></ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           
         </div>
         <div class="tab-pane fade" id="pills-matches" role="tabpanel" aria-labelledby="pills-matches-tab">
@@ -175,7 +155,7 @@
                     <td colspan="1" th:text="${request.id}">ID</td>
                     <td colspan="1" th:text="${request.user1.id}">Name</td>
                     <td colspan="1">
-                      <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |" styñe="text-decoration: none;"></a>
+                      <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |" style="text-decoration: none;"></a>
                     </td>
                     <td colspan="1">
                       <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">

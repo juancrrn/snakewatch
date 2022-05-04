@@ -42,44 +42,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    let roomInvitationsButton = document.getElementById('roomInvitationsButton');
-
-
-    roomInvitationsButton.onclick = (e) => {
-        e.preventDefault();
-        go("/rooms/get_room_invitations", 'GET', {})
-        .then(d => {
-            let roomInvitationsModalBody = document.getElementById('roomInvitationsModalBody');
-            roomInvitationsModalBody.innerHTML = '';
-            for(let i=0; i < d.roomInvitations.length; i++){
-                let li = document.createElement('li');
-
-                li.setAttribute("class", "text-center justify-content-around border-bottom border-2");
-
-                let div = document.createElement('div');
-
-                div.setAttribute("class", "row justify-content-around my-2")
-                let p = document.createElement('p');
-
-                p.setAttribute("class", "col-12 text-center fs-4");
-                p.innerHTML = d.roomInvitations[i][1] + " invites you to Room " + d.roomInvitations[i][0] + "!!!! Do you want to Join?";
-
-                let acceptButton = document.createElement('button');
-                let rejectButton = document.createElement('button');
-                acceptButton.setAttribute("class", "col-4 btn btn-outline-success text-center fs-5");
-                rejectButton.setAttribute("class", "col-4 btn btn-outline-danger text-center fs-5");
-
-                acceptButton.innerHTML = "Accept";
-                rejectButton.innerHTML = "Reject";
-
-                div.appendChild(p);
-                div.appendChild(rejectButton);
-                div.appendChild(acceptButton);
-                li.appendChild(div);
-                roomInvitationsModalBody.appendChild(li);
-            }
-        })
-        .catch(e => console.log("sad", e))
-
-    }
   });

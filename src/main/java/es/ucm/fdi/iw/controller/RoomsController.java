@@ -32,7 +32,6 @@ import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Room;
-import es.ucm.fdi.iw.model.RoomInvitation;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.Match.Status;
 import es.ucm.fdi.iw.model.Room.RoomType;
@@ -204,58 +203,25 @@ public class RoomsController {
         return "redirect:/rooms";
     }
 
-    @PostMapping("invite_friends_to_room/{roomId}")
+    @GetMapping("get_user_friends")
     @ResponseBody
-    @Transactional
-    public String sendInvitationsToJoinPrivateRoom(@PathVariable long roomId, Model model) {
+    public String getUserFriends(Model model) 
+        throws JsonProcessingException {
 
-        Room room = entityManager.find(Room.class, roomId);
-       
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode rootNode = mapper.createObjectNode();
+
         Long sessionUserId = ((User) session.getAttribute("u")).getId();
-        User sessionUser = entityManager.find(User.class, sessionUserId);
-
+       
         List<Friendship> friendships = entityManager
                 .createNamedQuery("Friendship.getFriends", Friendship.class)
                 .setParameter("userId", sessionUserId)
                 .getResultList();
-        
+
+        ArrayNode userFriendsArray = rootNode.putArray("userFriends");
+
         for(Friendship f: friendships){
-            
-            RoomInvitation ri = new RoomInvitation();
-            ri.setSender(sessionUser);
-            ri.setReceiver(f.getUser2());
-            ri.setRoom(room);
-            entityManager.persist(ri);
-            entityManager.flush();
-        }
-
-        return "{\"result\": \"invitations sent.\"}";
-    }
-
-
-    @GetMapping("get_room_invitations")
-    @ResponseBody
-    public String getRoomInvitations(Model model) 
-        throws JsonProcessingException{
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode rootNode = mapper.createObjectNode();
-
-        Long receiverId = ((User) session.getAttribute("u")).getId();
-        
-        List<RoomInvitation> roomInvitations = entityManager.
-                createNamedQuery("RoomInvitation.getReceiverInvitations", RoomInvitation.class)
-                .setParameter("receiverId", receiverId).
-                getResultList();
-        
-        ArrayNode invitationsArray = rootNode.putArray("roomInvitations");
-        
-        for(RoomInvitation ri: roomInvitations){
-            List<Object> objList = new ArrayList<>();
-            objList.add(ri.getRoom().getId());
-            objList.add(ri.getSender().getUsername());
-            objList.add(ri.getReceiver().getUsername());
-            JsonNode j = mapper.convertValue(objList, JsonNode.class);
-            invitationsArray.add(j);
+            userFriendsArray.add(f.getUser2().getUsername());
         }
 
         String json = mapper.writeValueAsString(rootNode);
