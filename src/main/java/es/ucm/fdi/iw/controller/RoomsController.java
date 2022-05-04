@@ -212,13 +212,15 @@ public class RoomsController {
         return "redirect:/rooms";
     }
 
-    @GetMapping("get_user_friends")
+    @GetMapping("get_user_friends/{roomId}")
     @ResponseBody
-    public String getUserFriends(Model model) 
+    public String getUserFriends(@PathVariable long roomId, Model  model) 
         throws JsonProcessingException {
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
+
+        Room room = entityManager.find(Room.class, roomId);
 
         Long sessionUserId = ((User) session.getAttribute("u")).getId();
        
@@ -230,7 +232,9 @@ public class RoomsController {
         ArrayNode userFriendsArray = rootNode.putArray("userFriends");
 
         for(Friendship f: friendships){
-            userFriendsArray.add(f.getUser2().getUsername());
+            if(room.getUsers().indexOf(f.getUser2())==-1){
+                userFriendsArray.add(f.getUser2().getUsername());
+            }
         }
 
         String json = mapper.writeValueAsString(rootNode);
