@@ -10,11 +10,9 @@ const ws = {
      */
     retries: 3,
     
-    // WARNING: put this 2 lines anywhere where you use ws.receive
-    // const oldReceive = ws.receive;       (OUTSIDE and BEFORE the ws.receive)
-    // oldReceive(text);                    (INSIDE and AT THE END the ws.receive)
+    // Default receive function if no one is passed to ws.subscribe()
     receive: (text) => {
-        // Empty, to be reimplemented with oldReceive call
+        // Empty
     },
 
     headers: { 'X-CSRF-TOKEN': config.csrf.value },
