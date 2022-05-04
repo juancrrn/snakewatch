@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.ucm.fdi.iw.model.Friendship;
 import es.ucm.fdi.iw.model.Match;
@@ -85,26 +86,34 @@ public class RoomsController {
     @GetMapping("join/{roomId}")
     @MessageMapping
     @Transactional
-    public String joinRoom(@PathVariable long roomId, Model model)
-            throws JsonProcessingException {
+    public String joinRoom(@PathVariable long roomId, Model model, RedirectAttributes attributes)
+            throws JsonProcessingException, IllegalArgumentException {
+
+
+      
         Room room = entityManager.find(Room.class, roomId);
         Long joinUserId = ((User) session.getAttribute("u")).getId();
         User joinUser = entityManager.find(User.class, joinUserId);
 
-        room.getUsers().add(joinUser);
-        entityManager.persist(room);
-        entityManager.flush();
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
 
-        rootNode.put("type", "joinRoom");
-        rootNode.put("message", joinUser.getUsername());
-        String json = mapper.writeValueAsString(rootNode);
+        if(room.getUsers().size()<room.getMaxUsers()){
+            room.getUsers().add(joinUser);
+            entityManager.persist(room);
+            entityManager.flush();
 
-        messagingTemplate.convertAndSend("/topic/room" + roomId, json);
+            rootNode.put("type", "joinRoom");
+            rootNode.put("message", joinUser.getUsername());
+            String json = mapper.writeValueAsString(rootNode);
 
-        return getRoom(roomId, model);
+            messagingTemplate.convertAndSend("/topic/room" + roomId, json);
+            return getRoom(roomId, model);
+        }
+        else{
+            attributes.addFlashAttribute("message", "You can't join room " + roomId + ", is full!!!");
+            return "redirect:/rooms";
+        }  
     }
 
     @GetMapping("{roomId}")

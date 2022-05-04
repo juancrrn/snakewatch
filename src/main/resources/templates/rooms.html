@@ -40,8 +40,31 @@
             </div>
         </div>
 
+
+        <div th:if="${message}" id="maxRoomUsersReachedToast" class="toast position-absolute top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" style="display:none;">
+            <div class="toast-header">
+                <img th:src="@{/img/logo.png}" style="width:30px; height:30px;" class="rounded me-2">
+                <strong class="me-auto">Snakewatch</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p class="toast-body-text fs-5 fw-bold" th:text="${message}"></p>
+            </div>
+        </div>
+        
+
     </main>
 
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            let toastHTML = document.getElementById('maxRoomUsersReachedToast');
+            if(toastHTML){
+                toastHTML.style.display = '';
+                let toast = new bootstrap.Toast(toastHTML);
+                toast.show();
+            }
+        })
+    </script>
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
 

@@ -14,4 +14,10 @@ public class GlobalExceptionHandler {
         attributes.addFlashAttribute("message", e.getCause().getMessage());
         return "redirect:/levels";
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgument(IllegalArgumentException e, RedirectAttributes attributes){
+        attributes.addFlashAttribute("message", e.getCause().getMessage());
+        return "redirect:/rooms";
+    }
 }

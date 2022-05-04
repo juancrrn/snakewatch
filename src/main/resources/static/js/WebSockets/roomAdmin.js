@@ -49,8 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let inviteFriendsButton = document.getElementById('inviteFriendsButton');
 
         inviteFriendsButton.onclick = () => {
-        
-            go("/rooms/get_user_friends", 'GET', {})
+            
+            function roomGo(){
+                go("/rooms/get_user_friends", 'GET', {})
             .then(d => {
 
                 let userFriendsModalBody = document.getElementById('userFriendsModalBody');
@@ -115,16 +116,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     li.appendChild(div);
                     userFriendsModalBody.appendChild(li);
                 }
-
-
-                /*let toastHTML = document.getElementById('friendsInvitationsSentToast');
-    
-                toastHTML.style.display = '';
-    
-                let toast = new bootstrap.Toast(toastHTML);
-                toast.show();*/
             })
             .catch(e => console.log("Error", e))
+            }     
+
+            setInterval(roomGo, 3000);
         }
     }   
 
