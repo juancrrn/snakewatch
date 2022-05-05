@@ -35,7 +35,7 @@
           </div>  
           
           <div th:if="${session.u.hasRole('ADMIN')}" class="row justify-content-around">
-            <form class="col-6" th:action="@{/levels/load_level}" method="POST" enctype="multipart/form-data">
+            <form class="col-md-5" th:action="@{/levels/load_level}" method="POST" enctype="multipart/form-data">
               <div class="input-group">
                 <input type="file" name="file" accept=".json" class="form-control" id="fileInput" aria-describedby="fileButton" aria-label="Upload">
                 <button class="btn btn-outline-info" type="submit" id="fileButton">Upload File</button>
