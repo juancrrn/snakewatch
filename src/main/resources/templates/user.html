@@ -111,31 +111,35 @@
           
         </div>
         <div class="tab-pane fade" id="pills-matches" role="tabpanel" aria-labelledby="pills-matches-tab">
-          <div class="table-responsive">
-            <table class="table table-hover caption-top shadow fs-5">
-              <caption>Matches</caption>
-              <thead class="table-primary">
-                <tr>
-                  <th>Match</th>
-                  <th>Room</th>
-                  <th>Top</th>
-                  <th>Participants</th>
-                </tr>
-              </thead>
-              <tbody class="table-info">
-                <tr th:each="matchPlayer: ${matchPlayers}">
-                  <td th:text="| # ${matchPlayer.match.id} |"></td>
-                  <td th:text="| ${matchPlayer.match.room.id} |"></td>
-                  <td th:text="| ${matchPlayer.position}º|"></td>
-                  <td>
-                    <a th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}" th:href="@{/user/__${matchPlayerOthers.player.id}__}"
-                      th:text="| ${matchPlayerOthers.player.username} |" style="margin-right: 16px; text-decoration: none;" ></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
           
+          <div class="row justify-content-center">
+            <div th:each="matchPlayer: ${matchPlayers}" class="card col-10 mb-3 shadow bg-info bg-gradient bg-opacity-10 px-0 mx-0 my-2">
+              <div class="row g-0 justify-content-around">
+                <div class="col-md-3 bg-primary bg-gradient bg-opacity-50">
+                  <h3 class="text-white text-center" th:text="| Match ${matchPlayer.match.id} |"></h3>
+                  <h4 class="text-white text-center" th:text="| Room ${matchPlayer.match.room.id} |"></h4>
+                </div>
+                <div class="col-md-9">
+                  <div class="card-body w-100">
+                    <div class="row justify-content-around">
+                      <div class="col-3">
+                        <p class="text-center fs-5">Position</p>  
+                        <p class="text-center fs-5" th:text="${matchPlayer.position} + 'º'"></p>  
+                      </div>
+                      <div class="col-9">
+                        <p class="text-center fs-5">Participants</p>  
+                        <div class="text-center">
+                          <a class="fs-5" th:each="matchPlayerOthers: ${matchPlayer.match.getMatchPlayers()}" th:href="@{/user/__${matchPlayerOthers.player.id}__}"
+                          th:text="| ${matchPlayerOthers.player.username} |" style="margin-right: 16px; text-decoration: none;" ></a>
+                        </div>                    
+                      </div>
+                    </div>
+                      
+                  </div>
+                </div>      
+              </div>
+            </div>
+          </div>
         </div>
         <div th:if="${isOwnProfile}" class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
           <div id="request-block">
