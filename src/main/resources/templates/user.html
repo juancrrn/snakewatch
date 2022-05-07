@@ -118,9 +118,11 @@
           <div class="row justify-content-center">
             <div th:each="matchPlayer: ${matchPlayers}" class="card col-10 mb-3 shadow bg-info bg-gradient bg-opacity-10 px-0 mx-0 my-2">
               <div class="row g-0 justify-content-around">
-                <div class="col-md-3 bg-primary bg-gradient bg-opacity-50">
-                  <h3 class="text-white text-center" th:text="| Match ${matchPlayer.match.id} |"></h3>
-                  <h4 class="text-white text-center" th:text="| Room ${matchPlayer.match.room.id} |"></h4>
+                <div class="col-md-3 bg-primary bg-gradient bg-opacity-50" style="display: table;">
+                  <div style="display: table-cell; vertical-align: middle;" >
+                    <h3 class="text-white text-center" th:text="| Match ${matchPlayer.match.id} |"></h3>
+                    <h4 class="text-white text-center" th:text="| Room ${matchPlayer.match.room.id} |"></h4>
+                  </div>
                 </div>
                 <div class="col-md-9">
                   <div class="card-body w-100">
