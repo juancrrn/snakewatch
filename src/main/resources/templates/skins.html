@@ -11,10 +11,118 @@
 
     <main class="flex-shrink-0">
         <div class="container">
-            Skins
+            <div class="row justify-content-center">
+                <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4">Skins</h1> 
+                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">   
+                        <div th:each="skin, iterator: ${skins}" th:id="${skin}" th:if="${skin==playerSkin}" class="carousel-item active">
+                            <h2 class="text-center fs-1 text-secondary bg-info bg-gradient bg-opacity-50 m-0 p-0 shadow-sm"></h2>
+                            <canvas></canvas>  
+                            <div class="row justify-content-center">
+                                <h2 class="col-3 fs-3 text-center bg-info bg-opacity-50 bg-gradient">¡Skin Selected!</h2>    
+                            </div>
+                                        
+                        </div>
+                        <div th:each="skin, iterator: ${skins}" th:id="${skin}" th:unless="${skin==playerSkin}" class="carousel-item">
+                            <h2 class="text-center fs-1 text-secondary bg-info bg-gradient bg-opacity-50 m-0 p-0 shadow-sm"></h2>
+                            <canvas></canvas>
+                            <div class="row justify-content-center">
+                                <form class="col-4" th:action="@{/skins/change_skin/__${skin}__}" method="POST">
+                                    <button type="submit" class="w-100 text-center btn btn-outline-info fs-4">Select skin</button>
+                                </form>    
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                  
+            </div>
+           
         </div>
     </main>
 
+    <script th:inline="javascript">
+        const SKINS = [[${skins}]];
+        const PLAYERSKIN = [[${playerSkin}]];
+    </script>
+
+    
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+
+    <script>
+    
+            for(let i=0; i < SKINS.length;i++){
+                let skinAnimationDiv = document.getElementById(SKINS[i]);
+    
+                skinAnimationDiv.querySelector('h2').innerHTML = SKINS[i].split('.')[0] + ' skin';
+                let config = {
+                    type: Phaser.CANVAS,
+                    canvas: skinAnimationDiv.querySelector('canvas'),               
+                    scale: {
+                        mode: Phaser.Scale.CENTER_BOTH,
+                        width: 250,
+                        height: 100,
+                        fullscreenTarget: 'canvas'
+                    },
+                    backgroundColor: '#E6FFFF',
+                    pixelArt: true,
+                    scene: {
+                        preload: preload,
+                        create: create,
+                        update: update
+                    },
+                    physics: {
+                        default: 'arcade',
+                        arcade: {
+                            gravity: { y: 0 },
+                            debug: false
+                        }
+                    } 
+                }
+
+                new Phaser.Game(config);
+
+
+                function preload(){
+                    this.load.spritesheet("snake", '/img/Skins/' + SKINS[i], { frameWidth: 20, frameHeight:80 });
+                }
+
+                function create(){
+                    this.snake = this.add.sprite(50, 50, "snake");
+
+                    this.snake.setAngle(90);
+                    this.anims.create({
+                        key: "snakeMove",
+                        frames: this.anims.generateFrameNumbers("snake"),
+                        frameRate: 20,
+                        repeat: -1
+                    })
+                   
+                    this.snake.play("snakeMove");
+
+                }
+
+                function update(){
+                    moveSnake(this.snake, 2);
+                }
+
+                function moveSnake(snake,speed){
+                    snake.x+=speed;
+                    if( (snake.x - 40) > config.scale.width){
+                        snake.x= -40;
+                    }
+                }
+            }
+       
+    </script>
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
 

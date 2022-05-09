@@ -34,12 +34,12 @@
       const NPLAYERS = [[${match.matchPlayers.size}]];
       const PLAYERSKIN = [[${playerSkin}]];
       const SKINS = [[${skins}]];
+      const IMPLAYER = [[${imPlayer}]];
       const ROOM = [[${room.id}]] 
       const ADMIN = [[${admin}]];
       const MATCH = [[${match.id}]];
       const LEVEL = [[${level}]];
       const USERSESSIONAME = [[${session.u.username}]];
-      const CLIENTURL = [[@{/rooms/go_to_match/__${match.id}__}]];
     </script>
     
     <script th:if="${admin}" type="module" th:src="@{/js/WebSockets/matchAdmin.js}"></script>

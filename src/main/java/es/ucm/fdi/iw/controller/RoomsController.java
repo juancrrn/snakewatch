@@ -258,11 +258,20 @@ public class RoomsController {
         model.addAttribute("match", match);
         model.addAttribute("level", "demo");
 
+        boolean imPlayer = false;
         // Lista con los los "username" de los jugadores 
-        List<String> players = new ArrayList<>();
+        List<List<String>> players = new ArrayList<>();
         for (MatchPlayer mp : match.getMatchPlayers()) {
-            players.add(mp.getPlayer().getUsername());
+            List<String> p = new ArrayList<>();
+            p.add(mp.getPlayer().getUsername());
+            p.add(mp.getPlayer().getSkin());
+            players.add(p);
+            if(mp.getPlayer().getId()==sessionUserId){
+                imPlayer = true;
+            }
         }
+
+        model.addAttribute("imPlayer", imPlayer);
 
         model.addAttribute("players", players);
    
@@ -283,7 +292,7 @@ public class RoomsController {
         }
         else{
 
-            if(players.indexOf(sessionUser.getUsername())==-1){
+            if(!imPlayer){
                 return "redirect:/spectate";
             }
             else{

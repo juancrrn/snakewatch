@@ -43,7 +43,7 @@ export default class Spectator extends Phaser.Scene {
 
     let cont = 0;
     PLAYERS.forEach(p => {
-      let texto =  this.add.text(370,(cont+1) * 15, 1 + " " + p + "    " + 0, {
+      let texto =  this.add.text(370,(cont+1) * 15, 1 + " " + p[0] + "    " + 0, {
         color: '#FFFFFF',
         fontStyle: 'italic',
         fontSize: 14
@@ -69,14 +69,16 @@ export default class Spectator extends Phaser.Scene {
 
     this.timeText.setDepth(1);
 
-    // Cursors
-    if(PLAYERS.indexOf(USERSESSIONAME) != -1){
-    this.cursors = this.input.keyboard.createCursorKeys();
+    
 
-    this.cursors.up.on('down', () => this.sendMove(0), this);
-    this.cursors.right.on('down', () => this.sendMove(1), this);
-    this.cursors.down.on('down', () => this.sendMove(2), this);
-    this.cursors.left.on('down', () => this.sendMove(3), this);
+    // Cursors
+    if(IMPLAYER){
+      this.cursors = this.input.keyboard.createCursorKeys();
+
+      this.cursors.up.on('down', () => this.sendMove(0), this);
+      this.cursors.right.on('down', () => this.sendMove(1), this);
+      this.cursors.down.on('down', () => this.sendMove(2), this);
+      this.cursors.left.on('down', () => this.sendMove(3), this);
     }
     // Add key to toggle game fullscreen
     this.input.keyboard.addKey('F').on('down', () => this.scale.toggleFullscreen(), this);
@@ -122,7 +124,7 @@ export default class Spectator extends Phaser.Scene {
         let backButton = document.createElement("button");
         
         backButton.setAttribute("class", "w-50 btn btn-outline-danger text-center fs-5");
-        if(PLAYERS.indexOf(USERSESSIONAME)!=-1){
+        if(IMPLAYER){
           backButton.innerHTML = 'Go Back To Room';
           backButton.onclick = () => {
             window.location.replace("/rooms/" + ROOM);

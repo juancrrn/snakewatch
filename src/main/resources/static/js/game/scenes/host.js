@@ -38,8 +38,8 @@ export default class Level extends Phaser.Scene {
     this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), PLAYERSKIN, USERSESSIONAME);
     this.snakes.set(USERSESSIONAME, this.player);
     PLAYERS.forEach((p) => {
-      if (p !== USERSESSIONAME) {
-        this.snakes.set(p, new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), PLAYERSKIN, p));
+      if (p[0] !== USERSESSIONAME) {
+        this.snakes.set(p[0], new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), p[1], p[0]));
       }
     });
 
