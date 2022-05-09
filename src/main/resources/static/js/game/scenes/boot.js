@@ -14,8 +14,11 @@ export default class Boot extends Phaser.Scene {
     this.load.tilemapTiledJSON('tilemap', '/maps/' + LEVEL + '.json');
     this.load.image('tileset', '/img/snake_tileset.png');
 
-    this.load.spritesheet('red', '/img/red.png', { frameWidth: 20 });
-    this.load.spritesheet('white', '/img/white.png', { frameWidth: 20 });
+    let directoryHeader = '/img/Skins/';
+    for(let i=0; i<SKINS.length;i++){
+      this.load.spritesheet(SKINS[i], directoryHeader + SKINS[i], { frameWidth: 20 });
+    }
+
     this.load.image('pink', '/img/pink.png');
   }
 

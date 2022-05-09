@@ -14,8 +14,8 @@
       this.load.tilemapTiledJSON('tilemap', '/levelMaps/' + LEVEL + '.json');
       this.load.image('tileset', '/img/snake_tileset.png');
   
-      this.load.spritesheet('red', '/img/red.png', { frameWidth: 20 });
-      this.load.spritesheet('white', '/img/white.png', { frameWidth: 20 });
+      this.load.spritesheet('red', '/img/Skins/red.png', { frameWidth: 20 });
+      this.load.spritesheet('white', '/img/Skins/white.png', { frameWidth: 20 });
       this.load.image('pink', '/img/pink.png');
     }
   

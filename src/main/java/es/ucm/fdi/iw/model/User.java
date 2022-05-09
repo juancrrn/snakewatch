@@ -62,6 +62,8 @@ public class User implements Serializable {
 
 	private boolean enabled;
 
+	private String skin;
+
 	/**
 	 * Roles
 	 * <p> - USER: standard user

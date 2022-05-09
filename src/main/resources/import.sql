@@ -1,10 +1,10 @@
 -- insert admin (username a, password aa)
-INSERT INTO IWUser (id, enabled, roles, username, password)
+INSERT INTO IWUser (id, enabled, roles, username, password, skin)
 VALUES 
-    (NEXT VALUE FOR user_id_seq, TRUE, 'USER,ADMIN', 'admin','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W'),
-    (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user1', '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W'),
-    (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user2','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W'),
-    (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user3','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
+    (NEXT VALUE FOR user_id_seq, TRUE, 'USER,ADMIN', 'admin','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'white.png'),
+    (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user1', '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'white.png'),
+    (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user2','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'white.png'),
+    (NEXT VALUE FOR user_id_seq, TRUE, 'USER', 'user3','{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'white.png');
 
 INSERT INTO Friendship (id, user1_id, user2_id, status) 
 VALUES 

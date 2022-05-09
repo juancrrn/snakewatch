@@ -2,8 +2,10 @@ package es.ucm.fdi.iw.controller;
 
 import java.util.Comparator;
 import java.util.List;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
@@ -263,9 +265,16 @@ public class RoomsController {
         }
 
         model.addAttribute("players", players);
-
+   
+        model.addAttribute("admin", match.getOwner().getId() == sessionUserId);
         
-        model.addAttribute("admin", match.getOwner().getId() == sessionUserId);        
+        model.addAttribute("playerSkin", sessionUser.getSkin());
+
+        File skinsFolder = new File("./src/main/resources/static/img/Skins");
+        String[] skinsNames = skinsFolder.list();
+        List<String> skinsList = new ArrayList<String>(Arrays.asList(skinsNames));
+
+        model.addAttribute("skins", skinsList);
 
         if(match.getStatus()!=Status.ENDED){
 

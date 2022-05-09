@@ -374,7 +374,8 @@ public class UserController {
 
 		if(!username.isEmpty() && !password.isEmpty()){
 			User user = new User(username, encodePassword(password), true, false);
-
+			//Default skin
+			user.setSkin("white.png");
 			if(!firstName.isEmpty()) user.setFirstName(firstName);
 			if(!lastName.isEmpty()) user.setLastName(lastName);
 
