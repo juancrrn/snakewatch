@@ -39,7 +39,9 @@
 
     <script>
         let savedSkin = PLAYERSKIN;
-        let skinAnimationDiv = document.getElementById("skinName").innerHTML = PLAYERSKIN.split('.')[0] + ' skin';
+        let skinNameH = document.getElementById("skinName");
+        skinNameH.innerHTML = PLAYERSKIN.split('.')[0];
+
         const game = new Phaser.Game({
             type: Phaser.CANVAS,
             parent: document.getElementById('game-container'),
@@ -109,6 +111,7 @@
 
         function changeSkin(skin = savedSkin) {
             game.registry.values.selectedSkin = skin;
+            skinNameH.innerHTML = skin.split('.')[0];
         }
 
         function updateSkin(skin, parts) {
