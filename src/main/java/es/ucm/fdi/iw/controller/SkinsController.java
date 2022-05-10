@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.iw.model.User;
 
@@ -49,6 +50,7 @@ public class SkinsController {
 
     @PostMapping("/change_skin/{skin}")
     @Transactional
+    @ResponseBody
     public String changeSkin(@PathVariable String skin, Model model){
 
         Long sessionUserId = ((User) session.getAttribute("u")).getId();
@@ -57,7 +59,7 @@ public class SkinsController {
         sessionUser.setSkin(skin);
         entityManager.persist(sessionUser);
         entityManager.flush();
-        return "redirect:/skins";
+        return "{\"result\": \"skin changed\", \"skin\":\"" + skin + "\"}";
     }
     
 }

@@ -23,9 +23,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <form th:each="skin, iterator: ${skins}" th:id="${skin}" th:action="@{/skins/change_skin/__${skin}__}" method="POST" class="skinForm">
-                    <button class="btn-sm btn-info skinBtn" th:onmouseover="changeSkin([[${skin}]])" th:onmouseout="changeSkin([[${playerSkin}]])" th:style="'background-image: url(/img/Skins/' + ${skin} + ')'"></button>
-                </form>
+                <button th:each="skin: ${skins}" class="btn-sm btn-info skinBtn" th:onmouseover="changeSkin([[${skin}]])" th:onmouseout="changeSkin()" th:onclick="saveSkin([[${skin}]])" th:style="'background-image: url(/img/Skins/' + ${skin} + ')'"></button>
             </div>
         </div>
     </main>
@@ -40,6 +38,7 @@
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
 
     <script>
+        let savedSkin = PLAYERSKIN;
         let skinAnimationDiv = document.getElementById("skinName").innerHTML = PLAYERSKIN.split('.')[0] + ' skin';
         const game = new Phaser.Game({
             type: Phaser.CANVAS,
@@ -107,7 +106,7 @@
             }, this);
         }
 
-        function changeSkin(skin) {
+        function changeSkin(skin = savedSkin) {
             game.registry.values.selectedSkin = skin;
         }
 
@@ -115,6 +114,15 @@
             parts.forEach((part) => {
                 part.setTexture(skin, part.frame.name)
             }, this);
+        }
+
+        function saveSkin(skin) {
+            go("/skins/change_skin/" + skin, "POST").then((d) => {
+                savedSkin = d.skin;
+                changeSkin();
+            }).catch((e) => {
+                console.log("Error: ", e);
+            })
         }
     </script>
     <th:block th:replace="fragments/footer.html :: footer" />
