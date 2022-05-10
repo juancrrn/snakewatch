@@ -7,6 +7,7 @@ export default class BotSnake extends Snake {
 
   constructor(scene, snakesGroup, pos, texture) {
     super(scene, snakesGroup, pos, 5, texture);
+    this.parts[0].setFrame(4);
   }
 
   chooseNextMove() {
