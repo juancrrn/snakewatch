@@ -18,3 +18,21 @@
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
 }
+
+.skinBtn {
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  margin: 5px 10px;
+  background-repeat: no-repeat;
+  background-clip: rect(0px,0px,80px,0px);
+  background-size: cover;
+  image-rendering: pixelated;
+}
+
+.skinForm {
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  margin: 0;
+}
