@@ -82,6 +82,14 @@
             this.parts.push(this.add.sprite(10, 50, selected, 3));
 
             this.parts.forEach((part) => part.setAngle(90), this);
+
+            let timer = this.time.addEvent({
+                delay: 1500,
+                callback: () => this.parts[0].setFrame(this.parts[0].frame.name === 0 ? 4 : 0),
+                callbackScope: this,
+                loop: true
+            })
+
             this.registry.set('selectedSkin', PLAYERSKIN);
             this.registry.events.on('changedata-selectedSkin', () => updateSkin(game.registry.values.selectedSkin.split('.')[0], this.parts), this);
         }
