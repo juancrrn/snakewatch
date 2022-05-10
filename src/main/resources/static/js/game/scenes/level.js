@@ -36,7 +36,7 @@ export default class Level extends Phaser.Scene {
     this.snakesGroup = this.physics.add.group();
     this.snakes = new Map();
 
-    this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white');
+    this.player = new PlayerSnake(this, this.snakesGroup, this.getEmptyCell(), 'white', USERSESSIONAME);
     this.snakes.set(USERSESSIONAME, this.player);
     for (let i = 0; i < NBOTS; i++) {
       this.snakes.set(i, new BotSnake(this, this.snakesGroup, this.getEmptyCell(), 'red'));
