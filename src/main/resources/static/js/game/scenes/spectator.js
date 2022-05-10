@@ -168,7 +168,7 @@ export default class Spectator extends Phaser.Scene {
     for (const key in json.snakes) {
       let snake = json.snakes[key];
       if (!this.snakes.has(key)) {
-        this.snakes.set(key, new Snake(this, null, { x: 0, y: 0 }, 0, snake.skin));
+        this.snakes.set(key, new Snake(this, null, { x: 0, y: 0 }, 0, snake.skin, key));
       }
       this.snakes.get(key).fromJSON(snake);
     }

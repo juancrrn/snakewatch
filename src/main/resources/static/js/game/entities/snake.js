@@ -20,7 +20,7 @@ export default class Snake {
     pos.dir = this.dir;
 
     this.parts = [];
-    this.head = new SnakePart(this, pos, 0);
+    this.head = new SnakePart(this, pos, this.username === USERSESSIONAME ? 0 : 4);
     this.parts.push(this.head);
     if (this.snakesGroup !== null) this.snakesGroup.addMultiple(this.parts);
     this.scene.physics.add.overlap(this.head, this.snakesGroup, this.onCollision, null, this);
@@ -198,6 +198,7 @@ export default class Snake {
       for (let idx = 0; idx < this.parts.length; idx++) {
         this.parts[idx].fromJSON(json.parts[idx]);
       }
+      this.head.setFrame(this.username === USERSESSIONAME ? 0 : 4)
     } else if (!this.dead) {
       this.die();
     }
