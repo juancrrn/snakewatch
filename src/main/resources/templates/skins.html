@@ -12,13 +12,13 @@
     <main class="flex-shrink-0">
         <div class="container">
             <div class="row justify-content-center">
-                <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4">Skins</h1> 
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">   
-                        <div th:id="${skin}" class="carousel-item active">
-                            <h2 id="skinName" class="text-center fs-1 text-secondary bg-info bg-gradient bg-opacity-50 m-0 p-0 shadow-sm"></h2>
-                            <canvas id="canvas"></canvas>
-                        </div>
+                <h1 class="text-center text-white bg-primary bg-gradient bg-opacity-50 shadow mb-4">Skins</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div id="game-area">
+                    <h2 id="skinName" class="text-center fs-1 text-secondary bg-info bg-gradient bg-opacity-50 m-0 p-0 shadow-sm"></h2>
+                    <div id="game-container">
+                        <canvas id="canvas"></canvas>
                     </div>
                 </div>
             </div>
@@ -42,11 +42,12 @@
         let skinAnimationDiv = document.getElementById("skinName").innerHTML = PLAYERSKIN.split('.')[0] + ' skin';
         const game = new Phaser.Game({
             type: Phaser.CANVAS,
+            parent: document.getElementById('game-container'),
             canvas: document.getElementById('canvas'),
             scale: {
                 mode: Phaser.Scale.CENTER_BOTH,
-                width: 250,
-                height: 100,
+                width: 200,
+                height: 80,
                 fullscreenTarget: 'canvas'
             },
             backgroundColor: '#E6FFFF',
@@ -75,10 +76,10 @@
             this.parts = []
             let selected = PLAYERSKIN.split('.')[0];
 
-            this.parts.push(this.add.sprite(70, 50, selected, 0));
-            this.parts.push(this.add.sprite(50, 50, selected, 1));
-            this.parts.push(this.add.sprite(30, 50, selected, 1));
-            this.parts.push(this.add.sprite(10, 50, selected, 3));
+            this.parts.push(this.add.sprite(70, 40, selected, 0));
+            this.parts.push(this.add.sprite(50, 40, selected, 1));
+            this.parts.push(this.add.sprite(30, 40, selected, 1));
+            this.parts.push(this.add.sprite(10, 40, selected, 3));
 
             this.parts.forEach((part) => part.setAngle(90), this);
 
@@ -100,8 +101,8 @@
         function moveSnake(snake, speed) {
             snake.forEach((part) => {
                 part.x += speed;
-                if((part.x) > game.scale.width){
-                    part.x = -20;
+                if((part.x) > game.scale.width + 10) {
+                    part.x = -10;
                 }
             }, this);
         }
