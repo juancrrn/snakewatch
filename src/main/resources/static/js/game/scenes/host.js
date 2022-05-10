@@ -89,22 +89,28 @@ export default class Level extends Phaser.Scene {
     this.wallsLayer.setCollisionFromCollisionGroup();
     this.wallsLayer.setTileIndexCallback(2, this.onCollision, this);
 
-    // Set timer for cycles execution
+    // Delay game start and then set timers
     this.timer = this.time.addEvent({
-      delay: 500,
-      callback: this.processTick,
+      delay: 3000,
+      callback: () => {
+        this.timer = this.time.addEvent({
+          delay: 500,
+          callback: this.processTick,
+          callbackScope: this,
+          loop: true
+        })
+        this.finishGameTimer = this.time.addEvent({
+          delay: 1000,
+          callback: this.processSecond,
+          callbackScope: this,
+          loop: true
+        })
+      },
       callbackScope: this,
-      loop: true
+      loop: false
     })
 
     this.timeToFinish = 90;
-
-    this.finishGameTimer = this.time.addEvent({
-      delay: 1000,
-      callback: this.processSecond,
-      callbackScope: this,
-      loop: true
-    })
 
     let remainingTimeText = this.add.text(190, 0, "Remaining Time", {
       color: '#FFFFFF',

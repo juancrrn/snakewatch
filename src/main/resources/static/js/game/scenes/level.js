@@ -62,10 +62,17 @@ export default class Level extends Phaser.Scene {
 
     // Set timer for cycles execution
     this.timer = this.time.addEvent({
-      delay: 500,
-      callback: this.processTick,
+      delay: 1000,
+      callback: () => {
+        this.timer = this.time.addEvent({
+          delay: 500,
+          callback: this.processTick,
+          callbackScope: this,
+          loop: true
+        })
+      },
       callbackScope: this,
-      loop: true
+      loop: false
     })
 
     // Let some logic be delayed
