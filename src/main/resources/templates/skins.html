@@ -92,33 +92,31 @@
 
 
                 function preload(){
-                    this.load.spritesheet("snake", '/img/Skins/' + SKINS[i], { frameWidth: 20, frameHeight:80 });
+                    this.load.spritesheet("snake", '/img/Skins/' + SKINS[i], { frameWidth: 20, frameHeight: 20 });
                 }
 
                 function create(){
-                    this.snake = this.add.sprite(50, 50, "snake");
+                    this.parts = []
 
-                    this.snake.setAngle(90);
-                    this.anims.create({
-                        key: "snakeMove",
-                        frames: this.anims.generateFrameNumbers("snake"),
-                        frameRate: 20,
-                        repeat: -1
-                    })
-                   
-                    this.snake.play("snakeMove");
+                    this.parts.push(this.add.sprite(70, 50, "snake", 0));
+                    this.parts.push(this.add.sprite(50, 50, "snake", 1));
+                    this.parts.push(this.add.sprite(30, 50, "snake", 1));
+                    this.parts.push(this.add.sprite(10, 50, "snake", 3));
 
+                    this.parts.forEach((part) => part.setAngle(90), this);
                 }
 
                 function update(){
-                    moveSnake(this.snake, 2);
+                    moveSnake(this.parts, 2);
                 }
 
-                function moveSnake(snake,speed){
-                    snake.x+=speed;
-                    if( (snake.x - 40) > config.scale.width){
-                        snake.x= -40;
-                    }
+                function moveSnake(snake, speed){
+                    snake.forEach((part) => {
+                        part.x += speed;
+                        if((part.x) > config.scale.width){
+                            part.x = -20;
+                        }
+                    }, this);
                 }
             }
        
