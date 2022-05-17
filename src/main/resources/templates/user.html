@@ -148,39 +148,16 @@
         </div>
 
         <div th:if="${isOwnProfile}" class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
-          <div th:if="${friendRequests.size} gt 0">
-            <h3 class="mt-4 mb-4">Friend Requests</h3>
-            <div class="card text-center py-3" style="width: 210px; float: left; margin-right: 16px;" th:each="request: ${friendRequests}">
-              <div class="text-center">
-                <img class="rounded-circle" style="width: 140px; height: 140px;" th:src="@{/user/{id}/pic(id=${request.user1.id})}">
-              </div>
-              <div class="mt-1 mb-2">
-                <a th:href="@{/user/__${request.user1.id}__}" th:text="| ${request.user1.username} |" style="text-decoration: none;"></a>
-              </div>
-              <div>
-                <form th:action="@{/friendship/accept_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
-                  <button id="request-accept-button" class="btn btn-success" type="submit">Accept</button>
-                </form>
-                <form th:action="@{/friendship/reject_req/__${request.user1.id}__/}" style="display: inline-block;" method="POST">
-                  <button id="request-reject-button" class="btn btn-danger" type="submit">Reject</button>
-                </form>
-              </div>
-            </div>            
+          <div id="requests-block">
+            <h3 class="mt-4 mb-4 hideIfOnlyChild">Friend Requests</h3>
+            <th:block th:each="request: ${friendRequests}" th:with="user=${request.user1}" th:insert="fragments/friendship.html :: request-card"/>
           </div>
 
-          <div style="clear:both;">
-          </div>
+          <div style="clear: both;"></div>
 
-          <div th:if="${friendships.size} gt 0">
-            <h3 class="mt-4 mb-4">Friends</h3>
-            <div class="card text-center py-2" style="width: 210px; float: left; margin-right: 16px;" th:each="friendship: ${friendships}">
-              <div class="text-center">
-                <img class="rounded-circle mt-3" style="width: 140px; height: 140px;" th:src="@{/user/{id}/pic(id=${friendship.user2.id})}">
-              </div>
-              <div class="mt-1 mb-2">
-                <a th:href="@{/user/__${friendship.user2.id}__}" th:text="| ${friendship.user2.username} |" style="text-decoration: none;"></a>
-              </div>
-            </div>            
+          <div id="friends-block">
+            <h3 class="mt-4 mb-4 hideIfOnlyChild">Friends</h3>
+            <th:block th:each="friendship: ${friendships}" th:with="user=${friendship.user2}" th:insert="fragments/friendship.html :: card"/>
           </div>
         </div>
 

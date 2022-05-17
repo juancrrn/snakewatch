@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <title>Friendship Fragments</title>
+  </head>
+
+  <body>
+    <div th:fragment="card" th:id="'friend-card-' + ${user.id}" class="card text-center py-3 friendship-card">
+      <div class="text-center">
+        <img class="rounded-circle" style="width: 140px; height: 140px;" th:src="@{/user/{id}/pic(id=${user.id})}">
+      </div>
+      <div class="mt-1 mb-2">
+        <a th:href="@{/user/__${user.id}__}" th:text="| ${user.username} |" style="text-decoration: none;"></a>
+      </div>
+      <div>
+        <button id="friendship-delete-button" class="btn btn-warning" th:onclick="updateFriendship([[${user.id}]],'finish')" type="submit">Delete</button>
+      </div>
+    </div>
+
+    <div th:fragment="request-card" th:id="'friend-card-' + ${user.id}" class="card text-center py-3 friendship-card">
+      <div class="text-center">
+        <img class="rounded-circle" style="width: 140px; height: 140px;" th:src="@{/user/{id}/pic(id=${user.id})}">
+      </div>
+      <div class="mt-1 mb-2">
+        <a th:href="@{/user/__${user.id}__}" th:text="| ${user.username} |" style="text-decoration: none;"></a>
+      </div>
+      <div>
+        <button id="request-accept-button" class="btn btn-success" th:onclick="updateFriendship([[${user.id}]],'accept_req')" type="submit">Accept</button>
+        <button id="request-reject-button" class="btn btn-danger" th:onclick="updateFriendship([[${user.id}]],'reject_req')" type="submit">Reject</button>
+        <button id="friendship-delete-button" class="btn btn-warning" th:onclick="updateFriendship([[${user.id}]],'finish')" style="display: none;" type="submit">Delete</button>
+      </div>
+    </div>
+  </body>
+</html>

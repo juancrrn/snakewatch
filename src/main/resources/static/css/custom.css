@@ -29,3 +29,13 @@
   background-size: cover;
   image-rendering: pixelated;
 }
+
+.friendship-card {
+  width: 210px;
+  float: left;
+  margin-right: 16px;
+}
+
+.hideIfOnlyChild:only-child {
+  display: none;
+}

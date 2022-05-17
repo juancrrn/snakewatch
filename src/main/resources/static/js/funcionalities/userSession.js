@@ -1,45 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Manejar la seccion de solicitudes recibidas: aceptar o rechazar cada solicitud
+function updateFriendship(id, action) {
+  go("/friendship/" + action + "/" + id + "/", "POST").then((d) => {
+    const fBlock = document.getElementById('friends-block');
+    const card = document.getElementById("friend-card-" + id);
 
-    const requestContainer = document.getElementById("request-block");
-    var requestRows = document.getElementsByClassName("request-row");       // Una row para cada solicitud
+    switch (action) {
+      case "accept_req":
+        fBlock.appendChild(card);
+        card.querySelector('#request-accept-button').style.display = 'none';
+        card.querySelector('#request-reject-button').style.display = 'none';
+        card.querySelector('#friendship-delete-button').style.display = '';
+        break;
+      case "reject_req":
+      case "finish":
+        card.remove();
+        break;
 
-    if(requestRows.length <= 0){
-      requestContainer.style.display = 'none';
+      default:
+        break;
     }
-
-    for (let i = 0; i < requestRows.length; i++) {
-      let row = requestRows[i];
-
-      // Boton de aceptar la solicitud: aceptarla a traves de ayax y ocultar esta row
-      let acceptRequestButton = row.querySelector('#request-accept-button');
-      acceptRequestButton.onclick = (e) => {
-        e.preventDefault();
-        go(acceptRequestButton.parentNode.action, 'POST', {})
-          .then(d => {
-            row.remove();
-            // Ocultar row. Si ya no queda ninguna row mas, ocultar la seccion de solicitudes entera
-            if (requestRows.length <= 0) {
-              requestContainer.style.display = 'none';
-            }
-          })
-          .catch(e => console.log("sad", e))
-      }
-
-      // Boton de rechazar la solicitud: rechazarla a traves de ayax y ocultar esta row
-      let rejectRequestButton = row.querySelector('#request-reject-button');
-      rejectRequestButton.onclick = (e) => {
-        e.preventDefault();
-        go(rejectRequestButton.parentNode.action, 'POST', {})
-          .then(d => {
-            row.style.display = 'none';
-            // Ocultar row. Si ya no queda ninguna row mas, ocultar la seccion de solicitudes entera
-            if (requestRows.length <= 0) {
-              requestContainer.style.display = 'none';
-            }
-          })
-          .catch(e => console.log("sad", e))
-      }
-    }
-
-  });
+  }).catch((e) => {
+    console.log("Error: ", e);
+  })
+}
