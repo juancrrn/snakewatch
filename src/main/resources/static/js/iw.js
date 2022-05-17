@@ -24,6 +24,7 @@ const ws = {
     initialize: (endpoint, subs = []) => {
         try {
             ws.stompClient = Stomp.client(endpoint);
+            ws.stompClient.debug = () => {};
             ws.stompClient.reconnect_delay = 2000;
             // only works on modified stomp.js, not on original from mantainer's site
             ws.stompClient.reconnect_callback = () => ws.retries-- > 0;
@@ -83,7 +84,7 @@ function go(url, method, data = {}) {
     } else {
         params.headers["X-CSRF-TOKEN"] = config.csrf.value;
     }
-    console.log("sending", url, params)
+    // console.log("sending", url, params)
     return fetch(url, params)
         .then(response => {
             const r = response;
