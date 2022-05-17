@@ -129,7 +129,7 @@
         <script th:src="@{/js/stomp.js}" src="js/stomp.js"></script>
         <script th:src="@{/js/iw.js}" src="js/iw.js"></script>
 
-        <script>
+        <script th:if="${session.u}">
             document.addEventListener("DOMContentLoaded", () => {
                 function showToast(toastId, title, body) {
                     let toastHTML = document.getElementById(toastId);
