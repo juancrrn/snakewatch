@@ -136,6 +136,13 @@ public class FriendshipController {
         friendship.setUser1(loggedUser);
         friendship.setUser2(receiver);
         friendship.setStatus(Friendship.Status.PENDING);
+
+        List<Friendship> fr = entityManager.createNamedQuery("Friendship.getFriendship", Friendship.class)
+        .setParameter("userId", loggedUser.getId()).setParameter("otherId", receiver.getId())
+        .getResultList();
+
+        if (fr.size() != 0) return "{\"status\": \"error\",\"error\": \"friendship or request already exists\"}";
+
         entityManager.persist(friendship);
         entityManager.flush();
 
@@ -165,6 +172,8 @@ public class FriendshipController {
         List<Friendship> frList = new ArrayList<>(sender.getFriendships());
         frList.removeIf(
                 f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
+
+        if (frList.size() == 0) return "{\"status\": \"error\",\"error\": \"no request found\"}";
 
         Long frId = frList.get(0).getId();
         Friendship frRequest = entityManager.find(Friendship.class, frId);
@@ -212,6 +221,8 @@ public class FriendshipController {
         frList.removeIf(
                 f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != loggedUser.getId()));
 
+        if (frList.size() == 0) return "{\"status\": \"error\",\"error\": \"no request found\"}";
+
         Long frId = frList.get(0).getId();
         Friendship frRequest = entityManager.find(Friendship.class, frId);
 
@@ -242,6 +253,8 @@ public class FriendshipController {
 
         List<Friendship> frList = new ArrayList<>(loggedUser.getFriendships());
         frList.removeIf(f -> (f.getStatus() != Friendship.Status.PENDING || f.getUser2().getId() != otherUserId));
+
+        if (frList.size() == 0) return "{\"status\": \"error\",\"error\": \"no request found\"}";
 
         Long frId = frList.get(0).getId();
         Friendship frRequest = entityManager.find(Friendship.class, frId);
@@ -279,6 +292,9 @@ public class FriendshipController {
          * or need
          */
         loggedInUserFriendships.removeIf(f -> (f.getUser2().getId() != friend.getId()));
+
+        if (loggedInUserFriendships.size() == 0) return "{\"status\": \"error\",\"error\": \"no friendship found\"}";
+
         // FIXME Better to store the friendship and then get the id where needed
         Long loggedInUserFriendshipId = loggedInUserFriendships.get(0).getId();
 
