@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,7 +68,7 @@ public class FriendshipController {
      * @param sesion    current session used for this request
      * @return status of friendship between both users
      */
-    @PostMapping("/state/{otherUserId}")
+    @GetMapping("/state/{otherUserId}")
     @ResponseBody
     @Transactional
     public String getFriendStatus(@PathVariable long otherUserId, Model model, HttpSession session) {

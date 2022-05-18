@@ -52,10 +52,9 @@ function updateFriendship(id, action) {
   })
 }
 
-// FIXME: should be a GET request
 // Get friendship status and show corresponding button
 document.addEventListener("DOMContentLoaded", () => {
-  go("/friendship/state/" + USER_ID, 'POST', {}).then((d) => {
+  go("/friendship/state/" + USER_ID, 'GET').then((d) => {
       hideElement(frLoadingMessage);
 
       switch (d.result) {
