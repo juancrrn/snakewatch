@@ -165,14 +165,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let startMatchButton = document.getElementById('startMatchButton');
 
     startMatchButton.onclick = (e) => {
-        
-                e.preventDefault();
-                go(startMatchButton.parentNode.action, 'POST', {
-                    message: gamePlayersNames
-                })
-                .then(d  => console.log("happy", d))
-                .catch(e => console.log("sad", e))
-
+        e.preventDefault();
+        go(startMatchButton.parentNode.action, 'POST', {
+            message: gamePlayersNames
+        }).then((d) => {
+            if (d.matchId) window.location.replace("/rooms/get_match/" + d.matchId);
+        }).catch((e) => {
+            console.log("Error: ", e)
+        })
     }
 
     function showToast(text) {
@@ -218,10 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     startMatchButton.style.display = 'block';
                 }
             }
-        }
-
-        if (text.type == "goToMatch") {
-            window.location.replace("/rooms/get_match/" + text.message);
         }
     }
 

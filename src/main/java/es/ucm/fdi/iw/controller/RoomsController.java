@@ -345,7 +345,7 @@ public class RoomsController {
 
         messagingTemplate.convertAndSend("/topic/room" + roomId, json);
 
-        return "{\"result\": \"match created.\"}";
+        return "{\"result\": \"match created.\",\"matchId\":\"" + match.getId() + "\"}";
     }
 
     @PostMapping("start_match/{matchId}")
