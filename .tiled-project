@@ -1,0 +1,13 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "extensionsPath": "extensions",
+    "folders": [
+        "src/main/resources/static/maps",
+        "src/main/resources/static/levelMaps"
+    ],
+    "objectTypesFile": "",
+    "propertyTypes": [
+    ]
+}
