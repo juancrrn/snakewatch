@@ -46,8 +46,7 @@
 
     <script th:unless="${admin}" type="module" th:src="@{/js/WebSockets/matchPlayer.js}"></script>
 
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/game/phaser.js}"></script>
 
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>

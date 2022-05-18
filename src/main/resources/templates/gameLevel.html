@@ -41,11 +41,9 @@
     </script>
 
     <script type="text/javascript" th:src="@{/js/WebSockets/levelWS.js}"></script>
-    
-    <script type="module" th:src="@{/js/game/gameLevel.js}"></script>
 
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/game/phaser.js}"></script>
+    <script type="module" th:src="@{/js/game/gameLevel.js}"></script>
 
     <th:block th:replace="fragments/footer.html :: footer" />
 </body>
