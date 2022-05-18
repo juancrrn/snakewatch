@@ -67,7 +67,7 @@ INSERT INTO User_report (id, reasons, status, moderator_user_id, reported_user_i
 VALUES 
     (NEXT VALUE FOR userreport_id_seq, 'Cheater', 0, NULL, 2, 3),
     (NEXT VALUE FOR userreport_id_seq, 'Cheater', 1, 1, 3, 4),
-    (NEXT VALUE FOR userreport_id_seq, 'Cheater', 2, 1, 4, 2),
+    (NEXT VALUE FOR userreport_id_seq, 'Cheater', 1, 1, 4, 2),
     (NEXT VALUE FOR userreport_id_seq, 'Cheater', 0, 1, 2, 3);
 
 INSERT INTO Level (id)

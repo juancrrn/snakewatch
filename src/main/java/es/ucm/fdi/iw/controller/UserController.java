@@ -6,6 +6,7 @@ import es.ucm.fdi.iw.model.MatchPlayer;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Room;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.UserReport;
 import es.ucm.fdi.iw.model.User.Role;
 
 import org.apache.logging.log4j.LogManager;
@@ -383,6 +384,30 @@ public class UserController {
 			entityManager.flush();
 		}
 		return "{}";
+	}
+
+	@PostMapping("/{id}/report")
+	@ResponseBody
+	@Transactional
+	public String report(@PathVariable long id,
+			@RequestBody JsonNode o, Model model, HttpSession session)
+			throws JsonProcessingException {
+
+		String reason = o.get("message").asText();
+		User reported = entityManager.find(User.class, id);
+		User reporter = entityManager.find(
+				User.class, ((User) session.getAttribute("u")).getId());
+
+		// construye mensaje, lo guarda en BD
+		UserReport r = new UserReport();
+		r.setReportingUser(reporter);
+		r.setReportedUser(reported);
+		r.setReasons(reason);
+		r.setStatus(UserReport.Status.SENT);
+		r.setModeratorUser(null);
+		entityManager.persist(r);
+		entityManager.flush(); // to get Id before commit
+		return "{\"result\": \"Report sent.\"}";
 	}
 
 
