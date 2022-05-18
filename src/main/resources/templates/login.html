@@ -23,6 +23,7 @@
                         <label for="password" class="visually-hidden">Password</label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required">
                     </p>
+                    <p th:if="${message}" class="text-center fs-6" style="color:crimson;" th:text="${message}"></p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                 </form>
             </div>

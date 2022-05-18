@@ -1,15 +1,9 @@
 package es.ucm.fdi.iw.controller;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import es.ucm.fdi.iw.model.Level;
 
 /**
  * Root controller
@@ -27,8 +21,6 @@ import es.ucm.fdi.iw.model.Level;
 @Controller
 public class RootController {
 
-    @Autowired
-    private EntityManager entityManager;
 
     /**
      * Home view
@@ -43,6 +35,7 @@ public class RootController {
      */
     @GetMapping("/login")
     public String login(Model model) {
+     
         return "login";
     }
 

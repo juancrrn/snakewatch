@@ -28,8 +28,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -363,26 +365,32 @@ public class UserController {
     }
 
 	@PostMapping("/signup")
-	@ResponseBody
 	@Transactional
-	public String signup(@RequestBody JsonNode o, Model model) throws JsonProcessingException {
-
-		String username = o.get("username").asText();
-		String password = o.get("password").asText();
-		String firstName = o.get("first_name").asText();
-		String lastName = o.get("last_name").asText();
+	public String signup(@RequestParam String username, @RequestParam String password, Model model, RedirectAttributes attributes) throws IllegalArgumentException {
 
 		if(!username.isEmpty() && !password.isEmpty()){
+			User u = null;
+			try{
+			u = entityManager
+				.createNamedQuery("User.byUsername", User.class)
+				.setParameter("username", username)
+				.getSingleResult();
+			}
+			catch(NoResultException e){	
+			};
+
+			if(u!=null){
+				attributes.addFlashAttribute("message", "Username already exists.");
+				return "redirect:/user/signup";
+			}
+
 			User user = new User(username, encodePassword(password), true, false);
 			//Default skin
 			user.setSkin("white.png");
-			if(!firstName.isEmpty()) user.setFirstName(firstName);
-			if(!lastName.isEmpty()) user.setLastName(lastName);
-
 			entityManager.persist(user);
 			entityManager.flush();
 		}
-		return "{}";
+		return "redirect:/login";
 	}
 
 

@@ -79,28 +79,30 @@ public class LevelController {
     @PostMapping("score/{levelId}/{scorePlayer}")
     @ResponseBody
     @Transactional
-    public String updateHighscore(@PathVariable long levelId, @PathVariable int scorePlayer ,Model model){
+    public String updateHighscore(@PathVariable long levelId, @PathVariable int scorePlayer ,Model model) {
         
         Long userId = ((User) session.getAttribute("u")).getId();
         User user = entityManager.find(User.class, userId);
         Level level = entityManager.find(Level.class, levelId);
-        UserLevel userLevel = null;
+        UserLevel userLevel;
         try {
             userLevel = entityManager
             .createNamedQuery("UserLevel.getUserLevel", UserLevel.class)
             .setParameter("userId", userId)
             .setParameter("levelId", level.getId())
             .getSingleResult();             
-        } catch (NoResultException e) {
-            }
-        if(userLevel == null){
-            userLevel = new UserLevel(user, level, scorePlayer);
+        } 
+        catch (NoResultException e) {
+            userLevel = new UserLevel();
+            userLevel.setLevel(level);
+            userLevel.setPlayer(user);
         }
-        else{
-            if(userLevel.getHighscore() < scorePlayer){
-                userLevel.setHighscore(scorePlayer);
-            }
+
+      
+        if(userLevel.getHighscore() < scorePlayer){
+            userLevel.setHighscore(scorePlayer);
         }
+        
         entityManager.persist(userLevel);
         entityManager.flush();
         
@@ -123,7 +125,7 @@ public class LevelController {
 
     @PostMapping("load_level")
     public String loadLevel(@RequestParam("file") MultipartFile file , Model model, RedirectAttributes attributes) 
-        throws IOException {
+        throws IOException, IllegalArgumentException {
 
         File folder = new File("./src/main/resources/static/levelMaps");
         String[] foldersList = folder.list();
