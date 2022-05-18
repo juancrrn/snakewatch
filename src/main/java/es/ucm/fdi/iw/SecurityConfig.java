@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	            .and()
 			.formLogin()
 				.loginPage("/login")
+				.failureUrl("/login/failed")
 				.permitAll().successHandler(loginSuccessHandler); // <-- called when login Ok; can redirect
 	}
 	

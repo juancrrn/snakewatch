@@ -15,7 +15,6 @@ public class GlobalExceptionHandler {
     
     @Autowired HttpSession session;
 
-  
     @ExceptionHandler(value= IllegalArgumentException.class)
     public String handleIllegalArgument(IllegalArgumentException e, RedirectAttributes attributes){
         String path = session.getServletContext().getContextPath();
