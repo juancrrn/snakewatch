@@ -27,13 +27,13 @@
                         <td th:text="${report.id}"></td>
                         <td><a th:href="@{/user/__${report.reportedUser.id}__}" th:text="|${report.reportedUser.username}|" style="text-decoration: none;"></a></td>
                         <td th:text="${report.reasons}">Motivos</td>
-                        <td th:text="${report.status.ordinal() != 2} ? (${report.status.ordinal() == 0} ? 'Enviado' : 'En proceso') : 'Cerrado'">Status</td>
+                        <td th:text="${report.status.ordinal() == 0} ? 'Enviado' : 'Cerrado'">Status</td>
                         <td th:unless="${report.moderatorUser}">Ninguno</td>
                         <td th:if="${report.moderatorUser}"><a th:href="@{/user/__${report.moderatorUser.id}__}" th:text="|${report.moderatorUser.username}|" style="text-decoration: none;"></td>
                         <td>
                             <div class="btn-group">
-                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-success" th:onclick="ignore([[${report.id}]])">Ignorar</button>
-                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-danger" th:onclick="ban([[${report.id}]])">Bloquear</button>
+                                <button th:classappend="${report.status.ordinal() == 1} ? 'disabled' : ''" class="btn btn-success" th:onclick="ignore([[${report.id}]])">Ignorar</button>
+                                <button th:classappend="${report.status.ordinal() == 1} ? 'disabled' : ''" class="btn btn-danger" th:onclick="ban([[${report.id}]])">Bloquear</button>
                             </div>
                         </td>
                     </tr>
