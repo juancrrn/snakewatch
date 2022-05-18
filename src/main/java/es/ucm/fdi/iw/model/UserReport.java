@@ -68,7 +68,6 @@ public class UserReport {
      */
     public enum Status {
         SENT,
-        BEING_PROCESSED,
         CLOSED
     }
 
