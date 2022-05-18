@@ -15,8 +15,8 @@
 
             <table class="table table-light">
                 <thead>
-                    <th>ID del reporte</th>
-                    <th>Usuario reportado</th>
+                    <th>ID</th>
+                    <th>Usuario</th>
                     <th>Motivos</th>
                     <th>Estado</th>
                     <th>Moderador</th>
@@ -24,16 +24,16 @@
                 </thead>
                 <tbody>
                     <tr th:each="report: ${reports}">
-                        <td th:text="${report.id}">Report ID</td>
-                        <td th:text="|${report.reportedUser.username} (${report.reportedUser.id})|">Usuario reportado</td>
+                        <td th:text="${report.id}"></td>
+                        <td><a th:href="@{/user/__${report.reportedUser.id}__}" th:text="|${report.reportedUser.username}|" style="text-decoration: none;"></a></td>
                         <td th:text="${report.reasons}">Motivos</td>
                         <td th:text="${report.status.ordinal() != 2} ? (${report.status.ordinal() == 0} ? 'Enviado' : 'En proceso') : 'Cerrado'">Status</td>
-                        <td th:text="${report.moderatorUser}? |${report.moderatorUser.username} (${report.moderatorUser.id})| : 'Ninguno'">Moderador encargado</td>
+                        <td th:unless="${report.moderatorUser}">Ninguno</td>
+                        <td th:if="${report.moderatorUser}"><a th:href="@{/user/__${report.moderatorUser.id}__}" th:text="|${report.moderatorUser.username}|" style="text-decoration: none;"></td>
                         <td>
                             <div class="btn-group">
-                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-primary">Revisar</button>
-                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-success">Ignorar</button>
-                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-danger">Bloquear</button>
+                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-success" th:onclick="ignore([[${report.id}]])">Ignorar</button>
+                                <button th:classappend="${report.status.ordinal() == 2} ? 'disabled' : ''" class="btn btn-danger" th:onclick="ban([[${report.id}]])">Bloquear</button>
                             </div>
                         </td>
                     </tr>
@@ -43,6 +43,24 @@
     </main>
 
     <th:block th:replace="fragments/footer.html :: footer" />
+
+    <script th:inline="javascript">
+      function ignore(id) {
+        go("/admin/" + id + "/ignore", "POST").then((d) => {
+          location.reload();
+        }).catch((e) => {
+          console.log("Error: ", e);
+        })
+      }
+
+      function ban(id) {
+        go("/admin/" + id + "/ban", "POST").then((d) => {
+          location.reload();
+        }).catch((e) => {
+          console.log("Error: ", e);
+        })
+      }
+    </script>
 </body>
 
 </html>
